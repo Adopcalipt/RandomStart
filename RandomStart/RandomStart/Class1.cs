@@ -12,6 +12,7 @@ using GTA.Math;
 using GTA.Native;
 using System.Runtime.InteropServices;
 
+//The Face blend data This part was from  E66666666/LeeC_HBD.cs, https://gist.github.com/E66666666/466c59df7aff69d2ac788fa38e669300
 public static class SHVNative
 {
     // These are borrowed from ScriptHookVDotNet's 
