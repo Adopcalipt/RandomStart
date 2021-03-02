@@ -9441,7 +9441,7 @@ namespace RandomStart
 
                     sTatBase.Add("mpbeach_overlays"); sTatName.Add("MP_Bea_F_Chest_001"); MyTat.Add("Anchor");
                     sTatBase.Add("mpbeach_overlays"); sTatName.Add("MP_Bea_F_Chest_000"); MyTat.Add("Anchor");
-                    sTatBase.Add("mpbeach_overlays"); sTatName.Add("MP_Bea_F_Chest_000"); MyTat.Add("Los Santos Wreath");
+                    sTatBase.Add("mpbeach_overlays"); sTatName.Add("MP_Bea_F_Chest_002"); MyTat.Add("Los Santos Wreath");
 
                     sTatBase.Add("multiplayer_overlays"); sTatName.Add("FM_Tat_F_044"); MyTat.Add("Stone Cross");
                     sTatBase.Add("multiplayer_overlays"); sTatName.Add("FM_Tat_F_034"); MyTat.Add("Flaming Shamrock");
