@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Xml.Serialization;
@@ -11,7 +11,6 @@ using GTA;
 using GTA.Math;
 using GTA.Native;
 using System.Runtime.InteropServices;
-
 //The Face blend data This part was from  E66666666/LeeC_HBD.cs, https://gist.github.com/E66666666/466c59df7aff69d2ac788fa38e669300
 public static class SHVNative
 {
@@ -62,6 +61,7 @@ namespace RandomStart
         int iHair02 = 0;
         int iUnlock = 0;
         int iVersion = 0;
+        int iPedNum = 0;
         int iLogCount = 0;
         int iGrouping = 0;
         int iPostAction = 0;
@@ -87,8 +87,8 @@ namespace RandomStart
         bool bPrisHeli = false;
         bool bMethFail = false;
         bool bMenuOpen = false;
+        bool bWeaponFault = false;
         bool bAddBeachParty = true;
-        bool bLoadedPedOpt = false;
         bool bBeltUp = false;
         bool bDisableDLCVeh = true;
         bool bInYankton = false;
@@ -96,6 +96,7 @@ namespace RandomStart
         bool bMethActor = false;
         bool bDontStopMe = false;
         bool bMainProtag = false;
+        bool bCurrentChar = false;
         bool bKeepWeapons = false;
         bool bAllowControl = false;
         bool bInCayoPerico = false;
@@ -104,8 +105,7 @@ namespace RandomStart
         bool bPlayingNewMissions = false;
 
 
-        string sVersion = "1.8";
-        string sSaveInPed = "";
+        string sVersion = "2.1";
         string sFirstName = "PlayerX";
         string sMainChar = "player_zero";
         string sFunChar01 = "player_one";
@@ -113,6 +113,7 @@ namespace RandomStart
         string sBeeLogs = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSLog.txt";
         string sExitAn_01 = "";
         string sExitAn_02 = "";
+        string sPedVoices = "";
 
         List<int> iAmmoLs = new List<int>();
         List<int> iPlayWep = new List<int>();
@@ -123,6 +124,7 @@ namespace RandomStart
 
         List<float> fHeads = new List<float>();
         List<float> fOverlayOpc = new List<float>();
+        List<float> fAceFeats = new List<float>();
 
         List<string> sNameFem = new List<string>();
         List<string> sNameMal = new List<string>();
@@ -136,6 +138,7 @@ namespace RandomStart
         List<string> sTatName = new List<string>();
         List<string> AddTatBase = new List<string>();
         List<string> AddTatName = new List<string>();
+        List<string> ThemVoices = new List<string>();
 
         List<Ped> PeddyList = new List<Ped>();
         List<Ped> PedParty = new List<Ped>();
@@ -145,6 +148,7 @@ namespace RandomStart
         List<Vehicle> VehList = new List<Vehicle>();
         List<Weather> WetherBe = new List<Weather>();
         List<VehicleSeat> Vseats = new List<VehicleSeat>();
+        List<NewClothBank> MyPedCollection = new List<NewClothBank>();
 
         List<int> SABlipsAlfa = new List<int>();
         List<bool> SABlipsMiniM = new List<bool>();
@@ -347,7 +351,7 @@ namespace RandomStart
             {
                 int iAmmo = iAmmoLs[i];
 
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), iAmmo, false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), 0, false, true);
 
                 for (int ii = 0; ii < sPlayerAddsList.Count; ii++)
                 {
@@ -356,10 +360,33 @@ namespace RandomStart
                         Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), Function.Call<int>(Hash.GET_HASH_KEY, sPlayerAddsList[ii]));
                     }
                 }
-                Function.Call<bool>(Hash.SET_AMMO_IN_CLIP, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), Function.Call<int>(Hash.GET_MAX_AMMO_IN_CLIP, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), false));
-                Function.Call(Hash.SET_PED_AMMO, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), iAmmo);
+                LockNLoad(iAmmo, sWeapList[iPlayWep[i]], Peddy);
+
+                if (Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]])) < iAmmo)
+                {
+                    if (!bWeaponFault)
+                        bWeaponFault = true;
+                }
             }
             Function.Call(Hash.SET_PED_CURRENT_WEAPON_VISIBLE, Game.Player.Character, false, true, true, true);
+        }
+        private void LockNLoad(int iAmmo, string sWeap, Ped Peddy)
+        {
+            Function.Call<bool>(Hash.SET_AMMO_IN_CLIP, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), Function.Call<int>(Hash.GET_MAX_AMMO_IN_CLIP, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), false));
+            Function.Call(Hash.SET_PED_AMMO, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), iAmmo);
+        }
+        public int Mk2AmmoFix(string sWeapo)
+        {
+            int iAmmo = 0;
+            Ped Peddy = Game.Player.Character;
+            int iWeap = Function.Call<int>(Hash.GET_HASH_KEY, sWeapo);
+
+            unsafe
+            {
+                Function.Call<bool>(Hash.GET_MAX_AMMO, Peddy.Handle, iWeap, &iAmmo);
+            }
+
+            return iAmmo;
         }
         public class SettingsXML
         {
@@ -415,6 +442,9 @@ namespace RandomStart
                 iAmmoLs = SetsXML.AmmoLs;
                 sPlayerAddsList = SetsXML.PlayCompsList;
 
+                bBeltUp = SetsXML.BeltUp;
+                PlayerBelter();
+
                 if (bMainProtag && bSavedPed)
                 {
                     bMainProtag = false;
@@ -425,19 +455,21 @@ namespace RandomStart
                     bRandLocate = false;
 
 
-                if (iVersion == 18000)
+                if (iVersion < 21000)
                 {
-                    bBeltUp = SetsXML.BeltUp;
-                    Game.Player.Character.CanFlyThroughWindscreen = !bBeltUp;
-                }
-                else
-                {
-                    iVersion = 18000;
-                    WriteSetXML();
+                    for (int i = 0; i < MyPedCollection.Count; i++)
+                        MyPedCollection[i].PedVoice = "";
+                    NagScreen();
                 }
             }
             else
-                WriteSetXML();
+                NagScreen();
+        }
+        private void NagScreen()
+        {
+            UI.Notify(sLangfile[0]);
+            iVersion = 21000;
+            WriteSetXML();
         }
         private void WriteSetXML()
         {
@@ -475,6 +507,14 @@ namespace RandomStart
             using (StreamReader sr = new StreamReader(fileName))
             {
                 return (LangXML)xml.Deserialize(sr);
+            }
+        }
+        public void OutPutLang(LangXML config, string fileName)
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(LangXML));
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                xml.Serialize(sw, config);
             }
         }
         private void Languages()
@@ -597,13 +637,37 @@ namespace RandomStart
             sLangfile.Add("Stomach");      //111
             sLangfile.Add("New ");      //112
             sLangfile.Add("blank");      //113
-            sLangfile.Add("blank");      //114
-            sLangfile.Add("blank");      //115
-            sLangfile.Add("blank");      //116
-            sLangfile.Add("blank");      //117
-            sLangfile.Add("blank");      //118
-            sLangfile.Add("blank");      //119
-            sLangfile.Add("blank");      //120
+            sLangfile.Add("Nose Width");      //114
+            sLangfile.Add("Nose Peak Height");      //115
+            sLangfile.Add("Nose Peak Length");      //116
+            sLangfile.Add("Nose Bone High");      //117
+            sLangfile.Add("Nose Peak Lowering");      //118
+            sLangfile.Add("Nose Bone Twist");      //119
+            sLangfile.Add("Eyebrow High");      //120
+            sLangfile.Add("Eyebrow Forward");      //121
+            sLangfile.Add("Cheekbone High");      //122
+            sLangfile.Add("Cheekbone Width");      //123
+            sLangfile.Add("Cheek Width");      //124
+            sLangfile.Add("Eyes Opening");      //125
+            sLangfile.Add("Lips Thickness");      //126
+            sLangfile.Add("Jaw Bone Width");      //127
+            sLangfile.Add("Jaw Bone Back Length");      //128
+            sLangfile.Add("Chimp Bone Lowering");      //129
+            sLangfile.Add("Chimp Bone Length");      //130
+            sLangfile.Add("Chimp Bone Width");      //131
+            sLangfile.Add("Chimp Hole");      //132
+            sLangfile.Add("Neck Thickness");      //133
+            sLangfile.Add("Face Features");      //134
+            sLangfile.Add("blank");      //135
+            sLangfile.Add("blank");      //136
+            sLangfile.Add("blank");      //137
+            sLangfile.Add("blank");      //138
+            sLangfile.Add("blank");      //139
+            sLangfile.Add("blank");      //140
+
+            //LangXML Mylang = new LangXML();
+            //Mylang.Langfile = sLangfile;
+            //OutPutLang(Mylang, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStartLang.Xml");
         }
         private void FindaLang()
         {
@@ -698,6 +762,972 @@ namespace RandomStart
             WetherBe.Add(Weather.Clearing);
             WetherBe.Add(Weather.Neutral);
         }
+        private void IHearVoices()
+        {
+            //Voice list was taken from; https://pastebin.com/vDWd8RYx
+            ThemVoices.Clear();
+
+            ThemVoices.Add("ABIGAIL"); //073DD899"); //121493657"); //121493657
+            ThemVoices.Add("AFFLUENT_SUBURBAN_FEMALE_01"); //FF4D4698"); //4283254424"); //ThemVoices.Add("11712872
+            ThemVoices.Add("AFFLUENT_SUBURBAN_FEMALE_02"); //12836D04"); //310603012"); //310603012
+            ThemVoices.Add("AFFLUENT_SUBURBAN_FEMALE_03"); //DC6000BE"); //3697279166"); //ThemVoices.Add("597688130
+            ThemVoices.Add("AFFLUENT_SUBURBAN_FEMALE_04"); //EE1AA433"); //3994723379"); //ThemVoices.Add("300243917
+            ThemVoices.Add("AFFLUENT_SUBURBAN_FEMALE_05"); //A47190DE"); //2758906078"); //ThemVoices.Add("1536061218
+            ThemVoices.Add("AFFLUENT_SUBURBAN_FEMALE_06"); //B62C3453"); //3056350291"); //ThemVoices.Add("1238617005
+            ThemVoices.Add("AFFLUENT_SUBURBAN_MALE_01"); //85FA12FF"); //2247758591"); //ThemVoices.Add("2047208705
+            ThemVoices.Add("AFFLUENT_SUBURBAN_MALE_02"); //A4394F7D"); //2755219325"); //ThemVoices.Add("1539747971
+            ThemVoices.Add("AGENCYJANITOR"); //5288D370"); //1384698736"); //1384698736
+            ThemVoices.Add("AIRCRAFT_WARNING_FEMALE_01"); //85A08F9C"); //2241892252"); //ThemVoices.Add("2053075044
+            ThemVoices.Add("AIRCRAFT_WARNING_MALE_01"); //A65A6402"); //2790941698"); //ThemVoices.Add("1504025598
+            ThemVoices.Add("AIRDUMMER"); //798D01B5"); //2039284149"); //2039284149
+            ThemVoices.Add("AIRGUITARIST"); //A1D7351A"); //2715235610"); //ThemVoices.Add("1579731686
+            ThemVoices.Add("AIRPIANIST"); //B98B1513"); //3112899859"); //ThemVoices.Add("1182067437
+            ThemVoices.Add("AIRPORT_PA_FEMALE"); //80D0944F"); //2161153103"); //ThemVoices.Add("2133814193
+            ThemVoices.Add("AIRPORT_PA_MALE"); //4BA3E2F7"); //1269031671"); //1269031671
+            ThemVoices.Add("ALIENS"); //EB86F769"); //3951490921"); //ThemVoices.Add("343476375
+            ThemVoices.Add("AMANDA_DRUNK"); //5C0B144D"); //1544229965"); //1544229965
+            ThemVoices.Add("AMANDA_NORMAL"); //EC6C9072"); //3966537842"); //ThemVoices.Add("328429454
+            ThemVoices.Add("AMMUCITY"); //D4503291"); //3562025617"); //ThemVoices.Add("732941679
+            ThemVoices.Add("ANDY_MOON"); //B51D1921"); //3038583073"); //ThemVoices.Add("1256384223
+            ThemVoices.Add("ANTON"); //ED9B229C"); //3986367132"); //ThemVoices.Add("308600164
+            ThemVoices.Add("APT_BEAST"); //14F37BC9"); //351501257"); //351501257
+            ThemVoices.Add("AVI"); //EF7A6BDE"); //4017777630"); //ThemVoices.Add("277189666
+            ThemVoices.Add("A_F_M_BEACH_01_WHITE_FULL_01"); //6B996380"); //1805214592"); //1805214592
+            ThemVoices.Add("A_F_M_BEACH_01_WHITE_MINI_01"); //139EA948"); //329165128"); //329165128
+            ThemVoices.Add("A_F_M_BEVHILLS_01_WHITE_FULL_01"); //00A8641D"); //11035677"); //11035677
+            ThemVoices.Add("A_F_M_BEVHILLS_01_WHITE_MINI_01"); //3E0995AE"); //1040815534"); //1040815534
+            ThemVoices.Add("A_F_M_BEVHILLS_01_WHITE_MINI_02"); //4ABAAF10"); //1253748496"); //1253748496
+            ThemVoices.Add("A_F_M_BEVHILLS_02_BLACK_FULL_01"); //8455F5F0"); //2220226032"); //ThemVoices.Add("2074741264
+            ThemVoices.Add("A_F_M_BEVHILLS_02_BLACK_MINI_01"); //466B8D2A"); //1181453610"); //1181453610
+            ThemVoices.Add("A_F_M_BEVHILLS_02_WHITE_FULL_01"); //B228C501"); //2989016321"); //ThemVoices.Add("1305950975
+            ThemVoices.Add("A_F_M_BEVHILLS_02_WHITE_FULL_02"); //CC76F99D"); //3430349213"); //ThemVoices.Add("864618083
+            ThemVoices.Add("A_F_M_BEVHILLS_02_WHITE_MINI_01"); //3FD63057"); //1071001687"); //1071001687
+            ThemVoices.Add("A_F_M_BODYBUILD_01_BLACK_FULL_01"); //4B0E89BF"); //1259243967"); //1259243967
+            ThemVoices.Add("A_F_M_BODYBUILD_01_BLACK_MINI_01"); //23D791B0"); //601330096"); //601330096
+            ThemVoices.Add("A_F_M_BODYBUILD_01_WHITE_FULL_01"); //8773ADD6"); //2272505302"); //ThemVoices.Add("2022461994
+            ThemVoices.Add("A_F_M_BODYBUILD_01_WHITE_MINI_01"); //B902AA3A"); //3103959610"); //ThemVoices.Add("1191007686
+            ThemVoices.Add("A_F_M_BUSINESS_02_WHITE_MINI_01"); //9C4AD53A"); //2622149946"); //ThemVoices.Add("1672817350
+            ThemVoices.Add("A_F_M_DOWNTOWN_01_BLACK_FULL_01"); //0AA25C8F"); //178412687"); //178412687
+            ThemVoices.Add("A_F_M_EASTSA_01_LATINO_FULL_01"); //0ACC23F9"); //181150713"); //181150713
+            ThemVoices.Add("A_F_M_EASTSA_01_LATINO_MINI_01"); //CE348715"); //3459548949"); //ThemVoices.Add("835418347
+            ThemVoices.Add("A_F_M_EASTSA_02_LATINO_FULL_01"); //0AA30167"); //178454887"); //178454887
+            ThemVoices.Add("A_F_M_EASTSA_02_LATINO_MINI_01"); //721CC9FF"); //1914489343"); //1914489343
+            ThemVoices.Add("A_F_M_FATWHITE_01_WHITE_FULL_01"); //D2158D79"); //3524627833"); //ThemVoices.Add("770339463
+            ThemVoices.Add("A_F_M_FATWHITE_01_WHITE_MINI_01"); //59E595EB"); //1508218347"); //1508218347
+            ThemVoices.Add("A_F_M_KTOWN_01_KOREAN_FULL_01"); //D77777E6"); //3614930918"); //ThemVoices.Add("680036378
+            ThemVoices.Add("A_F_M_KTOWN_01_KOREAN_MINI_01"); //AF6FB9B1"); //2943334833"); //ThemVoices.Add("1351632463
+            ThemVoices.Add("A_F_M_KTOWN_02_CHINESE_MINI_01"); //C533C983"); //3308505475"); //ThemVoices.Add("986461821
+            ThemVoices.Add("A_F_M_KTOWN_02_KOREAN_FULL_01"); //D8CD3773"); //3637327731"); //ThemVoices.Add("657639565
+            ThemVoices.Add("A_F_M_SALTON_01_WHITE_FULL_01"); //89DA8A2E"); //2312800814"); //ThemVoices.Add("1982166482
+            ThemVoices.Add("A_F_M_SALTON_01_WHITE_FULL_02"); //9C052E83"); //2617585283"); //ThemVoices.Add("1677382013
+            ThemVoices.Add("A_F_M_SALTON_01_WHITE_FULL_03"); //A66E4355"); //2792244053"); //ThemVoices.Add("1502723243
+            ThemVoices.Add("A_F_M_SALTON_01_WHITE_MINI_01"); //8701705E"); //2265018462"); //ThemVoices.Add("2029948834
+            ThemVoices.Add("A_F_M_SALTON_01_WHITE_MINI_02"); //7DC35DE2"); //2109955554"); //2109955554
+            ThemVoices.Add("A_F_M_SALTON_01_WHITE_MINI_03"); //6675AF47"); //1718988615"); //1718988615
+            ThemVoices.Add("A_F_M_SKIDROW_01_BLACK_FULL_01"); //A7C0DE51"); //2814434897"); //ThemVoices.Add("1480532399
+            ThemVoices.Add("A_F_M_SKIDROW_01_BLACK_MINI_01"); //443E6FBE"); //1144942526"); //1144942526
+            ThemVoices.Add("A_F_M_SKIDROW_01_WHITE_FULL_01"); //F8F30014"); //4176674836"); //ThemVoices.Add("118292460
+            ThemVoices.Add("A_F_M_SKIDROW_01_WHITE_MINI_01"); //705684C4"); //1884718276"); //1884718276
+            ThemVoices.Add("A_F_M_SOUCENT_01_BLACK_FULL_01"); //4E0DA806"); //1309517830"); //1309517830
+            ThemVoices.Add("A_F_M_SOUCENT_02_BLACK_FULL_01"); //C725E5CC"); //3341149644"); //ThemVoices.Add("953817652
+            ThemVoices.Add("A_F_M_TOURIST_01_WHITE_MINI_01"); //25365382"); //624317314"); //624317314
+            ThemVoices.Add("A_F_M_TRAMPBEAC_01_BLACK_FULL_01"); //F091AF03"); //4036079363"); //ThemVoices.Add("258887933
+            ThemVoices.Add("A_F_M_TRAMPBEAC_01_BLACK_MINI_01"); //DE24211D"); //3726909725"); //ThemVoices.Add("568057571
+            ThemVoices.Add("A_F_M_TRAMPBEAC_01_WHITE_FULL_01"); //8D34DFCC"); //2369052620"); //ThemVoices.Add("1925914676
+            ThemVoices.Add("A_F_M_TRAMP_01_WHITE_FULL_01"); //D05841FA"); //3495444986"); //ThemVoices.Add("799522310
+            ThemVoices.Add("A_F_M_TRAMP_01_WHITE_MINI_01"); //55CE3CCC"); //1439579340"); //1439579340
+            ThemVoices.Add("A_F_O_GENSTREET_01_WHITE_MINI_01"); //482D1EC8"); //1210916552"); //1210916552
+            ThemVoices.Add("A_F_O_INDIAN_01_INDIAN_MINI_01"); //8755E8CA"); //2270554314"); //ThemVoices.Add("2024412982
+            ThemVoices.Add("A_F_O_KTOWN_01_KOREAN_FULL_01"); //DBE7871F"); //3689383711"); //ThemVoices.Add("605583585
+            ThemVoices.Add("A_F_O_KTOWN_01_KOREAN_MINI_01"); //F94EAEEB"); //4182683371"); //ThemVoices.Add("112283925
+            ThemVoices.Add("A_F_O_SALTON_01_WHITE_FULL_01"); //F79EEC05"); //4154387461"); //ThemVoices.Add("140579835
+            ThemVoices.Add("A_F_O_SALTON_01_WHITE_MINI_01"); //FCBC6F1F"); //4240207647"); //ThemVoices.Add("54759649
+            ThemVoices.Add("A_F_O_SOUCENT_01_BLACK_FULL_01"); //3439D3C2"); //876204994"); //876204994
+            ThemVoices.Add("A_F_O_SOUCENT_02_BLACK_FULL_01"); //F27CEF94"); //4068274068"); //ThemVoices.Add("226693228
+            ThemVoices.Add("A_F_Y_BEACH_01_BLACK_MINI_01"); //4B79AF9D"); //1266266013"); //1266266013
+            ThemVoices.Add("A_F_Y_BEACH_01_WHITE_FULL_01"); //2BCAB282"); //734704258"); //734704258
+            ThemVoices.Add("A_F_Y_BEACH_01_WHITE_MINI_01"); //13609A3C"); //325098044"); //325098044
+            ThemVoices.Add("A_F_Y_BEACH_BLACK_FULL_01"); //0422CC2C"); //69389356"); //69389356
+            ThemVoices.Add("A_F_Y_BEVHILLS_01_WHITE_FULL_01"); //E7099D21"); //3876166945"); //ThemVoices.Add("418800351
+            ThemVoices.Add("A_F_Y_BEVHILLS_01_WHITE_MINI_01"); //D2C133B9"); //3535877049"); //ThemVoices.Add("759090247
+            ThemVoices.Add("A_F_Y_BEVHILLS_02_WHITE_FULL_01"); //F700AB54"); //4144016212"); //ThemVoices.Add("150951084
+            ThemVoices.Add("A_F_Y_BEVHILLS_02_WHITE_MINI_01"); //AA4B2212"); //2857050642"); //ThemVoices.Add("1437916654
+            ThemVoices.Add("A_F_Y_BEVHILLS_02_WHITE_MINI_02"); //7E1BC9B0"); //2115750320"); //2115750320
+            ThemVoices.Add("A_F_Y_BEVHILLS_03_WHITE_FULL_01"); //8558FF3F"); //2237202239"); //ThemVoices.Add("2057765057
+            ThemVoices.Add("A_F_Y_BEVHILLS_03_WHITE_MINI_01"); //D17E6765"); //3514722149"); //ThemVoices.Add("780245147
+            ThemVoices.Add("A_F_Y_BEVHILLS_04_WHITE_FULL_01"); //B91127EB"); //3104909291"); //ThemVoices.Add("1190058005
+            ThemVoices.Add("A_F_Y_BEVHILLS_04_WHITE_MINI_01"); //9A251230"); //2586120752"); //ThemVoices.Add("1708846544
+            ThemVoices.Add("A_F_Y_BUSINESS_01_WHITE_FULL_01"); //A3D0C7CD"); //2748368845"); //ThemVoices.Add("1546598451
+            ThemVoices.Add("A_F_Y_BUSINESS_01_WHITE_MINI_01"); //87816F13"); //2273406739"); //ThemVoices.Add("2021560557
+            ThemVoices.Add("A_F_Y_BUSINESS_01_WHITE_MINI_02"); //188B9125"); //411799845"); //411799845
+            ThemVoices.Add("A_F_Y_BUSINESS_02_WHITE_FULL_01"); //4CC300E2"); //1287848162"); //1287848162
+            ThemVoices.Add("A_F_Y_BUSINESS_02_WHITE_MINI_01"); //94B7537B"); //2495042427"); //ThemVoices.Add("1799924869
+            ThemVoices.Add("A_F_Y_BUSINESS_03_CHINESE_FULL_01"); //7D9DD020"); //2107494432"); //2107494432
+            ThemVoices.Add("A_F_Y_BUSINESS_03_CHINESE_MINI_01"); //D41AE44A"); //3558532170"); //ThemVoices.Add("736435126
+            ThemVoices.Add("A_F_Y_BUSINESS_03_LATINO_FULL_01"); //420377DE"); //1107523550"); //1107523550
+            ThemVoices.Add("A_F_Y_BUSINESS_04_BLACK_FULL_01"); //26D1F656"); //651294294"); //651294294
+            ThemVoices.Add("A_F_Y_BUSINESS_04_BLACK_MINI_01"); //97D8B312"); //2547561234"); //ThemVoices.Add("1747406062
+            ThemVoices.Add("A_F_Y_BUSINESS_04_WHITE_MINI_01"); //BE6FAE2C"); //3194990124"); //ThemVoices.Add("1099977172
+            ThemVoices.Add("A_F_Y_EASTSA_01_LATINO_FULL_01"); //3CB71B34"); //1018633012"); //1018633012
+            ThemVoices.Add("A_F_Y_EASTSA_01_LATINO_MINI_01"); //D3A7F87F"); //3551000703"); //ThemVoices.Add("743966593
+            ThemVoices.Add("A_F_Y_EASTSA_02_WHITE_FULL_01"); //3DDC0236"); //1037828662"); //1037828662
+            ThemVoices.Add("A_F_Y_EASTSA_03_LATINO_FULL_01"); //C801D0E0"); //3355562208"); //ThemVoices.Add("939405088
+            ThemVoices.Add("A_F_Y_EASTSA_03_LATINO_MINI_01"); //38E9E4FC"); //954852604"); //954852604
+            ThemVoices.Add("A_F_Y_EPSILON_01_WHITE_MINI_01"); //1B66BF81"); //459718529"); //459718529
+            ThemVoices.Add("A_F_Y_FITNESS_01_WHITE_FULL_01"); //7639B49D"); //1983493277"); //1983493277
+            ThemVoices.Add("A_F_Y_FITNESS_01_WHITE_MINI_01"); //E2D732E6"); //3805754086"); //ThemVoices.Add("489213210
+            ThemVoices.Add("A_F_Y_FITNESS_02_BLACK_FULL_01"); //851B5376"); //2233160566"); //ThemVoices.Add("2061806730
+            ThemVoices.Add("A_F_Y_FITNESS_02_BLACK_MINI_01"); //27C40170"); //667156848"); //667156848
+            ThemVoices.Add("A_F_Y_FITNESS_02_WHITE_FULL_01"); //BF9CB8C8"); //3214719176"); //ThemVoices.Add("1080248120
+            ThemVoices.Add("A_F_Y_FITNESS_02_WHITE_MINI_01"); //A105E3A0"); //2701517728"); //ThemVoices.Add("1593449568
+            ThemVoices.Add("A_F_Y_Golfer_01_WHITE_FULL_01"); //B81316C5"); //3088258757"); //ThemVoices.Add("1206708539
+            ThemVoices.Add("A_F_Y_Golfer_01_WHITE_MINI_01"); //5F5BFB44"); //1599863620"); //1599863620
+            ThemVoices.Add("A_F_Y_HIKER_01_WHITE_FULL_01"); //BB0A674E"); //3138021198"); //ThemVoices.Add("1156946098
+            ThemVoices.Add("A_F_Y_HIKER_01_WHITE_MINI_01"); //C8CAFB5E"); //3368745822"); //ThemVoices.Add("926221474
+            ThemVoices.Add("A_F_Y_HIPSTER_01_WHITE_FULL_01"); //A24D58EA"); //2722978026"); //ThemVoices.Add("1571989270
+            ThemVoices.Add("A_F_Y_HIPSTER_01_WHITE_MINI_01"); //92D2202A"); //2463244330"); //ThemVoices.Add("1831722966
+            ThemVoices.Add("A_F_Y_HIPSTER_02_WHITE_FULL_01"); //83EA9D79"); //2213191033"); //ThemVoices.Add("2081776263
+            ThemVoices.Add("A_F_Y_HIPSTER_02_WHITE_MINI_01"); //41543F56"); //1096040278"); //1096040278
+            ThemVoices.Add("A_F_Y_HIPSTER_02_WHITE_MINI_02"); //2F6F9B8D"); //795843469"); //795843469
+            ThemVoices.Add("A_F_Y_HIPSTER_03_WHITE_FULL_01"); //ADED3C9F"); //2918005919"); //ThemVoices.Add("1376961377
+            ThemVoices.Add("A_F_Y_HIPSTER_03_WHITE_MINI_01"); //F824C1C7"); //4163158471"); //ThemVoices.Add("131808825
+            ThemVoices.Add("A_F_Y_HIPSTER_03_WHITE_MINI_02"); //E95A2432"); //3914998834"); //ThemVoices.Add("379968462
+            ThemVoices.Add("A_F_Y_HIPSTER_04_WHITE_FULL_01"); //3141C876"); //826394742"); //826394742
+            ThemVoices.Add("A_F_Y_HIPSTER_04_WHITE_MINI_01"); //6B08FBA6"); //1795750822"); //1795750822
+            ThemVoices.Add("A_F_Y_HIPSTER_04_WHITE_MINI_02"); //3BDF1D53"); //1004477779"); //1004477779
+            ThemVoices.Add("A_F_Y_INDIAN_01_INDIAN_MINI_01"); //AD0551E1"); //2902807009"); //ThemVoices.Add("1392160287
+            ThemVoices.Add("A_F_Y_INDIAN_01_INDIAN_MINI_02"); //BF49F66A"); //3209295466"); //ThemVoices.Add("1085671830
+            ThemVoices.Add("A_F_Y_ROLLERCOASTER_01_MINI_01"); //5470D900"); //1416681728"); //1416681728
+            ThemVoices.Add("A_F_Y_ROLLERCOASTER_01_MINI_02"); //4295B54A"); //1117107530"); //1117107530
+            ThemVoices.Add("A_F_Y_ROLLERCOASTER_01_MINI_03"); //C2393483"); //3258528899"); //ThemVoices.Add("1036438397
+            ThemVoices.Add("A_F_Y_ROLLERCOASTER_01_MINI_04"); //B015903C"); //2954203196"); //ThemVoices.Add("1340764100
+            ThemVoices.Add("A_F_Y_SKATER_01_WHITE_FULL_01"); //52D929F1"); //1389963761"); //1389963761
+            ThemVoices.Add("A_F_Y_SKATER_01_WHITE_MINI_01"); //6E55B81F"); //1851111455"); //1851111455
+            ThemVoices.Add("A_F_Y_SOUCENT_01_BLACK_FULL_01"); //A0FDDA5B"); //2700991067"); //ThemVoices.Add("1593976229
+            ThemVoices.Add("A_F_Y_SOUCENT_02_BLACK_FULL_01"); //DB96A76C"); //3684083564"); //ThemVoices.Add("610883732
+            ThemVoices.Add("A_F_Y_SOUCENT_03_LATINO_FULL_01"); //AA71DF24"); //2859589412"); //ThemVoices.Add("1435377884
+            ThemVoices.Add("A_F_Y_SOUCENT_03_LATINO_MINI_01"); //656710BE"); //1701253310"); //1701253310
+            ThemVoices.Add("A_F_Y_TENNIS_01_BLACK_MINI_01"); //B602DF7D"); //3053641597"); //ThemVoices.Add("1241325699
+            ThemVoices.Add("A_F_Y_TENNIS_01_WHITE_MINI_01"); //434E2C2C"); //1129196588"); //1129196588
+            ThemVoices.Add("A_F_Y_TOURIST_01_BLACK_FULL_01"); //ECA3EB4D"); //3970165581"); //ThemVoices.Add("324801715
+            ThemVoices.Add("A_F_Y_TOURIST_01_BLACK_MINI_01"); //A3713FCD"); //2742108109"); //ThemVoices.Add("1552859187
+            ThemVoices.Add("A_F_Y_TOURIST_01_LATINO_FULL_01"); //D6F2B12F"); //3606229295"); //ThemVoices.Add("688738001
+            ThemVoices.Add("A_F_Y_TOURIST_01_LATINO_MINI_01"); //122F5483"); //305091715"); //305091715
+            ThemVoices.Add("A_F_Y_TOURIST_01_WHITE_FULL_01"); //DBEFEC5C"); //3689933916"); //ThemVoices.Add("605033380
+            ThemVoices.Add("A_F_Y_TOURIST_01_WHITE_MINI_01"); //216BE906"); //560720134"); //560720134
+            ThemVoices.Add("A_F_Y_TOURIST_02_WHITE_MINI_01"); //0D6F398A"); //225393034"); //225393034
+            ThemVoices.Add("A_F_Y_VINEWOOD_01_WHITE_FULL_01"); //2AF2EF5B"); //720564059"); //720564059
+            ThemVoices.Add("A_F_Y_VINEWOOD_01_WHITE_MINI_01"); //23A74DCA"); //598166986"); //598166986
+            ThemVoices.Add("A_F_Y_VINEWOOD_02_WHITE_FULL_01"); //3A311C01"); //976296961"); //976296961
+            ThemVoices.Add("A_F_Y_VINEWOOD_02_WHITE_MINI_01"); //191A5AF2"); //421157618"); //421157618
+            ThemVoices.Add("A_F_Y_Vinewood_03_Chinese_FULL_01"); //E632B0F0"); //3862081776"); //ThemVoices.Add("432885520
+            ThemVoices.Add("A_F_Y_VINEWOOD_03_CHINESE_MINI_01"); //3512D951"); //890427729"); //890427729
+            ThemVoices.Add("A_F_Y_VINEWOOD_04_WHITE_FULL_01"); //20C68AC8"); //549882568"); //549882568
+            ThemVoices.Add("A_F_Y_VINEWOOD_04_WHITE_MINI_01"); //12763C39"); //309738553"); //309738553
+            ThemVoices.Add("A_F_Y_VINEWOOD_04_WHITE_MINI_02"); //C8CB28E4"); //3368757476"); //ThemVoices.Add("926209820
+            ThemVoices.Add("A_M_M_AFRIAMER_01_BLACK_FULL_01"); //43367BD1"); //1127644113"); //1127644113
+            ThemVoices.Add("A_M_M_BEACH_01_BLACK_MINI_01"); //D01013F6"); //3490714614"); //ThemVoices.Add("804252682
+            ThemVoices.Add("A_M_M_BEACH_01_LATINO_FULL_01"); //26669A41"); //644258369"); //644258369
+            ThemVoices.Add("A_M_M_BEACH_01_LATINO_MINI_01"); //FB444157"); //4215554391"); //ThemVoices.Add("79412905
+            ThemVoices.Add("A_M_M_BEACH_01_WHITE_FULL_01"); //30CB4589"); //818627977"); //818627977
+            ThemVoices.Add("A_M_M_BEACH_01_WHITE_MINI_02"); //A8E033BD"); //2833265597"); //ThemVoices.Add("1461701699
+            ThemVoices.Add("A_M_M_BEACH_02_BLACK_FULL_01"); //BCACE696"); //3165447830"); //ThemVoices.Add("1129519466
+            ThemVoices.Add("A_M_M_BEACH_02_WHITE_FULL_01"); //E8314D57"); //3895545175"); //ThemVoices.Add("399422121
+            ThemVoices.Add("A_M_M_BEACH_02_WHITE_MINI_01"); //AE3CFC05"); //2923232261"); //ThemVoices.Add("1371735035
+            ThemVoices.Add("A_M_M_BEACH_02_WHITE_MINI_02"); //4717ADD8"); //1192734168"); //1192734168
+            ThemVoices.Add("A_M_M_BEVHILLS_01_BLACK_FULL_01"); //457F9C3D"); //1165990973"); //1165990973
+            ThemVoices.Add("A_M_M_BEVHILLS_01_BLACK_MINI_01"); //29323F4A"); //691158858"); //691158858
+            ThemVoices.Add("A_M_M_BevHills_01_WHITE_FULL_01"); //DBCAE12A"); //3687506218"); //ThemVoices.Add("607461078
+            ThemVoices.Add("A_M_M_BEVHILLS_01_WHITE_MINI_01"); //D19FFBCA"); //3516922826"); //ThemVoices.Add("778044470
+            ThemVoices.Add("A_M_M_BEVHILLS_02_BLACK_FULL_01"); //5370D897"); //1399904407"); //1399904407
+            ThemVoices.Add("A_M_M_BEVHILLS_02_BLACK_MINI_01"); //25983C23"); //630733859"); //630733859
+            ThemVoices.Add("A_M_M_BEVHILLS_02_WHITE_FULL_01"); //6BB97FD6"); //1807318998"); //1807318998
+            ThemVoices.Add("A_M_M_BEVHILLS_02_WHITE_MINI_01"); //B509F09C"); //3037327516"); //ThemVoices.Add("1257639780
+            ThemVoices.Add("A_M_M_BUSINESS_01_BLACK_FULL_01"); //4F3C06EB"); //1329333995"); //1329333995
+            ThemVoices.Add("A_M_M_BUSINESS_01_BLACK_MINI_01"); //9C4ACF39"); //2622148409"); //ThemVoices.Add("1672818887
+            ThemVoices.Add("A_M_M_BUSINESS_01_WHITE_FULL_01"); //CE2B65BC"); //3458950588"); //ThemVoices.Add("836016708
+            ThemVoices.Add("A_M_M_BUSINESS_01_WHITE_MINI_01"); //F3AD48DE"); //4088219870"); //ThemVoices.Add("206747426
+            ThemVoices.Add("A_M_M_EASTSA_01_LATINO_FULL_01"); //BE01DD94"); //3187793300"); //ThemVoices.Add("1107173996
+            ThemVoices.Add("A_M_M_EASTSA_01_LATINO_MINI_01"); //6BF8BF2C"); //1811463980"); //1811463980
+            ThemVoices.Add("A_M_M_EASTSA_02_LATINO_FULL_01"); //9CB34BA8"); //2628996008"); //ThemVoices.Add("1665971288
+            ThemVoices.Add("A_M_M_EASTSA_02_LATINO_MINI_01"); //CDF2AD27"); //3455233319"); //ThemVoices.Add("839733977
+            ThemVoices.Add("A_M_M_FARMER_01_WHITE_MINI_01"); //24689D1A"); //610835738"); //610835738
+            ThemVoices.Add("A_M_M_FARMER_01_WHITE_MINI_02"); //4ED1F1EC"); //1322381804"); //1322381804
+            ThemVoices.Add("A_M_M_FARMER_01_WHITE_MINI_03"); //F7F4C433"); //4160013363"); //ThemVoices.Add("134953933
+            ThemVoices.Add("A_M_M_FATLATIN_01_LATINO_FULL_01"); //2F04A30B"); //788833035"); //788833035
+            ThemVoices.Add("A_M_M_FATLATIN_01_LATINO_MINI_01"); //4AED8689"); //1257080457"); //1257080457
+            ThemVoices.Add("A_M_M_GENERICMALE_01_WHITE_MINI_01"); //13EFDE7E"); //334487166"); //334487166
+            ThemVoices.Add("A_M_M_GENERICMALE_01_WHITE_MINI_02"); //221A7AD3"); //572160723"); //572160723
+            ThemVoices.Add("A_M_M_GENERICMALE_01_WHITE_MINI_03"); //5AA26BD6"); //1520593878"); //1520593878
+            ThemVoices.Add("A_M_M_GENERICMALE_01_WHITE_MINI_04"); //FD0AB0B4"); //4245336244"); //ThemVoices.Add("49631052
+            ThemVoices.Add("A_M_M_GENFAT_01_LATINO_FULL_01"); //E53DAB11"); //3846023953"); //ThemVoices.Add("448943343
+            ThemVoices.Add("A_M_M_GENFAT_01_LATINO_MINI_01"); //4C00FC14"); //1275132948"); //1275132948
+            ThemVoices.Add("A_M_M_GOLFER_01_BLACK_FULL_01"); //65B984D1"); //1706656977"); //1706656977
+            ThemVoices.Add("A_M_M_GOLFER_01_WHITE_FULL_01"); //57DD2744"); //1474111300"); //1474111300
+            ThemVoices.Add("A_M_M_GOLFER_01_WHITE_MINI_01"); //CA82D279"); //3397571193"); //ThemVoices.Add("897396103
+            ThemVoices.Add("A_M_M_HASJEW_01_WHITE_MINI_01"); //31B413DD"); //833885149"); //833885149
+            ThemVoices.Add("A_M_M_HILLBILLY_01_WHITE_MINI_01"); //342FA137"); //875536695"); //875536695
+            ThemVoices.Add("A_M_M_HILLBILLY_01_WHITE_MINI_02"); //EEB2964E"); //4004681294"); //ThemVoices.Add("290286002
+            ThemVoices.Add("A_M_M_HILLBILLY_01_WHITE_MINI_03"); //62B97E4A"); //1656323658"); //1656323658
+            ThemVoices.Add("A_M_M_HILLBILLY_02_WHITE_MINI_01"); //9E428A7D"); //2655160957"); //ThemVoices.Add("1639806339
+            ThemVoices.Add("A_M_M_HILLBILLY_02_WHITE_MINI_02"); //ACECA7D1"); //2901190609"); //ThemVoices.Add("1393776687
+            ThemVoices.Add("A_M_M_HILLBILLY_02_WHITE_MINI_03"); //7A9EC332"); //2057225010"); //2057225010
+            ThemVoices.Add("A_M_M_HILLBILLY_02_WHITE_MINI_04"); //14C3777D"); //348354429"); //348354429
+            ThemVoices.Add("A_M_M_INDIAN_01_INDIAN_MINI_01"); //0D92701D"); //227700765"); //227700765
+            ThemVoices.Add("A_M_M_KTOWN_01_KOREAN_FULL_01"); //CEB967A9"); //3468257193"); //ThemVoices.Add("826710103
+            ThemVoices.Add("A_M_M_KTOWN_01_KOREAN_MINI_01"); //9D5568DD"); //2639620317"); //ThemVoices.Add("1655346979
+            ThemVoices.Add("A_M_M_MALIBU_01_BLACK_FULL_01"); //704A0828"); //1883899944"); //1883899944
+            ThemVoices.Add("A_M_M_MALIBU_01_LATINO_FULL_01"); //C446CD11"); //3292974353"); //ThemVoices.Add("1001992943
+            ThemVoices.Add("A_M_M_MALIBU_01_LATINO_MINI_01"); //23A05D0D"); //597712141"); //597712141
+            ThemVoices.Add("A_M_M_MALIBU_01_WHITE_FULL_01"); //ABCCBA7C"); //2882321020"); //ThemVoices.Add("1412646276
+            ThemVoices.Add("A_M_M_MALIBU_01_WHITE_MINI_01"); //B71E2A9D"); //3072207517"); //ThemVoices.Add("1222759779
+            ThemVoices.Add("A_M_M_POLYNESIAN_01_POLYNESIAN_FULL_01"); //68887F5A"); //1753775962"); //1753775962
+            ThemVoices.Add("A_M_M_POLYNESIAN_01_POLYNESIAN_MINI_01"); //CDB20C91"); //3450997905"); //ThemVoices.Add("843969391
+            ThemVoices.Add("A_M_M_SALTON_01_WHITE_FULL_01"); //C4B4C301"); //3300180737"); //ThemVoices.Add("994786559
+            ThemVoices.Add("A_M_M_SALTON_02_WHITE_FULL_01"); //AAD2C80E"); //2865940494"); //ThemVoices.Add("1429026802
+            ThemVoices.Add("A_M_M_SALTON_02_WHITE_MINI_01"); //47C9EC4A"); //1204415562"); //1204415562
+            ThemVoices.Add("A_M_M_SALTON_02_WHITE_MINI_02"); //6D9837E6"); //1838692326"); //1838692326
+            ThemVoices.Add("A_M_M_SKATER_01_BLACK_FULL_01"); //256B9C01"); //627809281"); //627809281
+            ThemVoices.Add("A_M_M_SKATER_01_WHITE_FULL_01"); //011E5DF9"); //18767353"); //18767353
+            ThemVoices.Add("A_M_M_SKATER_01_WHITE_MINI_01"); //990DB923"); //2567813411"); //ThemVoices.Add("1727153885
+            ThemVoices.Add("A_M_M_SKIDROW_01_BLACK_FULL_01"); //A9B4316E"); //2847158638"); //ThemVoices.Add("1447808658
+            ThemVoices.Add("A_M_M_SOCENLAT_01_LATINO_FULL_01"); //06291B43"); //103357251"); //103357251
+            ThemVoices.Add("A_M_M_SOCENLAT_01_LATINO_MINI_01"); //E9A5A98F"); //3919948175"); //ThemVoices.Add("375019121
+            ThemVoices.Add("A_M_M_SOUCENT_01_BLACK_FULL_01"); //15D5484D"); //366299213"); //366299213
+            ThemVoices.Add("A_M_M_SOUCENT_02_BLACK_FULL_01"); //465792F9"); //1180144377"); //1180144377
+            ThemVoices.Add("A_M_M_SOUCENT_03_BLACK_FULL_01"); //19DD2A37"); //433924663"); //433924663
+            ThemVoices.Add("A_M_M_SOUCENT_04_BLACK_FULL_01"); //3712F629"); //923989545"); //923989545
+            ThemVoices.Add("A_M_M_SOUCENT_04_BLACK_MINI_01"); //7BDBD27A"); //2078003834"); //2078003834
+            ThemVoices.Add("A_M_M_STLAT_02_LATINO_FULL_01"); //27BC1008"); //666636296"); //666636296
+            ThemVoices.Add("A_M_M_TENNIS_01_BLACK_MINI_01"); //74745D9B"); //1953783195"); //1953783195
+            ThemVoices.Add("A_M_M_TENNIS_01_WHITE_MINI_01"); //A7AD9A25"); //2813172261"); //ThemVoices.Add("1481795035
+            ThemVoices.Add("A_M_M_TOURIST_01_WHITE_MINI_01"); //4B87E962"); //1267198306"); //1267198306
+            ThemVoices.Add("A_M_M_TRAMPBEAC_01_BLACK_FULL_01"); //126F2EEF"); //309276399"); //309276399
+            ThemVoices.Add("A_M_M_TRAMP_01_BLACK_FULL_01"); //EBC7775E"); //3955717982"); //ThemVoices.Add("339249314
+            ThemVoices.Add("A_M_M_TRAMP_01_BLACK_MINI_01"); //7924B380"); //2032448384"); //2032448384
+            ThemVoices.Add("A_M_M_TRANVEST_01_WHITE_MINI_01"); //98921800"); //2559711232"); //ThemVoices.Add("1735256064
+            ThemVoices.Add("A_M_M_TRANVEST_02_LATINO_FULL_01"); //659F48E4"); //1704937700"); //1704937700
+            ThemVoices.Add("A_M_M_TRANVEST_02_LATINO_MINI_01"); //F9BFF521"); //4190106913"); //ThemVoices.Add("104860383
+            ThemVoices.Add("A_M_O_BEACH_01_WHITE_FULL_01"); //7FBF0F4A"); //2143227722"); //2143227722
+            ThemVoices.Add("A_M_O_BEACH_01_WHITE_MINI_01"); //B21E181B"); //2988316699"); //ThemVoices.Add("1306650597
+            ThemVoices.Add("A_M_O_GENSTREET_01_WHITE_FULL_01"); //BB6B9D57"); //3144392023"); //ThemVoices.Add("1150575273
+            ThemVoices.Add("A_M_O_GENSTREET_01_WHITE_MINI_01"); //10EE4E6A"); //284053098"); //284053098
+            ThemVoices.Add("A_M_O_SALTON_01_WHITE_FULL_01"); //5DBB7560"); //1572566368"); //1572566368
+            ThemVoices.Add("A_M_O_SALTON_01_WHITE_MINI_01"); //AEA39902"); //2929957122"); //ThemVoices.Add("1365010174
+            ThemVoices.Add("A_M_O_SOUCENT_01_BLACK_FULL_01"); //8F45DF82"); //2403721090"); //ThemVoices.Add("1891246206
+            ThemVoices.Add("A_M_O_SOUCENT_02_BLACK_FULL_01"); //C195B582"); //3247814018"); //ThemVoices.Add("1047153278
+            ThemVoices.Add("A_M_O_SOUCENT_03_BLACK_FULL_01"); //9CE751AB"); //2632405419"); //ThemVoices.Add("1662561877
+            ThemVoices.Add("A_M_O_TRAMP_01_BLACK_FULL_01"); //ABAB17E1"); //2880116705"); //ThemVoices.Add("1414850591
+            ThemVoices.Add("A_M_Y_BEACHVESP_01_CHINESE_FULL_01"); //D5130E1F"); //3574795807"); //ThemVoices.Add("720171489
+            ThemVoices.Add("A_M_Y_BEACHVESP_01_CHINESE_MINI_01"); //B0C6E699"); //2965825177"); //ThemVoices.Add("1329142119
+            ThemVoices.Add("A_M_Y_BEACHVESP_01_LATINO_MINI_01"); //3F13D91C"); //1058265372"); //1058265372
+            ThemVoices.Add("A_M_Y_BEACHVESP_01_WHITE_FULL_01"); //3CE0CB56"); //1021365078"); //1021365078
+            ThemVoices.Add("A_M_Y_BEACHVESP_01_WHITE_MINI_01"); //AAD5FF3F"); //2866151231"); //ThemVoices.Add("1428816065
+            ThemVoices.Add("A_M_Y_BEACHVESP_02_WHITE_FULL_01"); //4C19F4DE"); //1276769502"); //1276769502
+            ThemVoices.Add("A_M_Y_BEACHVESP_02_WHITE_MINI_01"); //7F7BB4CC"); //2138813644"); //2138813644
+            ThemVoices.Add("A_M_Y_BEACH_01_CHINESE_FULL_01"); //14611348"); //341906248"); //341906248
+            ThemVoices.Add("A_M_Y_BEACH_01_CHINESE_MINI_01"); //6A55B403"); //1784001539"); //1784001539
+            ThemVoices.Add("A_M_Y_BEACH_01_WHITE_FULL_01"); //1C2149A7"); //471943591"); //471943591
+            ThemVoices.Add("A_M_Y_BEACH_01_WHITE_MINI_01"); //912C1ADE"); //2435586782"); //ThemVoices.Add("1859380514
+            ThemVoices.Add("A_M_Y_BEACH_02_LATINO_FULL_01"); //DBF1B32E"); //3690050350"); //ThemVoices.Add("604916946
+            ThemVoices.Add("A_M_Y_BEACH_02_WHITE_FULL_01"); //0B3E6275"); //188637813"); //188637813
+            ThemVoices.Add("A_M_Y_BEACH_03_BLACK_FULL_01"); //18519A78"); //408001144"); //408001144
+            ThemVoices.Add("A_M_Y_BEACH_03_BLACK_MINI_01"); //5C219040"); //1545703488"); //1545703488
+            ThemVoices.Add("A_M_Y_BEACH_03_WHITE_FULL_01"); //187DBBE4"); //410893284"); //410893284
+            ThemVoices.Add("A_M_Y_BEVHILLS_01_BLACK_FULL_01"); //BB7823E2"); //3145212898"); //ThemVoices.Add("1149754398
+            ThemVoices.Add("A_M_Y_BevHills_01_WHITE_FULL_01"); //FBF34319"); //4227023641"); //ThemVoices.Add("67943655
+            ThemVoices.Add("A_M_Y_BEVHILLS_01_WHITE_MINI_01"); //7C5C68C5"); //2086430917"); //2086430917
+            ThemVoices.Add("A_M_Y_BevHills_02_Black_FULL_01"); //7FDB40A6"); //2145075366"); //2145075366
+            ThemVoices.Add("A_M_Y_BEVHILLS_02_WHITE_FULL_01"); //D4FC2A78"); //3573295736"); //ThemVoices.Add("721671560
+            ThemVoices.Add("A_M_Y_BEVHILLS_02_WHITE_MINI_01"); //E24573FE"); //3796202494"); //ThemVoices.Add("498764802
+            ThemVoices.Add("A_M_Y_BUSICAS_01_WHITE_MINI_01"); //AE353C51"); //2922724433"); //ThemVoices.Add("1372242863
+            ThemVoices.Add("A_M_Y_BUSINESS_01_BLACK_FULL_01"); //14EA502A"); //350900266"); //350900266
+            ThemVoices.Add("A_M_Y_BUSINESS_01_BLACK_MINI_01"); //3EE0C0FD"); //1054916861"); //1054916861
+            ThemVoices.Add("A_M_Y_BUSINESS_01_CHINESE_FULL_01"); //2AF37A7A"); //720599674"); //720599674
+            ThemVoices.Add("A_M_Y_BUSINESS_01_CHINESE_MINI_01"); //BBE9D5F6"); //3152664054"); //ThemVoices.Add("1142303242
+            ThemVoices.Add("A_M_Y_BUSINESS_01_WHITE_FULL_01"); //A3B29220"); //2746389024"); //ThemVoices.Add("1548578272
+            ThemVoices.Add("A_M_Y_BUSINESS_01_WHITE_MINI_02"); //D5230A76"); //3575843446"); //ThemVoices.Add("719123850
+            ThemVoices.Add("A_M_Y_BUSINESS_02_BLACK_FULL_01"); //455E1156"); //1163792726"); //1163792726
+            ThemVoices.Add("A_M_Y_BUSINESS_02_BLACK_MINI_01"); //728E84E0"); //1921942752"); //1921942752
+            ThemVoices.Add("A_M_Y_BUSINESS_02_WHITE_FULL_01"); //21BD5DCB"); //566058443"); //566058443
+            ThemVoices.Add("A_M_Y_BUSINESS_02_WHITE_MINI_01"); //DF04F10C"); //3741643020"); //ThemVoices.Add("553324276
+            ThemVoices.Add("A_M_Y_BUSINESS_02_WHITE_MINI_02"); //D1405583"); //3510654339"); //ThemVoices.Add("784312957
+            ThemVoices.Add("A_M_Y_BUSINESS_03_BLACK_FULL_01"); //63CAEDDD"); //1674243549"); //1674243549
+            ThemVoices.Add("A_M_Y_BUSINESS_03_WHITE_MINI_01"); //5161018C"); //1365311884"); //1365311884
+            ThemVoices.Add("A_M_Y_DOWNTOWN_01_BLACK_FULL_01"); //5C59E524"); //1549395236"); //1549395236
+            ThemVoices.Add("A_M_Y_EASTSA_01_LATINO_FULL_01"); //4D091B2B"); //1292442411"); //1292442411
+            ThemVoices.Add("A_M_Y_EASTSA_01_LATINO_MINI_01"); //90006FB0"); //2415947696"); //ThemVoices.Add("1879019600
+            ThemVoices.Add("A_M_Y_EASTSA_02_LATINO_FULL_01"); //71EFEA69"); //1911548521"); //1911548521
+            ThemVoices.Add("A_M_Y_EPSILON_01_BLACK_FULL_01"); //3C737DA3"); //1014201763"); //1014201763
+            ThemVoices.Add("A_M_Y_EPSILON_01_KOREAN_FULL_01"); //C5901506"); //3314554118"); //ThemVoices.Add("980413178
+            ThemVoices.Add("A_M_Y_EPSILON_01_WHITE_FULL_01"); //8B5E6BA1"); //2338220961"); //ThemVoices.Add("1956746335
+            ThemVoices.Add("A_M_Y_EPSILON_02_WHITE_MINI_01"); //5929B31B"); //1495905051"); //1495905051
+            ThemVoices.Add("A_M_Y_GAY_01_BLACK_FULL_01"); //D66B6510"); //3597362448"); //ThemVoices.Add("697604848
+            ThemVoices.Add("A_M_Y_GAY_01_LATINO_FULL_01"); //56EA4F8A"); //1458196362"); //1458196362
+            ThemVoices.Add("A_M_Y_GAY_02_WHITE_MINI_01"); //F31D141C"); //4078769180"); //ThemVoices.Add("216198116
+            ThemVoices.Add("A_M_Y_GENSTREET_01_CHINESE_FULL_01"); //FBD60609"); //4225107465"); //ThemVoices.Add("69859831
+            ThemVoices.Add("A_M_Y_GENSTREET_01_CHINESE_MINI_01"); //68B1C2E6"); //1756480230"); //1756480230
+            ThemVoices.Add("A_M_Y_GenStreet_01_White_FULL_01"); //CCC8E124"); //3435716900"); //ThemVoices.Add("859250396
+            ThemVoices.Add("A_M_Y_GENSTREET_01_WHITE_MINI_01"); //0EA63482"); //245773442"); //245773442
+            ThemVoices.Add("A_M_Y_GENSTREET_02_BLACK_FULL_01"); //A05521B9"); //2689933753"); //ThemVoices.Add("1605033543
+            ThemVoices.Add("A_M_Y_GENSTREET_02_LATINO_FULL_01"); //8A23EC00"); //2317609984"); //ThemVoices.Add("1977357312
+            ThemVoices.Add("A_M_Y_GENSTREET_02_LATINO_MINI_01"); //71BDAFD1"); //1908256721"); //1908256721
+            ThemVoices.Add("A_M_Y_GOLFER_01_WHITE_FULL_01"); //DB7324F1"); //3681756401"); //ThemVoices.Add("613210895
+            ThemVoices.Add("A_M_Y_GOLFER_01_WHITE_MINI_01"); //0F36AC80"); //255241344"); //255241344
+            ThemVoices.Add("A_M_Y_HASJEW_01_WHITE_MINI_01"); //C4E78448"); //3303507016"); //ThemVoices.Add("991460280
+            ThemVoices.Add("A_M_Y_HIPPY_01_WHITE_FULL_01"); //72E9121E"); //1927877150"); //1927877150
+            ThemVoices.Add("A_M_Y_HIPPY_01_WHITE_MINI_01"); //A92E6392"); //2838389650"); //ThemVoices.Add("1456577646
+            ThemVoices.Add("A_M_Y_HIPSTER_01_BLACK_FULL_01"); //4D67AAB4"); //1298639540"); //1298639540
+            ThemVoices.Add("A_M_Y_HIPSTER_01_WHITE_FULL_01"); //93896827"); //2475255847"); //ThemVoices.Add("1819711449
+            ThemVoices.Add("A_M_Y_HIPSTER_01_WHITE_MINI_01"); //B4EB0EBF"); //3035303615"); //ThemVoices.Add("1259663681
+            ThemVoices.Add("A_M_Y_HIPSTER_02_WHITE_FULL_01"); //742FB44D"); //1949283405"); //1949283405
+            ThemVoices.Add("A_M_Y_HIPSTER_02_WHITE_MINI_01"); //521933C3"); //1377383363"); //1377383363
+            ThemVoices.Add("A_M_Y_HIPSTER_03_WHITE_FULL_01"); //E694D959"); //3868514649"); //ThemVoices.Add("426452647
+            ThemVoices.Add("A_M_Y_HIPSTER_03_WHITE_MINI_01"); //B22C563F"); //2989250111"); //ThemVoices.Add("1305717185
+            ThemVoices.Add("A_M_Y_KTOWN_01_KOREAN_FULL_01"); //285D1B2F"); //677190447"); //677190447
+            ThemVoices.Add("A_M_Y_KTOWN_01_KOREAN_MINI_01"); //D97AF207"); //3648713223"); //ThemVoices.Add("646254073
+            ThemVoices.Add("A_M_Y_KTOWN_02_KOREAN_FULL_01"); //7B3CEC0F"); //2067590159"); //2067590159
+            ThemVoices.Add("A_M_Y_KTOWN_02_KOREAN_MINI_01"); //77B4E675"); //2008344181"); //2008344181
+            ThemVoices.Add("A_M_Y_LATINO_01_LATINO_MINI_01"); //26ED66AF"); //653092527"); //653092527
+            ThemVoices.Add("A_M_Y_LATINO_01_LATINO_MINI_02"); //C2429D5B"); //3259145563"); //ThemVoices.Add("1035821733
+            ThemVoices.Add("A_M_Y_MEXTHUG_01_LATINO_FULL_01"); //5756D257"); //1465307735"); //1465307735
+            ThemVoices.Add("A_M_Y_MUSCLBEAC_01_BLACK_FULL_01"); //C1B61E52"); //3249938002"); //ThemVoices.Add("1045029294
+            ThemVoices.Add("A_M_Y_MUSCLBEAC_01_WHITE_FULL_01"); //0225E2F9"); //36037369"); //36037369
+            ThemVoices.Add("A_M_Y_MUSCLBEAC_01_WHITE_MINI_01"); //977DC3C1"); //2541601729"); //ThemVoices.Add("1753365567
+            ThemVoices.Add("A_M_Y_MUSCLBEAC_02_CHINESE_FULL_01"); //A6F52D1E"); //2801085726"); //ThemVoices.Add("1493881570
+            ThemVoices.Add("A_M_Y_MUSCLBEAC_02_LATINO_FULL_01"); //67CCA113"); //1741463827"); //1741463827
+            ThemVoices.Add("A_M_Y_POLYNESIAN_01_POLYNESIAN_FULL_01"); //121DA55B"); //303932763"); //303932763
+            ThemVoices.Add("A_M_Y_RACER_01_WHITE_MINI_01"); //F64541B5"); //4131733941"); //ThemVoices.Add("163233355
+            ThemVoices.Add("A_M_Y_ROLLERCOASTER_01_MINI_01"); //7DB0EDFB"); //2108747259"); //2108747259
+            ThemVoices.Add("A_M_Y_ROLLERCOASTER_01_MINI_02"); //678FC1B9"); //1737474489"); //1737474489
+            ThemVoices.Add("A_M_Y_ROLLERCOASTER_01_MINI_03"); //A3F33A7F"); //2750626431"); //ThemVoices.Add("1544340865
+            ThemVoices.Add("A_M_Y_ROLLERCOASTER_01_MINI_04"); //962B9EF0"); //2519441136"); //ThemVoices.Add("1775526160
+            ThemVoices.Add("A_M_Y_RUNNER_01_WHITE_FULL_01"); //F85796B7"); //4166489783"); //ThemVoices.Add("128477513
+            ThemVoices.Add("A_M_Y_RUNNER_01_WHITE_MINI_01"); //6816D078"); //1746325624"); //1746325624
+            ThemVoices.Add("A_M_Y_SALTON_01_WHITE_MINI_01"); //488C6273"); //1217159795"); //1217159795
+            ThemVoices.Add("A_M_Y_SALTON_01_WHITE_MINI_02"); //5E6F8E25"); //1584369189"); //1584369189
+            ThemVoices.Add("A_M_Y_SKATER_01_WHITE_FULL_01"); //1E6F76CB"); //510621387"); //510621387
+            ThemVoices.Add("A_M_Y_SKATER_01_WHITE_MINI_01"); //41386857"); //1094215767"); //1094215767
+            ThemVoices.Add("A_M_Y_SKATER_02_BLACK_FULL_01"); //46B9D99F"); //1186584991"); //1186584991
+            ThemVoices.Add("A_M_Y_SOUCENT_01_BLACK_FULL_01"); //7ADB7C56"); //2061204566"); //2061204566
+            ThemVoices.Add("A_M_Y_SOUCENT_02_BLACK_FULL_01"); //BA7414D7"); //3128169687"); //ThemVoices.Add("1166797609
+            ThemVoices.Add("A_M_Y_SOUCENT_03_BLACK_FULL_01"); //997A83C0"); //2574943168"); //ThemVoices.Add("1720024128
+            ThemVoices.Add("A_M_Y_SOUCENT_04_BLACK_FULL_01"); //97BA1740"); //2545555264"); //ThemVoices.Add("1749412032
+            ThemVoices.Add("A_M_Y_SOUCENT_04_BLACK_MINI_01"); //E3DE23A6"); //3822986150"); //ThemVoices.Add("471981146
+            ThemVoices.Add("A_M_Y_STBLA_01_BLACK_FULL_01"); //80372D5A"); //2151099738"); //ThemVoices.Add("2143867558
+            ThemVoices.Add("A_M_Y_STBLA_02_BLACK_FULL_01"); //B77F38D5"); //3078568149"); //ThemVoices.Add("1216399147
+            ThemVoices.Add("A_M_Y_STLAT_01_LATINO_FULL_01"); //AF739934"); //2943588660"); //ThemVoices.Add("1351378636
+            ThemVoices.Add("A_M_Y_STLAT_01_LATINO_MINI_01"); //CDC7408D"); //3452387469"); //ThemVoices.Add("842579827
+            ThemVoices.Add("A_M_Y_STWHI_01_WHITE_FULL_01"); //51843C65"); //1367620709"); //1367620709
+            ThemVoices.Add("A_M_Y_STWHI_01_WHITE_MINI_01"); //283E7635"); //675182133"); //675182133
+            ThemVoices.Add("A_M_Y_STWHI_02_WHITE_FULL_01"); //32F459E7"); //854874599"); //854874599
+            ThemVoices.Add("A_M_Y_STWHI_02_WHITE_MINI_01"); //D94A1B14"); //3645512468"); //ThemVoices.Add("649454828
+            ThemVoices.Add("A_M_Y_SUNBATHE_01_BLACK_FULL_01"); //523A66C3"); //1379559107"); //1379559107
+            ThemVoices.Add("A_M_Y_SUNBATHE_01_WHITE_FULL_01"); //0CEA2526"); //216671526"); //216671526
+            ThemVoices.Add("A_M_Y_SUNBATHE_01_WHITE_MINI_01"); //C31ADD04"); //3273317636"); //ThemVoices.Add("1021649660
+            ThemVoices.Add("A_M_Y_TRIATHLON_01_MINI_01"); //55B488C4"); //1437894852"); //1437894852
+            ThemVoices.Add("A_M_Y_TRIATHLON_01_MINI_02"); //87746C43"); //2272554051"); //ThemVoices.Add("2022413245
+            ThemVoices.Add("A_M_Y_TRIATHLON_01_MINI_03"); //BB49D3ED"); //3142177773"); //ThemVoices.Add("1152789523
+            ThemVoices.Add("A_M_Y_TRIATHLON_01_MINI_04"); //ED26B7A6"); //3978737574"); //ThemVoices.Add("316229722
+            ThemVoices.Add("A_M_Y_VINEWOOD_01_BLACK_FULL_01"); //8567F85C"); //2238183516"); //ThemVoices.Add("2056783780
+            ThemVoices.Add("A_M_Y_VINEWOOD_01_BLACK_MINI_01"); //0C746F67"); //208957287"); //208957287
+            ThemVoices.Add("A_M_Y_VINEWOOD_02_WHITE_FULL_01"); //0A626D28"); //174222632"); //174222632
+            ThemVoices.Add("A_M_Y_VINEWOOD_02_WHITE_MINI_01"); //C370059E"); //3278898590"); //ThemVoices.Add("1016068706
+            ThemVoices.Add("A_M_Y_Vinewood_03_Latino_FULL_01"); //F450D2AC"); //4098937516"); //ThemVoices.Add("196029780
+            ThemVoices.Add("A_M_Y_VINEWOOD_03_LATINO_MINI_01"); //9FDD31FF"); //2682073599"); //ThemVoices.Add("1612893697
+            ThemVoices.Add("A_M_Y_VINEWOOD_03_WHITE_FULL_01"); //852D3A8F"); //2234333839"); //ThemVoices.Add("2060633457
+            ThemVoices.Add("A_M_Y_VINEWOOD_03_WHITE_MINI_01"); //3A84F91E"); //981793054"); //981793054
+            ThemVoices.Add("A_M_Y_VINEWOOD_04_WHITE_FULL_01"); //77B21017"); //2008158231"); //2008158231
+            ThemVoices.Add("A_M_Y_VINEWOOD_04_WHITE_MINI_01"); //99DA0ADA"); //2581203674"); //ThemVoices.Add("1713763622
+            ThemVoices.Add("BAILBOND1JUMPER"); //6909D3CC"); //1762251724"); //1762251724
+            ThemVoices.Add("BAILBOND2JUMPER"); //8C257BBD"); //2351266749"); //ThemVoices.Add("1943700547
+            ThemVoices.Add("BAILBOND3JUMPER"); //2E2EF1F8"); //774828536"); //774828536
+            ThemVoices.Add("BAILBOND4JUMPER"); //643A0559"); //1681524057"); //1681524057
+            ThemVoices.Add("BALLASOG"); //AAE4ECF8"); //2867129592"); //ThemVoices.Add("1427837704
+            ThemVoices.Add("BANK"); //3A15DB98"); //974511000"); //974511000
+            ThemVoices.Add("BANKWM1"); //CED9042B"); //3470328875"); //ThemVoices.Add("824638421
+            ThemVoices.Add("BANKWM2"); //9C9B9FB1"); //2627444657"); //ThemVoices.Add("1667522639
+            ThemVoices.Add("BARRY"); //A9058E54"); //2835713620"); //ThemVoices.Add("1459253676
+            ThemVoices.Add("BARRY_01_ALIEN_A"); //82BA2086"); //2193236102"); //ThemVoices.Add("2101731194
+            ThemVoices.Add("BARRY_01_ALIEN_B"); //7494843B"); //1955890235"); //1955890235
+            ThemVoices.Add("BARRY_01_ALIEN_C"); //F06D7BEB"); //4033706987"); //ThemVoices.Add("261260309
+            ThemVoices.Add("BARRY_02_CLOWN_A"); //7929F21D"); //2032792093"); //2032792093
+            ThemVoices.Add("BARRY_02_CLOWN_B"); //66F4CDB3"); //1727319475"); //1727319475
+            ThemVoices.Add("BARRY_02_CLOWN_C"); //9E16BBF6"); //2652290038"); //ThemVoices.Add("1642677258
+            ThemVoices.Add("BAYGOR"); //7BF7A5D6"); //2079827414"); //2079827414
+            ThemVoices.Add("BENNY"); //F1EB2693"); //4058719891"); //ThemVoices.Add("236247405
+            ThemVoices.Add("BEVERLY"); //79D862EA"); //2044224234"); //2044224234
+            ThemVoices.Add("BIKE_MECHANIC"); //573287EB"); //1462929387"); //1462929387
+            ThemVoices.Add("BILLBINDER"); //4E43F344"); //1313076036"); //1313076036
+            ThemVoices.Add("BJPILOT_CANAL"); //B75951F4"); //3076084212"); //ThemVoices.Add("1218883084
+            ThemVoices.Add("BJPILOT_TRAIN"); //0FACABE0"); //262974432"); //262974432
+            ThemVoices.Add("BRAD"); //57360243"); //1463157315"); //1463157315
+            ThemVoices.Add("BREATHING_FRANKLIN_01"); //777E9106"); //2004783366"); //2004783366
+            ThemVoices.Add("BREATHING_MICHAEL_01"); //CAB2CFFB"); //3400716283"); //ThemVoices.Add("894251013
+            ThemVoices.Add("BREATHING_TEST_01"); //D75E8754"); //3613296468"); //ThemVoices.Add("681670828
+            ThemVoices.Add("BREATHING_TREVOR_01"); //18092047"); //403251271"); //403251271
+            ThemVoices.Add("BUSINESSMAN"); //3ECBA7BD"); //1053534141"); //1053534141
+            ThemVoices.Add("CASEY"); //908C67DC"); //2425120732"); //ThemVoices.Add("1869846564
+            ThemVoices.Add("CHAR_INTRO_FRANKLIN_01"); //420FF5A0"); //1108342176"); //1108342176
+            ThemVoices.Add("CHAR_INTRO_MICHAEL_01"); //E4A08B92"); //3835726738"); //ThemVoices.Add("459240558
+            ThemVoices.Add("CHAR_INTRO_TREVOR_01"); //8F52758F"); //2404545935"); //ThemVoices.Add("1890421361
+            ThemVoices.Add("CHASTITY"); //9B4468A9"); //2604951721"); //ThemVoices.Add("1690015575
+            ThemVoices.Add("CHASTITY_MP"); //4E0041AA"); //1308639658"); //1308639658
+            ThemVoices.Add("CHEETAH"); //B1D95DA0"); //2983812512"); //ThemVoices.Add("1311154784
+            ThemVoices.Add("CHEF"); //BF59CC9A"); //3210333338"); //ThemVoices.Add("1084633958
+            ThemVoices.Add("CHENG"); //65BBBE48"); //1706802760"); //1706802760
+            ThemVoices.Add("CLETUS"); //9B00816A"); //2600501610"); //ThemVoices.Add("1694465686
+            ThemVoices.Add("CLINTON"); //2B502F45"); //726675269"); //726675269
+            ThemVoices.Add("CLOWNS"); //D8088180"); //3624436096"); //ThemVoices.Add("670531200
+            ThemVoices.Add("CONSTRUCTION_SITE_MALE_01"); //C285BFCA"); //3263545290"); //ThemVoices.Add("1031422006
+            ThemVoices.Add("CONSTRUCTION_SITE_MALE_02"); //3572A596"); //896705942"); //896705942
+            ThemVoices.Add("CONSTRUCTION_SITE_MALE_03"); //82A1C003"); //2191638531"); //ThemVoices.Add("2103328765
+            ThemVoices.Add("CONSTRUCTION_SITE_MALE_04"); //93CE625C"); //2479776348"); //ThemVoices.Add("1815190948
+            ThemVoices.Add("COOK"); //5673232D"); //1450386221"); //1450386221
+            ThemVoices.Add("CST4ACTRESS"); //6A8C4C84"); //1787579524"); //1787579524
+            ThemVoices.Add("DARYL"); //10088962"); //268994914"); //268994914
+            ThemVoices.Add("DAVE"); //B1F68A9D"); //2985724573"); //ThemVoices.Add("1309242723
+            ThemVoices.Add("DENISE"); //860AA79A"); //2248845210"); //ThemVoices.Add("2046122086
+            ThemVoices.Add("DOM"); //BBF2D511"); //3153253649"); //ThemVoices.Add("1141713647
+            ThemVoices.Add("EDDIE"); //C5FB1FF5"); //3321569269"); //ThemVoices.Add("973398027
+            ThemVoices.Add("EXECPA_FEMALE"); //B6FB2A37"); //3069913655"); //ThemVoices.Add("1225053641
+            ThemVoices.Add("EXECPA_MALE"); //0C5C69CC"); //207382988"); //207382988
+            ThemVoices.Add("EXT1HELIPILOT"); //EF004581"); //4009772417"); //ThemVoices.Add("285194879
+            ThemVoices.Add("FACILITY_ANNOUNCER"); //A9F8234D"); //2851611469"); //ThemVoices.Add("1443355827
+            ThemVoices.Add("FLOYD"); //5E69D958"); //1583995224"); //1583995224
+            ThemVoices.Add("FM"); //FFE20CE1"); //4293004513"); //ThemVoices.Add("1962783
+            ThemVoices.Add("FM_TH"); //2640742C"); //641758252"); //641758252
+            ThemVoices.Add("FRANKLIN_1_NORMAL"); //D603B047"); //3590565959"); //ThemVoices.Add("704401337
+            ThemVoices.Add("FRANKLIN_2_NORMAL"); //9F8D1B67"); //2676824935"); //ThemVoices.Add("1618142361
+            ThemVoices.Add("FRANKLIN_3_NORMAL"); //FA7C388C"); //4202444940"); //ThemVoices.Add("92522356
+            ThemVoices.Add("FRANKLIN_ANGRY"); //D227A0A9"); //3525812393"); //ThemVoices.Add("769154903
+            ThemVoices.Add("FRANKLIN_DRUNK"); //E6EFD5C5"); //3874477509"); //ThemVoices.Add("420489787
+            ThemVoices.Add("FRANKLIN_NORMAL"); //64CCE782"); //1691150210"); //1691150210
+            ThemVoices.Add("FUFU"); //ED8EA575"); //3985548661"); //ThemVoices.Add("309418635
+            ThemVoices.Add("FUFU_MP"); //4EA343CA"); //1319322570"); //1319322570
+            ThemVoices.Add("GARDENER"); //4260B7F4"); //1113634804"); //1113634804
+            ThemVoices.Add("GAYMILITARY"); //212EBC3B"); //556710971"); //556710971
+            ThemVoices.Add("GERALD"); //07DCC381"); //131908481"); //131908481
+            ThemVoices.Add("GIRL1"); //9ABA4CB8"); //2595900600"); //ThemVoices.Add("1699066696
+            ThemVoices.Add("GIRL2"); //C38C1E5B"); //3280739931"); //ThemVoices.Add("1014227365
+            ThemVoices.Add("GRIFF"); //03DD4948"); //64833864"); //64833864
+            ThemVoices.Add("GROOM"); //4A735AF1"); //1249073905"); //1249073905
+            ThemVoices.Add("GUSTAVO"); //E5A7195C"); //3852933468"); //ThemVoices.Add("442033828
+            ThemVoices.Add("G_F_Y_BALLAS_01_BLACK_MINI_01"); //15BB1C9C"); //364584092"); //364584092
+            ThemVoices.Add("G_F_Y_BALLAS_01_BLACK_MINI_02"); //17F72114"); //402071828"); //402071828
+            ThemVoices.Add("G_F_Y_BALLAS_01_BLACK_MINI_03"); //1D7F2C2C"); //494873644"); //494873644
+            ThemVoices.Add("G_F_Y_BALLAS_01_BLACK_MINI_04"); //403F71AC"); //1077899692"); //1077899692
+            ThemVoices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_01"); //4D341506"); //1295258886"); //1295258886
+            ThemVoices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_02"); //69F34E84"); //1777553028"); //1777553028
+            ThemVoices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_03"); //B0B85C0D"); //2964872205"); //ThemVoices.Add("1330095091
+            ThemVoices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_04"); //5B7DB199"); //1534964121"); //1534964121
+            ThemVoices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_05"); //85658568"); //2238023016"); //ThemVoices.Add("2056944280
+            ThemVoices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_06"); //BFA0F9DE"); //3214997982"); //ThemVoices.Add("1079969314
+            ThemVoices.Add("G_F_Y_VAGOS_01_LATINO_MINI_01"); //0320E887"); //52488327"); //52488327
+            ThemVoices.Add("G_F_Y_VAGOS_01_LATINO_MINI_02"); //D6930F6C"); //3599961964"); //ThemVoices.Add("695005332
+            ThemVoices.Add("G_F_Y_VAGOS_01_LATINO_MINI_03"); //7E0BDE5F"); //2114707039"); //2114707039
+            ThemVoices.Add("G_F_Y_VAGOS_01_LATINO_MINI_04"); //8854F2F1"); //2287268593"); //ThemVoices.Add("2007698703
+            ThemVoices.Add("G_M_M_ARMBOSS_01_WHITE_ARMENIAN_MINI_01"); //F840ABA3"); //4164987811"); //ThemVoices.Add("129979485
+            ThemVoices.Add("G_M_M_ARMBOSS_01_WHITE_ARMENIAN_MINI_02"); //DD7F7641"); //3716118081"); //ThemVoices.Add("578849215
+            ThemVoices.Add("G_M_M_ARMLIEUT_01_WHITE_ARMENIAN_MINI_01"); //9B88EB80"); //2609441664"); //ThemVoices.Add("1685525632
+            ThemVoices.Add("G_M_M_ARMLIEUT_01_WHITE_ARMENIAN_MINI_02"); //8BCF4C0D"); //2345618445"); //ThemVoices.Add("1949348851
+            ThemVoices.Add("G_M_M_CHIBOSS_01_CHINESE_MINI_01"); //FD2B8068"); //4247486568"); //ThemVoices.Add("47480728
+            ThemVoices.Add("G_M_M_CHIBOSS_01_CHINESE_MINI_02"); //6EF5E41B"); //1861608475"); //1861608475
+            ThemVoices.Add("G_M_M_CHIGOON_01_CHINESE_MINI_01"); //E8CB59DD"); //3905640925"); //ThemVoices.Add("389326371
+            ThemVoices.Add("G_M_M_CHIGOON_01_CHINESE_MINI_02"); //F8FCFA40"); //4177328704"); //ThemVoices.Add("117638592
+            ThemVoices.Add("G_M_M_CHIGOON_02_CHINESE_MINI_01"); //93D6B240"); //2480321088"); //ThemVoices.Add("1814646208
+            ThemVoices.Add("G_M_M_CHIGOON_02_CHINESE_MINI_02"); //2138CD06"); //557370630"); //557370630
+            ThemVoices.Add("G_M_M_KORBOSS_01_KOREAN_MINI_01"); //049ADD23"); //77258019"); //77258019
+            ThemVoices.Add("G_M_M_KORBOSS_01_KOREAN_MINI_02"); //9DB98F56"); //2646183766"); //ThemVoices.Add("1648783530
+            ThemVoices.Add("G_M_M_MEXBOSS_01_LATINO_MINI_01"); //121AC997"); //303745431"); //303745431
+            ThemVoices.Add("G_M_M_MEXBOSS_01_LATINO_MINI_02"); //A86BF63B"); //2825647675"); //ThemVoices.Add("1469319621
+            ThemVoices.Add("G_M_M_MEXBOSS_02_LATINO_MINI_01"); //FCB3B4DF"); //4239635679"); //ThemVoices.Add("55331617
+            ThemVoices.Add("G_M_M_MEXBOSS_02_LATINO_MINI_02"); //59FC6F6F"); //1509715823"); //1509715823
+            ThemVoices.Add("G_M_M_X17_RSO_01"); //7B4E71E9"); //2068738537"); //2068738537
+            ThemVoices.Add("G_M_M_X17_RSO_02"); //0518057E"); //85460350"); //85460350
+            ThemVoices.Add("G_M_M_X17_RSO_03"); //16232794"); //371402644"); //371402644
+            ThemVoices.Add("G_M_M_X17_RSO_04"); //09AF0EA8"); //162467496"); //162467496
+            ThemVoices.Add("G_M_Y_ARMGOON_02_WHITE_ARMENIAN_MINI_01"); //F98339EA"); //4186126826"); //ThemVoices.Add("108840470
+            ThemVoices.Add("G_M_Y_ARMGOON_02_WHITE_ARMENIAN_MINI_02"); //91C4EA6B"); //2445601387"); //ThemVoices.Add("1849365909
+            ThemVoices.Add("G_M_Y_BALLAEAST_01_BLACK_FULL_01"); //9CFAAA5C"); //2633673308"); //ThemVoices.Add("1661293988
+            ThemVoices.Add("G_M_Y_BALLAEAST_01_BLACK_FULL_02"); //8F2D0EC1"); //2402094785"); //ThemVoices.Add("1892872511
+            ThemVoices.Add("G_M_Y_BALLAEAST_01_BLACK_MINI_01"); //2C0FCD9F"); //739233183"); //739233183
+            ThemVoices.Add("G_M_Y_BALLAEAST_01_BLACK_MINI_02"); //D5BE20F9"); //3586007289"); //ThemVoices.Add("708960007
+            ThemVoices.Add("G_M_Y_BALLAEAST_01_BLACK_MINI_03"); //C77B8474"); //3346760820"); //ThemVoices.Add("948206476
+            ThemVoices.Add("G_M_Y_BALLAORIG_01_BLACK_FULL_01"); //F0D6A527"); //4040598823"); //ThemVoices.Add("254368473
+            ThemVoices.Add("G_M_Y_BALLAORIG_01_BLACK_FULL_02"); //DF4101FC"); //3745579516"); //ThemVoices.Add("549387780
+            ThemVoices.Add("G_M_Y_BALLAORIG_01_BLACK_MINI_01"); //719C62A9"); //1906074281"); //1906074281
+            ThemVoices.Add("G_M_Y_BALLAORIG_01_BLACK_MINI_02"); //AD1BD9A7"); //2904283559"); //ThemVoices.Add("1390683737
+            ThemVoices.Add("G_M_Y_BALLAORIG_01_BLACK_MINI_03"); //925BA427"); //2455479335"); //ThemVoices.Add("1839487961
+            ThemVoices.Add("G_M_Y_BALLASOUT_01_BLACK_FULL_01"); //60B320B0"); //1622352048"); //1622352048
+            ThemVoices.Add("G_M_Y_BALLASOUT_01_BLACK_FULL_02"); //2A5033EB"); //709899243"); //709899243
+            ThemVoices.Add("G_M_Y_BALLASOUT_01_BLACK_MINI_01"); //6ED150A0"); //1859211424"); //1859211424
+            ThemVoices.Add("G_M_Y_BALLASOUT_01_BLACK_MINI_02"); //A00D3317"); //2685219607"); //ThemVoices.Add("1609747689
+            ThemVoices.Add("G_M_Y_BALLASOUT_01_BLACK_MINI_03"); //BE746FE5"); //3195301861"); //ThemVoices.Add("1099665435
+            ThemVoices.Add("G_M_Y_FAMCA_01_BLACK_FULL_01"); //3F299AE9"); //1059691241"); //1059691241
+            ThemVoices.Add("G_M_Y_FAMCA_01_BLACK_FULL_02"); //51573F44"); //1364672324"); //1364672324
+            ThemVoices.Add("G_M_Y_FAMCA_01_BLACK_MINI_01"); //D991FA9F"); //3650222751"); //ThemVoices.Add("644744545
+            ThemVoices.Add("G_M_Y_FAMCA_01_BLACK_MINI_02"); //6B6D9E58"); //1802346072"); //1802346072
+            ThemVoices.Add("G_M_Y_FAMCA_01_BLACK_MINI_03"); //0658D3F8"); //106484728"); //106484728
+            ThemVoices.Add("G_M_Y_FAMDNF_01_BLACK_FULL_01"); //5F8F7FB9"); //1603239865"); //1603239865
+            ThemVoices.Add("G_M_Y_FAMDNF_01_BLACK_FULL_02"); //B271257B"); //2993759611"); //ThemVoices.Add("1301207685
+            ThemVoices.Add("G_M_Y_FAMDNF_01_BLACK_MINI_01"); //BA8A1C11"); //3129613329"); //ThemVoices.Add("1165353967
+            ThemVoices.Add("G_M_Y_FAMDNF_01_BLACK_MINI_02"); //28A77842"); //682063938"); //682063938
+            ThemVoices.Add("G_M_Y_FAMDNF_01_BLACK_MINI_03"); //D2384B6D"); //3526904685"); //ThemVoices.Add("768062611
+            ThemVoices.Add("G_M_Y_FAMFOR_01_BLACK_FULL_01"); //4D505739"); //1297110841"); //1297110841
+            ThemVoices.Add("G_M_Y_FAMFOR_01_BLACK_FULL_02"); //7FEB3C3E"); //2146122814"); //2146122814
+            ThemVoices.Add("G_M_Y_FAMFOR_01_BLACK_MINI_01"); //FA83BCD1"); //4202937553"); //ThemVoices.Add("92029743
+            ThemVoices.Add("G_M_Y_FAMFOR_01_BLACK_MINI_02"); //4721560B"); //1193367051"); //1193367051
+            ThemVoices.Add("G_M_Y_FAMFOR_01_BLACK_MINI_03"); //56CEF566"); //1456403814"); //1456403814
+            ThemVoices.Add("G_M_Y_KOREAN_01_KOREAN_MINI_01"); //3975B100"); //964014336"); //964014336
+            ThemVoices.Add("G_M_Y_KOREAN_01_KOREAN_MINI_02"); //0F585CC6"); //257449158"); //257449158
+            ThemVoices.Add("G_M_Y_KOREAN_02_KOREAN_MINI_01"); //E1E0349F"); //3789567135"); //ThemVoices.Add("505400161
+            ThemVoices.Add("G_M_Y_KOREAN_02_KOREAN_MINI_02"); //D41A1913"); //3558480147"); //ThemVoices.Add("736487149
+            ThemVoices.Add("G_M_Y_KORLIEUT_01_KOREAN_MINI_01"); //6B9A636E"); //1805280110"); //1805280110
+            ThemVoices.Add("G_M_Y_KORLIEUT_01_KOREAN_MINI_02"); //2116CE64"); //555142756"); //555142756
+            ThemVoices.Add("G_M_Y_LATINO01_LATINO_MINI_02"); //215F60FC"); //559898876"); //559898876
+            ThemVoices.Add("G_M_Y_LOST_01_BLACK_FULL_01"); //BD922FD5"); //3180474325"); //ThemVoices.Add("1114492971
+            ThemVoices.Add("G_M_Y_LOST_01_BLACK_FULL_02"); //06D7C263"); //114803299"); //114803299
+            ThemVoices.Add("G_M_Y_LOST_01_BLACK_MINI_01"); //D03903FA"); //3493397498"); //ThemVoices.Add("801569798
+            ThemVoices.Add("G_M_Y_LOST_01_BLACK_MINI_02"); //0154E631"); //22341169"); //22341169
+            ThemVoices.Add("G_M_Y_LOST_01_BLACK_MINI_03"); //2ADE3943"); //719206723"); //719206723
+            ThemVoices.Add("G_M_Y_LOST_01_WHITE_FULL_01"); //A29BB240"); //2728112704"); //ThemVoices.Add("1566854592
+            ThemVoices.Add("G_M_Y_LOST_01_WHITE_MINI_01"); //0477B521"); //74954017"); //74954017
+            ThemVoices.Add("G_M_Y_LOST_01_WHITE_MINI_02"); //D6005837"); //3590346807"); //ThemVoices.Add("704620489
+            ThemVoices.Add("G_M_Y_LOST_02_LATINO_FULL_01"); //93D0C3D0"); //2479932368"); //ThemVoices.Add("1815034928
+            ThemVoices.Add("G_M_Y_LOST_02_LATINO_FULL_02"); //DD9DD769"); //3718109033"); //ThemVoices.Add("576858263
+            ThemVoices.Add("G_M_Y_LOST_02_LATINO_MINI_01"); //B4A96868"); //3031001192"); //ThemVoices.Add("1263966104
+            ThemVoices.Add("G_M_Y_LOST_02_LATINO_MINI_02"); //C34E85B2"); //3276703154"); //ThemVoices.Add("1018264142
+            ThemVoices.Add("G_M_Y_LOST_02_LATINO_MINI_03"); //D1C5229F"); //3519357599"); //ThemVoices.Add("775609697
+            ThemVoices.Add("G_M_Y_LOST_02_WHITE_FULL_01"); //552D4F23"); //1429032739"); //1429032739
+            ThemVoices.Add("G_M_Y_LOST_02_WHITE_MINI_01"); //AC382220"); //2889359904"); //ThemVoices.Add("1405607392
+            ThemVoices.Add("G_M_Y_LOST_02_WHITE_MINI_02"); //302D2A08"); //808266248"); //808266248
+            ThemVoices.Add("G_M_Y_LOST_03_WHITE_FULL_01"); //269A2029"); //647634985"); //647634985
+            ThemVoices.Add("G_M_Y_LOST_03_WHITE_MINI_02"); //19793B32"); //427375410"); //427375410
+            ThemVoices.Add("G_M_Y_LOST_03_WHITE_MINI_03"); //6C55606D"); //1817534573"); //1817534573
+            ThemVoices.Add("G_M_Y_MEXGOON_01_LATINO_MINI_01"); //57C1000E"); //1472266254"); //1472266254
+            ThemVoices.Add("G_M_Y_MEXGOON_01_LATINO_MINI_02"); //4F90EFAA"); //1334898602"); //1334898602
+            ThemVoices.Add("G_M_Y_MEXGOON_02_LATINO_MINI_01"); //B00D3337"); //2953655095"); //ThemVoices.Add("1341312201
+            ThemVoices.Add("G_M_Y_MEXGOON_02_LATINO_MINI_02"); //6A4227A2"); //1782720418"); //1782720418
+            ThemVoices.Add("G_M_Y_MEXGOON_03_LATINO_MINI_01"); //36640278"); //912523896"); //912523896
+            ThemVoices.Add("G_M_Y_MEXGOON_03_LATINO_MINI_02"); //45EBA187"); //1173070215"); //1173070215
+            ThemVoices.Add("G_M_Y_POLOGOON_01_LATINO_MINI_01"); //D1389B20"); //3510147872"); //ThemVoices.Add("784819424
+            ThemVoices.Add("G_M_Y_POLOGOON_01_LATINO_MINI_02"); //DBFFB0AE"); //3690967214"); //ThemVoices.Add("604000082
+            ThemVoices.Add("G_M_Y_SALVABOSS_01_SALVADORIAN_MINI_01"); //083FF1D1"); //138408401"); //138408401
+            ThemVoices.Add("G_M_Y_SALVABOSS_01_SALVADORIAN_MINI_02"); //FB1D578C"); //4213004172"); //ThemVoices.Add("81963124
+            ThemVoices.Add("G_M_Y_SALVAGOON_01_SALVADORIAN_MINI_01"); //0E2D970B"); //237868811"); //237868811
+            ThemVoices.Add("G_M_Y_SALVAGOON_01_SALVADORIAN_MINI_02"); //C9228CF6"); //3374484726"); //ThemVoices.Add("920482570
+            ThemVoices.Add("G_M_Y_SALVAGOON_01_SALVADORIAN_MINI_03"); //D6DD286B"); //3604818027"); //ThemVoices.Add("690149269
+            ThemVoices.Add("G_M_Y_SALVAGOON_02_SALVADORIAN_MINI_01"); //38FB557B"); //955995515"); //955995515
+            ThemVoices.Add("G_M_Y_SalvaGoon_02_SALVADORIAN_MINI_02"); //2B1E39C1"); //723401153"); //723401153
+            ThemVoices.Add("G_M_Y_SALVAGOON_02_SALVADORIAN_MINI_03"); //1C639C4C"); //476290124"); //476290124
+            ThemVoices.Add("G_M_Y_SALVAGOON_03_SALVADORIAN_MINI_01"); //B2F150B6"); //3002159286"); //ThemVoices.Add("1292808010
+            ThemVoices.Add("G_M_Y_SALVAGOON_03_SALVADORIAN_MINI_02"); //50C88C62"); //1355320418"); //1355320418
+            ThemVoices.Add("G_M_Y_SalvaGoon_03_SALVADORIAN_MINI_03"); //61092CDF"); //1627991263"); //1627991263
+            ThemVoices.Add("G_M_Y_STREETPUNK02_BLACK_MINI_04"); //5E2969AE"); //1579772334"); //1579772334
+            ThemVoices.Add("G_M_Y_STREETPUNK_01_BLACK_MINI_01"); //A5364DA4"); //2771799460"); //ThemVoices.Add("1523167836
+            ThemVoices.Add("G_M_Y_STREETPUNK_01_BLACK_MINI_02"); //7AD978EB"); //2061072619"); //2061072619
+            ThemVoices.Add("G_M_Y_STREETPUNK_01_BLACK_MINI_03"); //4A3417A1"); //1244927905"); //1244927905
+            ThemVoices.Add("G_M_Y_STREETPUNK_02_BLACK_MINI_01"); //4C3FB5C7"); //1279243719"); //1279243719
+            ThemVoices.Add("G_M_Y_STREETPUNK_02_BLACK_MINI_02"); //658FE867"); //1703929959"); //1703929959
+            ThemVoices.Add("G_M_Y_STREETPUNK_02_BLACK_MINI_03"); //58794E3A"); //1484344890"); //1484344890
+            ThemVoices.Add("G_M_Y_X17_AGUARD_01"); //0FC95A0C"); //264854028"); //264854028
+            ThemVoices.Add("G_M_Y_X17_AGUARD_02"); //1AEC7052"); //451702866"); //451702866
+            ThemVoices.Add("G_M_Y_X17_AGUARD_03"); //ED3E94F7"); //3980301559"); //ThemVoices.Add("314665737
+            ThemVoices.Add("G_M_Y_X17_AGUARD_04"); //71369CE9"); //1899404521"); //1899404521
+            ThemVoices.Add("G_M_Y_X17_AGUARD_05"); //7B64B145"); //2070196549"); //2070196549
+            ThemVoices.Add("HAO"); //5F91F8AE"); //1603401902"); //1603401902
+            ThemVoices.Add("HEISTMANAGER"); //3F3FAB0F"); //1061137167"); //1061137167
+            ThemVoices.Add("HOSTAGEBF1"); //D5D22CA5"); //3587320997"); //ThemVoices.Add("707646299
+            ThemVoices.Add("HOSTAGEBM1"); //E8CB2CFF"); //3905629439"); //ThemVoices.Add("389337857
+            ThemVoices.Add("HOSTAGEWF1"); //8632FA43"); //2251487811"); //ThemVoices.Add("2043479485
+            ThemVoices.Add("HOSTAGEWF2"); //99952107"); //2576687367"); //ThemVoices.Add("1718279929
+            ThemVoices.Add("HOSTAGEWM1"); //5779B631"); //1467594289"); //1467594289
+            ThemVoices.Add("HOSTAGEWM2"); //9F53C5E4"); //2673067492"); //ThemVoices.Add("1621899804
+            ThemVoices.Add("HUGH"); //F4EE78A9"); //4109269161"); //ThemVoices.Add("185698135
+            ThemVoices.Add("IMPOTENT_RAGE"); //BE080ED8"); //3188199128"); //ThemVoices.Add("1106768168
+            ThemVoices.Add("INFERNUS"); //18F25AC7"); //418536135"); //418536135
+            ThemVoices.Add("JANE"); //893E74D0"); //2302571728"); //ThemVoices.Add("1992395568
+            ThemVoices.Add("JANET"); //8498F40B"); //2224616459"); //ThemVoices.Add("2070350837
+            ThemVoices.Add("JEROME"); //D982DA50"); //3649231440"); //ThemVoices.Add("645735856
+            ThemVoices.Add("JESSE"); //916BB095"); //2439753877"); //ThemVoices.Add("1855213419
+            ThemVoices.Add("JIMMY_DRUNK"); //43C1EB55"); //1136782165"); //1136782165
+            ThemVoices.Add("JIMMY_NORMAL"); //95810242"); //2508259906"); //ThemVoices.Add("1786707390
+            ThemVoices.Add("JOE"); //07CC375A"); //130824026"); //130824026
+            ThemVoices.Add("JOSEF"); //F63ED80C"); //4131313676"); //ThemVoices.Add("163653620
+            ThemVoices.Add("JOSH"); //F4DDE967"); //4108183911"); //ThemVoices.Add("186783385
+            ThemVoices.Add("JULIET"); //27AD5D38"); //665673016"); //665673016
+            ThemVoices.Add("KAREN"); //FBF9CDB2"); //4227452338"); //ThemVoices.Add("67514958
+            ThemVoices.Add("KARIM"); //DB158746"); //3675621190"); //ThemVoices.Add("619346106
+            ThemVoices.Add("KARL"); //D29BCDFD"); //3533426173"); //ThemVoices.Add("761541123
+            ThemVoices.Add("KIDNAPPEDFEMALE"); //064DC6E9"); //105760489"); //105760489
+            ThemVoices.Add("LACEY"); //29CAB776"); //701151094"); //701151094
+            ThemVoices.Add("LAMAR"); //EA22BC4D"); //3928144973"); //ThemVoices.Add("366822323
+            ThemVoices.Add("LAMAR_1_NORMAL"); //35FE7226"); //905867814"); //905867814
+            ThemVoices.Add("LAMAR_2_NORMAL"); //25068D1D"); //621186333"); //621186333
+            ThemVoices.Add("LAMAR_DRUNK"); //648A554F"); //1686787407"); //1686787407
+            ThemVoices.Add("LAMAR_NORMAL"); //9D861581"); //2642810241"); //ThemVoices.Add("1652157055
+            ThemVoices.Add("LESTER"); //8DB38846"); //2377353286"); //ThemVoices.Add("1917614010
+            ThemVoices.Add("LIENGINEER"); //BD5D1E88"); //3176996488"); //ThemVoices.Add("1117970808
+            ThemVoices.Add("LIENGINEER2"); //3A58B62B"); //978892331"); //978892331
+            ThemVoices.Add("LI_FEMALE_01"); //E58E5187"); //3851309447"); //ThemVoices.Add("443657849
+            ThemVoices.Add("LI_GEORGE_01"); //F22854E3"); //4062729443"); //ThemVoices.Add("232237853
+            ThemVoices.Add("LI_LOBBY_01"); //3DB175B5"); //1035040181"); //1035040181
+            ThemVoices.Add("LI_MALE_01"); //9CF88EB5"); //2633535157"); //ThemVoices.Add("1661432139
+            ThemVoices.Add("LI_MALE_02"); //AAB22A28"); //2863802920"); //ThemVoices.Add("1431164376
+            ThemVoices.Add("LOSTKIDNAPGIRL"); //7D8F4F88"); //2106544008"); //2106544008
+            ThemVoices.Add("MAID"); //015EE6C7"); //22996679"); //22996679
+            ThemVoices.Add("MALE_STRIP_DJ_WHITE"); //54825131"); //1417826609"); //1417826609
+            ThemVoices.Add("MANI"); //9A9B1CC9"); //2593856713"); //ThemVoices.Add("1701110583
+            ThemVoices.Add("MARNIE"); //5FA82CAC"); //1604857004"); //1604857004
+            ThemVoices.Add("MARYANN"); //9FEEF145"); //2683236677"); //ThemVoices.Add("1611730619
+            ThemVoices.Add("MAUDE"); //1AE32960"); //451094880"); //451094880
+            ThemVoices.Add("MELVIN"); //558B495C"); //1435191644"); //1435191644
+            ThemVoices.Add("MELVINSCIENTIST"); //E90C6953"); //3909904723"); //ThemVoices.Add("385062573
+            ThemVoices.Add("MICHAEL_1_NORMAL"); //78BECF39"); //2025770809"); //2025770809
+            ThemVoices.Add("MICHAEL_2_NORMAL"); //568D3564"); //1452094820"); //1452094820
+            ThemVoices.Add("MICHAEL_3_NORMAL"); //FBC7F7B9"); //4224186297"); //ThemVoices.Add("70780999
+            ThemVoices.Add("MICHAEL_ANGRY"); //973C5F18"); //2537316120"); //ThemVoices.Add("1757651176
+            ThemVoices.Add("MICHAEL_DRUNK"); //DEBBCFA7"); //3736850343"); //ThemVoices.Add("558116953
+            ThemVoices.Add("MICHAEL_NORMAL"); //C46897D1"); //3295188945"); //ThemVoices.Add("999778351
+            ThemVoices.Add("MIME"); //5B25DA1F"); //1529207327"); //1529207327
+            ThemVoices.Add("MISTERK"); //FF37663A"); //4281820730"); //ThemVoices.Add("13146566
+            ThemVoices.Add("MPCT"); //FF02D40E"); //4278375438"); //ThemVoices.Add("16591858
+            ThemVoices.Add("MP_M_SHOPKEEP_01_CHINESE_MINI_01"); //D36AF9E4"); //3547003364"); //ThemVoices.Add("747963932
+            ThemVoices.Add("MP_M_SHOPKEEP_01_LATINO_MINI_01"); //0592C339"); //93504313"); //93504313
+            ThemVoices.Add("MP_M_SHOPKEEP_01_PAKISTANI_MINI_01"); //25364924"); //624314660"); //624314660
+            ThemVoices.Add("MP_RESIDENT"); //844127A9"); //2218862505"); //ThemVoices.Add("2076104791
+            ThemVoices.Add("MRSTHORNHILL"); //C6DE44C8"); //3336455368"); //ThemVoices.Add("958511928
+            ThemVoices.Add("NERVOUSRON"); //20251950"); //539302224"); //539302224
+            ThemVoices.Add("NIGEL"); //F95E18F2"); //4183693554"); //ThemVoices.Add("111273742
+            ThemVoices.Add("NIGHT_OUT_FEMALE_01"); //33A0908D"); //866160781"); //866160781
+            ThemVoices.Add("NIGHT_OUT_FEMALE_02"); //49EBBD23"); //1240186147"); //1240186147
+            ThemVoices.Add("NIGHT_OUT_FEMALE_03"); //831EAF88"); //2199826312"); //ThemVoices.Add("2095140984
+            ThemVoices.Add("NIGHT_OUT_FEMALE_04"); //A56CF424"); //2775381028"); //ThemVoices.Add("1519586268
+            ThemVoices.Add("NIGHT_OUT_MALE_01"); //41EC4175"); //1106002293"); //1106002293
+            ThemVoices.Add("NIGHT_OUT_MALE_02"); //C428C5EC"); //3291006444"); //ThemVoices.Add("1003960852
+            ThemVoices.Add("NIKKI"); //47F4D564"); //1207227748"); //1207227748
+            ThemVoices.Add("NIKKI_MP"); //11515E1F"); //290545183"); //290545183
+            ThemVoices.Add("NORM"); //AE21D168"); //2921451880"); //ThemVoices.Add("1373515416
+            ThemVoices.Add("NO_VOICE"); //87BFF09A"); //2277503130"); //ThemVoices.Add("2017464166
+            ThemVoices.Add("PACKIE"); //B8791A2F"); //3094944303"); //ThemVoices.Add("1200022993
+            ThemVoices.Add("PACKIE_AI_NORM_PART1_BOOTH"); //E0D1A809"); //3771836425"); //ThemVoices.Add("523130871
+            ThemVoices.Add("PAIGE"); //C2515320"); //3260109600"); //ThemVoices.Add("1034857696
+            ThemVoices.Add("PAIN_FEMALE_01"); //40F0B1B8"); //1089515960"); //1089515960
+            ThemVoices.Add("PAIN_FEMALE_02"); //D828602D"); //3626524717"); //ThemVoices.Add("668442579
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_01"); //6EF36D3C"); //1861446972"); //1861446972
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_02"); //5CECC92F"); //1559021871"); //1559021871
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_03"); //8AA3249B"); //2325947547"); //ThemVoices.Add("1969019749
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_04"); //78878064"); //2022146148"); //2022146148
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_05"); //2629DBA6"); //640277414"); //640277414
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_06"); //0BF1A736"); //200386358"); //200386358
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_07"); //41699229"); //1097437737"); //1097437737
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_08"); //374E7DEF"); //927890927"); //927890927
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_09"); //DCDE4910"); //3705555216"); //ThemVoices.Add("589412080
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_10"); //966B3B23"); //2523609891"); //ThemVoices.Add("1771357405
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_11"); //343976BD"); //876181181"); //876181181
+            ThemVoices.Add("PAIN_FEMALE_NORMAL_12"); //21EAD220"); //569037344"); //569037344
+            ThemVoices.Add("PAIN_FEMALE_TEST_01"); //95928372"); //2509407090"); //ThemVoices.Add("1785560206
+            ThemVoices.Add("PAIN_FEMALE_TEST_02"); //AAE0AE0E"); //2866851342"); //ThemVoices.Add("1428115954
+            ThemVoices.Add("PAIN_FEMALE_TEST_03"); //B89E4989"); //3097381257"); //ThemVoices.Add("1197586039
+            ThemVoices.Add("PAIN_FRANKLIN_01"); //2003420C"); //537084428"); //537084428
+            ThemVoices.Add("PAIN_FRANKLIN_02"); //EBF4D9F0"); //3958692336"); //ThemVoices.Add("336274960
+            ThemVoices.Add("PAIN_FRANKLIN_03"); //1DA7BD55"); //497532245"); //497532245
+            ThemVoices.Add("PAIN_FRANKLIN_04"); //C5B08D68"); //3316682088"); //ThemVoices.Add("978285208
+            ThemVoices.Add("PAIN_MALE_MIXED_01"); //0A14C671"); //169133681"); //169133681
+            ThemVoices.Add("PAIN_MALE_MIXED_02"); //A251F75D"); //2723280733"); //ThemVoices.Add("1571686563
+            ThemVoices.Add("PAIN_MALE_MIXED_03"); //700712C8"); //1879511752"); //1879511752
+            ThemVoices.Add("PAIN_MALE_MIXED_04"); //86A03FFA"); //2258649082"); //ThemVoices.Add("2036318214
+            ThemVoices.Add("PAIN_MALE_MIXED_05"); //5124548F"); //1361335439"); //1361335439
+            ThemVoices.Add("PAIN_MALE_MIXED_06"); //B25B96FC"); //2992346876"); //ThemVoices.Add("1302620420
+            ThemVoices.Add("PAIN_MALE_MIXED_07"); //BC96AB72"); //3163990898"); //ThemVoices.Add("1130976398
+            ThemVoices.Add("PAIN_MALE_MIXED_08"); //8DA5CD91"); //2376453521"); //ThemVoices.Add("1918513775
+            ThemVoices.Add("PAIN_MALE_MIXED_09"); //97EBE21D"); //2548818461"); //ThemVoices.Add("1746148835
+            ThemVoices.Add("PAIN_MALE_NORMAL_01"); //E3B792BC"); //3820458684"); //ThemVoices.Add("474508612
+            ThemVoices.Add("PAIN_MALE_NORMAL_02"); //145573EB"); //341144555"); //341144555
+            ThemVoices.Add("PAIN_MALE_NORMAL_03"); //E296906E"); //3801518190"); //ThemVoices.Add("493449106
+            ThemVoices.Add("PAIN_MALE_NORMAL_04"); //B7C53ACC"); //3083156172"); //ThemVoices.Add("1211811124
+            ThemVoices.Add("PAIN_MALE_NORMAL_05"); //09F45F29"); //167010089"); //167010089
+            ThemVoices.Add("PAIN_MALE_NORMAL_06"); //CB49E1D5"); //3410616789"); //ThemVoices.Add("884350507
+            ThemVoices.Add("PAIN_MALE_TOUGH_01"); //ACC806D0"); //2898790096"); //ThemVoices.Add("1396177200
+            ThemVoices.Add("PAIN_MALE_TOUGH_02"); //DB33E3A7"); //3677610919"); //ThemVoices.Add("617356377
+            ThemVoices.Add("PAIN_MALE_TOUGH_03"); //90FF4F3B"); //2432651067"); //ThemVoices.Add("1862316229
+            ThemVoices.Add("PAIN_MALE_TOUGH_04"); //BF202B80"); //3206556544"); //ThemVoices.Add("1088410752
+            ThemVoices.Add("PAIN_MALE_TOUGH_05"); //F397946E"); //4086797422"); //ThemVoices.Add("208169874
+            ThemVoices.Add("PAIN_MALE_WEAK_01"); //22C36EE8"); //583233256"); //583233256
+            ThemVoices.Add("PAIN_MALE_WEAK_02"); //B05B0A1D"); //2958756381"); //ThemVoices.Add("1336210915
+            ThemVoices.Add("PAIN_MALE_WEAK_03"); //D62355AD"); //3592639917"); //ThemVoices.Add("702327379
+            ThemVoices.Add("PAIN_MALE_WEAK_04"); //E61CF5A0"); //3860657568"); //ThemVoices.Add("434309728
+            ThemVoices.Add("PAIN_MICHAEL_01"); //E657BAA9"); //3864509097"); //ThemVoices.Add("430458199
+            ThemVoices.Add("PAIN_MICHAEL_02"); //D8151E24"); //3625262628"); //ThemVoices.Add("669704668
+            ThemVoices.Add("PAIN_MICHAEL_03"); //3436D666"); //876009062"); //876009062
+            ThemVoices.Add("PAIN_MICHAEL_04"); //66EB3BD2"); //1726692306"); //1726692306
+            ThemVoices.Add("PAIN_PLAYER_TEST_01"); //F38B2CC2"); //4085984450"); //ThemVoices.Add("208982846
+            ThemVoices.Add("PAIN_PLAYER_TEST_02"); //E161886F"); //3781265519"); //ThemVoices.Add("513701777
+            ThemVoices.Add("PAIN_PLAYER_TEST_03"); //576C746B"); //1466725483"); //1466725483
+            ThemVoices.Add("PAIN_TEST_01"); //F5655828"); //4117059624"); //ThemVoices.Add("177907672
+            ThemVoices.Add("PAIN_TEST_02"); //FC1C6596"); //4229719446"); //ThemVoices.Add("65247850
+            ThemVoices.Add("PAIN_TEST_03"); //172E9BA2"); //388930466"); //388930466
+            ThemVoices.Add("PAIN_TREVOR_01"); //21261ADB"); //556145371"); //556145371
+            ThemVoices.Add("PAIN_TREVOR_02"); //32DCBE48"); //853327432"); //853327432
+            ThemVoices.Add("PAIN_TREVOR_03"); //3DAED3EC"); //1034867692"); //1034867692
+            ThemVoices.Add("PAIN_TREVOR_04"); //4F427713"); //1329755923"); //1329755923
+            ThemVoices.Add("PAMELA_DRAKE"); //714E62B7"); //1900962487"); //1900962487
+            ThemVoices.Add("PANIC_WALLA"); //14DEB561"); //350139745"); //350139745
+            ThemVoices.Add("PATRICIA"); //D22B34C3"); //3526046915"); //ThemVoices.Add("768920381
+            ThemVoices.Add("PEACH"); //FE7FCDEA"); //4269788650"); //ThemVoices.Add("25178646
+            ThemVoices.Add("PEYOTE_ATTRACT_BOAR"); //44E0B0C1"); //1155576001"); //1155576001
+            ThemVoices.Add("PEYOTE_ATTRACT_CAT"); //957D8693"); //2508031635"); //ThemVoices.Add("1786935661
+            ThemVoices.Add("PEYOTE_ATTRACT_CHICKENHAWK"); //37642D77"); //929312119"); //929312119
+            ThemVoices.Add("PEYOTE_ATTRACT_CORMORANT"); //25B89DC4"); //632856004"); //632856004
+            ThemVoices.Add("PEYOTE_ATTRACT_COW"); //D18269E8"); //3514984936"); //ThemVoices.Add("779982360
+            ThemVoices.Add("PEYOTE_ATTRACT_COYOTE"); //CACF8A4A"); //3402598986"); //ThemVoices.Add("892368310
+            ThemVoices.Add("PEYOTE_ATTRACT_CROW"); //4ECC966B"); //1322030699"); //1322030699
+            ThemVoices.Add("PEYOTE_ATTRACT_DEER"); //F0A3CD5D"); //4037266781"); //ThemVoices.Add("257700515
+            ThemVoices.Add("PEYOTE_ATTRACT_DOLPHIN"); //59448EA4"); //1497665188"); //1497665188
+            ThemVoices.Add("PEYOTE_ATTRACT_HEN"); //E2D7CD2E"); //3805793582"); //ThemVoices.Add("489173714
+            ThemVoices.Add("PEYOTE_ATTRACT_HUSKY"); //3E0E6964"); //1041131876"); //1041131876
+            ThemVoices.Add("PEYOTE_ATTRACT_MTLION"); //14EF12E9"); //351212265"); //351212265
+            ThemVoices.Add("PEYOTE_ATTRACT_PIG"); //49848323"); //1233421091"); //1233421091
+            ThemVoices.Add("PEYOTE_ATTRACT_PIGEON"); //8E48AAC7"); //2387126983"); //ThemVoices.Add("1907840313
+            ThemVoices.Add("PEYOTE_ATTRACT_RABBIT"); //93CBB169"); //2479599977"); //ThemVoices.Add("1815367319
+            ThemVoices.Add("PEYOTE_ATTRACT_RETRIEVER"); //7B353C1A"); //2067086362"); //2067086362
+            ThemVoices.Add("PEYOTE_ATTRACT_ROTTWEILER"); //0131CB79"); //20040569"); //20040569
+            ThemVoices.Add("PEYOTE_ATTRACT_SASQUATCH"); //068101D6"); //109117910"); //109117910
+            ThemVoices.Add("PEYOTE_ATTRACT_SEAGULL"); //427EF9C8"); //1115617736"); //1115617736
+            ThemVoices.Add("PEYOTE_ATTRACT_SEA_CREATURE"); //5A3979EC"); //1513716204"); //1513716204
+            ThemVoices.Add("PEYOTE_ATTRACT_SHEPHERD"); //5CA8ACB0"); //1554558128"); //1554558128
+            ThemVoices.Add("PEYOTE_ATTRACT_SMALL_DOG"); //517711B0"); //1366757808"); //1366757808
+            ThemVoices.Add("PIER_ANNOUNCE_FEMALE"); //3AB5E64D"); //984999501"); //984999501
+            ThemVoices.Add("PIER_ANNOUNCE_MALE"); //9567A0E1"); //2506596577"); //ThemVoices.Add("1788370719
+            ThemVoices.Add("PIER_FOLEY"); //58EA9491"); //1491768465"); //1491768465
+            ThemVoices.Add("PLAYER_RINGTONES"); //3A3B02D3"); //976945875"); //976945875
+            ThemVoices.Add("PRISONER"); //7EA26372"); //2124571506"); //2124571506
+            ThemVoices.Add("PRISON_ANNOUNCER"); //9BEE7F20"); //2616098592"); //ThemVoices.Add("1678868704
+            ThemVoices.Add("PRISON_TANNOY"); //E5DCB564"); //3856446820"); //ThemVoices.Add("438520476
+            ThemVoices.Add("REDOCASTRO"); //CED55457"); //3470087255"); //ThemVoices.Add("824880041
+            ThemVoices.Add("REDR1DRUNK1"); //4184DA81"); //1099225729"); //1099225729
+            ThemVoices.Add("REDR1DRUNK1_AI_DRUNK"); //2B10FBD7"); //722533335"); //722533335
+            ThemVoices.Add("REDR2DRUNKM"); //51408669"); //1363183209"); //1363183209
+            ThemVoices.Add("REHH2HIKER"); //92977683"); //2459399811"); //ThemVoices.Add("1835567485
+            ThemVoices.Add("REHH3HIPSTER"); //C0147C2B"); //3222567979"); //ThemVoices.Add("1072399317
+            ThemVoices.Add("REHH5BRIDE"); //923B42A5"); //2453357221"); //ThemVoices.Add("1841610075
+            ThemVoices.Add("REHOMGIRL"); //745E2A7D"); //1952328317"); //1952328317
+            ThemVoices.Add("REPRI1LOST"); //4E9991FE"); //1318687230"); //1318687230
+            ThemVoices.Add("SAPPHIRE"); //74F8F352"); //1962472274"); //1962472274
+            ThemVoices.Add("SECUROMECH"); //9C7CE8C0"); //2625431744"); //ThemVoices.Add("1669535552
+            ThemVoices.Add("SHOPASSISTANT"); //53912D70"); //1402023280"); //1402023280
+            ThemVoices.Add("SIMEON"); //82816017"); //2189516823"); //ThemVoices.Add("2105450473
+            ThemVoices.Add("SOL1ACTOR"); //4B0CAD83"); //1259122051"); //1259122051
+            ThemVoices.Add("SPACE_RANGER"); //21D80107"); //567804167"); //567804167
+            ThemVoices.Add("STEVE"); //CE95B9A9"); //3465918889"); //ThemVoices.Add("829048407
+            ThemVoices.Add("STRETCH"); //8B13F083"); //2333339779"); //ThemVoices.Add("1961627517
+            ThemVoices.Add("SUBWAY_ANNOUNCER"); //1C2F9BF2"); //472882162"); //472882162
+            ThemVoices.Add("S_F_M_FEMBARBER_BLACK_MINI_01"); //4B82A928"); //1266854184"); //1266854184
+            ThemVoices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_01"); //E085EF87"); //3766873991"); //ThemVoices.Add("528093305
+            ThemVoices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_02"); //EA440303"); //3930325763"); //ThemVoices.Add("364641533
+            ThemVoices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_03"); //51565112"); //1364611346"); //1364611346
+            ThemVoices.Add("S_F_M_PONSEN_01_BLACK_01"); //B60A191B"); //3054115099"); //ThemVoices.Add("1240852197
+            ThemVoices.Add("S_F_M_SHOP_HIGH_WHITE_MINI_01"); //AD7E25AA"); //2910725546"); //ThemVoices.Add("1384241750
+            ThemVoices.Add("S_F_Y_AIRHOSTESS_01_BLACK_FULL_01"); //50B140C7"); //1353793735"); //1353793735
+            ThemVoices.Add("S_F_Y_AIRHOSTESS_01_BLACK_FULL_02"); //D0FFC16E"); //3506422126"); //ThemVoices.Add("788545170
+            ThemVoices.Add("S_F_Y_AIRHOSTESS_01_WHITE_FULL_01"); //090B4CD4"); //151735508"); //151735508
+            ThemVoices.Add("S_F_Y_AIRHOSTESS_01_WHITE_FULL_02"); //E1B67E2B"); //3786833451"); //ThemVoices.Add("508133845
+            ThemVoices.Add("S_F_Y_BAYWATCH_01_BLACK_FULL_01"); //F33860E9"); //4080558313"); //ThemVoices.Add("214408983
+            ThemVoices.Add("S_F_Y_BAYWATCH_01_BLACK_FULL_02"); //880F0A98"); //2282687128"); //ThemVoices.Add("2012280168
+            ThemVoices.Add("S_F_Y_BAYWATCH_01_WHITE_FULL_01"); //26DECE02"); //652135938"); //652135938
+            ThemVoices.Add("S_F_Y_BAYWATCH_01_WHITE_FULL_02"); //35226A89"); //891447945"); //891447945
+            ThemVoices.Add("S_F_Y_Cop_01_BLACK_FULL_01"); //EFB0FA91"); //4021353105"); //ThemVoices.Add("273614191
+            ThemVoices.Add("S_F_Y_COP_01_BLACK_FULL_02"); //62A6E07B"); //1655103611"); //1655103611
+            ThemVoices.Add("S_F_Y_COP_01_WHITE_FULL_01"); //EB73C44F"); //3950232655"); //ThemVoices.Add("344734641
+            ThemVoices.Add("S_F_Y_COP_01_WHITE_FULL_02"); //F9C560F2"); //4190462194"); //ThemVoices.Add("104505102
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_BLACK_MINI_01"); //44ACE464"); //1152181348"); //1152181348
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_BLACK_MINI_02"); //3707C91A"); //923257114"); //923257114
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_01"); //A135DE73"); //2704662131"); //ThemVoices.Add("1590305165
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_02"); //CF08BA18"); //3473455640"); //ThemVoices.Add("821511656
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_03"); //BC269454"); //3156644948"); //ThemVoices.Add("1138322348
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_04"); //EB8E7323"); //3951981347"); //ThemVoices.Add("342985949
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_WHITE_MINI_01"); //E5EAA67A"); //3857360506"); //ThemVoices.Add("437606790
+            ThemVoices.Add("S_F_Y_GENERICCHEAPWORKER_01_WHITE_MINI_02"); //39B64E08"); //968248840"); //968248840
+            ThemVoices.Add("S_F_Y_HOOKER_01_WHITE_FULL_01"); //18B73C7E"); //414661758"); //414661758
+            ThemVoices.Add("S_F_Y_HOOKER_01_WHITE_FULL_02"); //66F658FB"); //1727420667"); //1727420667
+            ThemVoices.Add("S_F_Y_HOOKER_01_WHITE_FULL_03"); //75E576D9"); //1977972441"); //1977972441
+            ThemVoices.Add("S_F_Y_HOOKER_02_WHITE_FULL_01"); //77BE674B"); //2008966987"); //2008966987
+            ThemVoices.Add("S_F_Y_HOOKER_02_WHITE_FULL_02"); //09978AFF"); //160926463"); //160926463
+            ThemVoices.Add("S_F_Y_HOOKER_02_WHITE_FULL_03"); //1B382E40"); //456666688"); //456666688
+            ThemVoices.Add("S_F_Y_HOOKER_03_BLACK_FULL_01"); //875814D6"); //2270696662"); //ThemVoices.Add("2024270634
+            ThemVoices.Add("S_F_Y_HOOKER_03_BLACK_FULL_03"); //129DAB5F"); //312322911"); //312322911
+            ThemVoices.Add("S_F_Y_PECKER_01_WHITE_01"); //6B019062"); //1795264610"); //1795264610
+            ThemVoices.Add("S_F_Y_RANGER_01_WHITE_MINI_01"); //47A85382"); //1202213762"); //1202213762
+            ThemVoices.Add("S_F_Y_SHOP_LOW_WHITE_MINI_01"); //ED77E493"); //3984057491"); //ThemVoices.Add("310909805
+            ThemVoices.Add("S_F_Y_SHOP_MID_WHITE_MINI_01"); //77B47F14"); //2008317716"); //2008317716
+            ThemVoices.Add("S_M_M_AMMUCOUNTRY_01_WHITE_01"); //14AE106F"); //346951791"); //346951791
+            ThemVoices.Add("S_M_M_AMMUCOUNTRY_WHITE_MINI_01"); //B6A5CF41"); //3064319809"); //ThemVoices.Add("1230647487
+            ThemVoices.Add("S_M_M_AUTOSHOP_01_WHITE_01"); //B97E410A"); //3112059146"); //ThemVoices.Add("1182908150
+            ThemVoices.Add("S_M_M_BOUNCER_01_BLACK_FULL_01"); //5CF368B8"); //1559455928"); //1559455928
+            ThemVoices.Add("S_M_M_BOUNCER_01_LATINO_FULL_01"); //57B91BD3"); //1471749075"); //1471749075
+            ThemVoices.Add("S_M_M_BOUNCER_LATINO_FULL_01"); //66E1CE62"); //1726074466"); //1726074466
+            ThemVoices.Add("S_M_M_CIASEC_01_BLACK_MINI_01"); //797CD9E6"); //2038225382"); //2038225382
+            ThemVoices.Add("S_M_M_CIASEC_01_BLACK_MINI_02"); //F6AED44C"); //4138652748"); //ThemVoices.Add("156314548
+            ThemVoices.Add("S_M_M_CIASEC_01_WHITE_MINI_01"); //7DB88D9D"); //2109246877"); //2109246877
+            ThemVoices.Add("S_M_M_CIASEC_01_WHITE_MINI_02"); //AF77F11B"); //2943873307"); //ThemVoices.Add("1351093989
+            ThemVoices.Add("S_M_M_FIBOFFICE_01_BLACK_MINI_01"); //DEA5CD64"); //3735407972"); //ThemVoices.Add("559559324
+            ThemVoices.Add("S_M_M_FIBOFFICE_01_BLACK_MINI_02"); //F0C0F19A"); //4039176602"); //ThemVoices.Add("255790694
+            ThemVoices.Add("S_M_M_FIBOFFICE_01_LATINO_MINI_01"); //655117C7"); //1699813319"); //1699813319
+            ThemVoices.Add("S_M_M_FIBOFFICE_01_LATINO_MINI_02"); //938DF440"); //2475553856"); //ThemVoices.Add("1819413440
+            ThemVoices.Add("S_M_M_FIBOFFICE_01_WHITE_MINI_01"); //0AC9249C"); //180954268"); //180954268
+            ThemVoices.Add("S_M_M_FIBOFFICE_01_WHITE_MINI_02"); //FE040B12"); //4261677842"); //ThemVoices.Add("33289454
+            ThemVoices.Add("S_M_M_GENERICCHEAPWORKER_01_LATINO_MINI_01"); //90328A79"); //2419231353"); //ThemVoices.Add("1875735943
+            ThemVoices.Add("S_M_M_GENERICCHEAPWORKER_01_LATINO_MINI_02"); //D9249C5C"); //3643055196"); //ThemVoices.Add("651912100
+            ThemVoices.Add("S_M_M_GENERICCHEAPWORKER_01_LATINO_MINI_03"); //EBDDC1CE"); //3957178830"); //ThemVoices.Add("337788466
+            ThemVoices.Add("S_M_M_GENERICCHEAPWORKER_01_LATINO_MINI_04"); //635D30CB"); //1667051723"); //1667051723
+            ThemVoices.Add("S_M_M_GENERICMARINE_01_LATINO_MINI_01"); //24A78E34"); //614960692"); //614960692
+            ThemVoices.Add("S_M_M_GENERICMARINE_01_LATINO_MINI_02"); //8F6E63C0"); //2406376384"); //ThemVoices.Add("1888590912
+            ThemVoices.Add("S_M_M_GENERICMECHANIC_01_BLACK_MINI_01"); //229CDFDF"); //580706271"); //580706271
+            ThemVoices.Add("S_M_M_GENERICMECHANIC_01_BLACK_MINI_02"); //09392D18"); //154742040"); //154742040
+            ThemVoices.Add("S_M_M_GENERICPOSTWORKER_01_BLACK_MINI_01"); //10C0CBFD"); //281070589"); //281070589
+            ThemVoices.Add("S_M_M_GENERICPOSTWORKER_01_BLACK_MINI_02"); //FC16A2A9"); //4229341865"); //ThemVoices.Add("65625431
+            ThemVoices.Add("S_M_M_GENERICPOSTWORKER_01_WHITE_MINI_01"); //D2C75726"); //3536279334"); //ThemVoices.Add("758687962
+            ThemVoices.Add("S_M_M_GENERICPOSTWORKER_01_WHITE_MINI_02"); //DC906AB8"); //3700452024"); //ThemVoices.Add("594515272
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_BLACK_MINI_01"); //3D1D46D3"); //1025328851"); //1025328851
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_BLACK_MINI_02"); //565A794D"); //1448769869"); //1448769869
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_BLACK_MINI_03"); //9162EF15"); //2439180053"); //ThemVoices.Add("1855787243
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_LATINO_MINI_01"); //B5910C1D"); //3046181917"); //ThemVoices.Add("1248785379
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_LATINO_MINI_02"); //97D1D09F"); //2547110047"); //ThemVoices.Add("1747857249
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_WHITE_MINI_01"); //5D4BE0A9"); //1565253801"); //1565253801
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_WHITE_MINI_02"); //4FE145D4"); //1340163540"); //1340163540
+            ThemVoices.Add("S_M_M_GENERICSECURITY_01_WHITE_MINI_03"); //66DDF3D9"); //1725821913"); //1725821913
+            ThemVoices.Add("S_M_M_HAIRDRESSER_01_BLACK_MINI_01"); //594BCB86"); //1498139526"); //1498139526
+            ThemVoices.Add("S_M_M_HAIRDRESS_01_BLACK_01"); //7E2CBE66"); //2116861542"); //2116861542
+            ThemVoices.Add("S_M_M_PARAMEDIC_01_BLACK_MINI_01"); //1DE649B3"); //501631411"); //501631411
+            ThemVoices.Add("S_M_M_PARAMEDIC_01_LATINO_MINI_01"); //43261273"); //1126568563"); //1126568563
+            ThemVoices.Add("S_M_M_PARAMEDIC_01_WHITE_MINI_01"); //54925FD6"); //1418878934"); //1418878934
+            ThemVoices.Add("S_M_M_PILOT_01_BLACK_FULL_01"); //3DAC41B0"); //1034699184"); //1034699184
+            ThemVoices.Add("S_M_M_PILOT_01_BLACK_FULL_02"); //4F73E53F"); //1332995391"); //1332995391
+            ThemVoices.Add("S_M_M_PILOT_01_WHITE_FULL_01"); //BC0F504A"); //3155120202"); //ThemVoices.Add("1139847094
+            ThemVoices.Add("S_M_M_PILOT_01_WHITE_FULL_02"); //A9A32B72"); //2846042994"); //ThemVoices.Add("1448924302
+            ThemVoices.Add("S_M_M_TRUCKER_01_BLACK_FULL_01"); //D940A3BC"); //3644892092"); //ThemVoices.Add("650075204
+            ThemVoices.Add("S_M_M_TRUCKER_01_WHITE_FULL_01"); //3CA3269A"); //1017325210"); //1017325210
+            ThemVoices.Add("S_M_M_TRUCKER_01_WHITE_FULL_02"); //0B4743DF"); //189219807"); //189219807
+            ThemVoices.Add("S_M_Y_AIRWORKER_BLACK_FULL_01"); //90ECCFDC"); //2431438812"); //ThemVoices.Add("1863528484
+            ThemVoices.Add("S_M_Y_AIRWORKER_BLACK_FULL_02"); //9EAF6B61"); //2662296417"); //ThemVoices.Add("1632670879
+            ThemVoices.Add("S_M_Y_AIRWORKER_LATINO_FULL_01"); //0D981AB3"); //228072115"); //228072115
+            ThemVoices.Add("S_M_Y_AIRWORKER_LATINO_FULL_02"); //234F4621"); //592397857"); //592397857
+            ThemVoices.Add("S_M_Y_AMMUCITY_01_WHITE_01"); //5C7526F0"); //1551181552"); //1551181552
+            ThemVoices.Add("S_M_Y_AMMUCITY_01_WHITE_MINI_01"); //20C18390"); //549553040"); //549553040
+            ThemVoices.Add("S_M_Y_BAYWATCH_01_BLACK_FULL_01"); //CD79387C"); //3447273596"); //ThemVoices.Add("847693700
+            ThemVoices.Add("S_M_Y_BAYWATCH_01_BLACK_FULL_02"); //E32263CE"); //3810681806"); //ThemVoices.Add("484285490
+            ThemVoices.Add("S_M_Y_BAYWATCH_01_WHITE_FULL_01"); //BAB6D724"); //3132544804"); //ThemVoices.Add("1162422492
+            ThemVoices.Add("S_M_Y_BAYWATCH_01_WHITE_FULL_02"); //1EA89F06"); //514367238"); //514367238
+            ThemVoices.Add("S_M_Y_BLACKOPS_01_BLACK_MINI_01"); //BBE7E188"); //3152535944"); //ThemVoices.Add("1142431352
+            ThemVoices.Add("S_M_Y_BLACKOPS_01_BLACK_MINI_02"); //DDB7A52B"); //3719800107"); //ThemVoices.Add("575167189
+            ThemVoices.Add("S_M_Y_BLACKOPS_01_WHITE_MINI_01"); //65B98207"); //1706656263"); //1706656263
+            ThemVoices.Add("S_M_Y_BLACKOPS_01_WHITE_MINI_02"); //D7FFE692"); //3623872146"); //ThemVoices.Add("671095150
+            ThemVoices.Add("S_M_Y_BLACKOPS_02_LATINO_MINI_01"); //4214AE9E"); //1108651678"); //1108651678
+            ThemVoices.Add("S_M_Y_BLACKOPS_02_LATINO_MINI_02"); //13E2520A"); //333599242"); //333599242
+            ThemVoices.Add("S_M_Y_BLACKOPS_02_WHITE_MINI_01"); //C3A6E830"); //3282495536"); //ThemVoices.Add("1012471760
+            ThemVoices.Add("S_M_Y_BUSBOY_01_WHITE_MINI_01"); //C847EAA9"); //3360156329"); //ThemVoices.Add("934810967
+            ThemVoices.Add("S_M_Y_COP_01_BLACK_FULL_01"); //DD72FE87"); //3715300999"); //ThemVoices.Add("579666297
+            ThemVoices.Add("S_M_Y_COP_01_BLACK_FULL_02"); //C7B3D309"); //3350450953"); //ThemVoices.Add("944516343
+            ThemVoices.Add("S_M_Y_COP_01_BLACK_MINI_01"); //EF2409AE"); //4012116398"); //ThemVoices.Add("282850898
+            ThemVoices.Add("S_M_Y_COP_01_BLACK_MINI_02"); //00CDAD01"); //13479169"); //13479169
+            ThemVoices.Add("S_M_Y_COP_01_BLACK_MINI_03"); //4A804065"); //1249919077"); //1249919077
+            ThemVoices.Add("S_M_Y_COP_01_BLACK_MINI_04"); //5C34E3CE"); //1546970062"); //1546970062
+            ThemVoices.Add("S_M_Y_COP_01_WHITE_FULL_01"); //6F38027D"); //1865941629"); //1865941629
+            ThemVoices.Add("S_M_Y_COP_01_WHITE_FULL_02"); //360C1026"); //906760230"); //906760230
+            ThemVoices.Add("S_M_Y_COP_01_WHITE_MINI_01"); //BA399207"); //3124335111"); //ThemVoices.Add("1170632185
+            ThemVoices.Add("S_M_Y_COP_01_WHITE_MINI_02"); //CBEB356A"); //3421189482"); //ThemVoices.Add("873777814
+            ThemVoices.Add("S_M_Y_COP_01_WHITE_MINI_03"); //DDB458FC"); //3719583996"); //ThemVoices.Add("575383300
+            ThemVoices.Add("S_M_Y_COP_01_WHITE_MINI_04"); //EF5EFC51"); //4015979601"); //ThemVoices.Add("278987695
+            ThemVoices.Add("S_M_Y_FIREMAN_01_LATINO_FULL_01"); //71549C50"); //1901370448"); //1901370448
+            ThemVoices.Add("S_M_Y_FIREMAN_01_LATINO_FULL_02"); //7C0BB1BE"); //2081141182"); //2081141182
+            ThemVoices.Add("S_M_Y_FIREMAN_01_WHITE_FULL_01"); //0094A96A"); //9742698"); //9742698
+            ThemVoices.Add("S_M_Y_FIREMAN_01_WHITE_FULL_02"); //80DB29FD"); //2161846781"); //ThemVoices.Add("2133120515
+            ThemVoices.Add("S_M_Y_GENERICCHEAPWORKER_01_BLACK_MINI_01"); //09FD9FD3"); //167616467"); //167616467
+            ThemVoices.Add("S_M_Y_GENERICCHEAPWORKER_01_BLACK_MINI_02"); //37D07B78"); //936409976"); //936409976
+            ThemVoices.Add("S_M_Y_GENERICCHEAPWORKER_01_WHITE_MINI_01"); //3869CBA7"); //946457511"); //946457511
+            ThemVoices.Add("S_M_Y_GENERICMARINE_01_BLACK_MINI_01"); //17F5909B"); //401969307"); //401969307
+            ThemVoices.Add("S_M_Y_GENERICMARINE_01_BLACK_MINI_02"); //0E947DD1"); //244612561"); //244612561
+            ThemVoices.Add("S_M_Y_GENERICMARINE_01_WHITE_MINI_01"); //55FDC164"); //1442693476"); //1442693476
+            ThemVoices.Add("S_M_Y_GENERICMARINE_01_WHITE_MINI_02"); //08BBA6E1"); //146515681"); //146515681
+            ThemVoices.Add("S_M_Y_GENERICWORKER_01_BLACK_MINI_01"); //0A3A301F"); //171585567"); //171585567
+            ThemVoices.Add("S_M_Y_GENERICWORKER_01_BLACK_MINI_02"); //60D0DD4B"); //1624300875"); //1624300875
+            ThemVoices.Add("S_M_Y_GENERICWORKER_01_LATINO_MINI_01"); //86640419"); //2254701593"); //ThemVoices.Add("2040265703
+            ThemVoices.Add("S_M_Y_GENERICWORKER_01_LATINO_MINI_02"); //F4AC60AC"); //4104937644"); //ThemVoices.Add("190029652
+            ThemVoices.Add("S_M_Y_GENERICWORKER_01_WHITE_01"); //129AD4A3"); //312136867"); //312136867
+            ThemVoices.Add("S_M_Y_GENERICWORKER_01_WHITE_MINI_01"); //E8727D7D"); //3899817341"); //ThemVoices.Add("395149955
+            ThemVoices.Add("S_M_Y_GENERICWORKER_01_WHITE_MINI_02"); //B23310FF"); //2989691135"); //ThemVoices.Add("1305276161
+            ThemVoices.Add("S_M_Y_HWAYCOP_01_BLACK_FULL_01"); //DC403AA7"); //3695196839"); //ThemVoices.Add("599770457
+            ThemVoices.Add("S_M_Y_HWAYCOP_01_BLACK_FULL_02"); //11AAA57B"); //296396155"); //296396155
+            ThemVoices.Add("S_M_Y_HWAYCOP_01_WHITE_FULL_01"); //F332D786"); //4080195462"); //ThemVoices.Add("214771834
+            ThemVoices.Add("S_M_Y_HWAYCOP_01_WHITE_FULL_02"); //0384F82A"); //59045930"); //59045930
+            ThemVoices.Add("S_M_Y_MCOP_01_WHITE_MINI_01"); //7A44FB56"); //2051341142"); //2051341142
+            ThemVoices.Add("S_M_Y_MCOP_01_WHITE_MINI_02"); //670ED4EA"); //1729025258"); //1729025258
+            ThemVoices.Add("S_M_Y_MCOP_01_WHITE_MINI_03"); //54D0306D"); //1422930029"); //1422930029
+            ThemVoices.Add("S_M_Y_MCOP_01_WHITE_MINI_04"); //B361ED8F"); //3009539471"); //ThemVoices.Add("1285427825
+            ThemVoices.Add("S_M_Y_MCOP_01_WHITE_MINI_05"); //0F8FA5E9"); //261072361"); //261072361
+            ThemVoices.Add("S_M_Y_MCOP_01_WHITE_MINI_06"); //FFE50694"); //4293199508"); //ThemVoices.Add("1767788
+            ThemVoices.Add("S_M_Y_RANGER_01_LATINO_FULL_01"); //94EBCA6B"); //2498480747"); //ThemVoices.Add("1796486549
+            ThemVoices.Add("S_M_Y_RANGER_01_WHITE_FULL_01"); //9723C55B"); //2535703899"); //ThemVoices.Add("1759263397
+            ThemVoices.Add("S_M_Y_SHERIFF_01_WHITE_FULL_01"); //A1C8B88A"); //2714286218"); //ThemVoices.Add("1580681078
+            ThemVoices.Add("S_M_Y_SHERIFF_01_WHITE_FULL_02"); //939F1C37"); //2476678199"); //ThemVoices.Add("1818289097
+            ThemVoices.Add("S_M_Y_SHOP_MASK_WHITE_MINI_01"); //03AAB8B0"); //61520048"); //61520048
+            ThemVoices.Add("S_M_Y_SWAT_01_WHITE_FULL_01"); //BA960340"); //3130393408"); //ThemVoices.Add("1164573888
+            ThemVoices.Add("S_M_Y_SWAT_01_WHITE_FULL_02"); //E55E58D0"); //3848165584"); //ThemVoices.Add("446801712
+            ThemVoices.Add("S_M_Y_SWAT_01_WHITE_FULL_03"); //F324745C"); //4079252572"); //ThemVoices.Add("215714724
+            ThemVoices.Add("S_M_Y_SWAT_01_WHITE_FULL_04"); //0236127F"); //37098111"); //37098111
+            ThemVoices.Add("TALINA"); //ED031790"); //3976402832"); //ThemVoices.Add("318564464
+            ThemVoices.Add("TAXIALONZO"); //A0B07846"); //2695919686"); //ThemVoices.Add("1599047610
+            ThemVoices.Add("TAXIBRUCE"); //1E0A9C18"); //504011800"); //504011800
+            ThemVoices.Add("TAXICLYDE"); //90992C60"); //2425957472"); //ThemVoices.Add("1869009824
+            ThemVoices.Add("TAXIDARREN"); //2C1A5202"); //739922434"); //739922434
+            ThemVoices.Add("TAXIDERRICK"); //2D71435C"); //762397532"); //762397532
+            ThemVoices.Add("TAXIDOM"); //9DA9FDB5"); //2645163445"); //ThemVoices.Add("1649803851
+            ThemVoices.Add("TAXIFELIPE"); //E66D1B66"); //3865910118"); //ThemVoices.Add("429057178
+            ThemVoices.Add("TAXIGANGGIRL1"); //E2228087"); //3793911943"); //ThemVoices.Add("501055353
+            ThemVoices.Add("TAXIGANGGIRL2"); //F7E3AC09"); //4158893065"); //ThemVoices.Add("136074231
+            ThemVoices.Add("TAXIGANGM"); //08AC318A"); //145502602"); //145502602
+            ThemVoices.Add("TAXIJAMES"); //A8A8F64E"); //2829645390"); //ThemVoices.Add("1465321906
+            ThemVoices.Add("TAXIKEYLA"); //23ACB127"); //598520103"); //598520103
+            ThemVoices.Add("TAXIKWAK"); //58B68A9D"); //1488358045"); //1488358045
+            ThemVoices.Add("TAXILIZ"); //C8B6AC99"); //3367414937"); //ThemVoices.Add("927552359
+            ThemVoices.Add("TAXIMIRANDA"); //97A199A8"); //2543950248"); //ThemVoices.Add("1751017048
+            ThemVoices.Add("TAXIOJCOP1"); //5883C603"); //1485030915"); //1485030915
+            ThemVoices.Add("TAXIOTIS"); //A0B868F9"); //2696440057"); //ThemVoices.Add("1598527239
+            ThemVoices.Add("TAXIPAULIE"); //05437D58"); //88309080"); //88309080
+            ThemVoices.Add("TAXIWALTER"); //1A43E0E1"); //440656097"); //440656097
+            ThemVoices.Add("TEST_VOICE"); //62883B8C"); //1653095308"); //1653095308
+            ThemVoices.Add("TOM"); //97CBE769"); //2546722665"); //ThemVoices.Add("1748244631
+            ThemVoices.Add("TONYA"); //FCB43161"); //4239667553"); //ThemVoices.Add("55299743
+            ThemVoices.Add("TRACEY"); //5A7D2459"); //1518150745"); //1518150745
+            ThemVoices.Add("TRANSLATOR"); //EAC3FECB"); //3938713291"); //ThemVoices.Add("356254005
+            ThemVoices.Add("TREVOR_1_NORMAL"); //3AD6D338"); //987157304"); //987157304
+            ThemVoices.Add("TREVOR_2_NORMAL"); //CB2DDB29"); //3408780073"); //ThemVoices.Add("886187223
+            ThemVoices.Add("TREVOR_3_NORMAL"); //4697A021"); //1184342049"); //1184342049
+            ThemVoices.Add("TREVOR_ANGRY"); //0953FCF8"); //156499192"); //156499192
+            ThemVoices.Add("TREVOR_DRUNK"); //EA0CA87A"); //3926698106"); //ThemVoices.Add("368269190
+            ThemVoices.Add("TREVOR_NORMAL"); //4072CC77"); //1081265271"); //1081265271
+            ThemVoices.Add("U_M_Y_TATTOO_01_WHITE_MINI_01"); //956C178D"); //2506889101"); //ThemVoices.Add("1788078195
+            ThemVoices.Add("VB_FEMALE_01"); //CB2136C8"); //3407951560"); //ThemVoices.Add("887015736
+            ThemVoices.Add("VB_FEMALE_02"); //E4EA6A5A"); //3840567898"); //ThemVoices.Add("454399398
+            ThemVoices.Add("VB_FEMALE_03"); //B1510330"); //2974876464"); //ThemVoices.Add("1320090832
+            ThemVoices.Add("VB_FEMALE_04"); //C397A7BD"); //3281495997"); //ThemVoices.Add("1013471299
+            ThemVoices.Add("VB_LIFEGUARD_01"); //6B6161EE"); //1801544174"); //1801544174
+            ThemVoices.Add("VB_MALE_01"); //AC519660"); //2891028064"); //ThemVoices.Add("1403939232
+            ThemVoices.Add("VB_MALE_02"); //B5E5A988"); //3051727240"); //ThemVoices.Add("1243240056
+            ThemVoices.Add("VB_MALE_03"); //3A03B192"); //973320594"); //973320594
+            ThemVoices.Add("VULTURES"); //18219991"); //404855185"); //404855185
+            ThemVoices.Add("WADE"); //7DD049A4"); //2110802340"); //2110802340
+            ThemVoices.Add("WAVELOAD_PAIN_FEMALE"); //332128AB"); //857811115"); //857811115
+            ThemVoices.Add("WAVELOAD_PAIN_FRANKLIN"); //33F65FC3"); //871784387"); //871784387
+            ThemVoices.Add("WAVELOAD_PAIN_MALE"); //804C18BB"); //2152470715"); //ThemVoices.Add("2142496581
+            ThemVoices.Add("WAVELOAD_PAIN_MICHAEL"); //6531A692"); //1697752722"); //1697752722
+            ThemVoices.Add("WAVELOAD_PAIN_TREVOR"); //0CF83E9F"); //217595551"); //217595551
+            ThemVoices.Add("WFSTEWARDESS"); //84EDE1BF"); //2230182335"); //ThemVoices.Add("2064784961
+            ThemVoices.Add("WHISTLINGJANITOR"); //168D3E8E"); //378355342"); //378355342
+            ThemVoices.Add("YACHTCAPTAIN"); //71C9A806"); //1909041158"); //1909041158
+            ThemVoices.Add("ZOMBIE"); //22666A99"); //577137305"); //577137305
+        }
         private void SeatList()
         {
             Vseats.Clear();
@@ -717,164 +1747,6 @@ namespace RandomStart
             Vseats.Add(VehicleSeat.ExtraSeat10);
             Vseats.Add(VehicleSeat.ExtraSeat11);
             Vseats.Add(VehicleSeat.ExtraSeat12);
-        }
-        private void NamesList()
-        {
-            sNameFem.Clear();
-            sNameMal.Clear();
-            sNameSir.Clear();
-            sNameFem.Add("Cherry");
-            sNameFem.Add("Delora");
-            sNameFem.Add("Angelic");
-            sNameFem.Add("Jerica");
-            sNameFem.Add("Dianne");
-            sNameFem.Add("Nikia");
-            sNameFem.Add("Fay");
-            sNameFem.Add("Lasonya");
-            sNameFem.Add("Camille");
-            sNameFem.Add("Kiara");
-            sNameFem.Add("Margene");
-            sNameFem.Add("Nery");
-            sNameFem.Add("Robbi");
-            sNameFem.Add("Charla");
-            sNameFem.Add("Rina");
-            sNameFem.Add("Crystle");
-            sNameFem.Add("Kandi");
-            sNameFem.Add("Jonelle");
-            sNameFem.Add("Terese");
-            sNameFem.Add("Obdulia");
-            sNameFem.Add("Maricela");
-            sNameFem.Add("Jacquie");
-            sNameFem.Add("Davine");
-            sNameFem.Add("Minna");
-            sNameFem.Add("Brianne");
-            sNameFem.Add("Pinkie");
-            sNameFem.Add("Rosalina");
-            sNameFem.Add("Nadene");
-            sNameFem.Add("Loida");
-            sNameFem.Add("Kristal");
-            sNameFem.Add("Ramonita");
-            sNameFem.Add("Ula");
-            sNameFem.Add("Windy");
-            sNameFem.Add("Zulema");
-            sNameFem.Add("Marci");
-            sNameFem.Add("Sabra");
-            sNameFem.Add("Kyong");
-            sNameFem.Add("Johnsie");
-            sNameFem.Add("Digna");
-            sNameFem.Add("Hattie");
-            sNameFem.Add("Shirly");
-            sNameFem.Add("Winifred");
-            sNameFem.Add("Magen");
-            sNameFem.Add("Cammy");
-            sNameFem.Add("Sherill");
-            sNameFem.Add("Josephina");
-            sNameFem.Add("Chara");
-            sNameFem.Add("Suzi");
-            sNameFem.Add("Annabelle");
-            sNameFem.Add("Bronwyn");
-
-            sNameMal.Add("Werner");
-            sNameMal.Add("Wilbur");
-            sNameMal.Add("Blake");
-            sNameMal.Add("Grover");
-            sNameMal.Add("Jimmy");
-            sNameMal.Add("Jamison");
-            sNameMal.Add("Josiah");
-            sNameMal.Add("Miquel");
-            sNameMal.Add("Rupert");
-            sNameMal.Add("Christoper");
-            sNameMal.Add("Alphonso");
-            sNameMal.Add("Malik");
-            sNameMal.Add("Korey");
-            sNameMal.Add("Jess");
-            sNameMal.Add("Dewitt");
-            sNameMal.Add("Marquis");
-            sNameMal.Add("Mckinley");
-            sNameMal.Add("Deshawn");
-            sNameMal.Add("Thaddeus");
-            sNameMal.Add("Colin");
-            sNameMal.Add("Chester");
-            sNameMal.Add("Jeremiah");
-            sNameMal.Add("Casey");
-            sNameMal.Add("Ray");
-            sNameMal.Add("Tyron");
-            sNameMal.Add("Darron");
-            sNameMal.Add("Sylvester");
-            sNameMal.Add("Joshua");
-            sNameMal.Add("Lenard");
-            sNameMal.Add("Leon");
-            sNameMal.Add("Son");
-            sNameMal.Add("Willis");
-            sNameMal.Add("Thurman");
-            sNameMal.Add("Noah");
-            sNameMal.Add("Josh");
-            sNameMal.Add("Sherwood");
-            sNameMal.Add("Trey");
-            sNameMal.Add("Parker");
-            sNameMal.Add("Adalberto");
-            sNameMal.Add("Benton");
-            sNameMal.Add("Harlan");
-            sNameMal.Add("Santos");
-            sNameMal.Add("Abraham");
-            sNameMal.Add("Moshe");
-            sNameMal.Add("Vaughn");
-            sNameMal.Add("Quincy");
-            sNameMal.Add("Titus");
-            sNameMal.Add("Gino");
-            sNameMal.Add("Earle");
-            sNameMal.Add("Alfonso");
-
-            sNameSir.Add("Agee");
-            sNameSir.Add("Hillyer");
-            sNameSir.Add("Elie");
-            sNameSir.Add("Morrow");
-            sNameSir.Add("Wulff");
-            sNameSir.Add("Pollan");
-            sNameSir.Add("Zieman");
-            sNameSir.Add("Welborn");
-            sNameSir.Add("Ikeda");
-            sNameSir.Add("Mclead");
-            sNameSir.Add("Delmonte");
-            sNameSir.Add("Eble");
-            sNameSir.Add("Beitz");
-            sNameSir.Add("Northup");
-            sNameSir.Add("Wren");
-            sNameSir.Add("Therrien");
-            sNameSir.Add("Chitty");
-            sNameSir.Add("Bungard");
-            sNameSir.Add("Perrella");
-            sNameSir.Add("Roselli");
-            sNameSir.Add("Million");
-            sNameSir.Add("Winder");
-            sNameSir.Add("Jaynes");
-            sNameSir.Add("Smalling");
-            sNameSir.Add("Vito");
-            sNameSir.Add("Sabbagh");
-            sNameSir.Add("Patenaude");
-            sNameSir.Add("Hepburn");
-            sNameSir.Add("Lally");
-            sNameSir.Add("Fenster");
-            sNameSir.Add("Carlen");
-            sNameSir.Add("Perri");
-            sNameSir.Add("Doepke");
-            sNameSir.Add("Livengood");
-            sNameSir.Add("Micheal");
-            sNameSir.Add("Vanderburg");
-            sNameSir.Add("Ringwood");
-            sNameSir.Add("Semon");
-            sNameSir.Add("Kauffman");
-            sNameSir.Add("Frost");
-            sNameSir.Add("Simerly");
-            sNameSir.Add("Holbrook");
-            sNameSir.Add("Waechter");
-            sNameSir.Add("Bergstrom");
-            sNameSir.Add("Brisker");
-            sNameSir.Add("Orwig");
-            sNameSir.Add("Gullatt");
-            sNameSir.Add("Keifer");
-            sNameSir.Add("Rozman");
-            sNameSir.Add("Munger");
         }
         private void WeapsList()
         {
@@ -901,17 +1773,17 @@ namespace RandomStart
             sWeapList.Add("WEAPON_stone_hatchet");  //0x3813FC08"--17
 
             sWeapList.Add("WEAPON_pistol");  //0x1B06D571",
-            sWeapList.Add("WEAPON_pistol_mk2");  //0xBFE256D4",
+            sWeapList.Add("WEAPON_pistol_mk2");  //0xBFE256D4",---------19
             sWeapList.Add("WEAPON_combatpistol");  //0x5EF9FEC4",
             sWeapList.Add("WEAPON_appistol");  //0x22D8FE39",
             sWeapList.Add("WEAPON_pistol50");  //0x99AEEB3B",
             sWeapList.Add("WEAPON_snspistol");  //0xBFD21232",
-            sWeapList.Add("WEAPON_snspistol_mk2");  //0x88374054",
+            sWeapList.Add("WEAPON_snspistol_mk2");  //0x88374054",---24
             sWeapList.Add("WEAPON_heavypistol");  //0xD205520E",
             sWeapList.Add("WEAPON_vintagepistol");  //0x83839C4",
             sWeapList.Add("WEAPON_marksmanpistol");  //0xDC4DB296",
             sWeapList.Add("WEAPON_revolver");  //0xC1B3C3D1",
-            sWeapList.Add("WEAPON_revolver_mk2");  //0xCB96392F",
+            sWeapList.Add("WEAPON_revolver_mk2");  //0xCB96392F",----29
             sWeapList.Add("WEAPON_doubleaction");  //0x97EA20B8",
             sWeapList.Add("WEAPON_ceramicpistol");  //0x2B5EF5EC",
             sWeapList.Add("WEAPON_navyrevolver");  //0x917F6C8C"
@@ -922,7 +1794,7 @@ namespace RandomStart
 
             sWeapList.Add("WEAPON_microsmg");  //0x13532244",
             sWeapList.Add("WEAPON_smg");  //0x2BE6766B",
-            sWeapList.Add("WEAPON_smg_mk2");  //0x78A97CD0",
+            sWeapList.Add("WEAPON_smg_mk2");  //0x78A97CD0",-----39
             sWeapList.Add("WEAPON_assaultsmg");  //0xEFE7E2DF",
             sWeapList.Add("WEAPON_combatpdw");  //0xA3D4D34",
             sWeapList.Add("WEAPON_machinepistol");  //0xDB1AA450",
@@ -930,7 +1802,7 @@ namespace RandomStart
             sWeapList.Add("WEAPON_raycarbine");  //0x476BF155"--44
 
             sWeapList.Add("WEAPON_pumpshotgun");  //0x1D073A89",
-            sWeapList.Add("WEAPON_pumpshotgun_mk2");  //0x555AF99A",
+            sWeapList.Add("WEAPON_pumpshotgun_mk2");  //0x555AF99A",-----------46
             sWeapList.Add("WEAPON_sawnoffshotgun");  //0x7846A318",
             sWeapList.Add("WEAPON_assaultshotgun");  //0xE284C527",
             sWeapList.Add("WEAPON_bullpupshotgun");  //0x9D61E50F",
@@ -941,25 +1813,25 @@ namespace RandomStart
             sWeapList.Add("WEAPON_COMBATSHOTGUN");  //0x5A96BA4--54
 
             sWeapList.Add("WEAPON_assaultrifle");  //0xBFEFFF6D",
-            sWeapList.Add("WEAPON_assaultrifle_mk2");  //0x394F415C",
+            sWeapList.Add("WEAPON_assaultrifle_mk2");  //0x394F415C",-------56
             sWeapList.Add("WEAPON_carbinerifle");  //0x83BF0278",
-            sWeapList.Add("WEAPON_carbinerifle_mk2");  //0xFAD1F1C9",
+            sWeapList.Add("WEAPON_carbinerifle_mk2");  //0xFAD1F1C9",------58
             sWeapList.Add("WEAPON_advancedrifle");  //0xAF113F99",
             sWeapList.Add("WEAPON_specialcarbine");  //0xC0A3098D",
-            sWeapList.Add("WEAPON_specialcarbine_mk2");  //0x969C3D67",
+            sWeapList.Add("WEAPON_specialcarbine_mk2");  //0x969C3D67",------61
             sWeapList.Add("WEAPON_bullpuprifle");  //0x7F229F94",
-            sWeapList.Add("WEAPON_bullpuprifle_mk2");  //0x84D6FAFD",
-            sWeapList.Add("WEAPON_compactrifle");  //0x624FE830"--63
-            sWeapList.Add("WEAPON_MILITARYRIFLE");  //0x624FE830"--64
+            sWeapList.Add("WEAPON_bullpuprifle_mk2");  //0x84D6FAFD",----63
+            sWeapList.Add("WEAPON_compactrifle");  //0x624FE830"--64
+            sWeapList.Add("WEAPON_MILITARYRIFLE");  //0x624FE830"--65
 
             sWeapList.Add("WEAPON_mg");  //0x9D07F764",
             sWeapList.Add("WEAPON_combatmg");  //0x7FD62962",
-            sWeapList.Add("WEAPON_combatmg_mk2");  //0xDBBD7280",
+            sWeapList.Add("WEAPON_combatmg_mk2");  //0xDBBD7280",------68
             sWeapList.Add("WEAPON_gusenberg");  //0x61012683"--69
 
             sWeapList.Add("WEAPON_sniperrifle");  //0x5FC3C11",
             sWeapList.Add("WEAPON_heavysniper");  //0xC472FE2",
-            sWeapList.Add("WEAPON_heavysniper_mk2");  //0xA914799",
+            sWeapList.Add("WEAPON_heavysniper_mk2");  //0xA914799",---72
             sWeapList.Add("WEAPON_marksmanrifle");  //0xC734385A",
             sWeapList.Add("WEAPON_marksmanrifle_mk2");  //0x6A6C02E0"--74
 
@@ -1463,9 +2335,13 @@ namespace RandomStart
                 if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), false))
                 {
                     iPlayWep.Add(i);
-                    int iAmmos = Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]));
+                    int iAmmos = 0;
+
+                    iAmmos = Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]));
                     if (iAmmos < 1)
                         iAmmos = 1;
+
+
                     iAmmoLs.Add(iAmmos);
 
                     for (int ii = 0; ii < sAddsList.Count; ii++)
@@ -1473,6 +2349,8 @@ namespace RandomStart
                         if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON_COMPONENT, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), Function.Call<int>(Hash.GET_HASH_KEY, sAddsList[ii])))
                             sPlayerAddsList.Add(sAddsList[ii]);
                     }
+
+                    ///if (i == 19 || i == 24 || i == 74 || i == 72 || i == 68 || i == 63 || i == 61 || i == 58 || i == 56 || i == 46 || i == 39 || i == 29)--Mk2Weapps
                 }
             }
             WriteSetXML();
@@ -1480,10 +2358,11 @@ namespace RandomStart
         public int MaxAmmo(string sWeap, Ped Peddy)
         {         
             int iAmmo = 0;
+            int iWeap = Function.Call<int>(Hash.GET_HASH_KEY, sWeap);
 
             unsafe
             {
-                Function.Call<bool>(Hash.GET_MAX_AMMO, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), &iAmmo);
+                Function.Call<bool>(Hash.GET_MAX_AMMO, Peddy.Handle, iWeap, &iAmmo);
             }
             return iAmmo;
         }
@@ -1502,8 +2381,6 @@ namespace RandomStart
             World.SetRelationshipBetweenGroups(Relationship.Hate, FriendlyNPCs, AttackingNPCs);
 
             UI.Notify("Random Start " + sVersion + " by Adopcalipt Loaded");
-
-            UI.Notify(sLangfile[0]);
 
             if (File.Exists("" + Directory.GetCurrentDirectory() + "/Menyoo.asi"))
             {
@@ -1551,10 +2428,12 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("LoadUp", tEx);
 
+            PedPools();
             FindaLang();
             WeatherList();
+            IHearVoices();
             SeatList();
-            NamesList();
+            GetNames();
             WeapsList();
             LoadupWeaponXML();
             NSPMComXml();
@@ -1570,8 +2449,7 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("StartTheMod, iSelects == " + iSelects + ", bLoading == " + bLoading, tEx);
 
-            List<string> sPeds = PedPool();
-            if (sPeds.Count == 0)
+            if (MyPedCollection.Count == 1)
             {
                 bSavedPed = false;
                 WriteSetXML();
@@ -4983,11 +5861,6 @@ namespace RandomStart
                     else
                         PedWeapons(Game.Player.Character, iWeapons);
                 }
-
-                if (Game.Player.Character.Gender == Gender.Male)
-                    sFirstName = sNameMal[RandInt(0, sNameMal.Count() - 1)];
-                else
-                    sFirstName = sNameFem[RandInt(0, sNameFem.Count() - 1)];
             }
 
             if (iAction > 0)
@@ -6785,50 +7658,20 @@ namespace RandomStart
                     ReturnWeaps();
             }
         }
-        public List<string> PedPool()
-        {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PedPool", tEx);
-
-            string sNamez = "SP";
-            List<string> sWardrobe = new List<string>();
-
-            string[] sWrite = Directory.GetFiles("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/");
-            for (int i = 0; i < sWrite.Count(); i++)
-            {
-                string sting = sWrite[i];
-                if (sting.Contains(sNamez))
-                {
-                    int iNum = sting.LastIndexOf("/") + 1;
-                    sWardrobe.Add(sting.Substring(iNum));
-                }
-            }
-            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavePed.Xml"))
-                sWardrobe.Add("SavePed.Xml");
-
-            return sWardrobe;
-        }
         private void YourSavedPed()
         {
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("YourSavedPed", tEx);
 
-            List<string> sMyPeds = PedPool();
-
-            if (sMyPeds.Count > 0)
-            {
-                if (sMyPeds.Count > 1)
-                    SavePedLoader(sMyPeds[RandInt(0, sMyPeds.Count -1)]);
-                else
-                    SavePedLoader(sMyPeds[0]);
-            }
+            if (MyPedCollection.Count > 1)
+                SavePedLoader(MyPedCollection[RandInt(1, MyPedCollection.Count - 1)]);
             else
                 bSavedPed = false;
         }
-        private void SavePedLoader(string sFile)
+        private void SavePedLoader(NewClothBank MyWoven)
         {
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SavePedLoader, sFile == " + sFile, tEx);
+                BeeLog("SavePedLoader, ", tEx);
 
             List<int> iWardrobe01 = new List<int>();
             List<int> iWardrobe02 = new List<int>();
@@ -6842,9 +7685,7 @@ namespace RandomStart
             AddTatBase.Clear();
             AddTatName.Clear();
 
-            ClothBank Cloths = LoadOutfit("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/" + sFile);
-
-            var model = new Model(Cloths.ModelX);
+            var model = new Model(MyWoven.ModelX);
             model.Request();    // Check if the model is valid
             if (model.IsInCdImage && model.IsValid)
             {
@@ -6854,43 +7695,52 @@ namespace RandomStart
                     Wait(1);
                 Game.Player.ChangeModel(model);
 
-                iWardrobe01 = Cloths.ClothA;
-                iWardrobe02 = Cloths.ClothB;
+                iWardrobe01 = MyWoven.ClothA;
+                iWardrobe02 = MyWoven.ClothB;
 
-                iWardrobe01Extra = Cloths.ExtraA;
-                iWardrobe02Extra = Cloths.ExtraB;
+                iWardrobe01Extra = MyWoven.ExtraA;
+                iWardrobe02Extra = MyWoven.ExtraB;
 
-                AddTatBase = Cloths.Tattoo_COl;
-                AddTatName = Cloths.Tattoo_Nam;
+                AddTatBase = MyWoven.Tattoo_COl;
+                AddTatName = MyWoven.Tattoo_Nam;
 
                 Function.Call(Hash.SET_MODEL_AS_NO_LONGER_NEEDED, model.Hash);
 
-                bool bFree = Cloths.FreeMode;
+                bool bFree = MyWoven.FreeMode;
 
                 if (bFree)
                 {
-                    FaceInt.Add(Cloths.XshapeFirstID);
-                    FaceInt.Add(Cloths.XshapeSecondID);
-                    FaceInt.Add(Cloths.XshapeThirdID);
-                    FaceInt.Add(Cloths.XskinFirstID);
-                    FaceInt.Add(Cloths.XskinSecondID);
-                    FaceInt.Add(Cloths.XskinThirdID);
-                    FaceFloat.Add(Cloths.XshapeMix);
-                    FaceFloat.Add(Cloths.XskinMix);
-                    FaceFloat.Add(Cloths.XthirdMix);
+                    FaceInt.Add(MyWoven.XshapeFirstID);
+                    FaceInt.Add(MyWoven.XshapeSecondID);
+                    FaceInt.Add(MyWoven.XshapeThirdID);
+                    FaceInt.Add(MyWoven.XskinFirstID);
+                    FaceInt.Add(MyWoven.XskinSecondID);
+                    FaceInt.Add(MyWoven.XskinThirdID);
+                    FaceFloat.Add(MyWoven.XshapeMix);
+                    FaceFloat.Add(MyWoven.XskinMix);
+                    FaceFloat.Add(MyWoven.XthirdMix);
 
-                    iHair01 = Cloths.HairColour;
-                    iHair02 = Cloths.HairStreaks;
-                    iEye = Cloths.EyeColour;
+                    iHair01 = MyWoven.HairColour;
+                    iHair02 = MyWoven.HairStreaks;
+                    iEye = MyWoven.EyeColour;
 
-                    iOverlay = Cloths.Overlay;
-                    iOverlayColour = Cloths.OverlayColour;
-                    fOverlayOpc = Cloths.OverlayOpc;
+                    iOverlay = MyWoven.Overlay;
+                    iOverlayColour = MyWoven.OverlayColour;
+                    fOverlayOpc = MyWoven.OverlayOpc;
+
+                    fAceFeats = MyWoven.FaceScale;
 
                     CustomFree(iWardrobe01, iWardrobe02, iWardrobe01Extra, iWardrobe02Extra, FaceInt, FaceFloat);
                 }
                 else
                     CustomRand(iWardrobe01, iWardrobe02, iWardrobe01Extra, iWardrobe02Extra);
+
+                sPedVoices = MyWoven.PedVoice;
+
+                if (sPedVoices != "")
+                    Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character, sPedVoices);
+
+                sFirstName = MyWoven.Name;
 
                 if (bKeepWeapons)
                     ReturnWeaps();
@@ -6903,33 +7753,13 @@ namespace RandomStart
 
             Ped Peddy = Game.Player.Character;
 
-            int iCloth = iWardrobe01.Count();
-            while (iCloth > 0)
-            {
-                iCloth -= 1;
-                int iDrawId = iWardrobe01[iCloth];
-                int iDrawTx = iWardrobe02[iCloth];
-                Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Peddy, iCloth, iDrawId, iDrawTx, 2);
-            }
-            int iExtra = iWardrobe01Extra.Count();
+            for (int i = 0; i < iWardrobe01.Count; i++)
+                Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Peddy, i, iWardrobe01[i], iWardrobe02[i], 2);
+
             Function.Call(Hash.CLEAR_ALL_PED_PROPS, Peddy);
-            while (iExtra > 0)
-            {
-                iExtra -= 1;
-                int iDrawId = iWardrobe01Extra[iExtra];
-                int iDrawTx = iWardrobe02Extra[iExtra];
-                Function.Call(Hash.SET_PED_PROP_INDEX, Peddy, iExtra, iDrawId, iDrawTx, false);
-            }
-            int iOver = iOverlay.Count();
-            while (iOver > 0)
-            {
-                iOver -= 1;
-                Function.Call(Hash.SET_PED_HEAD_OVERLAY, Peddy, iOver, iOverlay[iOver], fOverlayOpc[iOver]);
-                if (iOver == 1 || iOver == 2 || iOver == 10)
-                    Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy, iOver, 1, iOverlayColour[iOver], 0);
-                else if (iOver == 5 || iOver == 8)
-                    Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy, iOver, 2, iOverlayColour[iOver], 0);
-            }
+
+            for (int i = 0; i < iWardrobe01Extra.Count; i++)
+                Function.Call(Hash.SET_PED_PROP_INDEX, Peddy, i, iWardrobe01Extra[i], iWardrobe02Extra[i], false);
 
             for (int i = 0; i < AddTatBase.Count; i++)
                 Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, AddTatBase[i]), Function.Call<int>(Hash.GET_HASH_KEY, AddTatName[i]));
@@ -6938,6 +7768,20 @@ namespace RandomStart
 
             Function.Call(Hash._SET_PED_HAIR_COLOR, Peddy, iHair01, iHair02);
             Function.Call(Hash._SET_PED_EYE_COLOR, Peddy, iEye);
+
+            for (int i = 0; i < iOverlay.Count; i++)
+            {
+                Function.Call(Hash.SET_PED_HEAD_OVERLAY, Peddy, i, iOverlay[i], fOverlayOpc[i]);
+
+                if (i == 1 || i == 2 || i == 10)
+                    Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy, i, 1, iOverlayColour[i], 0);
+                else if (i == 5 || i == 8)
+                    Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy, i, 2, iOverlayColour[i], 0);
+            }
+
+            for (int i = 0; i < fAceFeats.Count; i++)
+                Function.Call(Hash._SET_PED_FACE_FEATURE, Game.Player.Character, i, fAceFeats[i]);
+
         }
         private void CustomRand(List<int> iWardrobe01, List<int> iWardrobe02, List<int> iWardrobe01Extra, List<int> iWardrobe02Extra)
         {
@@ -6946,23 +7790,13 @@ namespace RandomStart
 
             Ped Peddy = Game.Player.Character;
 
-            int iCloth = iWardrobe01.Count();
-            while (iCloth > 0)
-            {
-                iCloth = iCloth - 1;
-                int iDrawId = iWardrobe01[iCloth];
-                int iDrawTx = iWardrobe02[iCloth];
-                Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Peddy, iCloth, iDrawId, iDrawTx, 2);
-            }
-            int iExtra = iWardrobe01Extra.Count();
+            for (int i = 0; i < iWardrobe01.Count; i++)
+                Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Peddy, i, iWardrobe01[i], iWardrobe02[i], 2);
+
             Function.Call(Hash.CLEAR_ALL_PED_PROPS, Peddy);
-            while (iExtra > 0)
-            {
-                iExtra = iExtra - 1;
-                int iDrawId = iWardrobe01Extra[iExtra];
-                int iDrawTx = iWardrobe02Extra[iExtra];
-                Function.Call(Hash.SET_PED_PROP_INDEX, Peddy, iExtra, iDrawId, iDrawTx, false);
-            }
+
+            for (int i = 0; i < iWardrobe01Extra.Count; i++)
+                Function.Call(Hash.SET_PED_PROP_INDEX, Peddy, i, iWardrobe01Extra[i], iWardrobe02Extra[i], false);
 
             for (int i = 0; i < AddTatBase.Count; i++)
                 Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, AddTatBase[i]), Function.Call<int>(Hash.GET_HASH_KEY, AddTatName[i]));
@@ -7613,13 +8447,22 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("OverLayList", tEx);
 
-            int iOvers = 13;
-            while (iOvers > 0)
+
+            for (int i = 0; i < 13; i++)
             {
-                iOvers -= 1;
-                iOverlay.Add(255);
-                iOverlayColour.Add(0);
-                fOverlayOpc.Add(0.00f);
+                int iValue = Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character, i);
+                iOverlay.Add(iValue);
+                if (iValue == 255)
+                {
+                    iOverlayColour.Add(0);
+                    fOverlayOpc.Add(0.00f);
+                }
+
+                else
+                {
+                    iOverlayColour.Add(RandInt(0, 61));
+                    fOverlayOpc.Add(RandFloat(0.65f, 0.99f));
+                }
             }
         }
         private void DeathArrestCont(bool bProg)
@@ -7627,72 +8470,82 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("DeathArrestCont bProg == " + bProg, tEx);
 
-            vHeaven = World.GetNextPositionOnSidewalk(Game.Player.Character.Position);
-
-            Game.Player.Character.Position = vHeaven;
-            Game.Player.Character.IsVisible = true;
-            Game.Player.Character.HasCollision = true;
-
-            if (bDontStopMe)
+            if (Game.Player.Character.Model != PedHash.Michael && Game.Player.Character.Model != PedHash.Trevor && Game.Player.Character.Model != PedHash.Franklin)
             {
-                Game.Player.IgnoredByPolice = false;
-                Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character, true);
-                Function.Call(Has﻿h.REQUEST_SCRIPT, "restrictedareas");
-                Function.Call(Has﻿h.REQUEST_SCRIPT, "re_armybase");
-                Script.Wait(100);
+                vHeaven = World.GetNextPositionOnSidewalk(Game.Player.Character.Position);
 
-                if (bPrisHeli)
+                Game.Player.Character.Position = vHeaven;
+                Game.Player.Character.IsVisible = true;
+                Game.Player.Character.HasCollision = true;
+
+                if (bDontStopMe)
                 {
-                    bPrisHeli = false;
-                    PrisEscape.CurrentBlip.Remove();
-                    PrisEscape.MarkAsNoLongerNeeded();
+                    Game.Player.IgnoredByPolice = false;
+                    Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character, true);
+                    Function.Call(Has﻿h.REQUEST_SCRIPT, "restrictedareas");
+                    Function.Call(Has﻿h.REQUEST_SCRIPT, "re_armybase");
+                    Script.Wait(100);
+
+                    if (bPrisHeli)
+                    {
+                        bPrisHeli = false;
+                        PrisEscape.CurrentBlip.Remove();
+                        PrisEscape.MarkAsNoLongerNeeded();
+                    }
+                    bDontStopMe = false;
                 }
-                bDontStopMe = false;
-            }
 
-            if (bMenyooZZ)
-            {
-                if (bProg)
+                if (bMenyooZZ)
                 {
-                    while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
-                        Script.Wait(100);
+                    if (bProg)
+                    {
+                        while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
+                            Script.Wait(100);
 
-                    Vector3 VMep = Game.Player.Character.Position;
-                    while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
-                        Script.Wait(100);
+                        Vector3 VMep = Game.Player.Character.Position;
+                        while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
+                            Script.Wait(100);
 
-                    YourRanPed(sMainChar);
-                    ReturnWeaps();
+                        YourRanPed(sMainChar);
+                        ReturnWeaps();
 
-                    YouDied();
+                        YouDied();
+                    }
+                    else
+                    {
+                        while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
+                            Script.Wait(100);
+
+                        Vector3 VMep = Game.Player.Character.Position;
+                        while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
+                            Script.Wait(100);
+
+                        YouArrest();
+                    }
+                }
+                else if (bEnhanceT)
+                {
+                    if (!bProg)
+                        YouArrest();
                 }
                 else
                 {
-                    while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
-                        Script.Wait(100);
-
-                    Vector3 VMep = Game.Player.Character.Position;
-                    while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
-                        Script.Wait(100);
-
-                    YouArrest();
+                    if (bProg)
+                    {
+                        YourRanPed(sMainChar);
+                        ReturnWeaps();
+                        YouDied();
+                    }
+                    else
+                        YouArrest();
                 }
-            }
-            else if (bEnhanceT)
-            {
-                if (!bProg)
-                    YouArrest();
             }
             else
             {
-                if (bProg)
-                {
-                    YourRanPed(sMainChar);
-                    ReturnWeaps();
-                    YouDied();
-                }
-                else
-                    YouArrest();
+                if (bInYankton)
+                    Yankton(false);
+                else if (bInCayoPerico)
+                    CayoPerico(false);
             }
         }
         private void ClearDASCript(bool bProg)
@@ -7722,6 +8575,10 @@ namespace RandomStart
 
             bDead = true;
             DeathArrestCont(bProg);
+        }
+        private void PlayerBelter()
+        {
+            Function.Call(Hash.SET_PED_CONFIG_FLAG, Game.Player.Character, 32, !bBeltUp);
         }
         private void YouDied()
         {
@@ -7756,6 +8613,14 @@ namespace RandomStart
 
             Game.Player.Character.Position = vPlayer;
             Game.Player.Character.Heading = fPlayer;
+
+            if (sFirstName == "PlayerX")
+            {
+                if (Game.Player.Character.Gender == Gender.Male)
+                    sFirstName = sNameMal[RandInt(0, sNameMal.Count() - 1)];
+                else
+                    sFirstName = sNameFem[RandInt(0, sNameFem.Count() - 1)];
+            }
 
             int iNameSir = sNameSir.Count();
             if (iNameSir > 0)
@@ -9017,6 +9882,12 @@ namespace RandomStart
                     iMyRanInt = minNumber;
             }
             return iMyRanInt;
+        }
+        public float RandFloat(float fMin, float fMax)
+        {
+            float iMyRanFlow = Function.Call<float>(Hash.GET_RANDOM_FLOAT_IN_RANGE, fMin, fMax);
+
+            return iMyRanFlow;
         }
         public List<string> TattoosList(int iPed, int iZone)
         {
@@ -10664,6 +11535,216 @@ namespace RandomStart
 
             return MyTat;
         }
+        public class NameList
+        {
+            public List<string> MaleName { get; set; }
+            public List<string> FemaleName { get; set; }
+            public List<string> SurnName { get; set; }
+        }
+        public NameList LoadNames(string fileName)
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(NameList));
+            using (StreamReader sr = new StreamReader(fileName))
+            {
+                return (NameList)xml.Deserialize(sr);
+            }
+        }
+        public void SaveNames(NameList config, string fileName)
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(NameList));
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                xml.Serialize(sw, config);
+            }
+        }
+        private void GetNames()
+        {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("GetNames", tEx);
+
+            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml"))
+            {
+                NameList XSets = LoadNames("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml");
+
+                sNameFem = XSets.FemaleName;
+                sNameMal = XSets.MaleName;
+                sNameSir = XSets.SurnName;
+
+                if (sNameFem.Count == 0 || sNameMal.Count == 0 || sNameSir.Count == 0)
+                    NamesList();
+            }
+            else
+                NamesList();
+        }
+        private void NamesList()
+        {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("NamesList", tEx);
+
+            sNameFem.Clear();
+            sNameMal.Clear();
+            sNameSir.Clear();
+            sNameFem.Add("Cherry");
+            sNameFem.Add("Delora");
+            sNameFem.Add("Angelic");
+            sNameFem.Add("Jerica");
+            sNameFem.Add("Dianne");
+            sNameFem.Add("Nikia");
+            sNameFem.Add("Fay");
+            sNameFem.Add("Lasonya");
+            sNameFem.Add("Camille");
+            sNameFem.Add("Kiara");
+            sNameFem.Add("Margene");
+            sNameFem.Add("Nery");
+            sNameFem.Add("Robbi");
+            sNameFem.Add("Charla");
+            sNameFem.Add("Rina");
+            sNameFem.Add("Crystle");
+            sNameFem.Add("Kandi");
+            sNameFem.Add("Jonelle");
+            sNameFem.Add("Terese");
+            sNameFem.Add("Obdulia");
+            sNameFem.Add("Maricela");
+            sNameFem.Add("Jacquie");
+            sNameFem.Add("Davine");
+            sNameFem.Add("Minna");
+            sNameFem.Add("Brianne");
+            sNameFem.Add("Pinkie");
+            sNameFem.Add("Rosalina");
+            sNameFem.Add("Nadene");
+            sNameFem.Add("Loida");
+            sNameFem.Add("Kristal");
+            sNameFem.Add("Ramonita");
+            sNameFem.Add("Ula");
+            sNameFem.Add("Windy");
+            sNameFem.Add("Zulema");
+            sNameFem.Add("Marci");
+            sNameFem.Add("Sabra");
+            sNameFem.Add("Kyong");
+            sNameFem.Add("Johnsie");
+            sNameFem.Add("Digna");
+            sNameFem.Add("Hattie");
+            sNameFem.Add("Shirly");
+            sNameFem.Add("Winifred");
+            sNameFem.Add("Magen");
+            sNameFem.Add("Cammy");
+            sNameFem.Add("Sherill");
+            sNameFem.Add("Josephina");
+            sNameFem.Add("Chara");
+            sNameFem.Add("Suzi");
+            sNameFem.Add("Annabelle");
+            sNameFem.Add("Bronwyn");
+
+            sNameMal.Add("Werner");
+            sNameMal.Add("Wilbur");
+            sNameMal.Add("Blake");
+            sNameMal.Add("Grover");
+            sNameMal.Add("Jimmy");
+            sNameMal.Add("Jamison");
+            sNameMal.Add("Josiah");
+            sNameMal.Add("Miquel");
+            sNameMal.Add("Rupert");
+            sNameMal.Add("Christoper");
+            sNameMal.Add("Alphonso");
+            sNameMal.Add("Malik");
+            sNameMal.Add("Korey");
+            sNameMal.Add("Jess");
+            sNameMal.Add("Dewitt");
+            sNameMal.Add("Marquis");
+            sNameMal.Add("Mckinley");
+            sNameMal.Add("Deshawn");
+            sNameMal.Add("Thaddeus");
+            sNameMal.Add("Colin");
+            sNameMal.Add("Chester");
+            sNameMal.Add("Jeremiah");
+            sNameMal.Add("Casey");
+            sNameMal.Add("Ray");
+            sNameMal.Add("Tyron");
+            sNameMal.Add("Darron");
+            sNameMal.Add("Sylvester");
+            sNameMal.Add("Joshua");
+            sNameMal.Add("Lenard");
+            sNameMal.Add("Leon");
+            sNameMal.Add("Son");
+            sNameMal.Add("Willis");
+            sNameMal.Add("Thurman");
+            sNameMal.Add("Noah");
+            sNameMal.Add("Josh");
+            sNameMal.Add("Sherwood");
+            sNameMal.Add("Trey");
+            sNameMal.Add("Parker");
+            sNameMal.Add("Adalberto");
+            sNameMal.Add("Benton");
+            sNameMal.Add("Harlan");
+            sNameMal.Add("Santos");
+            sNameMal.Add("Abraham");
+            sNameMal.Add("Moshe");
+            sNameMal.Add("Vaughn");
+            sNameMal.Add("Quincy");
+            sNameMal.Add("Titus");
+            sNameMal.Add("Gino");
+            sNameMal.Add("Earle");
+            sNameMal.Add("Alfonso");
+
+            sNameSir.Add("Agee");
+            sNameSir.Add("Hillyer");
+            sNameSir.Add("Elie");
+            sNameSir.Add("Morrow");
+            sNameSir.Add("Wulff");
+            sNameSir.Add("Pollan");
+            sNameSir.Add("Zieman");
+            sNameSir.Add("Welborn");
+            sNameSir.Add("Ikeda");
+            sNameSir.Add("Mclead");
+            sNameSir.Add("Delmonte");
+            sNameSir.Add("Eble");
+            sNameSir.Add("Beitz");
+            sNameSir.Add("Northup");
+            sNameSir.Add("Wren");
+            sNameSir.Add("Therrien");
+            sNameSir.Add("Chitty");
+            sNameSir.Add("Bungard");
+            sNameSir.Add("Perrella");
+            sNameSir.Add("Roselli");
+            sNameSir.Add("Million");
+            sNameSir.Add("Winder");
+            sNameSir.Add("Jaynes");
+            sNameSir.Add("Smalling");
+            sNameSir.Add("Vito");
+            sNameSir.Add("Sabbagh");
+            sNameSir.Add("Patenaude");
+            sNameSir.Add("Hepburn");
+            sNameSir.Add("Lally");
+            sNameSir.Add("Fenster");
+            sNameSir.Add("Carlen");
+            sNameSir.Add("Perri");
+            sNameSir.Add("Doepke");
+            sNameSir.Add("Livengood");
+            sNameSir.Add("Micheal");
+            sNameSir.Add("Vanderburg");
+            sNameSir.Add("Ringwood");
+            sNameSir.Add("Semon");
+            sNameSir.Add("Kauffman");
+            sNameSir.Add("Frost");
+            sNameSir.Add("Simerly");
+            sNameSir.Add("Holbrook");
+            sNameSir.Add("Waechter");
+            sNameSir.Add("Bergstrom");
+            sNameSir.Add("Brisker");
+            sNameSir.Add("Orwig");
+            sNameSir.Add("Gullatt");
+            sNameSir.Add("Keifer");
+            sNameSir.Add("Rozman");
+            sNameSir.Add("Munger");
+
+            NameList XSets = new NameList();
+
+            XSets.FemaleName = sNameFem;
+            XSets.MaleName = sNameMal;
+            XSets.SurnName = sNameSir;
+
+            SaveNames(XSets, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml");
+        }
         public class RandomPlus
         {
             public List<int> RandNum_01 { get; set; }
@@ -10836,6 +11917,168 @@ namespace RandomStart
 
             return iBe;
         }
+        public List<string> PedCollect()
+        {
+            List<string> JustNames = new List<string>();
+
+            for (int i = 0; i < MyPedCollection.Count(); i++)
+                JustNames.Add(MyPedCollection[i].Name);
+
+            return JustNames;
+        }
+        public class ClothBankist
+        {
+            public List<NewClothBank> FreeChars { get; set; }
+
+            public ClothBankist()
+            {
+                FreeChars = new List<NewClothBank>();
+            }
+        }
+        public ClothBankist LoadChars(string fileName)
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(ClothBankist));
+            using (StreamReader sr = new StreamReader(fileName))
+            {
+                return (ClothBankist)xml.Deserialize(sr);
+            }
+        }
+        public void SaveChars(ClothBankist config, string fileName)
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(ClothBankist));
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                xml.Serialize(sw, config);
+            }
+        }
+        public void AddChars(NewClothBank MyNewChar)
+        {
+            bool bOverWrite = true;
+            for (int i = 0; i < MyPedCollection.Count; i++)
+            {
+                if (bOverWrite)
+                {
+                    if (MyPedCollection[i].Name == MyNewChar.Name)
+                    {
+                        bOverWrite = false;
+                        MyPedCollection[i].ModelX = MyNewChar.ModelX;
+
+                        MyPedCollection[i].ClothA = new List<int>(MyNewChar.ClothA);
+                        MyPedCollection[i].ClothB = new List<int>(MyNewChar.ClothB);
+
+                        MyPedCollection[i].ExtraA = new List<int>(MyNewChar.ExtraA);
+                        MyPedCollection[i].ExtraB = new List<int>(MyNewChar.ExtraB);
+
+                        MyPedCollection[i].FreeMode = MyNewChar.FreeMode;
+
+                        MyPedCollection[i].XshapeFirstID = MyNewChar.XshapeFirstID;
+                        MyPedCollection[i].XshapeSecondID = MyNewChar.XshapeSecondID;
+                        MyPedCollection[i].XshapeThirdID = MyNewChar.XshapeThirdID;
+                        MyPedCollection[i].XskinFirstID = MyNewChar.XskinFirstID;
+                        MyPedCollection[i].XskinSecondID = MyNewChar.XskinSecondID;
+                        MyPedCollection[i].XskinThirdID = MyNewChar.XskinThirdID;
+                        MyPedCollection[i].XshapeMix = MyNewChar.XshapeMix;
+                        MyPedCollection[i].XskinMix = MyNewChar.XskinMix;
+                        MyPedCollection[i].XthirdMix = MyNewChar.XthirdMix;
+                        MyPedCollection[i].XisParent = MyNewChar.XisParent;
+
+                        MyPedCollection[i].HairColour = MyNewChar.HairColour;
+                        MyPedCollection[i].HairStreaks = MyNewChar.HairStreaks;
+                        MyPedCollection[i].EyeColour = MyNewChar.EyeColour;
+
+                        MyPedCollection[i].Overlay = new List<int>(MyNewChar.Overlay);
+                        MyPedCollection[i].OverlayColour = new List<int>(MyNewChar.OverlayColour);
+                        MyPedCollection[i].OverlayOpc = new List<float>(MyNewChar.OverlayOpc);
+
+                        MyPedCollection[i].Tattoo_COl = new List<string>(MyNewChar.Tattoo_COl);
+                        MyPedCollection[i].Tattoo_Nam = new List<string>(MyNewChar.Tattoo_Nam);
+
+                        MyPedCollection[i].FaceScale = new List<float>(MyNewChar.FaceScale);
+
+                        MyPedCollection[i].PedVoice = MyNewChar.PedVoice;
+                    }
+                }
+            }
+
+            if (bOverWrite)
+                MyPedCollection.Add(MyNewChar);
+
+            SetPedSaveXML();
+        }
+        public class NewClothBank
+        {
+            public string Name { get; set; }
+
+            public int ModelX { get; set; }
+
+            public List<int> ClothA { get; set; }
+            public List<int> ClothB { get; set; }
+
+            public List<int> ExtraA { get; set; }
+            public List<int> ExtraB { get; set; }
+
+            public bool FreeMode { get; set; }
+
+            public int XshapeFirstID { get; set; }
+            public int XshapeSecondID { get; set; }
+            public int XshapeThirdID { get; set; }
+            public int XskinFirstID { get; set; }
+            public int XskinSecondID { get; set; }
+            public int XskinThirdID { get; set; }
+            public float XshapeMix { get; set; }
+            public float XskinMix { get; set; }
+            public float XthirdMix { get; set; }
+            public int XisParent { get; set; }
+
+            public int HairColour { get; set; }
+            public int HairStreaks { get; set; }
+            public int EyeColour { get; set; }
+
+            public List<int> Overlay { get; set; }
+            public List<int> OverlayColour { get; set; }
+            public List<float> OverlayOpc { get; set; }
+
+            public List<string> Tattoo_COl { get; set; }
+            public List<string> Tattoo_Nam { get; set; }
+
+            public List<float> FaceScale { get; set; }
+
+            public string PedVoice { get; set; }
+
+            public NewClothBank()
+            {
+                ClothA = new List<int>();
+                ClothB = new List<int>();
+
+                ExtraA = new List<int>();
+                ExtraB = new List<int>();
+
+                Overlay = new List<int>();
+                OverlayColour = new List<int>();
+                OverlayOpc = new List<float>();
+
+                Tattoo_COl = new List<string>();
+                Tattoo_Nam = new List<string>();
+
+                FaceScale = new List<float>();
+            }
+        }
+        public NewClothBank LoadNewOutfit(string fileName)
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(NewClothBank));
+            using (StreamReader sr = new StreamReader(fileName))
+            {
+                return (NewClothBank)xml.Deserialize(sr);
+            }
+        }
+        public void SaveNewOutfitMain(NewClothBank config, string fileName)
+        {
+            XmlSerializer xml = new XmlSerializer(typeof(NewClothBank));
+            using (StreamWriter sw = new StreamWriter(fileName))
+            {
+                xml.Serialize(sw, config);
+            }
+        }
         public class ClothBank
         {
             public int ModelX { get; set; }
@@ -10878,13 +12121,98 @@ namespace RandomStart
                 return (ClothBank)xml.Deserialize(sr);
             }
         }
-        public void SaveOutfitMain(ClothBank config, string fileName)
+        private void PedPools()
         {
-            XmlSerializer xml = new XmlSerializer(typeof(ClothBank));
-            using (StreamWriter sw = new StreamWriter(fileName))
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("PedPool", tEx);
+
+            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml"))
             {
-                xml.Serialize(sw, config);
+                ClothBankist ClothXML = new ClothBankist();
+                ClothXML = LoadChars("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml");
+                MyPedCollection = new List<NewClothBank>(ClothXML.FreeChars);
             }
+            else
+            {
+                WritePedSave("Current");
+
+                string sNamez = "SP";
+                List<string> sWardrobe = new List<string>();
+
+                string[] sWrite = Directory.GetFiles("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/");
+                for (int i = 0; i < sWrite.Count(); i++)
+                {
+                    string sting = sWrite[i];
+                    if (sting.Contains(sNamez))
+                    {
+                        int iNum = sting.LastIndexOf("/") + 1;
+                        sWardrobe.Add(sting.Substring(iNum));
+                    }
+                }
+                if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavePed.Xml"))
+                    sWardrobe.Add("SavePed.Xml");
+
+                for (int i = 0; i < sWardrobe.Count(); i++)
+                {
+                    NewClothBank NewCloth = new NewClothBank();
+                    ClothBank OldCloths = LoadOutfit("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/" + sWardrobe[i]);
+
+                    string sNameFix = sWardrobe[i];
+                    string sNAme = sNameFix.Remove(0, 3);
+                    int iNum = sNAme.Length;
+
+                    NewCloth.Name = sNAme.Remove(iNum - 4, 4);
+                    NewCloth.ModelX = OldCloths.ModelX;
+
+                    NewCloth.ClothA = new List<int>(OldCloths.ClothA);
+                    NewCloth.ClothB = new List<int>(OldCloths.ClothB);
+
+                    NewCloth.ExtraA = new List<int>(OldCloths.ExtraA);
+                    NewCloth.ExtraB = new List<int>(OldCloths.ExtraB);
+
+                    NewCloth.FreeMode = OldCloths.FreeMode;
+
+                    NewCloth.XshapeFirstID = OldCloths.XshapeFirstID;
+                    NewCloth.XshapeSecondID = OldCloths.XshapeSecondID;
+                    NewCloth.XshapeThirdID = OldCloths.XshapeThirdID;
+                    NewCloth.XskinFirstID = OldCloths.XskinFirstID;
+                    NewCloth.XskinSecondID = OldCloths.XskinSecondID;
+                    NewCloth.XskinThirdID = OldCloths.XskinThirdID;
+                    NewCloth.XshapeMix = OldCloths.XshapeMix;
+                    NewCloth.XskinMix = OldCloths.XskinMix;
+                    NewCloth.XthirdMix = OldCloths.XthirdMix;
+                    NewCloth.XisParent = OldCloths.XisParent;
+
+                    NewCloth.HairColour = OldCloths.HairColour;
+                    NewCloth.HairStreaks = OldCloths.HairStreaks;
+                    NewCloth.EyeColour = OldCloths.EyeColour;
+
+                    NewCloth.Overlay = new List<int>(OldCloths.Overlay);
+                    NewCloth.OverlayColour = new List<int>(OldCloths.OverlayColour);
+                    NewCloth.OverlayOpc = new List<float>(OldCloths.OverlayOpc);
+
+                    NewCloth.Tattoo_COl = new List<string>(OldCloths.Tattoo_COl);
+                    NewCloth.Tattoo_Nam = new List<string>(OldCloths.Tattoo_Nam);
+
+                    NewCloth.FaceScale = new List<float>();
+
+                    NewCloth.PedVoice = "";
+
+                    MyPedCollection.Add(NewCloth);
+
+                    File.Delete("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/" + sWardrobe[i]);
+                }
+
+                SetPedSaveXML();
+            }
+        }
+        public void SetPedSaveXML()
+        {
+            ClothBankist ClothXML = new ClothBankist();
+
+            ClothXML.FreeChars = new List<NewClothBank>(MyPedCollection);
+
+            SaveChars(ClothXML, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml");
         }
         public void WritePedSave(string sPed)
         {
@@ -10897,7 +12225,9 @@ namespace RandomStart
             List<int> ExtrasB = new List<int>();
 
             Ped Peddy = Game.Player.Character;
-            ClothBank Cbank = new ClothBank();
+            NewClothBank Cbank = new NewClothBank();
+
+            Cbank.Name = sPed;
 
             Cbank.ModelX = Peddy.Model.GetHashCode();
 
@@ -10923,6 +12253,10 @@ namespace RandomStart
             Cbank.ExtraA = ExtrasA;
             Cbank.ExtraB = ExtrasB;
 
+            Cbank.Overlay = iOverlay;
+            Cbank.OverlayColour = iOverlayColour;
+            Cbank.OverlayOpc = fOverlayOpc;
+
             if (Cbank.FreeMode)
             {
                 Cbank.XshapeFirstID = GetHeadBlendData(Peddy).shapeFirstID;
@@ -10936,13 +12270,6 @@ namespace RandomStart
                 Cbank.XthirdMix = GetHeadBlendData(Peddy).thirdMix;
                 Cbank.XisParent = GetHeadBlendData(Peddy).isParent;
 
-                int iOver = iOverlay.Count();
-                while (iOver > 0)
-                {
-                    iOver = iOver - 1;
-                    iOverlay[iOver] = Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character, iOver);
-                }
-
                 Cbank.Overlay = iOverlay;
                 Cbank.OverlayColour = iOverlayColour;
                 Cbank.OverlayOpc = fOverlayOpc;
@@ -10950,11 +12277,15 @@ namespace RandomStart
                 Cbank.HairColour = iHair01;
                 Cbank.HairStreaks = iHair02;
                 Cbank.EyeColour = iEye;
+
+                Cbank.FaceScale = fAceFeats;
             }
             Cbank.Tattoo_COl = AddTatBase;
             Cbank.Tattoo_Nam = AddTatName;
 
-            SaveOutfitMain(Cbank, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/" + sPed);
+            Cbank.PedVoice = sPedVoices;
+
+            AddChars(Cbank);
         }
         [StructLayout(LayoutKind.Explicit, Size = 80)]
         public struct HeadBlendData
@@ -11009,10 +12340,8 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("PedMenuMain", tEx);
 
+            iPedNum = 0;
             LoadSetXML();
-            AddTatBase.Clear();
-            AddTatName.Clear();
-            WritePedSave("SP_Curent.Xml");
             MyMenuPool = new MenuPool();
             var mainMenu = new UIMenu(sLangfile[6], "");            
             MyMenuPool.Add(mainMenu);
@@ -11022,7 +12351,6 @@ namespace RandomStart
             SetLoadWeps(mainMenu);
             SetMenuKey(mainMenu);
             SelectSaved(mainMenu);
-            //SavePedMenu(mainMenu);
             DisRecord(mainMenu);
             AddBeachParty(mainMenu);
             SeatBeltON(mainMenu);
@@ -11032,13 +12360,15 @@ namespace RandomStart
         }
         private void SavePedMenu(UIMenu XMen)
         {
-            var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[8]);
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SavePedMenu", tEx);
 
-            //SelectSaved(playermodelmenu);
+            var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[8]);
 
             SetComponents(playermodelmenu);
             SetPedProps(playermodelmenu);
             ResetPedProps(playermodelmenu);
+            SetHVoice(playermodelmenu);
 
             if (Game.Player.Character.Model == PedHash.Michael)
             {
@@ -11059,6 +12389,7 @@ namespace RandomStart
                 SetHEyes(playermodelmenu);
                 SetOverLays(playermodelmenu);
                 AddTatts(playermodelmenu, 4);
+                SetFaceFeatures(playermodelmenu);
             }
             else if (Game.Player.Character.Model == PedHash.FreemodeMale01)
             {
@@ -11067,29 +12398,30 @@ namespace RandomStart
                 SetHEyes(playermodelmenu);
                 SetOverLays(playermodelmenu);
                 AddTatts(playermodelmenu, 5);
+                SetFaceFeatures(playermodelmenu);
             }
 
-            if (sSaveInPed != "SP_Curent.Xml" && sSaveInPed != "")
+            if (iPedNum > 0)
                 SaveMyPed(playermodelmenu);
             CreateNewPed(playermodelmenu);
             DeleteCurrentPed(playermodelmenu);
         }
         private void SelectSaved(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SelectSaved", tEx);
+
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[8]);
 
-            List<string> sPeddys = PedPool();
+            AddTatBase.Clear();
+            AddTatName.Clear();
+            sPedVoices = "";
+            WritePedSave("Current");
 
             List<dynamic> SavedPeds = new List<dynamic>();
 
-            SavedPeds.Add("SP_Curent.Xml");
-            for (int i = 0; i < sPeddys.Count; i++)
-            {
-                string sting = sPeddys[i];
-                int iNum = sting.LastIndexOf("/") + 1;
-                if (sting.Substring(iNum) != "SP_Curent.Xml")
-                    SavedPeds.Add(sting.Substring(iNum));
-            }
+            for (int i = 0; i < MyPedCollection.Count; i++)
+                SavedPeds.Add(MyPedCollection[i].Name);
 
             var ThisShizle = new UIMenuListItem("", SavedPeds, 0);
             ThisShizle.Description = sLangfile[98];
@@ -11098,17 +12430,8 @@ namespace RandomStart
             {
                 if (item == ThisShizle)
                 {
-                    if (!bLoadedPedOpt)
-                    {
-                        sSaveInPed = item.Items[index].ToString();
-                        SavePedLoader(sSaveInPed);
-                    }
-                    else
-                    {
-                        playermodelmenu.Clear();
-                        bLoadedPedOpt = false;
-                        playermodelmenu.AddItem(ThisShizle);
-                    }
+                    iPedNum = index;
+                    SavePedLoader(MyPedCollection[iPedNum]);
                 }
             };
             playermodelmenu.OnItemSelect += (sender, item, index) =>
@@ -11116,42 +12439,50 @@ namespace RandomStart
 
                 if (item == ThisShizle)
                 {
-                    if (!bLoadedPedOpt)
-                    {
-                        bLoadedPedOpt = true;
-                        SavePedMenu(playermodelmenu);
-                    }
-                    else
-                    {
-                        playermodelmenu.Clear();
-                        bLoadedPedOpt = false;
-                        playermodelmenu.AddItem(ThisShizle);
-                    }
+                    playermodelmenu.Clear();
+                    SavePedMenu(playermodelmenu);
                 }
             };
         }
         private void CompileMenuTotals(List<dynamic> dList, int iTotal,int iBZero)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("CompileMenuTotals", tEx);
+
             while (iBZero < iTotal)
             {
                 dList.Add("- " + iBZero + " -");
                 iBZero = iBZero + 1;
             }
         }
-        private void CompileMenuTotalsFloats(List<dynamic> dList, int iTotal)
+        private void CompileMenuTotalsFloats(List<dynamic> dList,int iLow, int iTotal)
         {
-            int iUpC = 0;
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("CompileMenuTotalsFloats", tEx);
+
+            int iUpC = iLow;
             while (iUpC < iTotal)
             {
-                if (iUpC < 10)
-                    dList.Add("- 0.0" + iUpC + " -");
+                if (iUpC < -9)
+                {
+                    dList.Add("[ -0." + iUpC * -1 + " ]");
+                }
+                else if (iUpC < 0)
+                {
+                    dList.Add("[ -0.0" + iUpC * -1 + " ]");
+                }
+                else if (iUpC < 10)
+                    dList.Add("[ 0.0" + iUpC + " ]");
                 else
-                    dList.Add("- 0." + iUpC + " -");
+                    dList.Add("[ 0." + iUpC + " ]");
                 iUpC = iUpC + 1;
             }
         }
         private void SetHair01(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetHair01", tEx);
+
             List<dynamic> Hair01 = new List<dynamic>();
 
             int iCount = Function.Call<int>(Hash._GET_NUM_HAIR_COLORS);
@@ -11172,6 +12503,9 @@ namespace RandomStart
         }
         private void SetHair02(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetHair02", tEx);
+
             List<dynamic> Hair02 = new List<dynamic>();
 
             int iCount = Function.Call<int>(Hash._GET_NUM_HAIR_COLORS);
@@ -11191,6 +12525,9 @@ namespace RandomStart
         }
         private void SetHEyes(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetHEyes", tEx);
+
             List<dynamic> Eyes = new List<dynamic>();
 
             int iCount = 32;
@@ -11209,8 +12546,35 @@ namespace RandomStart
                 }
             };
         }
+        private void SetHVoice(UIMenu XMen)
+        {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetHVoice", tEx);
+
+            var playermodelmenu = MyMenuPool.AddSubMenu(XMen, "Voices");
+
+            List<dynamic> Voices = new List<dynamic>();
+
+            for (int i = 0; i < ThemVoices.Count; i++)
+            {
+                Voices.Add(ThemVoices[i]);
+                var newitem = new UIMenuItem(ThemVoices[i]);
+                playermodelmenu.AddItem(newitem);
+            }
+
+            playermodelmenu.OnItemSelect += (sender, item, index) =>
+            {
+                sPedVoices = ThemVoices[index];
+                Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character, sPedVoices);
+                Function.Call((Hash)0x4ADA3F19BE4A6047, Game.Player.Character);
+                UI.Notify("Voice set to " + sPedVoices);
+            };
+        }
         private void SetOverLays(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetOverLays", tEx);
+
             if (iOverlay.Count() == 0)
                 OverLayList();
 
@@ -11231,6 +12595,9 @@ namespace RandomStart
         }
         private void SetOvers(UIMenu XMen, int OverLayId, string sName,int iCount)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetOvers", tEx);
+
             string sOpacity = "" + sName + sLangfile[25];
 
             List<dynamic> Main = new List<dynamic>();
@@ -11247,7 +12614,7 @@ namespace RandomStart
             float fOvers = fOverlayOpc[OverLayId];
             fOvers = fOvers * 100;
             int iAM = (int)Math.Ceiling(fOvers);
-            CompileMenuTotalsFloats(Opacity, iCount);
+            CompileMenuTotalsFloats(Opacity,0, iCount);
             var newitemOpac = new UIMenuListItem(sOpacity, Opacity, 0);
             newitemOpac.Index = iAM;
             XMen.AddItem(newitemOpac);
@@ -11273,6 +12640,9 @@ namespace RandomStart
         }
         private void SetOversColour(UIMenu XMen, int OverLayId, string sName, int iCount)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetOversColour", tEx);
+
             string sOpacity = "" + sName + sLangfile[25];
             string sColour = "" + sName + sLangfile[26];
 
@@ -11298,7 +12668,7 @@ namespace RandomStart
             float fOvers = fOverlayOpc[OverLayId];
             fOvers = fOvers * 100;
             int iAM = (int)Math.Ceiling(fOvers);
-            CompileMenuTotalsFloats(Opacity, iCount);
+            CompileMenuTotalsFloats(Opacity, 0, iCount);
             var newitemOpac = new UIMenuListItem(sOpacity, Opacity, 0);
             newitemOpac.Index = iAM;
             XMen.AddItem(newitemOpac);
@@ -11329,6 +12699,9 @@ namespace RandomStart
         }
         private void SetComponents(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetComponents", tEx);
+
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[27]);
 
             if (Game.Player.Character.Model != PedHash.Michael && Game.Player.Character.Model != PedHash.Trevor && Game.Player.Character.Model != PedHash.Franklin)
@@ -11347,6 +12720,9 @@ namespace RandomStart
         }
         private void Componets(UIMenu XMen, int CompId, string sName)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("Componets", tEx);
+
             string sText = "" + sName + sLangfile[40];
 
             List<dynamic> Comp = new List<dynamic>();
@@ -11386,6 +12762,9 @@ namespace RandomStart
         }
         private void SetPedProps(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetPedProps", tEx);
+
             var playermodelmenu2 = MyMenuPool.AddSubMenu(XMen, sLangfile[41]);
 
             PedProps(playermodelmenu2, 0, sLangfile[42]);
@@ -11395,6 +12774,9 @@ namespace RandomStart
         }
         private void PedProps(UIMenu XMen, int CompId, string sName)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("PedProps", tEx);
+
             string sText = "" + sName + sLangfile[40];
 
             List<dynamic> Comp = new List<dynamic>();
@@ -11437,6 +12819,9 @@ namespace RandomStart
         }
         private void ResetPedProps(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("ResetPedProps", tEx);
+
             var playermodelmenu = new UIMenuItem(sLangfile[46], sLangfile[47]);
             XMen.AddItem(playermodelmenu);
             XMen.OnItemSelect += (sender, item, index) =>
@@ -11453,6 +12838,9 @@ namespace RandomStart
         }
         private void AddTatts(UIMenu XMen, int iChar)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("AddTatts", tEx);
+
             if (iChar == 1 || iChar == 2 || iChar == 3)
             {
                 var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[109]);
@@ -11484,6 +12872,9 @@ namespace RandomStart
         }
         private void Tatty(UIMenu XMen, int iChar, int iSkin, string sName)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("Tatty", tEx);
+
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sName);
 
             List<string> sub_01 = TattoosList(iChar, iSkin);
@@ -11531,6 +12922,9 @@ namespace RandomStart
         }
         private void ClearTats(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("ClearTats", tEx);
+
             var playermodelmenu = new UIMenuItem(sLangfile[108], "");
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             XMen.AddItem(playermodelmenu);
@@ -11544,27 +12938,120 @@ namespace RandomStart
                 }
             };
         }
+        private void FaceTheFacts()
+        {
+            if (fAceFeats.Count < 19)
+            {
+                fAceFeats.Clear();
+                for (int i = 0; i < 20; i++)
+                    fAceFeats.Add(0.00f);
+            }
+        }
+        private void SetFaceFeatures(UIMenu XMen)
+        {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetFaceFeatures", tEx);
+
+            FaceTheFacts();
+
+            var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[134]);
+
+            FaceFeatures(playermodelmenu, 0, sLangfile[114]);
+            FaceFeatures(playermodelmenu, 1, sLangfile[115]);
+            FaceFeatures(playermodelmenu, 2, sLangfile[116]);
+            FaceFeatures(playermodelmenu, 3, sLangfile[117]);
+            FaceFeatures(playermodelmenu, 4, sLangfile[118]);
+            FaceFeatures(playermodelmenu, 5, sLangfile[119]);
+            FaceFeatures(playermodelmenu, 6, sLangfile[120]);
+            FaceFeatures(playermodelmenu, 7, sLangfile[121]);
+            FaceFeatures(playermodelmenu, 8, sLangfile[122]);
+            FaceFeatures(playermodelmenu, 9, sLangfile[123]);
+            FaceFeatures(playermodelmenu, 10, sLangfile[124]);
+            FaceFeatures(playermodelmenu, 11, sLangfile[125]);
+            FaceFeatures(playermodelmenu, 12, sLangfile[126]);
+            FaceFeatures(playermodelmenu, 13, sLangfile[127]);
+            FaceFeatures(playermodelmenu, 14, sLangfile[128]);
+            FaceFeatures(playermodelmenu, 15, sLangfile[129]);
+            FaceFeatures(playermodelmenu, 16, sLangfile[130]);
+            FaceFeatures(playermodelmenu, 17, sLangfile[131]);
+            FaceFeatures(playermodelmenu, 18, sLangfile[132]);
+            FaceFeatures(playermodelmenu, 19, sLangfile[133]);
+        }
+        private void FaceFeatures(UIMenu XMen, int CompId, string sName)
+        {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("FaceFeatures", tEx);
+
+            List<dynamic> FeatVar = new List<dynamic>();
+
+            float fOvers = fAceFeats[CompId];
+            fOvers = fOvers * 100;
+            int iAM = (int)Math.Ceiling(fOvers) + 99;
+            CompileMenuTotalsFloats(FeatVar, -99, 99);
+            var newitem = new UIMenuListItem(sName, FeatVar, 99);
+            XMen.AddItem(newitem);
+            newitem.Index = iAM;
+
+            XMen.OnListChange += (sender, item, index) =>
+            {
+                if (item == newitem)
+                {
+                    float fOpal = (int)index -99 ;
+                    fOpal = (fOpal / 100);
+                    Function.Call(Hash._SET_PED_FACE_FEATURE, Game.Player.Character, CompId, fOpal);
+                    fAceFeats[CompId] = fOpal;
+                }
+            };
+
+            //=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+            //  void _SET_PED_FACE_FEATURE(Ped ped, int index, float scale) // 71A5C1DBA060049E
+            //  Sets the various freemode face features, e.g.nose length, chin shape.Scale ranges from - 1.0 to 1.0.
+
+            //Nose_Width                                0
+            //Nose_Peak_Hight                           1
+            //Nose_Peak_Lenght                          2
+            //Nose_Bone_High                            3
+            //Nose_Peak_Lowering                        4
+            //Nose_Bone_Twist                           5
+            //EyeBrown_High                             6
+            //EyeBrown_Forward                          7
+            //Cheeks_Bone_High                          8
+            //Cheeks_Bone_Width                         9
+            //Cheeks_Width                              10
+            //Eyes_Openning                             11
+            //Lips_Thickness                            12
+            //Jaw_Bone_Width 'Bone size to sides        13
+            //Jaw_Bone_Back_Lenght 'Bone size to back   14
+            //Chimp_Bone_Lowering 'Go Down              15
+            //Chimp_Bone_Lenght 'Go forward             16
+            //Chimp_Bone_Width                          17
+            //Chimp_Hole                                18
+            //Neck_Thikness                             19
+        }
         private void SaveMyPed(UIMenu XMen)
         {
-            var playermodelmenu = new UIMenuItem(sLangfile[48], sSaveInPed);
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SaveMyPed", tEx);
+
+            var playermodelmenu = new UIMenuItem(sLangfile[48], MyPedCollection[iPedNum].Name);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             XMen.AddItem(playermodelmenu);
             XMen.OnItemSelect += (sender, item, index) =>
             {
                 if (item == playermodelmenu)
                 {
-                    if (sSaveInPed != "SP_Curent.Xml" && sSaveInPed != "")
-                    {
-                        WriteSetXML();
-                        WritePedSave(sSaveInPed);
-                        MyMenuPool.CloseAllMenus();
-                        UI.ShowSubtitle("~g~" + sLangfile[50] + sSaveInPed);
-                    }
+                    WriteSetXML();
+                    WritePedSave(MyPedCollection[iPedNum].Name);
+                    MyMenuPool.CloseAllMenus();
+                    UI.ShowSubtitle("~g~" + sLangfile[50] + MyPedCollection[iPedNum].Name);
                 }
             };
         }
         private void CreateNewPed(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("CreateNewPed", tEx);
+
             var playermodelmenu = new UIMenuItem(sLangfile[112] + sLangfile[48], sLangfile[49]);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             XMen.AddItem(playermodelmenu);
@@ -11576,8 +13063,8 @@ namespace RandomStart
                     if (sPed != "")
                     {
                         WriteSetXML();
-                        WritePedSave("SP_" + sPed + ".Xml");
-                        UI.ShowSubtitle("~g~" + sLangfile[50] + "Named SP_" + sPed);
+                        WritePedSave(sPed);
+                        UI.ShowSubtitle("~g~" + sLangfile[50] + sPed);
                         MyMenuPool.CloseAllMenus();
                     }
                 }
@@ -11585,6 +13072,9 @@ namespace RandomStart
         }
         private void SetLocate(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetLocate", tEx);
+
             var playermodelmenu = new UIMenuItem(sLangfile[51], sLangfile[52]);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             if (bRandLocate)
@@ -11611,6 +13101,9 @@ namespace RandomStart
         }
         private void SetChar(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetChar", tEx);
+
             var SetCharOpt = new UIMenuItem(sLangfile[53], sLangfile[54]);
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             if (bMainProtag)
@@ -11641,7 +13134,7 @@ namespace RandomStart
                 }
                 else if (item == SetSVSaveOpt)
                 {
-                    if (PedPool().Count > 0)
+                    if (MyPedCollection.Count > 0)
                     {
                         bSavedPed = !bSavedPed;
                         if (bSavedPed && bMainProtag)
@@ -11660,6 +13153,9 @@ namespace RandomStart
         }
         private void DisRecord(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("DisRecord", tEx);
+
             var SetCharOpt = new UIMenuItem(sLangfile[55], sLangfile[56]);
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             if (bDisableRecord)
@@ -11680,6 +13176,9 @@ namespace RandomStart
         }
         private void SeatBeltON(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SeatBeltON", tEx);
+
             var SetCharOpt = new UIMenuItem(sLangfile[96], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             if (Function.Call<bool>(Hash.GET_PED_CONFIG_FLAG, Game.Player.Character, 32, true))
@@ -11696,7 +13195,7 @@ namespace RandomStart
                 if (item == SetCharOpt)
                 {
                     bBeltUp = !bBeltUp;
-                    Function.Call(Hash.SET_PED_CONFIG_FLAG,Game.Player.Character, 32, !bBeltUp);
+                    PlayerBelter();
                     if (bBeltUp)
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                     else
@@ -11707,6 +13206,9 @@ namespace RandomStart
         }
         private void AddBeachParty(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("AddBeachParty", tEx);
+
             var SetCharOpt = new UIMenuItem(sLangfile[97], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             if (bAddBeachParty)
@@ -11727,6 +13229,9 @@ namespace RandomStart
         }
         private void SetLoadWeps(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetLoadWeps", tEx);
+
             var SetSVCharOpt = new UIMenuItem(sLangfile[59], sLangfile[60]);
             SetSVCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             if (bKeepWeapons)
@@ -11747,6 +13252,9 @@ namespace RandomStart
         }
         private void SetMenuKey(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("SetMenuKey", tEx);
+
             var playermodelmenu = new UIMenuItem(sLangfile[61], sLangfile[62]);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             XMen.AddItem(playermodelmenu);
@@ -11762,22 +13270,28 @@ namespace RandomStart
         }
         private void DeleteCurrentPed(UIMenu XMen)
         {
-            var playermodelmenu = new UIMenuItem(sLangfile[64], sSaveInPed);
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("DeleteCurrentPed", tEx);
+
+            var playermodelmenu = new UIMenuItem(sLangfile[64], MyPedCollection[iPedNum].Name);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
             XMen.AddItem(playermodelmenu);
             XMen.OnItemSelect += (sender, item, index) =>
             {
-                if (item == playermodelmenu && sSaveInPed != "")
+                if (item == playermodelmenu && iPedNum > 0)
                 {
-                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/" + sSaveInPed))
-                        File.Delete("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/" + sSaveInPed);
-                    UI.ShowSubtitle("~g~" + sLangfile[65] + " " + sSaveInPed);
+                    UI.ShowSubtitle("~g~" + sLangfile[65] + " " + MyPedCollection[iPedNum].Name);
+                    MyPedCollection.RemoveAt(iPedNum);
+                    SetPedSaveXML();
                     MyMenuPool.CloseAllMenus();
                 }
             };
         }
         private void RanPedMenu(UIMenu XMen)
         {
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeeLog("RanPedMenu", tEx);
+
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[66]);
             for (int i = 0; i < 1; i++) ;
             var Rand_01 = new UIMenuItem(sLangfile[67], "");
@@ -11835,8 +13349,6 @@ namespace RandomStart
                 MyMenuPool.CloseAllMenus();
                 AddTatBase.Clear();
                 AddTatName.Clear();
-                if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SP_Curent.Xml"))
-                    File.Delete("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SP_Curent.Xml");
                 bMenuOpen = false;
                 if (item == Rand_01)
                     StartTheMod(1, false);
@@ -11910,35 +13422,52 @@ namespace RandomStart
                     MyMenuPool.ProcessMenus();
                 else
                 {
+                    iOverlay.Clear();
+                    iOverlayColour.Clear();
+                    fOverlayOpc.Clear();
                     AddTatBase.Clear();
                     AddTatName.Clear();
-                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SP_Curent.Xml"))
-                        File.Delete("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SP_Curent.Xml");
                     bMenuOpen = false;
                 }
-
+            }
+            else if (bWeaponFault)
+            {
+                if (!Game.IsLoading)
+                {
+                    ReturnWeaps();
+                    bWeaponFault = false;
+                }
             }
             else
             {
-                if (Game.Player.Character.Model != PedHash.Michael && Game.Player.Character.Model != PedHash.Trevor && Game.Player.Character.Model != PedHash.Franklin)
+                if (!bDead)
                 {
-                    if (!bDead)
+                    if (bMenyooZZ)
                     {
-                        if (bMenyooZZ)
+                        if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
                         {
-                            if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
+                            if (bAllowControl)
+                                CleanUpMess();
+                            bDead = true;
+                            DeathArrestCont(false);
+                        }
+                        else if (Function.Call<bool>(Hash.IS_PLAYER_DEAD))
+                        {
+                            if (bAllowControl)
+                                CleanUpMess();
+                            bDead = true;
+                            DeathArrestCont(true);
+                        }
+
+                    }
+                    else
+                    {
+                        if (Game.Player.Character.Model == PedHash.Franklin || Game.Player.Character.Model == PedHash.Michael || Game.Player.Character.Model == PedHash.Trevor)
+                        {
+                            if (Function.Call<bool>(Hash.HAS_SCRIPT_LOADED, "director_mode"))
                             {
-                                if (bAllowControl)
-                                    CleanUpMess();
-                                bDead = true;
-                                DeathArrestCont(false);
-                            }
-                            else if (Function.Call<bool>(Hash.IS_PLAYER_DEAD))
-                            {
-                                if (bAllowControl)
-                                    CleanUpMess();
-                                bDead = true;
-                                DeathArrestCont(true);
+                                Script.Wait(500);
+                                Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "director_mode");
                             }
                         }
                         else
