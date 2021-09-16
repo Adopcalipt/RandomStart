@@ -11,6 +11,7 @@ using GTA;
 using GTA.Math;
 using GTA.Native;
 using System.Runtime.InteropServices;
+
 //The Face blend data This part was from  E66666666/LeeC_HBD.cs, https://gist.github.com/E66666666/466c59df7aff69d2ac788fa38e669300
 public static class SHVNative
 {
@@ -96,7 +97,6 @@ namespace RandomStart
         bool bMethActor = false;
         bool bDontStopMe = false;
         bool bMainProtag = false;
-        bool bCurrentChar = false;
         bool bKeepWeapons = false;
         bool bAllowControl = false;
         bool bInCayoPerico = false;
@@ -105,12 +105,18 @@ namespace RandomStart
         bool bPlayingNewMissions = false;
 
 
-        string sVersion = "2.1";
+        string sVersion = "2.2";
         string sFirstName = "PlayerX";
         string sMainChar = "player_zero";
         string sFunChar01 = "player_one";
         string sFunChar02 = "player_two";
         string sBeeLogs = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSLog.txt";
+        string sSettings = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml";
+        string sLangsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStartLang.Xml";
+        string sWeapsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml";
+        string sNamesFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml";
+        string sRandFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml";
+        string sSavedFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml";
         string sExitAn_01 = "";
         string sExitAn_02 = "";
         string sPedVoices = "";
@@ -404,6 +410,13 @@ namespace RandomStart
             public List<int> iPlayWeaps { get; set; }
             public List<string> PlayCompsList { get; set; }
             public List<int> AmmoLs { get; set; }
+
+            public SettingsXML()
+            {
+                iPlayWeaps = new List<int>();
+                PlayCompsList = new List<string>();
+                AmmoLs = new List<int>();
+            }
         }
         public SettingsXML LoadSettings(string fileName)
         {
@@ -426,9 +439,9 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("LoadSetXML", tEx);
 
-            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml"))
+            if (File.Exists(sSettings))
             {
-                SettingsXML SetsXML = LoadSettings("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml");
+                SettingsXML SetsXML = LoadSettings(sSettings);
                 KBuild = SetsXML.MenuKey;
                 bMainProtag = SetsXML.Spawn;
                 bRandLocate = SetsXML.Locate;
@@ -454,11 +467,8 @@ namespace RandomStart
                 if (bRandLocate && bLoadUpOnYacht)
                     bRandLocate = false;
 
-
-                if (iVersion < 21000)
+                if (iVersion != 22000)
                 {
-                    for (int i = 0; i < MyPedCollection.Count; i++)
-                        MyPedCollection[i].PedVoice = "";
                     NagScreen();
                 }
             }
@@ -468,7 +478,7 @@ namespace RandomStart
         private void NagScreen()
         {
             UI.Notify(sLangfile[0]);
-            iVersion = 21000;
+            iVersion = 22000;
             WriteSetXML();
         }
         private void WriteSetXML()
@@ -495,11 +505,16 @@ namespace RandomStart
 
             Set.Version = iVersion;
 
-            SaveSetMain(Set, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml");
+            SaveSetMain(Set, sSettings);
         }
         public class LangXML
         {
             public List<string> Langfile { get; set; }
+
+            public LangXML()
+            {
+                Langfile = new List<string>();
+            }
         }
         public LangXML LoadLang(string fileName)
         {
@@ -674,9 +689,9 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("FindaLang", tEx);
 
-            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStartLang.Xml"))
+            if (File.Exists(sLangsFile))
             {
-                LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStartLang.Xml");
+                LangXML LangXML = LoadLang(sLangsFile);
                 sLangfile.Clear();
                 sLangfile = LangXML.Langfile;
                 if (sLangfile.Count < 115)
@@ -689,6 +704,12 @@ namespace RandomStart
         {
             public List<string> WeaponsList { get; set; }
             public List<string> AttachmentsList { get; set; }
+
+            public WeaponsXML()
+            {
+                WeaponsList = new List<string>();
+                AttachmentsList = new List<string>();
+            }
         }
         public WeaponsXML LoadWeaps(string fileName)
         {
@@ -711,9 +732,9 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("LoadupWeaponXML", tEx);
 
-            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml"))
+            if (File.Exists(sWeapsFile))
             {
-                WeaponsXML WeapsXML = LoadWeaps("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml");
+                WeaponsXML WeapsXML = LoadWeaps(sWeapsFile);
 
                 for (int i = 0; i < WeapsXML.WeaponsList.Count; i++)
                 {
@@ -741,12 +762,12 @@ namespace RandomStart
             List<string> sAttList = new List<string>();
             sAttList.Add("Add_Your_Custom_Attachments_Here");
 
-            WeaponsXML WeapsXML = new WeaponsXML();
+            WeaponsXML MyWeapsXML = new WeaponsXML();
 
-            WeapsXML.WeaponsList = sWepList;
-            WeapsXML.AttachmentsList = sAttList;
+            MyWeapsXML.WeaponsList = sWepList;
+            MyWeapsXML.AttachmentsList = sAttList;
 
-            SaveWeaps(WeapsXML, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml");
+            SaveWeaps(MyWeapsXML, sWeapsFile);
         }
         private void WeatherList()
         { 
@@ -6357,6 +6378,7 @@ namespace RandomStart
                             PedScenario(Game.Player.Character, "PROP_HUMAN_SEAT_CHAIR", CHpos, PChair[i].Heading - 180.00f, true);
 
                             bSeated = true;
+                            break;
                         }
                     }
                     iPostAction = 1;
@@ -8019,7 +8041,7 @@ namespace RandomStart
                     Game.Player.Character.Task.WarpIntoVehicle(Vehic, VehicleSeat.RightRear);
                     Script.Wait(10);
                 }
-            }      //Player is Passenger--Build it
+            }      //Player is Passenger
             else if (iEnterV == 11)
             {
                 Game.Player.Character.Position = V3;
@@ -8424,6 +8446,8 @@ namespace RandomStart
                         MadP.Delete();
                     }
                 }
+                else
+                    break;
             }
             if (iCountEm > 0)
             {
@@ -8446,7 +8470,6 @@ namespace RandomStart
         {
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("OverLayList", tEx);
-
 
             for (int i = 0; i < 13; i++)
             {
@@ -9801,6 +9824,7 @@ namespace RandomStart
                                     CarSpot[i].IsPersistent = true;
                                     CarSpot[i].Driver.IsPersistent = true;
                                     CopsNRobbers(CarSpot[i], CarSpot[i].Driver);
+                                    break;
                                 }
                             }
                         }
@@ -11540,6 +11564,13 @@ namespace RandomStart
             public List<string> MaleName { get; set; }
             public List<string> FemaleName { get; set; }
             public List<string> SurnName { get; set; }
+
+            public NameList()
+            {
+                MaleName = new List<string>();
+                FemaleName = new List<string>();
+                SurnName = new List<string>();
+            }
         }
         public NameList LoadNames(string fileName)
         {
@@ -11562,9 +11593,9 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("GetNames", tEx);
 
-            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml"))
+            if (File.Exists(sNamesFile))
             {
-                NameList XSets = LoadNames("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml");
+                NameList XSets = LoadNames(sNamesFile);
 
                 sNameFem = XSets.FemaleName;
                 sNameMal = XSets.MaleName;
@@ -11743,7 +11774,7 @@ namespace RandomStart
             XSets.MaleName = sNameMal;
             XSets.SurnName = sNameSir;
 
-            SaveNames(XSets, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml");
+            SaveNames(XSets, sNamesFile);
         }
         public class RandomPlus
         {
@@ -11761,6 +11792,24 @@ namespace RandomStart
             public List<int> RandNum_12 { get; set; }
 
             public List<bool> RanBool { get; set; }
+
+            public RandomPlus()
+            {
+                RandNum_01 = new List<int>();
+                RandNum_02 = new List<int>();
+                RandNum_03 = new List<int>();
+                RandNum_04 = new List<int>();
+                RandNum_05 = new List<int>();
+                RandNum_06 = new List<int>();
+                RandNum_07 = new List<int>();
+                RandNum_08 = new List<int>();
+                RandNum_09 = new List<int>();
+                RandNum_10 = new List<int>();
+                RandNum_11 = new List<int>();
+                RandNum_12 = new List<int>();
+
+                RanBool = new List<bool>();
+            }
         }
         public RandomPlus LoadRando(string fileName)
         {
@@ -11785,10 +11834,10 @@ namespace RandomStart
 
             List<int> IntList = new List<int>();
 
-            if (!File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml"))
+            if (!File.Exists(sRandFile))
                 BuildRanXml(true, 0, IntList);
 
-            RandomPlus XSets = LoadRando("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml");
+            RandomPlus XSets = LoadRando(sRandFile);
             XSets.RanBool = bRandList;
             bRandList[iList] = !bRandList[iList];
             BuildRanXml(false, 0, IntList);
@@ -11863,7 +11912,7 @@ namespace RandomStart
 
                 XSets.RanBool = bRandList;
             }
-            SaveRando(XSets, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml");
+            SaveRando(XSets, sRandFile);
         }
         public int FindRandom(int iList, int iMin, int iMax)
         {
@@ -11873,10 +11922,10 @@ namespace RandomStart
             List<int> IntList = new List<int>();
             int iBe = 0;
 
-            if (!File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml"))
+            if (!File.Exists(sRandFile))
                 BuildRanXml(true, 0, IntList);
 
-            RandomPlus XSets = LoadRando("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml");
+            RandomPlus XSets = LoadRando(sRandFile);
 
             if (iList == 1)
                 IntList = XSets.RandNum_01;
@@ -11996,6 +12045,7 @@ namespace RandomStart
                         MyPedCollection[i].FaceScale = new List<float>(MyNewChar.FaceScale);
 
                         MyPedCollection[i].PedVoice = MyNewChar.PedVoice;
+                        break;
                     }
                 }
             }
@@ -12112,6 +12162,21 @@ namespace RandomStart
 
             public List<string> Tattoo_COl { get; set; }
             public List<string> Tattoo_Nam { get; set; }
+
+            public ClothBank()
+            {
+                ClothA = new List<int>();
+                ClothB = new List<int>();
+                ExtraA = new List<int>();
+                ExtraB = new List<int>();
+
+                Overlay = new List<int>();
+                OverlayColour = new List<int>();
+                OverlayOpc = new List<float>();
+
+                Tattoo_COl = new List<string>();
+                Tattoo_Nam = new List<string>();
+            }
         }
         public ClothBank LoadOutfit(string fileName)
         {
@@ -12126,10 +12191,10 @@ namespace RandomStart
             using (StreamWriter tEx = File.AppendText(sBeeLogs))
                 BeeLog("PedPool", tEx);
 
-            if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml"))
+            if (File.Exists(sSavedFile))
             {
                 ClothBankist ClothXML = new ClothBankist();
-                ClothXML = LoadChars("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml");
+                ClothXML = LoadChars(sSavedFile);
                 MyPedCollection = new List<NewClothBank>(ClothXML.FreeChars);
             }
             else
@@ -12202,7 +12267,6 @@ namespace RandomStart
 
                     File.Delete("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/" + sWardrobe[i]);
                 }
-
                 SetPedSaveXML();
             }
         }
@@ -12212,7 +12276,7 @@ namespace RandomStart
 
             ClothXML.FreeChars = new List<NewClothBank>(MyPedCollection);
 
-            SaveChars(ClothXML, "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml");
+            SaveChars(ClothXML, sSavedFile);
         }
         public void WritePedSave(string sPed)
         {
@@ -13293,7 +13357,7 @@ namespace RandomStart
                 BeeLog("RanPedMenu", tEx);
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[66]);
-            for (int i = 0; i < 1; i++) ;
+            //for (int i = 0; i < 1; i++) ;
             var Rand_01 = new UIMenuItem(sLangfile[67], "");
             var Rand_02 = new UIMenuItem(sLangfile[68], "");
             var Rand_03 = new UIMenuItem(sLangfile[69], "");
@@ -13458,13 +13522,19 @@ namespace RandomStart
                             bDead = true;
                             DeathArrestCont(true);
                         }
-
                     }
                     else
                     {
                         if (Game.Player.Character.Model == PedHash.Franklin || Game.Player.Character.Model == PedHash.Michael || Game.Player.Character.Model == PedHash.Trevor)
                         {
-                            if (Function.Call<bool>(Hash.HAS_SCRIPT_LOADED, "director_mode"))
+                            if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED) || Function.Call<bool>(Hash.IS_PLAYER_DEAD))
+                            {
+                                if (bInYankton)
+                                    Yankton(false);
+                                else if (bInCayoPerico)
+                                    CayoPerico(false);
+                            }
+                            else if (Function.Call<bool>(Hash.HAS_SCRIPT_LOADED, "director_mode"))
                             {
                                 Script.Wait(500);
                                 Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "director_mode");
