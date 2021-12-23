@@ -55,127 +55,127 @@ namespace RandomStart
 {
     public class Main : Script
     {
-        int iEye = 0;
-        int iPath = 0;
-        int iWait4 = 0;
-        int iHair01 = 0;
-        int iHair02 = 0;
-        int iUnlock = 0;
-        int iVersion = 0;
-        int iPedNum = 0;
-        int iLogCount = 0;
-        int iGrouping = 0;
-        int iPostAction = 0;
-        int iActionTime = 0;
-        int iAmModelHash = 0;
+        private int iEye = 0;
+        private int iPath = 0;
+        private int iWait4 = 0;
+        private int iHair01 = 0;
+        private int iHair02 = 0;
+        private int iUnlock = 0;
+        private int iPedNum = 0;
+        private int iVersion = 0;
+        private int iGrouping = 0;
+        private int iPostAction = 0;
+        private int iActionTime = 0;
+        private int iAmModelHash = 0;
+        private int iLangSupport = -1;
 
-        int PlayerGroups = Game.Player.Character.RelationshipGroup;
-        int FriendlyNPCs = World.AddRelationshipGroup("FriendNPCs");
-        int AttackingNPCs = World.AddRelationshipGroup("AttackNPCs");
+        private readonly int PlayerGroups = Game.Player.Character.RelationshipGroup;
+        private readonly int FriendlyNPCs = World.AddRelationshipGroup("FriendNPCs");
+        private readonly int AttackingNPCs = World.AddRelationshipGroup("AttackNPCs");
 
-        bool bStart = true;
-        bool bRandLocate = true;
+        private bool bStart = true;
+        private bool bRandLocate = true;
 
-        bool bMale = false;
-        bool bDead = false;
-        bool bFound = false;
-        bool bLoaded = false;
-        bool bFallenOff = false;
-        bool bOpenDoors = false;
-        bool bSavedPed = false;
-        bool bMenyooZZ = false;
-        bool bEnhanceT = false;
-        bool bPrisHeli = false;
-        bool bMethFail = false;
-        bool bMenuOpen = false;
-        bool bWeaponFault = false;
-        bool bAddBeachParty = true;
-        bool bBeltUp = false;
-        bool bDisableDLCVeh = true;
-        bool bInYankton = false;
-        bool bKeyFinder = false;
-        bool bMethActor = false;
-        bool bDontStopMe = false;
-        bool bMainProtag = false;
-        bool bKeepWeapons = false;
-        bool bAllowControl = false;
-        bool bInCayoPerico = false;
-        bool bDisableRecord = false;
-        bool bLoadUpOnYacht = false;
-        bool bPlayingNewMissions = false;
+        private bool bMale = false;
+        private bool bDead = false;
+        private bool bFound = false;
+        private bool bLoaded = false;
+        private bool bBeltUp = false;
+        private bool bSavedPed = false;
+        private bool bMenyooZZ = false;
+        private bool bEnhanceT = false;
+        private bool bPrisHeli = false;
+        private bool bMethFail = false;
+        private bool bMenuOpen = false;
+        private bool bFallenOff = false;
+        private bool bOpenDoors = false;
+        private bool bInYankton = false;
+        private bool bKeyFinder = false;
+        private bool bMethActor = false;
+        private bool bDontStopMe = false;
+        private bool bMainProtag = false;
+        private bool bWeaponFault = false;
+        private bool bKeepWeapons = false;
+        private bool bAllowControl = false;
+        private bool bInCayoPerico = false;
+        private bool bAddBeachParty = true;
+        private bool bDisableDLCVeh = true;
+        private bool bDisableRecord = false;
+        private bool bLoadUpOnYacht = false;
+        private bool bPlayingNewMissions = false;
 
 
-        string sVersion = "2.2";
-        string sFirstName = "PlayerX";
-        string sMainChar = "player_zero";
-        string sFunChar01 = "player_one";
-        string sFunChar02 = "player_two";
-        string sBeeLogs = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSLog.txt";
-        string sSettings = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml";
-        string sLangsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStartLang.Xml";
-        string sWeapsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml";
-        string sNamesFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml";
-        string sRandFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml";
-        string sSavedFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml";
-        string sExitAn_01 = "";
-        string sExitAn_02 = "";
-        string sPedVoices = "";
+        private readonly string sVersion = "2.3";
+        private string sFirstName = "PlayerX";
+        private string sMainChar = "player_zero";
+        private string sFunChar01 = "player_one";
+        private string sFunChar02 = "player_two";
+        private readonly string sBeeLogs = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSLog.txt";
+        private readonly string sSettings = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml";
+        private readonly string sLangsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStartLang.Xml";
+        private readonly string sWeapsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml";
+        private readonly string sNamesFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml";
+        private readonly string sRandFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml";
+        private readonly string sSavedFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml";
+        private readonly string sRandLanguage = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language";
 
-        List<int> iAmmoLs = new List<int>();
-        List<int> iPlayWep = new List<int>();
-        List<int> iOverlay = new List<int>();
-        List<int> iOverlayColour = new List<int>();
+        private string sExitAn_01 = "";
+        private string sExitAn_02 = "";
+        private string sPedVoices = "";
 
-        List<bool> bRandList = new List<bool>();
+        private List<int> iOverlay = new List<int>();
+        private List<int> iOverlayColour = new List<int>();
 
-        List<float> fHeads = new List<float>();
-        List<float> fOverlayOpc = new List<float>();
-        List<float> fAceFeats = new List<float>();
+        private List<bool> bRandList = new List<bool>();
 
-        List<string> sNameFem = new List<string>();
-        List<string> sNameMal = new List<string>();
-        List<string> sNameSir = new List<string>();
-        List<string> sLangfile = new List<string>();
-        List<string> sWeapList = new List<string>();
-        List<string> sAddsList = new List<string>();
-        List<string> sDebuggler = new List<string>();
-        List<string> sPlayerAddsList = new List<string>();
-        List<string> sTatBase = new List<string>();
-        List<string> sTatName = new List<string>();
-        List<string> AddTatBase = new List<string>();
-        List<string> AddTatName = new List<string>();
-        List<string> ThemVoices = new List<string>();
+        private List<float> fHeads = new List<float>();
+        private List<float> fOverlayOpc = new List<float>();
+        private List<float> fAceFeats = new List<float>();
 
-        List<Ped> PeddyList = new List<Ped>();
-        List<Ped> PedParty = new List<Ped>();
-        List<Prop> PropList = new List<Prop>();
-        List<Vector3> RanLoc_01 = new List<Vector3>();
-        List<Vector3> PeskyDoors = new List<Vector3>();
-        List<Vehicle> VehList = new List<Vehicle>();
-        List<Weather> WetherBe = new List<Weather>();
-        List<VehicleSeat> Vseats = new List<VehicleSeat>();
-        List<NewClothBank> MyPedCollection = new List<NewClothBank>();
+        private List<string> sNameFem = new List<string>();
+        private List<string> sNameMal = new List<string>();
+        private List<string> sNameSir = new List<string>();
+        private List<string> sLangfile = new List<string>();
+        private List<string> sWeapList = new List<string>();
+        private List<string> sAddsList = new List<string>();
+        private List<string> sDebuggler = new List<string>();
+        private List<string> sTatBase = new List<string>();
+        private List<string> sTatName = new List<string>();
+        private List<string> AddTatBase = new List<string>();
+        private List<string> AddTatName = new List<string>();
+        private List<string> ThemVoices = new List<string>();
 
-        List<int> SABlipsAlfa = new List<int>();
-        List<bool> SABlipsMiniM = new List<bool>();
-        List<Vector3> SABlipsPos = new List<Vector3>();
-        List<BlipColor> SABlipsColor = new List<BlipColor>();
-        List<BlipSprite> SABlipsSCA = new List<BlipSprite>();
+        private List<Ped> PeddyList = new List<Ped>();
+        private List<Ped> PedParty = new List<Ped>();
+        private List<Prop> PropList = new List<Prop>();
+        private List<Vector3> RanLoc_01 = new List<Vector3>();
+        private List<Vector3> PeskyDoors = new List<Vector3>();
+        private List<Vehicle> VehList = new List<Vehicle>();
+        private List<Weather> WetherBe = new List<Weather>();
+        private List<VehicleSeat> Vseats = new List<VehicleSeat>();
+        private List<NewClothBank> MyPedCollection = new List<NewClothBank>();
 
-        Vector3 vPedTarget = Vector3.Zero;
-        Vector3 vPlayerTarget = Vector3.Zero;
-        Vector3 vAreaRest = Vector3.Zero;
-        Vector3 vHeaven = Vector3.Zero;
+        private List<int> SABlipsAlfa = new List<int>();
+        private List<bool> SABlipsMiniM = new List<bool>();
+        private List<Vector3> SABlipsPos = new List<Vector3>();
+        private List<BlipColor> SABlipsColor = new List<BlipColor>();
+        private List<BlipSprite> SABlipsSCA = new List<BlipSprite>();
+        private List<WeaponSaver> wMyWeaps = new List<WeaponSaver>();
 
-        Ped pPilot = null;
+        private Vector3 vPedTarget = Vector3.Zero;
+        private Vector3 vPlayerTarget = Vector3.Zero;
+        private Vector3 vAreaRest = Vector3.Zero;
+        private Vector3 vHeaven = Vector3.Zero;
 
-        Relationship RelateReset = Relationship.Neutral;
+        private Ped pPilot = null;
 
-        Keys KBuild = Keys.L;
+        private Relationship RelateReset = Relationship.Neutral;
 
-        Vehicle Shoaf = null;
-        Vehicle RideThis = null;
-        Vehicle PrisEscape = null;
+        private Keys KBuild = Keys.L;
+
+        private Vehicle Shoaf = null;
+        private Vehicle RideThis = null;
+        private Vehicle PrisEscape = null;
 
         private ScriptSettings MenyooTest;
 
@@ -187,30 +187,18 @@ namespace RandomStart
             KeyDown += OnKeyDown;
             Interval = 1;
         }
-        private void BeeLog(string sLogs, TextWriter tEx)
+        private void LogginSyatem(string sLog)
         {
-            iLogCount += 1;
-            if (iLogCount > 25000)
-            {
-                iLogCount = 0;
-                File.Delete(sBeeLogs);
-                for (int i = 0; i < sDebuggler.Count; i++)
-                    tEx.WriteLine(sDebuggler[i]);
-                tEx.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()} {"--" + sLogs}");
-                sDebuggler.Clear();
-            }
-            else if (iLogCount > 24950)
-            {
-                tEx.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()} {"--" + sLogs}");
-                sDebuggler.Add($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()} {"--" + sLogs}");
-            }
-            else
-                tEx.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()} {"--" + sLogs}");
+            using (StreamWriter tEx = File.AppendText(sBeeLogs))
+                BeLogs(sLog, tEx);
+        }
+        private void BeLogs(string sLogs, TextWriter tEx)
+        {
+            tEx.WriteLine($"{DateTime.Now.ToLongTimeString()} {DateTime.Now.ToLongDateString()} {"--" + sLogs}");
         }
         private void CleanUpMess()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CleanUpMess", tEx);
+            LogginSyatem("CleanUpMess");
 
             while (Game.IsControlPressed(2, GTA.Control.VehicleExit))
                 Script.Wait(100);
@@ -249,8 +237,7 @@ namespace RandomStart
         }
         private void PostLaunchAct()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PostLaunchAct, iPostAction == "+ iPostAction, tEx);
+            LogginSyatem("PostLaunchAct, iPostAction == " + iPostAction);
 
             if (iPostAction == 1)
             {
@@ -305,7 +292,7 @@ namespace RandomStart
                 Script.Wait(4000);
                 Game.Player.Character.Task.ClearAll();
             }       //jogger
-            else 
+            else
             {
                 Game.Player.Character.Task.ClearAll();
             }       //Atv-Bike
@@ -313,8 +300,8 @@ namespace RandomStart
         }
         private void CleanPeds()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CleanPeds", tEx);
+
+            LogginSyatem("CleanPeds");
 
             for (int i = 0; i < PeddyList.Count; i++)
                 PeddyList[i].MarkAsNoLongerNeeded();
@@ -322,8 +309,8 @@ namespace RandomStart
         }
         private void CleanProps()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CleanProps", tEx);
+
+            LogginSyatem("CleanProps");
 
             for (int i = 0; i < PropList.Count; i++)
             {
@@ -334,8 +321,8 @@ namespace RandomStart
         }
         private void CleanVeh()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CleanVeh", tEx);
+
+            LogginSyatem("CleanVeh");
 
             for (int i = 0; i < VehList.Count; i++)
             {
@@ -343,38 +330,6 @@ namespace RandomStart
                 VehList[i].MarkAsNoLongerNeeded();
             }
             VehList.Clear();
-        }
-        private void ReturnWeaps()
-        {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("ReturnWeaps", tEx);
-
-            LoadSetXML();
-
-            Ped Peddy = Game.Player.Character;
-
-            for (int i = 0; i < iPlayWep.Count; i++)
-            {
-                int iAmmo = iAmmoLs[i];
-
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), 0, false, true);
-
-                for (int ii = 0; ii < sPlayerAddsList.Count; ii++)
-                {
-                    if (Function.Call<bool>(Hash.DOES_WEAPON_TAKE_WEAPON_COMPONENT, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), Function.Call<int>(Hash.GET_HASH_KEY, sPlayerAddsList[ii])))
-                    {
-                        Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]]), Function.Call<int>(Hash.GET_HASH_KEY, sPlayerAddsList[ii]));
-                    }
-                }
-                LockNLoad(iAmmo, sWeapList[iPlayWep[i]], Peddy);
-
-                if (Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[iPlayWep[i]])) < iAmmo)
-                {
-                    if (!bWeaponFault)
-                        bWeaponFault = true;
-                }
-            }
-            Function.Call(Hash.SET_PED_CURRENT_WEAPON_VISIBLE, Game.Player.Character, false, true, true, true);
         }
         private void LockNLoad(int iAmmo, string sWeap, Ped Peddy)
         {
@@ -403,19 +358,13 @@ namespace RandomStart
             public bool DisableRecord { get; set; }
             public bool KeepWeapons { get; set; }
             public bool BeltUp { get; set; }
-
             public int Version { get; set; }
-
-
-            public List<int> iPlayWeaps { get; set; }
-            public List<string> PlayCompsList { get; set; }
-            public List<int> AmmoLs { get; set; }
+            public int LangSupport { get; set; }
+            public List<WeaponSaver> YourWeaps { get; set;}
 
             public SettingsXML()
             {
-                iPlayWeaps = new List<int>();
-                PlayCompsList = new List<string>();
-                AmmoLs = new List<int>();
+                YourWeaps = new List<WeaponSaver>();
             }
         }
         public SettingsXML LoadSettings(string fileName)
@@ -436,9 +385,8 @@ namespace RandomStart
         }
         private void LoadSetXML()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("LoadSetXML", tEx);
-
+            LogginSyatem("LoadSetXML");
+            bool bNagg = false;
             if (File.Exists(sSettings))
             {
                 SettingsXML SetsXML = LoadSettings(sSettings);
@@ -449,11 +397,7 @@ namespace RandomStart
                 bDisableRecord = SetsXML.DisableRecord;
                 bKeepWeapons = SetsXML.KeepWeapons;
 
-                iPlayWep = SetsXML.iPlayWeaps;
                 iVersion = SetsXML.Version;
-
-                iAmmoLs = SetsXML.AmmoLs;
-                sPlayerAddsList = SetsXML.PlayCompsList;
 
                 bBeltUp = SetsXML.BeltUp;
                 PlayerBelter();
@@ -467,24 +411,34 @@ namespace RandomStart
                 if (bRandLocate && bLoadUpOnYacht)
                     bRandLocate = false;
 
-                if (iVersion != 22000)
+                if (iVersion != 23000)
+                    bNagg = true;
+                else
                 {
-                    NagScreen();
+                    iLangSupport = SetsXML.LangSupport;
+                    wMyWeaps = SetsXML.YourWeaps;
                 }
             }
             else
+                bNagg = true;
+
+            FindaLang();
+
+            if (bNagg)
                 NagScreen();
+
+            if (wMyWeaps.Count < 1)
+                GetWeaps();
         }
         private void NagScreen()
         {
             UI.Notify(sLangfile[0]);
-            iVersion = 22000;
+            iVersion = 23000;
             WriteSetXML();
         }
         private void WriteSetXML()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("WriteSetXML", tEx);
+            LogginSyatem("WriteSetXML");
 
             if (KBuild == Keys.None)
                 KBuild = Keys.L;
@@ -498,13 +452,9 @@ namespace RandomStart
             Set.DisableRecord = bDisableRecord;
             Set.KeepWeapons = bKeepWeapons;
             Set.BeltUp = bBeltUp;
-
-            Set.iPlayWeaps = iPlayWep;
-            Set.PlayCompsList = sPlayerAddsList; 
-            Set.AmmoLs = iAmmoLs;
-
             Set.Version = iVersion;
-
+            Set.LangSupport = iLangSupport;
+            Set.YourWeaps = wMyWeaps;
             SaveSetMain(Set, sSettings);
         }
         public class LangXML
@@ -534,8 +484,7 @@ namespace RandomStart
         }
         private void Languages()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("Languages", tEx);
+            LogginSyatem("Languages");
 
             sLangfile.Clear();
             sLangfile.Add("If you didn't download this file from 'gta5-mods.com' then delete it and download the original from 'gta5-mods.com/scripts/random-start-adopcalipt'");     //0
@@ -673,7 +622,7 @@ namespace RandomStart
             sLangfile.Add("Chimp Hole");      //132
             sLangfile.Add("Neck Thickness");      //133
             sLangfile.Add("Face Features");      //134
-            sLangfile.Add("blank");      //135
+            sLangfile.Add("Reset Owned Weapon List");      //135
             sLangfile.Add("blank");      //136
             sLangfile.Add("blank");      //137
             sLangfile.Add("blank");      //138
@@ -686,18 +635,161 @@ namespace RandomStart
         }
         private void FindaLang()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("FindaLang", tEx);
+            bool bNoLAng = true;
+            LogginSyatem("LangReader");
 
-            if (File.Exists(sLangsFile))
+            if (iLangSupport == -1)
             {
-                LangXML LangXML = LoadLang(sLangsFile);
-                sLangfile.Clear();
-                sLangfile = LangXML.Langfile;
-                if (sLangfile.Count < 115)
-                    Languages();
+                if (Game.Language == Language.American)
+                    iLangSupport = 1;
+                else if (Game.Language == Language.Chinese)
+                    iLangSupport = 2;
+                else if (Game.Language == Language.ChineseSimplified)
+                    iLangSupport = 3;
+                else if (Game.Language == Language.French)
+                    iLangSupport = 4;
+                else if (Game.Language == Language.German)
+                    iLangSupport = 5;
+                else if (Game.Language == Language.Italian)
+                    iLangSupport = 6;
+                else if (Game.Language == Language.Japanese)
+                    iLangSupport = 7;
+                else if (Game.Language == Language.Korean)
+                    iLangSupport = 8;
+                else if (Game.Language == Language.Mexican)
+                    iLangSupport = 9;
+                else if (Game.Language == Language.Polish)
+                    iLangSupport = 10;
+                else if (Game.Language == Language.Portuguese)
+                    iLangSupport = 11;
+                else if (Game.Language == Language.Russian)
+                    iLangSupport = 12;
+                else if (Game.Language == Language.Spanish)
+                    iLangSupport = 13;
             }
-            else
+
+            if (Directory.Exists(sRandLanguage))
+            {
+                if (iLangSupport == 1)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/English.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/English.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 2)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Chinese.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Chinese.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 3)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/ChineseS.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/ChineseS.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 4)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/French.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/French.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 5)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/German.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/German.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 6)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Italian.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Italian.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 7)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Japanese.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Japanese.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 8)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Korean.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Korean.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 9)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Mexican.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Mexican.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 10)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Polish.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Polish.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 11)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Portuguese.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Portuguese.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 12)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Russian.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Russian.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+                else if (iLangSupport == 13)
+                {
+                    if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Spanish.Xml"))
+                    {
+                        LangXML LangXML = LoadLang("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Spanish.Xml");
+                        sLangfile = LangXML.Langfile;
+                        bNoLAng = false;
+                    }
+                }
+            }
+
+            if (bNoLAng)
                 Languages();
         }
         public class WeaponsXML
@@ -729,8 +821,7 @@ namespace RandomStart
         }
         private void LoadupWeaponXML()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("LoadupWeaponXML", tEx);
+            LogginSyatem("LoadupWeaponXML");
 
             if (File.Exists(sWeapsFile))
             {
@@ -753,8 +844,8 @@ namespace RandomStart
         }
         private void BuildWeapXML()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("BuildWeapXML", tEx);
+
+            LogginSyatem("BuildWeapXML");
 
             List<string> sWepList = new List<string>();
             sWepList.Add("Add_Your_Custom_Weapons_Here");
@@ -770,7 +861,7 @@ namespace RandomStart
             SaveWeaps(MyWeapsXML, sWeapsFile);
         }
         private void WeatherList()
-        { 
+        {
             WetherBe.Clear();
             WetherBe.Add(Weather.ExtraSunny);
             WetherBe.Add(Weather.Clear);
@@ -1882,6 +1973,14 @@ namespace RandomStart
             sWeapList.Add("WEAPON_parachute");  //0xFBAB5776",
             sWeapList.Add("WEAPON_hazardcan");  //0xBA536372"--97
 
+            sWeapList.Add("WEAPON_EMPLAUNCHER");  // 0xDB26713A--98
+
+            sWeapList.Add("WEAPON_HEAVYRIFLE");  //0xC78D71B4 --99
+
+            sWeapList.Add("WEAPON_FERTILIZERCAN");//100
+
+            sWeapList.Add("WEAPON_STUNGUN_MP");//101
+
             sAddsList.Add("COMPONENT_ADVANCEDRIFLE_CLIP_01");//0xFA8FA10F,
             sAddsList.Add("COMPONENT_ADVANCEDRIFLE_CLIP_02");//0x8EC1C979,
             sAddsList.Add("COMPONENT_ADVANCEDRIFLE_VARMOD_LUXE");//0x377CD377,
@@ -2275,11 +2374,22 @@ namespace RandomStart
             sAddsList.Add("COMPONENT_AT_AR_FLSH");//
             sAddsList.Add("COMPONENT_AT_AR_SUPP");//
 
+            sAddsList.Add("COMPONENT_HEAVYRIFLE_CLIP_01");// | 0x5AF49386
+            sAddsList.Add("COMPONENT_HEAVYRIFLE_CLIP_02");//");// | 0x6CBF371B
+            sAddsList.Add("COMPONENT_HEAVYRIFLE_SIGHT_01");// | 0xB3E1C452
+            sAddsList.Add("COMPONENT_AT_SCOPE_MEDIUM");// | 0xA0D89C42
+            sAddsList.Add("COMPONENT_AT_AR_FLSH");// | 0x7BC4CDDC
+            sAddsList.Add("COMPONENT_AT_AR_SUPP");// | 0x837445AA
+            sAddsList.Add("COMPONENT_AT_AR_AFGRIP");// | 0xC164F53
+            sAddsList.Add("COMPONENT_HEAVYRIFLE_CAMO1");// | 0xEC9FECD9
+            sAddsList.Add("COMPONENT_APPISTOL_VARMOD_SECURITY");//
+            sAddsList.Add("COMPONENT_MICROSMG_VARMOD_SECURITY");//
+            sAddsList.Add("COMPONENT_PUMPSHOTGUN_VARMOD_SECURITY");//
         }
         private void NSPMComXml()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("NSPMComXml", tEx);
+
+            LogginSyatem("NSPMComXml");
 
             if (File.Exists("" + Directory.GetCurrentDirectory() + "/Scripts/NEW_SPM_XML.Xml"))
             {
@@ -2303,8 +2413,8 @@ namespace RandomStart
         }
         private void NSPMSetXml()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("NSPMSetXml", tEx);
+
+            LogginSyatem("NSPMSetXml");
 
             XmlWriterSettings NSPMsettings = new XmlWriterSettings();
             NSPMsettings.Indent = true;
@@ -2327,12 +2437,12 @@ namespace RandomStart
         }
         private void BuildBoolList()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("BuildBoolList", tEx);
+
+            LogginSyatem("BuildBoolList");
 
             bool bOnOff = true;
             int iList = 30;
-            if (bRandList.Count() != iList -1)
+            if (bRandList.Count() != iList - 1)
             {
                 for (int i = 0; i < iList; i++)
                 {
@@ -2341,43 +2451,75 @@ namespace RandomStart
                 }
             }
         }
+        public class WeaponSaver
+        {
+            public string sPlayWeaps { get; set; }
+            public List<string> PlayCompsList { get; set; }
+            public int iAmmos { get; set; }
+
+            public WeaponSaver()
+            {
+                PlayCompsList = new List<string>();
+            }
+        }
+        private void ReturnWeaps()
+        {
+            LogginSyatem("ReturnWeaps");
+
+            Ped Peddy = Game.Player.Character;
+
+            for (int i = 0; i < wMyWeaps.Count; i++)
+            {
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].sPlayWeaps), 0, false, true);
+
+                for (int ii = 0; ii < wMyWeaps[i].PlayCompsList.Count; ii++)
+                {
+                    if (Function.Call<bool>(Hash.DOES_WEAPON_TAKE_WEAPON_COMPONENT, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].sPlayWeaps), Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayCompsList[ii])))
+                    {
+                        Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].sPlayWeaps), Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayCompsList[ii]));
+                    }
+                }
+                LockNLoad(wMyWeaps[i].iAmmos, wMyWeaps[i].sPlayWeaps, Peddy);
+
+                if (Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].sPlayWeaps)) < wMyWeaps[i].iAmmos)
+                {
+                    if (!bWeaponFault)
+                        bWeaponFault = true;
+                }
+            }
+            Function.Call(Hash.SET_PED_CURRENT_WEAPON_VISIBLE, Game.Player.Character, false, true, true, true);
+        }
         private void GetWeaps()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("GetWeaps", tEx);
+            LogginSyatem("GetWeaps");
 
-            iPlayWep.Clear();
-            iAmmoLs.Clear();
-            sPlayerAddsList.Clear();
+            wMyWeaps.Clear();
             Ped Peddy = Game.Player.Character;
 
             for (int i = 0; i < sWeapList.Count; i++)
             {
                 if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), false))
                 {
-                    iPlayWep.Add(i);
+                    WeaponSaver AdThis = new WeaponSaver();
+                    AdThis.sPlayWeaps = sWeapList[i];
                     int iAmmos = 0;
-
                     iAmmos = Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]));
                     if (iAmmos < 1)
                         iAmmos = 1;
-
-
-                    iAmmoLs.Add(iAmmos);
+                    AdThis.iAmmos = iAmmos;
 
                     for (int ii = 0; ii < sAddsList.Count; ii++)
                     {
                         if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON_COMPONENT, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), Function.Call<int>(Hash.GET_HASH_KEY, sAddsList[ii])))
-                            sPlayerAddsList.Add(sAddsList[ii]);
+                            AdThis.PlayCompsList.Add(sAddsList[ii]);
                     }
-
-                    ///if (i == 19 || i == 24 || i == 74 || i == 72 || i == 68 || i == 63 || i == 61 || i == 58 || i == 56 || i == 46 || i == 39 || i == 29)--Mk2Weapps
+                    wMyWeaps.Add(AdThis);
                 }
             }
             WriteSetXML();
         }
         public int MaxAmmo(string sWeap, Ped Peddy)
-        {         
+        {
             int iAmmo = 0;
             int iWeap = Function.Call<int>(Hash.GET_HASH_KEY, sWeap);
 
@@ -2389,8 +2531,8 @@ namespace RandomStart
         }
         private void SetUpMod()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetUpMod", tEx);
+
+            LogginSyatem("SetUpMod");
 
             World.SetRelationshipBetweenGroups(Relationship.Hate, PlayerGroups, AttackingNPCs);
             World.SetRelationshipBetweenGroups(Relationship.Hate, AttackingNPCs, PlayerGroups);
@@ -2446,11 +2588,10 @@ namespace RandomStart
             if (File.Exists(sBeeLogs))
                 File.Delete(sBeeLogs);
 
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("LoadUp", tEx);
+            LogginSyatem("LoadUp");
 
+            FaceTheFacts();
             PedPools();
-            FindaLang();
             WeatherList();
             IHearVoices();
             SeatList();
@@ -2459,16 +2600,15 @@ namespace RandomStart
             LoadupWeaponXML();
             NSPMComXml();
             LoadSetXML();
+
             BuildBoolList();
-            GetWeaps();
             SetUpMod();
 
             StartTheMod(0, true);
         }
         private void StartTheMod(int iSelects, bool bLoading)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("StartTheMod, iSelects == " + iSelects + ", bLoading == " + bLoading, tEx);
+            LogginSyatem("StartTheMod, iSelects == " + iSelects + ", bLoading == " + bLoading);
 
             if (MyPedCollection.Count == 1)
             {
@@ -2510,7 +2650,7 @@ namespace RandomStart
                 {
                     sMainChar = "player_zero";
                     sFunChar01 = "player_one";
-                    sFunChar02 = "player_two";;
+                    sFunChar02 = "player_two"; ;
                 }
 
                 if (bRandLocate)
@@ -2520,10 +2660,7 @@ namespace RandomStart
                     if (bMainProtag)
                     {
                         if (Game.Player.Character.Model != PedHash.Franklin || Game.Player.Character.Model != PedHash.Michael || Game.Player.Character.Model != PedHash.Trevor)
-                        {
                             YourRanPed(sMainChar);
-                            ReturnWeaps();
-                        }
                     }
                     else
                     {
@@ -2561,8 +2698,8 @@ namespace RandomStart
         }
         private void RandomLocations(int iSelect)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("RandomLocations, iSelect == " + iSelect, tEx);
+
+            LogginSyatem("RandomLocations, iSelect == " + iSelect);
 
             List<float> fHeading = new List<float>();
             List<Vector3> Pos_01 = new List<Vector3>();
@@ -4999,7 +5136,7 @@ namespace RandomStart
                 }       //Airport
                 else if (iSubSet == 14)
                 {
-                    Pos_01.Add(new Vector3(-304.5138f, -1544.802f, 25.85103f)); fHeading.Add(154.0407f);           
+                    Pos_01.Add(new Vector3(-304.5138f, -1544.802f, 25.85103f)); fHeading.Add(154.0407f);
                     iAction = 1;
                     iEnterVeh = 10;
                 }       //"Garbage Worker");  
@@ -5842,31 +5979,8 @@ namespace RandomStart
 
             if (bMainProtag)
             {
-                if (Game.Player.Character.Model == PedHash.Franklin || Game.Player.Character.Model == PedHash.Michael || Game.Player.Character.Model == PedHash.Trevor)
-                {
-                    if (bKeepWeapons)
-                        ReturnWeaps();
-                    else
-                    {
-                        Game.Player.Character.Weapons.RemoveAll();
-                        if (iWeapons > 0)
-                            PedWeapons(Game.Player.Character, iWeapons);
-                    }
-                }
-                else
-                {
+                if (Game.Player.Character.Model != PedHash.Franklin || Game.Player.Character.Model != PedHash.Michael || Game.Player.Character.Model != PedHash.Trevor)
                     YourRanPed(sMainChar);
-                    if (bKeepWeapons)
-                        ReturnWeaps();
-                    else
-                    {
-                        if (iWeapons == 0)
-                            Game.Player.Character.Weapons.RemoveAll();
-                        else
-                            PedWeapons(Game.Player.Character, iWeapons);
-                    }
-                }
-
             }
             else
             {
@@ -5874,14 +5988,6 @@ namespace RandomStart
                     YourSavedPed();
                 else
                     YourRanPed(BuildRandomPed(iSelect, iSubSet));
-
-                if (!bKeepWeapons)
-                {
-                    if (iWeapons == 0)
-                        Game.Player.Character.Weapons.RemoveAll();
-                    else
-                        PedWeapons(Game.Player.Character, iWeapons);
-                }
             }
 
             if (iAction > 0)
@@ -6349,7 +6455,7 @@ namespace RandomStart
 
                     List<string> DanceSteps = new List<string>();
                     if (Game.Player.Character.Gender == Gender.Male)
-                        DanceSteps = DanceList(true, RandInt(1,3));
+                        DanceSteps = DanceList(true, RandInt(1, 3));
                     else
                         DanceSteps = DanceList(false, RandInt(1, 3));
 
@@ -6402,15 +6508,15 @@ namespace RandomStart
 
                 if (iSelect > 5 && iSelect != 24)
                 {
-                    for (int i = 0; i < RandInt(2,5); i++)
+                    for (int i = 0; i < RandInt(2, 5); i++)
                     {
                         Vector3 vRonud = Pos_01[iPlace].Around(10.00f);
                         vRonud.Z = World.GetGroundHeight(vRonud) + 0.50f;
 
-                        NPCSpawn(BuildRandomPed(iSelect, iSubSet), vRonud, (float)RandInt(0,360), 1, 0, null, true);
+                        NPCSpawn(BuildRandomPed(iSelect, iSubSet), vRonud, (float)RandInt(0, 360), 1, 0, null, true);
                     }
                 }
-                
+
                 Script.Wait(2000);
                 Game.FadeScreenIn(1000);
                 CleanUpMess();
@@ -6430,11 +6536,21 @@ namespace RandomStart
                 Function.Call(Hash.SET_VEHICLE_POPULATION_BUDGET, 3);
                 Function.Call(Hash.SET_PED_POPULATION_BUDGET, 3);
             }
+
+            if (bKeepWeapons)
+                ReturnWeaps();
+            else
+            {
+                Game.Player.Character.Weapons.RemoveAll();
+
+                if (iWeapons != 0)
+                    PedWeapons(Game.Player.Character, iWeapons);
+            }
         }
         public string BuildRandVeh(int iList, int iSubSet)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("BuildRandVeh, iList == " + iList + ", iSubSet == " + iSubSet, tEx);
+
+            LogginSyatem("BuildRandVeh, iList == " + iList + ", iSubSet == " + iSubSet);
 
             List<string> sVeh = new List<string>();
             string sVehc = "";
@@ -6611,6 +6727,9 @@ namespace RandomStart
                     sVeh.Add("YOUGA3"); //>                 ------------DIssapears....
                     sVeh.Add("TOREADOR"); //><!-- Pegassi Toreador -->
                     sVeh.Add("ITALIRSX"); //><!-- Grotti Itali RSX -->
+                    sVeh.Add("champion"); //Dewbauchee Champion
+                    sVeh.Add("ignus"); //Pegassi Ignus
+                    sVeh.Add("zeno"); //Overflod Zeno
                 }
             }
             else if (iList == 4)
@@ -6745,6 +6864,13 @@ namespace RandomStart
                     sVeh.Add("CLUB"); //>                 -                        -----------DIssapears....
                     sVeh.Add("BRIOSO2"); //>Grotti Brioso 300
                     sVeh.Add("WEEVIL"); //><!-- BF Weevil -->
+                    sVeh.Add("buffalo4"); //Bravado Buffalo STX
+                    sVeh.Add("astron"); //Pfister Astron
+                    sVeh.Add("baller7"); //Gallivanter Baller ST
+                    sVeh.Add("granger2"); //Declasse Granger 3600LX
+                    sVeh.Add("iwagen"); //Obey I-Wagen
+                    sVeh.Add("jubilee"); //Enus Jubilee
+                    sVeh.Add("patriot3"); //Mammoth Patriot Mil-Spec
                 }
             }
             else if (iList == 5)
@@ -6795,7 +6921,11 @@ namespace RandomStart
                 sVeh.Add("RHAPSODY"); //>
 
                 if (!bDisableDLCVeh)
+                {
                     sVeh.Add("NEBULA"); //>                 ------------DIssapears....
+                    sVeh.Add("cinquemila"); //Lampadati Cinquemila
+                    sVeh.Add("deity"); //Enus Deity
+                }
             }
             else if (iList == 6)
             {
@@ -7055,8 +7185,8 @@ namespace RandomStart
         }
         public string BuildRandomPed(int iPedtype, int iSubType)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("BuildRandomPed, iPedtype == " + iPedtype + ", iSubType == " + iSubType, tEx);
+
+            LogginSyatem("BuildRandomPed, iPedtype == " + iPedtype + ", iSubType == " + iSubType);
 
             List<string> sPeddy = new List<string>();
 
@@ -7655,8 +7785,8 @@ namespace RandomStart
         }
         private void YourRanPed(string PedName)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YourRanPed, PedName == " + PedName, tEx);
+
+            LogginSyatem("YourRanPed, PedName == " + PedName);
 
             var model = new Model(PedName);
             model.Request();    // Check if the model is valid
@@ -7675,15 +7805,12 @@ namespace RandomStart
                 int iHats = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS, Game.Player.Character, 0);
                 Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character, 0, RandInt(-1, iHats), 0, false);
                 Function.Call(Hash.SET_MODEL_AS_NO_LONGER_NEEDED, model.Hash);
-
-                if (bKeepWeapons)
-                    ReturnWeaps();
             }
         }
         private void YourSavedPed()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YourSavedPed", tEx);
+
+            LogginSyatem("YourSavedPed");
 
             if (MyPedCollection.Count > 1)
                 SavePedLoader(MyPedCollection[RandInt(1, MyPedCollection.Count - 1)]);
@@ -7692,8 +7819,8 @@ namespace RandomStart
         }
         private void SavePedLoader(NewClothBank MyWoven)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SavePedLoader, ", tEx);
+
+            LogginSyatem("SavePedLoader, ");
 
             List<int> iWardrobe01 = new List<int>();
             List<int> iWardrobe02 = new List<int>();
@@ -7763,15 +7890,12 @@ namespace RandomStart
                     Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character, sPedVoices);
 
                 sFirstName = MyWoven.Name;
-
-                if (bKeepWeapons)
-                    ReturnWeaps();
             }
         }
         private void CustomFree(List<int> iWardrobe01, List<int> iWardrobe02, List<int> iWardrobe01Extra, List<int> iWardrobe02Extra, List<int> FaceInt, List<float> FaceFloat)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CustomFree", tEx);
+
+            LogginSyatem("CustomFree");
 
             Ped Peddy = Game.Player.Character;
 
@@ -7807,8 +7931,8 @@ namespace RandomStart
         }
         private void CustomRand(List<int> iWardrobe01, List<int> iWardrobe02, List<int> iWardrobe01Extra, List<int> iWardrobe02Extra)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CustomRand", tEx);
+
+            LogginSyatem("CustomRand");
 
             Ped Peddy = Game.Player.Character;
 
@@ -7825,8 +7949,8 @@ namespace RandomStart
         }
         private void AddVeh(string sVehic, Vector3 Vpos, float fHead, int iEnterV, int iPedtype, int iSubType)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("AddVeh, sVehic == "+ sVehic + ", iEnterV == " + iEnterV + ", iPedtype == " + iPedtype + ", iSubType == " + iSubType, tEx);
+
+            LogginSyatem("AddVeh, sVehic == " + sVehic + ", iEnterV == " + iEnterV + ", iPedtype == " + iPedtype + ", iSubType == " + iSubType);
 
             int iVehHash = Function.Call<int>(Hash.GET_HASH_KEY, sVehic);
 
@@ -7854,8 +7978,8 @@ namespace RandomStart
         }
         private void MaxMods(Vehicle Vehic)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("MaxMods", tEx);
+
+            LogginSyatem("MaxMods");
 
             Function.Call(Hash.SET_VEHICLE_MOD_KIT, Vehic, 0);
             bool bMotoBike = Vehic.ClassType == VehicleClass.Motorcycles;
@@ -7888,8 +8012,8 @@ namespace RandomStart
         }
         private void EnterVeh(Vehicle Vehic, int iEnterV, int iPedtype, int iSubType)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("EnterVeh, iEnterV == " + iEnterV + ", iPedtype == " + iPedtype + ", iSubType == " + iSubType, tEx);
+
+            LogginSyatem("EnterVeh, iEnterV == " + iEnterV + ", iPedtype == " + iPedtype + ", iSubType == " + iSubType);
 
             Vector3 V3 = Vehic.Position + (Vehic.RightVector * 3.50f);
 
@@ -8066,16 +8190,16 @@ namespace RandomStart
         }
         private void FillthisVeh(Vehicle Vehic, int iPedtype, int iSubType, Vector3 vPos, int iTask, int iWeapons, bool bFriend)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("FillthisVeh, iPedtype == " + iPedtype + ", iSubType == " + iSubType + ", iTask == " + iTask, tEx);
+
+            LogginSyatem("FillthisVeh, iPedtype == " + iPedtype + ", iSubType == " + iSubType + ", iTask == " + iTask);
 
             for (int i = 0; i < Vehic.PassengerSeats; i++)
                 NPCSpawn(BuildRandomPed(iPedtype, iSubType), vPos, 0.00f, iTask, iWeapons, Vehic, bFriend);
         }
         private void MyPropBuild(string sPop, Vector3 Local, Vector3 Rotate, int iPropTask)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("MyPropBuild, sPop == " + sPop + ", iPropTask == " + iPropTask, tEx);
+
+            LogginSyatem("MyPropBuild, sPop == " + sPop + ", iPropTask == " + iPropTask);
 
             Prop Propper = null;
             Propper = World.CreateProp(Function.Call<int>(Hash.GET_HASH_KEY, sPop), Local, Rotate, true, false);
@@ -8093,11 +8217,11 @@ namespace RandomStart
                 MyPropBuild(sPop, Local, Rotate, iPropTask);
             }
 
-        }               
+        }
         private void PropTasks(Prop Popp, int iPopTask)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PropTasks, iPopTask == " + iPopTask, tEx);
+
+            LogginSyatem("PropTasks, iPopTask == " + iPopTask);
 
             if (iPopTask == 1)
                 Function.Call(Hash.ATTACH_ENTITY_TO_ENTITY, Popp.Handle, Game.Player.Character.Handle, Game.Player.Character.GetBoneIndex(Bone.PH_R_Hand), 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, 0.00f, false, false, true, false, 2, true);
@@ -8106,8 +8230,8 @@ namespace RandomStart
         }
         private void CayoNPCSpawn(string sPed, Prop pMyChair, Vector3 Vpos, float fAce, int iTask)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CayoNPCSpawn, sPed == " + sPed + ", iTask == " + iTask, tEx);
+
+            LogginSyatem("CayoNPCSpawn, sPed == " + sPed + ", iTask == " + iTask);
 
             Vector3 vLocal = Vpos;
             float fDir = fAce;
@@ -8149,8 +8273,8 @@ namespace RandomStart
         }
         private void NPCSpawn(string sPed, Vector3 vLocal, float fAce, int iTask, int iWeapons, Vehicle Vehicary, bool bFriend)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("NPCSpawn, sPed == " + sPed + ", iTask == " + iTask, tEx);
+
+            LogginSyatem("NPCSpawn, sPed == " + sPed + ", iTask == " + iTask);
 
             var model = new Model(sPed);
             model.Request();    // Check if the model is valid
@@ -8175,8 +8299,8 @@ namespace RandomStart
         }
         private void PedTasks(Ped Peddy, int iTask, Vehicle Vehicary)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("NPCSpawn, iTask == " + iTask, tEx);
+
+            LogginSyatem("NPCSpawn, iTask == " + iTask);
 
             if (iTask == 1)
             {
@@ -8363,8 +8487,7 @@ namespace RandomStart
         }
         private void PedWeapons(Ped Peddy, int iWeapons)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PedWeapons, iWeapons == " + iWeapons, tEx);
+            LogginSyatem("PedWeapons, iWeapons == " + iWeapons);
 
             if (iWeapons == 1)
             {
@@ -8400,7 +8523,7 @@ namespace RandomStart
                 sYourWeap = sWeapList[RandInt(55, 64)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
             }       //RandomCombos
-            else 
+            else
             {
                 string sYourWeap = sWeapList[6];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
@@ -8408,8 +8531,8 @@ namespace RandomStart
         }
         private void PedFindMeASeat(Vehicle Vhick, Ped Peddy)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PedFindMeASeat", tEx);
+
+            LogginSyatem("PedFindMeASeat");
 
             while (!Peddy.IsInVehicle())
             {
@@ -8419,8 +8542,8 @@ namespace RandomStart
         }
         private void YouTheDriver(Vehicle Vhick, Ped Peddy)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YouTheDriver", tEx);
+
+            LogginSyatem("YouTheDriver");
 
             while (!Peddy.IsInVehicle())
             {
@@ -8430,8 +8553,8 @@ namespace RandomStart
         }
         private void FindReplacePed(int iAnyPedList, Vector3 vZone, float fRadius, int iCountEm, int iTask, int iWeapons, bool bFriend)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("FindReplacePed, iCountEm == " + iCountEm + ", iTask == " + iTask, tEx);
+
+            LogginSyatem("FindReplacePed, iCountEm == " + iCountEm + ", iTask == " + iTask);
 
             Ped[] MadPeds = World.GetNearbyPeds(vZone, fRadius);
             for (int i = 0; i < MadPeds.Count(); i++)
@@ -8457,8 +8580,8 @@ namespace RandomStart
         }
         private void RandomWeatherTime()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("RandomWeatherTime", tEx);
+
+            LogginSyatem("RandomWeatherTime");
 
             int iTimes = RandInt(0, 23);
             double dTime = (int)iTimes;
@@ -8468,8 +8591,8 @@ namespace RandomStart
         }
         private void OverLayList()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("OverLayList", tEx);
+
+            LogginSyatem("OverLayList");
 
             for (int i = 0; i < 13; i++)
             {
@@ -8480,7 +8603,6 @@ namespace RandomStart
                     iOverlayColour.Add(0);
                     fOverlayOpc.Add(0.00f);
                 }
-
                 else
                 {
                     iOverlayColour.Add(RandInt(0, 61));
@@ -8490,8 +8612,7 @@ namespace RandomStart
         }
         private void DeathArrestCont(bool bProg)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("DeathArrestCont bProg == " + bProg, tEx);
+            LogginSyatem("DeathArrestCont bProg == " + bProg);
 
             if (Game.Player.Character.Model != PedHash.Michael && Game.Player.Character.Model != PedHash.Trevor && Game.Player.Character.Model != PedHash.Franklin)
             {
@@ -8530,7 +8651,6 @@ namespace RandomStart
                             Script.Wait(100);
 
                         YourRanPed(sMainChar);
-                        ReturnWeaps();
 
                         YouDied();
                     }
@@ -8556,7 +8676,6 @@ namespace RandomStart
                     if (bProg)
                     {
                         YourRanPed(sMainChar);
-                        ReturnWeaps();
                         YouDied();
                     }
                     else
@@ -8573,8 +8692,8 @@ namespace RandomStart
         }
         private void ClearDASCript(bool bProg)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("ClearDASCript bProg == " + bProg, tEx);
+
+            LogginSyatem("ClearDASCript bProg == " + bProg);
 
             if (bProg)
             {
@@ -8605,8 +8724,8 @@ namespace RandomStart
         }
         private void YouDied()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YouDied", tEx);
+
+            LogginSyatem("YouDied");
 
             if (bMethActor)
                 MethEdd(true);
@@ -8671,14 +8790,17 @@ namespace RandomStart
                 else
                     UI.Notify(sLangfile[2] + sFirstName + " Davis. " + sLangfile[4]);
             }
+
+            ReturnWeaps();
+
             Script.Wait(7000);
             CleanUpMess();
             bDead = false;
         }
         private void YouArrest()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YouArrest", tEx);
+
+            LogginSyatem("YouArrest");
 
             Game.FadeScreenIn(2000);
 
@@ -8708,8 +8830,8 @@ namespace RandomStart
         }
         private void YouJog()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YouJog", tEx);
+
+            LogginSyatem("YouJog");
 
             iActionTime = Game.GameTime + 100;
 
@@ -8723,8 +8845,8 @@ namespace RandomStart
         }
         private void YouDrive()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YouDrive", tEx);
+
+            LogginSyatem("YouDrive");
 
             iActionTime = Game.GameTime + 100;
 
@@ -8796,35 +8918,35 @@ namespace RandomStart
         {
             iActionTime = Game.GameTime + 100;
 
-                if (iPath < RanLoc_01.Count() - 1)
+            if (iPath < RanLoc_01.Count() - 1)
+            {
+                if (Shoaf.Position.DistanceTo(RanLoc_01[iPath]) < 10.00f)
                 {
-                    if (Shoaf.Position.DistanceTo(RanLoc_01[iPath]) < 10.00f)
-                    {
-                        iPath += 1;
-                        FlyHeliHere(RanLoc_01[iPath], fHeads[iPath], Shoaf, pPilot, false);
-                    }
+                    iPath += 1;
+                    FlyHeliHere(RanLoc_01[iPath], fHeads[iPath], Shoaf, pPilot, false);
                 }
-                else
-                {
-                    FlyHeliHere(RanLoc_01[RanLoc_01.Count() - 1], fHeads[fHeads.Count() - 1], Shoaf, pPilot, true);
-                    bAllowControl = false;
-                    while (Game.Player.Character.IsInVehicle())
-                        Script.Wait(100);
-                    Shoaf.EngineRunning = false;
-                    CleanUpMess();
-                }
+            }
+            else
+            {
+                FlyHeliHere(RanLoc_01[RanLoc_01.Count() - 1], fHeads[fHeads.Count() - 1], Shoaf, pPilot, true);
+                bAllowControl = false;
+                while (Game.Player.Character.IsInVehicle())
+                    Script.Wait(100);
+                Shoaf.EngineRunning = false;
+                CleanUpMess();
+            }
         }
         private void PedScenario(Ped Peddy, string sCenario, Vector3 Vpos, float fHeadings, bool bSeated)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PedScenario sCenario == " + sCenario, tEx);
+
+            LogginSyatem("PedScenario sCenario == " + sCenario);
 
             Function.Call(Hash.TASK_START_SCENARIO_AT_POSITION, Peddy.Handle, sCenario, Vpos.X, Vpos.Y, Vpos.Z, fHeadings, 0, 0, 1);
         }
         private void Yankton(bool bLoadIn)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("Yankton", tEx);
+
+            LogginSyatem("Yankton");
 
             List<string> YanktonIPLs = new List<string>();
 
@@ -8920,8 +9042,8 @@ namespace RandomStart
         }
         private void CayoPerico(bool bLoadIn)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CayoPerico", tEx);
+
+            LogginSyatem("CayoPerico");
 
             List<string> CayoPericoIPLs = new List<string>();
 
@@ -9160,8 +9282,8 @@ namespace RandomStart
         }
         private void DanceFloor(bool bOn)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("DanceFloor, bOn == "+ bOn, tEx);
+
+            LogginSyatem("DanceFloor, bOn == " + bOn);
 
             if (bOn)
             {
@@ -9183,8 +9305,8 @@ namespace RandomStart
         }
         public List<string> DanceList(bool bMale, int iSpeed)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("DanceList, bMale == " + bMale + ", iSpeed == " + iSpeed, tEx);
+
+            LogginSyatem("DanceList, bMale == " + bMale + ", iSpeed == " + iSpeed);
 
             List<string> sDancing = new List<string>();
             List<string> Dance = new List<string>(); List<string> DanceVar = new List<string>();
@@ -9614,8 +9736,8 @@ namespace RandomStart
         }
         private void LoadOnlineIps()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("LoadOnlineIps", tEx);
+
+            LogginSyatem("LoadOnlineIps");
 
             List<string> sAddIpl = new List<string>();
 
@@ -9642,8 +9764,8 @@ namespace RandomStart
         }
         private void FlyHeliHere(Vector3 Vloc, float fHeadin, Vehicle Heli, Ped Plot, bool bLand)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("FlyHeliHere, bLand == " + bLand, tEx);
+
+            LogginSyatem("FlyHeliHere, bLand == " + bLand);
 
             float HeliDesX = Vloc.X;
             float HeliDesY = Vloc.Y;
@@ -9659,8 +9781,8 @@ namespace RandomStart
         }
         private void MethEdd(bool bOver)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("MethEdd, bOver == " + bOver, tEx);
+
+            LogginSyatem("MethEdd, bOver == " + bOver);
 
             if (bOver)
             {
@@ -9692,16 +9814,16 @@ namespace RandomStart
         }
         private void YouDrive(Vehicle Vhick)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("YouDrive", tEx);
+
+            LogginSyatem("YouDrive");
 
             Vector3 V3ME = Vhick.Position + (Vhick.ForwardVector * 45.00f);
             Game.Player.Character.Task.DriveTo(Vhick, V3ME, 2.00f, 45.00f);
         }
         private void AccessAllAreas()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("AccessAllAreas", tEx);
+
+            LogginSyatem("AccessAllAreas");
 
             Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "restrictedareas");
             bDontStopMe = true;
@@ -9781,8 +9903,8 @@ namespace RandomStart
         }
         private void BacktoBase(bool bPrisHel)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("BacktoBase, bPrisHel == " + bPrisHel, tEx);
+
+            LogginSyatem("BacktoBase, bPrisHel == " + bPrisHel);
 
             if (bPrisHel)
             {
@@ -9802,8 +9924,8 @@ namespace RandomStart
         }
         private void FindCrimo(Vector3 Vec3, float fRadi, float fMinRadi)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("FindCrimo", tEx);
+
+            LogginSyatem("FindCrimo");
 
             Vehicle[] CarSpot = World.GetNearbyVehicles(Vec3, fRadi);
             int iFind = CarSpot.Count();
@@ -9841,8 +9963,8 @@ namespace RandomStart
         }
         private void CopsNRobbers(Vehicle vGetAway, Ped pDriver)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CopsNRobbers", tEx);
+
+            LogginSyatem("CopsNRobbers");
 
             Game.Player.Character.CurrentVehicle.SirenActive = true;
             pDriver.Task.FleeFrom(Game.Player.Character);
@@ -9862,8 +9984,8 @@ namespace RandomStart
         }
         public string AddAnyPed(int iType)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("AddAnyPed", tEx);
+
+            LogginSyatem("AddAnyPed");
 
             List<string> sPeds = new List<string>();
 
@@ -9894,8 +10016,8 @@ namespace RandomStart
         }
         public int RandInt(int minNumber, int maxNumber)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("RandInt", tEx);
+
+            LogginSyatem("RandInt");
 
             int iMyRanInt = Function.Call<int>(Hash.GET_RANDOM_INT_IN_RANGE, minNumber, maxNumber);
             if (minNumber + 1 == maxNumber)
@@ -9915,8 +10037,8 @@ namespace RandomStart
         }
         public List<string> TattoosList(int iPed, int iZone)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("TattoosList, iPed == " + iPed + ", iZone == " + iZone, tEx);
+
+            LogginSyatem("TattoosList, iPed == " + iPed + ", iZone == " + iZone);
 
             bool bEmpty = false;
             List<string> MyTat = new List<string>();
@@ -10022,7 +10144,7 @@ namespace RandomStart
                     sTatBase.Add("singleplayer_overlays"); sTatName.Add("fr_015"); MyTat.Add("The Warrior");
                     sTatBase.Add("singleplayer_overlays"); sTatName.Add("fr_002"); MyTat.Add("Dragons");
                 }//LEFT LEG
-                else 
+                else
                 {
                     sTatBase.Add("singleplayer_overlays"); sTatName.Add("fr_026"); MyTat.Add("Trust No One");
                     sTatBase.Add("singleplayer_overlays"); sTatName.Add("fr_003"); MyTat.Add("Melting Skull");
@@ -10468,7 +10590,7 @@ namespace RandomStart
 
                     sTatBase.Add("mpbeach_overlays"); sTatName.Add("MP_Bea_F_Neck_000"); MyTat.Add("Tribal Butterfly");
                     sTatBase.Add("mpbeach_overlays"); sTatName.Add("MP_Bea_F_Neck_000"); MyTat.Add("Little Fish");
-                    
+
                     sTatBase.Add("multiplayer_overlays"); sTatName.Add("FM_Tat_Award_F_000"); MyTat.Add("Skull");//500 Headshots Award
                     //Not On the TatlIst     ...                            
                     sTatBase.Add("mpheist3_overlays"); sTatName.Add("mpHeist3_Tat_044_F"); MyTat.Add("Clubs");
@@ -11201,7 +11323,7 @@ namespace RandomStart
                     sTatBase.Add("mpbeach_overlays"); sTatName.Add("MP_Bea_M_Head_000"); MyTat.Add("Pirate Skull");
 
                     sTatBase.Add("multiplayer_overlays"); sTatName.Add("FM_Tat_Award_M_000"); MyTat.Add("Skull");
-                       //Not On the TatlIst     ...                            
+                    //Not On the TatlIst     ...                            
                     sTatBase.Add("mpheist3_overlays"); sTatName.Add("mpHeist3_Tat_044_M"); MyTat.Add("Clubs");
                     sTatBase.Add("mpheist3_overlays"); sTatName.Add("mpHeist3_Tat_043_M"); MyTat.Add("Diamonds");
                     sTatBase.Add("mpheist3_overlays"); sTatName.Add("mpHeist3_Tat_042_M"); MyTat.Add("Hearts");
@@ -11590,8 +11712,8 @@ namespace RandomStart
         }
         private void GetNames()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("GetNames", tEx);
+
+            LogginSyatem("GetNames");
 
             if (File.Exists(sNamesFile))
             {
@@ -11609,8 +11731,8 @@ namespace RandomStart
         }
         private void NamesList()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("NamesList", tEx);
+
+            LogginSyatem("NamesList");
 
             sNameFem.Clear();
             sNameMal.Clear();
@@ -11829,8 +11951,8 @@ namespace RandomStart
         }
         public bool BoolList(int iList)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("BoolList, iList == " + iList, tEx);
+
+            LogginSyatem("BoolList, iList == " + iList);
 
             List<int> IntList = new List<int>();
 
@@ -11846,8 +11968,8 @@ namespace RandomStart
         }
         private void BuildRanXml(bool bBulid, int iList, List<int> list)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("BuildRanXml, bBulid == " + bBulid + ", iList == " + iList, tEx);
+
+            LogginSyatem("BuildRanXml, bBulid == " + bBulid + ", iList == " + iList);
 
             RandomPlus XSets = new RandomPlus();
 
@@ -11916,8 +12038,8 @@ namespace RandomStart
         }
         public int FindRandom(int iList, int iMin, int iMax)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("FindRandom, iList == " + iList, tEx);
+
+            LogginSyatem("FindRandom, iList == " + iList);
 
             List<int> IntList = new List<int>();
             int iBe = 0;
@@ -11955,7 +12077,7 @@ namespace RandomStart
             if (IntList.Count() < 1)
             {
                 IntList.Clear();
-                for (int i = iMin; i < iMax +1; i++)
+                for (int i = iMin; i < iMax + 1; i++)
                     IntList.Add(i);
             }
             int iRanNum = RandInt(0, IntList.Count - 1);
@@ -12188,8 +12310,8 @@ namespace RandomStart
         }
         private void PedPools()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PedPool", tEx);
+
+            LogginSyatem("PedPool");
 
             if (File.Exists(sSavedFile))
             {
@@ -12280,8 +12402,8 @@ namespace RandomStart
         }
         public void WritePedSave(string sPed)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("WritePedSave, sPed == " + sPed, tEx);
+
+            LogginSyatem("WritePedSave, sPed == " + sPed);
 
             List<int> ClothsA = new List<int>();
             List<int> ClothsB = new List<int>();
@@ -12295,7 +12417,7 @@ namespace RandomStart
 
             Cbank.ModelX = Peddy.Model.GetHashCode();
 
-            if (Peddy.Model == Function.Call<int>(Hash.GET_HASH_KEY,"mp_f_freemode_01") || Peddy.Model == Function.Call<int>(Hash.GET_HASH_KEY, "mp_m_freemode_01"))
+            if (Peddy.Model == Function.Call<int>(Hash.GET_HASH_KEY, "mp_f_freemode_01") || Peddy.Model == Function.Call<int>(Hash.GET_HASH_KEY, "mp_m_freemode_01"))
                 Cbank.FreeMode = true;
             else
                 Cbank.FreeMode = false;
@@ -12378,8 +12500,8 @@ namespace RandomStart
         }
         private void ForceAnim(Ped peddy, string sAnimDict, string sAnimName, Vector3 AnPos, Vector3 AnRot)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("ForceAnim, sAnimName == " + sAnimName, tEx);
+
+            LogginSyatem("ForceAnim, sAnimName == " + sAnimName);
 
             peddy.Task.ClearAll();
             Function.Call(Hash.REQUEST_ANIM_DICT, sAnimDict);
@@ -12390,8 +12512,8 @@ namespace RandomStart
         }
         private void ForceAnimOnce(Ped peddy, string sAnimDict, string sAnimName, Vector3 AnPos, Vector3 AnRot)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("ForceAnimOnce, sAnimName == " + sAnimName, tEx);
+
+            LogginSyatem("ForceAnimOnce, sAnimName == " + sAnimName);
 
             Function.Call(Hash.REQUEST_ANIM_DICT, sAnimDict);
             while (!Function.Call<bool>(Hash.HAS_ANIM_DICT_LOADED, sAnimDict))
@@ -12401,13 +12523,11 @@ namespace RandomStart
         }
         private void PedMenuMain()
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PedMenuMain", tEx);
+            LogginSyatem("PedMenuMain");
 
             iPedNum = 0;
-            LoadSetXML();
             MyMenuPool = new MenuPool();
-            var mainMenu = new UIMenu(sLangfile[6], "");            
+            var mainMenu = new UIMenu(sLangfile[6], "");
             MyMenuPool.Add(mainMenu);
             RanPedMenu(mainMenu); //Here we add the  Sub Menus
             SetLocate(mainMenu);
@@ -12418,14 +12538,15 @@ namespace RandomStart
             DisRecord(mainMenu);
             AddBeachParty(mainMenu);
             SeatBeltON(mainMenu);
+            Re_WriteLoadout(mainMenu);
             MyMenuPool.RefreshIndex();
             bMenuOpen = true;
             mainMenu.Visible = !mainMenu.Visible;
         }
         private void SavePedMenu(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SavePedMenu", tEx);
+
+            LogginSyatem("SavePedMenu");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[8]);
 
@@ -12446,8 +12567,11 @@ namespace RandomStart
             {
                 AddTatts(playermodelmenu, 3);
             }
-            else if (Game.Player.Character.Model == PedHash.FreemodeFemale01) 
+            else if (Game.Player.Character.Model == PedHash.FreemodeFemale01)
             {
+                if (iOverlay.Count() == 0)
+                    OverLayList();
+
                 SetHair01(playermodelmenu);
                 SetHair02(playermodelmenu);
                 SetHEyes(playermodelmenu);
@@ -12457,6 +12581,9 @@ namespace RandomStart
             }
             else if (Game.Player.Character.Model == PedHash.FreemodeMale01)
             {
+                if (iOverlay.Count() == 0)
+                    OverLayList();
+
                 SetHair01(playermodelmenu);
                 SetHair02(playermodelmenu);
                 SetHEyes(playermodelmenu);
@@ -12472,8 +12599,8 @@ namespace RandomStart
         }
         private void SelectSaved(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SelectSaved", tEx);
+
+            LogginSyatem("SelectSaved");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[8]);
 
@@ -12508,10 +12635,10 @@ namespace RandomStart
                 }
             };
         }
-        private void CompileMenuTotals(List<dynamic> dList, int iTotal,int iBZero)
+        private void CompileMenuTotals(List<dynamic> dList, int iTotal, int iBZero)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CompileMenuTotals", tEx);
+
+            LogginSyatem("CompileMenuTotals");
 
             while (iBZero < iTotal)
             {
@@ -12519,10 +12646,10 @@ namespace RandomStart
                 iBZero = iBZero + 1;
             }
         }
-        private void CompileMenuTotalsFloats(List<dynamic> dList,int iLow, int iTotal)
+        private void CompileMenuTotalsFloats(List<dynamic> dList, int iLow, int iTotal)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CompileMenuTotalsFloats", tEx);
+
+            LogginSyatem("CompileMenuTotalsFloats");
 
             int iUpC = iLow;
             while (iUpC < iTotal)
@@ -12544,8 +12671,8 @@ namespace RandomStart
         }
         private void SetHair01(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetHair01", tEx);
+
+            LogginSyatem("SetHair01");
 
             List<dynamic> Hair01 = new List<dynamic>();
 
@@ -12567,8 +12694,8 @@ namespace RandomStart
         }
         private void SetHair02(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetHair02", tEx);
+
+            LogginSyatem("SetHair02");
 
             List<dynamic> Hair02 = new List<dynamic>();
 
@@ -12589,8 +12716,8 @@ namespace RandomStart
         }
         private void SetHEyes(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetHEyes", tEx);
+
+            LogginSyatem("SetHEyes");
 
             List<dynamic> Eyes = new List<dynamic>();
 
@@ -12612,8 +12739,8 @@ namespace RandomStart
         }
         private void SetHVoice(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetHVoice", tEx);
+
+            LogginSyatem("SetHVoice");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, "Voices");
 
@@ -12636,11 +12763,8 @@ namespace RandomStart
         }
         private void SetOverLays(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetOverLays", tEx);
 
-            if (iOverlay.Count() == 0)
-                OverLayList();
+            LogginSyatem("SetOverLays");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[12]);
 
@@ -12657,10 +12781,10 @@ namespace RandomStart
             SetOversColour(playermodelmenu, 10, sLangfile[23], 16);
             SetOvers(playermodelmenu, 11, sLangfile[24], 11);
         }
-        private void SetOvers(UIMenu XMen, int OverLayId, string sName,int iCount)
+        private void SetOvers(UIMenu XMen, int OverLayId, string sName, int iCount)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetOvers", tEx);
+
+            LogginSyatem("SetOvers");
 
             string sOpacity = "" + sName + sLangfile[25];
 
@@ -12678,7 +12802,7 @@ namespace RandomStart
             float fOvers = fOverlayOpc[OverLayId];
             fOvers = fOvers * 100;
             int iAM = (int)Math.Ceiling(fOvers);
-            CompileMenuTotalsFloats(Opacity,0, iCount);
+            CompileMenuTotalsFloats(Opacity, 0, iCount);
             var newitemOpac = new UIMenuListItem(sOpacity, Opacity, 0);
             newitemOpac.Index = iAM;
             XMen.AddItem(newitemOpac);
@@ -12704,8 +12828,8 @@ namespace RandomStart
         }
         private void SetOversColour(UIMenu XMen, int OverLayId, string sName, int iCount)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetOversColour", tEx);
+
+            LogginSyatem("SetOversColour");
 
             string sOpacity = "" + sName + sLangfile[25];
             string sColour = "" + sName + sLangfile[26];
@@ -12714,7 +12838,7 @@ namespace RandomStart
             int iZero = iOverlay[OverLayId];
             if (iZero == 255)
                 iZero = -1;
-            CompileMenuTotals(Main, iCount, - 1);
+            CompileMenuTotals(Main, iCount, -1);
             var newitem = new UIMenuListItem(sName, Main, 0);
             newitem.Index = iZero;
             XMen.AddItem(newitem);
@@ -12763,8 +12887,8 @@ namespace RandomStart
         }
         private void SetComponents(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetComponents", tEx);
+
+            LogginSyatem("SetComponents");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[27]);
 
@@ -12784,8 +12908,8 @@ namespace RandomStart
         }
         private void Componets(UIMenu XMen, int CompId, string sName)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("Componets", tEx);
+
+            LogginSyatem("Componets");
 
             string sText = "" + sName + sLangfile[40];
 
@@ -12793,7 +12917,7 @@ namespace RandomStart
 
             int iCount = Function.Call<int>(Hash.GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS, Game.Player.Character, CompId) + 1;
             int iZero = Function.Call<int>(Hash.GET_PED_DRAWABLE_VARIATION, Game.Player.Character, CompId);
-            CompileMenuTotals(Comp, iCount, - 1);
+            CompileMenuTotals(Comp, iCount, -1);
             var newitem = new UIMenuListItem(sName, Comp, 0);
             newitem.Index = iZero;
             XMen.AddItem(newitem);
@@ -12826,8 +12950,8 @@ namespace RandomStart
         }
         private void SetPedProps(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetPedProps", tEx);
+
+            LogginSyatem("SetPedProps");
 
             var playermodelmenu2 = MyMenuPool.AddSubMenu(XMen, sLangfile[41]);
 
@@ -12838,8 +12962,8 @@ namespace RandomStart
         }
         private void PedProps(UIMenu XMen, int CompId, string sName)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("PedProps", tEx);
+
+            LogginSyatem("PedProps");
 
             string sText = "" + sName + sLangfile[40];
 
@@ -12883,8 +13007,8 @@ namespace RandomStart
         }
         private void ResetPedProps(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("ResetPedProps", tEx);
+
+            LogginSyatem("ResetPedProps");
 
             var playermodelmenu = new UIMenuItem(sLangfile[46], sLangfile[47]);
             XMen.AddItem(playermodelmenu);
@@ -12892,7 +13016,7 @@ namespace RandomStart
             {
                 if (item == playermodelmenu)
                 {
-                    Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character); 
+                    Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character);
                     Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, 0);
                     Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, 1);
                     Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, 2);
@@ -12902,8 +13026,7 @@ namespace RandomStart
         }
         private void AddTatts(UIMenu XMen, int iChar)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("AddTatts", tEx);
+            LogginSyatem("AddTatts");
 
             if (iChar == 1 || iChar == 2 || iChar == 3)
             {
@@ -12936,58 +13059,63 @@ namespace RandomStart
         }
         private void Tatty(UIMenu XMen, int iChar, int iSkin, string sName)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("Tatty", tEx);
+            LogginSyatem("Tatty");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sName);
 
             List<string> sub_01 = TattoosList(iChar, iSkin);
 
-            for (int i = 0; i < sub_01.Count; i++)
+            if (sub_01[0] != "No Tattoos Available")
             {
-                var item_ = new UIMenuItem(sub_01[i], "");
-                playermodelmenu.AddItem(item_);
-                if (AddTatName.Contains(sTatName[i]))
-                    item_.SetRightBadge(UIMenuItem.BadgeStyle.Tatoo);
-
-            }
-
-            playermodelmenu.OnItemSelect += (sender, item, index) =>
-            {
-                TattoosList(iChar, iSkin);
-                if (sub_01[index] != "No Tattoos Available")
+                for (int i = 0; i < sub_01.Count; i++)
                 {
-                    Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character);
-
-                    if (!AddTatName.Contains(sTatName[index]))
-                    {
-                        item.SetRightBadge(UIMenuItem.BadgeStyle.Tatoo);
-                        AddTatBase.Add(sTatBase[index]);
-                        AddTatName.Add(sTatName[index]);
-                        Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, sTatBase[index]), Function.Call<int>(Hash.GET_HASH_KEY, sTatName[index]));
-                    }
-                    else
-                    {
-                        item.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                        int iAm = AddTatName.IndexOf(sTatName[index]);
-                        AddTatBase.RemoveAt(iAm);
-                        AddTatName.RemoveAt(iAm);
-                    }
+                    var item_ = new UIMenuItem(sub_01[i], "");
+                    playermodelmenu.AddItem(item_);
+                    if (AddTatName.Contains(sTatName[i]))
+                        item_.SetRightBadge(UIMenuItem.BadgeStyle.Tatoo);
 
                 }
 
-            };
-            playermodelmenu.OnMenuClose += (sender) =>
-            {
-                Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character);
-                for (int i = 0; i < AddTatBase.Count; i++)
-                    Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, AddTatBase[i]), Function.Call<int>(Hash.GET_HASH_KEY, AddTatName[i]));
-            };
+                playermodelmenu.OnItemSelect += (sender, item, index) =>
+                {
+                    TattoosList(iChar, iSkin);
+                    if (sub_01[index] != "No Tattoos Available")
+                    {
+                        Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character);
+
+                        if (!AddTatName.Contains(sTatName[index]))
+                        {
+                            item.SetRightBadge(UIMenuItem.BadgeStyle.Tatoo);
+                            AddTatBase.Add(sTatBase[index]);
+                            AddTatName.Add(sTatName[index]);
+                            Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, sTatBase[index]), Function.Call<int>(Hash.GET_HASH_KEY, sTatName[index]));
+                        }
+                        else
+                        {
+                            item.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                            int iAm = AddTatName.IndexOf(sTatName[index]);
+                            AddTatBase.RemoveAt(iAm);
+                            AddTatName.RemoveAt(iAm);
+                        }
+
+                    }
+
+                };
+                playermodelmenu.OnMenuClose += (sender) =>
+                {
+                    Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character);
+                    for (int i = 0; i < AddTatBase.Count; i++)
+                        Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, AddTatBase[i]), Function.Call<int>(Hash.GET_HASH_KEY, AddTatName[i]));
+                };
+            }
+
+
+
         }
         private void ClearTats(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("ClearTats", tEx);
+
+            LogginSyatem("ClearTats");
 
             var playermodelmenu = new UIMenuItem(sLangfile[108], "");
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13004,19 +13132,14 @@ namespace RandomStart
         }
         private void FaceTheFacts()
         {
-            if (fAceFeats.Count < 19)
+            for (int i = 0; i < 20; i++)
             {
-                fAceFeats.Clear();
-                for (int i = 0; i < 20; i++)
-                    fAceFeats.Add(0.00f);
+                fAceFeats.Add(0.00f);
             }
         }
         private void SetFaceFeatures(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetFaceFeatures", tEx);
-
-            FaceTheFacts();
+            LogginSyatem("SetFaceFeatures");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[134]);
 
@@ -13043,8 +13166,7 @@ namespace RandomStart
         }
         private void FaceFeatures(UIMenu XMen, int CompId, string sName)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("FaceFeatures", tEx);
+            LogginSyatem("FaceFeatures");
 
             List<dynamic> FeatVar = new List<dynamic>();
 
@@ -13094,8 +13216,8 @@ namespace RandomStart
         }
         private void SaveMyPed(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SaveMyPed", tEx);
+            
+                LogginSyatem("SaveMyPed");
 
             var playermodelmenu = new UIMenuItem(sLangfile[48], MyPedCollection[iPedNum].Name);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13113,8 +13235,8 @@ namespace RandomStart
         }
         private void CreateNewPed(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("CreateNewPed", tEx);
+            
+                LogginSyatem("CreateNewPed");
 
             var playermodelmenu = new UIMenuItem(sLangfile[112] + sLangfile[48], sLangfile[49]);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13136,8 +13258,8 @@ namespace RandomStart
         }
         private void SetLocate(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetLocate", tEx);
+            
+                LogginSyatem("SetLocate");
 
             var playermodelmenu = new UIMenuItem(sLangfile[51], sLangfile[52]);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13165,8 +13287,8 @@ namespace RandomStart
         }
         private void SetChar(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetChar", tEx);
+            
+                LogginSyatem("SetChar");
 
             var SetCharOpt = new UIMenuItem(sLangfile[53], sLangfile[54]);
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13217,8 +13339,8 @@ namespace RandomStart
         }
         private void DisRecord(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("DisRecord", tEx);
+            
+                LogginSyatem("DisRecord");
 
             var SetCharOpt = new UIMenuItem(sLangfile[55], sLangfile[56]);
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13240,8 +13362,8 @@ namespace RandomStart
         }
         private void SeatBeltON(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SeatBeltON", tEx);
+            
+                LogginSyatem("SeatBeltON");
 
             var SetCharOpt = new UIMenuItem(sLangfile[96], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13270,8 +13392,8 @@ namespace RandomStart
         }
         private void AddBeachParty(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("AddBeachParty", tEx);
+            
+                LogginSyatem("AddBeachParty");
 
             var SetCharOpt = new UIMenuItem(sLangfile[97], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13293,8 +13415,7 @@ namespace RandomStart
         }
         private void SetLoadWeps(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetLoadWeps", tEx);
+            LogginSyatem("SetLoadWeps");
 
             var SetSVCharOpt = new UIMenuItem(sLangfile[59], sLangfile[60]);
             SetSVCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13314,10 +13435,24 @@ namespace RandomStart
                 }
             };
         }
+        private void Re_WriteLoadout(UIMenu XMen)
+        {
+            LogginSyatem("Re_WriteLoadout");
+
+            var SetCharOpt = new UIMenuItem(sLangfile[135], "");
+            XMen.AddItem(SetCharOpt);
+            XMen.OnItemSelect += (sender, item, index) =>
+            {
+                if (item == SetCharOpt)
+                {
+                    MyMenuPool.CloseAllMenus();
+                    GetWeaps();
+                }
+            };
+        }
         private void SetMenuKey(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("SetMenuKey", tEx);
+            LogginSyatem("SetMenuKey");
 
             var playermodelmenu = new UIMenuItem(sLangfile[61], sLangfile[62]);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13334,8 +13469,8 @@ namespace RandomStart
         }
         private void DeleteCurrentPed(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("DeleteCurrentPed", tEx);
+            
+                LogginSyatem("DeleteCurrentPed");
 
             var playermodelmenu = new UIMenuItem(sLangfile[64], MyPedCollection[iPedNum].Name);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13353,8 +13488,7 @@ namespace RandomStart
         }
         private void RanPedMenu(UIMenu XMen)
         {
-            using (StreamWriter tEx = File.AppendText(sBeeLogs))
-                BeeLog("RanPedMenu", tEx);
+            LogginSyatem("RanPedMenu");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[66]);
             //for (int i = 0; i < 1; i++) ;
@@ -13695,7 +13829,7 @@ namespace RandomStart
                 }
                 else if (e.KeyCode == KBuild)
                 {
-                    Game.FadeScreenIn(500);
+                    Game.FadeScreenIn(1);
                     if (bAllowControl)
                         UI.Notify(sLangfile[89]);
                     else
