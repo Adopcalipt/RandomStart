@@ -67,20 +67,20 @@ namespace RandomStart
         private int iAmModelHash = 0;
         private int iLangSupport = -1;
 
-        private readonly int PlayerGroups = Game.Player.Character.RelationshipGroup;
-        private readonly int FriendlyNPCs = World.AddRelationshipGroup("FriendNPCs");
-        private readonly int AttackingNPCs = World.AddRelationshipGroup("AttackNPCs");
+        private int GP_Player = Game.Player.Character.RelationshipGroup;
+        private readonly int GP_Friend = World.AddRelationshipGroup("FriendNPCs");
+        private readonly int GP_Attack = World.AddRelationshipGroup("AttackNPCs");
 
         private bool bStart = true;
         private bool bRandLocate = true;
 
-        private bool bDead = false;
+        private bool bDeadorArrest = false;
         private bool bFound = false;
         private bool bLoaded = false;
         private bool bBeltUp = false;
+        private bool bReincarn = false;
         private bool bSavedPed = false;
         private bool bMenyooZZ = false;
-        private bool bEnhanceT = false;
         private bool bPrisHeli = false;
         private bool bMethFail = false;
         private bool bMenuOpen = false;
@@ -91,6 +91,9 @@ namespace RandomStart
         private bool bMethActor = false;
         private bool bDontStopMe = false;
         private bool bMainProtag = false;
+        private bool bReCritters = true;
+        private bool bReSavedPed = false;
+        private bool bReCurrentPd = false;
         private bool bKeepWeapons = false;
         private bool bAllowControl = false;
         private bool bInCayoPerico = false;
@@ -101,11 +104,12 @@ namespace RandomStart
         private bool bPlayingNewMissions = false;
 
 
-        private readonly string sVersion = "2.4";
+        private readonly string sVersion = "2.5";
         private string sFirstName = "PlayerX";
         private string sMainChar = "player_zero";
         private string sFunChar01 = "player_one";
         private string sFunChar02 = "player_two";
+        
         private readonly string sBeeLogs = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSLog.txt";
         private readonly string sSettings = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml";
         private readonly string sLangsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStartLang.Xml";
@@ -115,12 +119,12 @@ namespace RandomStart
         private readonly string sSavedFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml";
         private readonly string sRandLanguage = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language";
 
+        private System.Media.SoundPlayer Ahhhhhh = new System.Media.SoundPlayer("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/heavenly_choir.wav");
+
         private string sExitAn_01 = "";
         private string sExitAn_02 = "";
 
         private List<float> fHeads = new List<float>();
-
-        private List<bool> bRandList = new List<bool>();
 
         private List<string> sNameFem = new List<string>();
         private List<string> sNameMal = new List<string>();
@@ -140,21 +144,24 @@ namespace RandomStart
         private List<Vehicle> VehList = new List<Vehicle>();
         private List<Weather> WetherBe = new List<Weather>();
         private List<VehicleSeat> Vseats = new List<VehicleSeat>();
-        private List<NewClothBank> MyPedCollection = new List<NewClothBank>();       
+        private List<NewClothBank> MyPedCollection = new List<NewClothBank>();
         private List<WeaponSaver> wMyWeaps = new List<WeaponSaver>();
 
         private Vector3 vPedTarget = Vector3.Zero;
         private Vector3 vPlayerTarget = Vector3.Zero;
         private Vector3 vAreaRest = Vector3.Zero;
+        private Vector3 vHell = Vector3.Zero;
         private Vector3 vHeaven = Vector3.Zero;
 
         private Ped pPilot = null;
-        private Relationship RelateReset = Relationship.Neutral;
         private Keys KBuild = Keys.L;
 
         private Vehicle Shoaf = null;
         private Vehicle RideThis = null;
         private Vehicle PrisEscape = null;
+
+        private Weather DeadWeather = Weather.Clear;
+        private double DeadTime = 0;
 
         private NewClothBank NewBank = null;
         private ScriptSettings MenyooTest;
@@ -182,7 +189,6 @@ namespace RandomStart
             Shoaf = null;
             pPilot = null;
             RideThis = null;
-            //Function.Call(Hash.SET_AI_MELEE_WEAPON_DAMAGE_MODIFIER, 1.00f);
             bFallenOff = false;
             bAllowControl = false;
             if (iPostAction > 0)
@@ -193,7 +199,7 @@ namespace RandomStart
                 Game.Player.Character.HasCollision = true;
                 Game.Player.Character.FreezePosition = false;
             }
-            if (Game.Player.Character.Model == PedHash.Franklin || Game.Player.Character.Model == PedHash.Michael || Game.Player.Character.Model == PedHash.Trevor)
+            if (IsMainChar())
             {
                 Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "director_mode");
                 Game.Player.Character.Task.ClearAll();
@@ -223,9 +229,9 @@ namespace RandomStart
                 {
                     ForceAnimOnce(Game.Player.Character, sExitAn_01, sExitAn_02, Game.Player.Character.Position, Game.Player.Character.Rotation);
                     Game.Player.Character.Detach();
-                    while (Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, Game.Player.Character, 134))
+                    while (Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, Game.Player.Character.Handle, 134))
                         Script.Wait(100);
-                    Function.Call(Hash.STOP_ANIM_PLAYBACK, Game.Player.Character, 0, 0);
+                    Function.Call(Hash.STOP_ANIM_PLAYBACK, Game.Player.Character.Handle, 0, 0);
                     //Game.Player.Character.Task.ClearAllImmediately();
                 }
                 else
@@ -235,28 +241,28 @@ namespace RandomStart
             {
                 if (iGrouping == 1)
                 {
-                    World.SetRelationshipBetweenGroups(RelateReset, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"));
-                    World.SetRelationshipBetweenGroups(RelateReset, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"), PlayerGroups);
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"));
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"), GP_Player);
                 }
                 else if (iGrouping == 2)
                 {
-                    World.SetRelationshipBetweenGroups(RelateReset, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"));
-                    World.SetRelationshipBetweenGroups(RelateReset, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"), PlayerGroups);
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"));
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"), GP_Player);
                 }
                 else if (iGrouping == 3)
                 {
-                    World.SetRelationshipBetweenGroups(RelateReset, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"));
-                    World.SetRelationshipBetweenGroups(RelateReset, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"), PlayerGroups);
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"));
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"), GP_Player);
                 }
                 else if (iGrouping == 4)
                 {
-                    World.SetRelationshipBetweenGroups(RelateReset, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"));
-                    World.SetRelationshipBetweenGroups(RelateReset, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"), PlayerGroups);
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"));
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"), GP_Player);
                 }
                 else if (iGrouping == 5)
                 {
-                    World.SetRelationshipBetweenGroups(RelateReset, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"));
-                    World.SetRelationshipBetweenGroups(RelateReset, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"), PlayerGroups);
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"));
+                    Function.Call(Hash.CLEAR_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"), GP_Player);
                 }
                 iGrouping = 0;
             }       //GangStar
@@ -274,7 +280,6 @@ namespace RandomStart
         }
         private void CleanPeds()
         {
-
             LogginSyatem("CleanPeds");
 
             for (int i = 0; i < PeddyList.Count; i++)
@@ -305,6 +310,19 @@ namespace RandomStart
             }
             VehList.Clear();
         }
+        private void SetPlayRellGrp()
+        {
+            LogginSyatem("SetPlayRellGrp");
+
+            Function.Call(Hash.REMOVE_RELATIONSHIP_GROUP, GP_Player);
+            GP_Player = Game.Player.Character.RelationshipGroup;
+
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Friend, GP_Player);
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, GP_Friend);
+
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Attack, GP_Player);
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Player, GP_Attack);
+        }
         public bool WhileButtonDown(int CButt, bool bDisable)
         {
             if (bDisable)
@@ -332,8 +350,8 @@ namespace RandomStart
         }
         private void LockNLoad(int iAmmo, string sWeap, Ped Peddy)
         {
-            Function.Call<bool>(Hash.SET_AMMO_IN_CLIP, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), Function.Call<int>(Hash.GET_MAX_AMMO_IN_CLIP, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), false));
-            Function.Call(Hash.SET_PED_AMMO, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), iAmmo);
+            Function.Call<bool>(Hash.SET_AMMO_IN_CLIP, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), Function.Call<int>(Hash.GET_MAX_AMMO_IN_CLIP, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), false));
+            Function.Call(Hash.SET_PED_AMMO, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sWeap), iAmmo);
         }
         public int Mk2AmmoFix(string sWeapo)
         {
@@ -357,9 +375,13 @@ namespace RandomStart
             public bool DisableRecord { get; set; }
             public bool KeepWeapons { get; set; }
             public bool BeltUp { get; set; }
+            public bool Reincarn { get; set; }
+            public bool ReCritter { get; set; }
+            public bool ReSave { get; set; }
+            public bool ReCurr { get; set; }
             public int Version { get; set; }
             public int LangSupport { get; set; }
-            public List<WeaponSaver> YourWeaps { get; set;}
+            public List<WeaponSaver> YourWeaps { get; set; }
 
             public SettingsXML()
             {
@@ -409,16 +431,28 @@ namespace RandomStart
                 if (bRandLocate && bLoadUpOnYacht)
                     bRandLocate = false;
 
-                if (iVersion != 24000)
+                if (iVersion != 25000)
                 {
                     GetWeaps();
                     bNagg = true;
                 }
                 else
-                    wMyWeaps = SetsXML.YourWeaps;
+                {
+                    bReCritters = SetsXML.ReCritter;
+                    bReCurrentPd = SetsXML.ReCurr;
+                    bReSavedPed = SetsXML.ReSave;
+                    bReincarn = SetsXML.Reincarn;
+                    if (SetsXML.YourWeaps.Count > 0)
+                        wMyWeaps = SetsXML.YourWeaps;
+                    else
+                        GetWeaps();
+                }
             }
             else
+            {
+                GetWeaps();
                 bNagg = true;
+            }
 
             FindaLang();
 
@@ -429,7 +463,7 @@ namespace RandomStart
         private void NagScreen()
         {
             UI.Notify(sLangfile[0]);
-            iVersion = 24000;
+            iVersion = 25000;
             if (File.Exists(sRandFile))
                 File.Delete(sRandFile);
             WriteSetXML();
@@ -452,6 +486,10 @@ namespace RandomStart
                 BeltUp = bBeltUp,
                 Version = iVersion,
                 LangSupport = iLangSupport,
+                Reincarn = bReincarn,
+                ReCritter = bReCritters,
+                ReCurr = bReCurrentPd,
+                ReSave = bReSavedPed,
                 YourWeaps = wMyWeaps
             };
             SaveSetMain(Set, sSettings);
@@ -626,7 +664,17 @@ namespace RandomStart
             sLangfile.Add("Select a nearby ped");      //137
             sLangfile.Add("Press ~INPUT_CONTEXT~ to select ped, ~INPUT_SPRINT~ to assimilate, ~INPUT_ENTER~ to exit.");      //138
             sLangfile.Add("Animals");      //139
-            sLangfile.Add("blank");      //140
+            sLangfile.Add("Reincarnation");      //140
+            sLangfile.Add("An alternative to dying");      //141
+            sLangfile.Add("Include Critters");      //142
+            sLangfile.Add("Return as a saved ped");      //143
+            sLangfile.Add("Return as current ped");      //144
+            sLangfile.Add("blank");      //145
+            sLangfile.Add("blank");      //146
+            sLangfile.Add("blank");      //147
+            sLangfile.Add("blank");      //148
+            sLangfile.Add("blank");      //149
+            sLangfile.Add("blank");      //150
 
             //LangXML Mylang = new LangXML();
             //Mylang.Langfile = sLangfile;
@@ -2454,20 +2502,24 @@ namespace RandomStart
 
             Ped Peddy = Game.Player.Character;
 
-            for (int i = 0; i < wMyWeaps.Count; i++)
+            if (Function.Call<int>(Hash.GET_PED_TYPE, Peddy.Handle) != 28)
             {
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayWeaps), 0, false, true);
-
-                for (int ii = 0; ii < wMyWeaps[i].PlayCompsList.Count; ii++)
+                for (int i = 0; i < wMyWeaps.Count; i++)
                 {
-                    if (Function.Call<bool>(Hash.DOES_WEAPON_TAKE_WEAPON_COMPONENT, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayWeaps), Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayCompsList[ii])))
+                    Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayWeaps), 0, false, true);
+
+                    for (int ii = 0; ii < wMyWeaps[i].PlayCompsList.Count; ii++)
                     {
-                        Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayWeaps), Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayCompsList[ii]));
+                        if (Function.Call<bool>(Hash.DOES_WEAPON_TAKE_WEAPON_COMPONENT, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayWeaps), Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayCompsList[ii])))
+                        {
+                            Function.Call(Hash.GIVE_WEAPON_COMPONENT_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayWeaps), Function.Call<int>(Hash.GET_HASH_KEY, wMyWeaps[i].PlayCompsList[ii]));
+                        }
                     }
+                    LockNLoad(wMyWeaps[i].Ammos, wMyWeaps[i].PlayWeaps, Peddy);
                 }
-                LockNLoad(wMyWeaps[i].Ammos, wMyWeaps[i].PlayWeaps, Peddy);
+                Function.Call(Hash.SET_PED_CURRENT_WEAPON_VISIBLE, Game.Player.Character.Handle, false, true, true, true);
+
             }
-            Function.Call(Hash.SET_PED_CURRENT_WEAPON_VISIBLE, Game.Player.Character, false, true, true, true);
         }
         private void GetWeaps()
         {
@@ -2478,19 +2530,19 @@ namespace RandomStart
 
             for (int i = 0; i < sWeapList.Count; i++)
             {
-                if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), false))
+                if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), false))
                 {
                     WeaponSaver AdThis = new WeaponSaver();
                     AdThis.PlayWeaps = sWeapList[i];
                     int iAmmos = 0;
-                    iAmmos = Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]));
+                    iAmmos = Function.Call<int>(Hash.GET_AMMO_IN_PED_WEAPON, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]));
                     if (iAmmos < 1)
                         iAmmos = 1;
                     AdThis.Ammos = iAmmos;
 
                     for (int ii = 0; ii < sAddsList.Count; ii++)
                     {
-                        if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON_COMPONENT, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), Function.Call<int>(Hash.GET_HASH_KEY, sAddsList[ii])))
+                        if (Function.Call<bool>(Hash.HAS_PED_GOT_WEAPON_COMPONENT, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sWeapList[i]), Function.Call<int>(Hash.GET_HASH_KEY, sAddsList[ii])))
                             AdThis.PlayCompsList.Add(sAddsList[ii]);
                     }
                     wMyWeaps.Add(AdThis);
@@ -2513,15 +2565,15 @@ namespace RandomStart
         {
 
             LogginSyatem("SetUpMod");
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Friend, GP_Player);
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, GP_Friend);
 
-            World.SetRelationshipBetweenGroups(Relationship.Hate, PlayerGroups, AttackingNPCs);
-            World.SetRelationshipBetweenGroups(Relationship.Hate, AttackingNPCs, PlayerGroups);
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Attack, GP_Player);
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Player, GP_Attack);
 
-            World.SetRelationshipBetweenGroups(Relationship.Like, PlayerGroups, FriendlyNPCs);
-            World.SetRelationshipBetweenGroups(Relationship.Like, FriendlyNPCs, PlayerGroups);
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Attack, GP_Friend);
+            Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Friend, GP_Attack);
 
-            World.SetRelationshipBetweenGroups(Relationship.Hate, AttackingNPCs, FriendlyNPCs);
-            World.SetRelationshipBetweenGroups(Relationship.Hate, FriendlyNPCs, AttackingNPCs);
 
             UI.Notify("Random Start " + sVersion + " by Adopcalipt Loaded");
 
@@ -2541,7 +2593,7 @@ namespace RandomStart
 
             if (File.Exists("" + Directory.GetCurrentDirectory() + "/EnhancedNativeTrainer.asi"))
             {
-                bEnhanceT = true;
+                //bEnhanceT = true;
                 bDisableDLCVeh = false;
             }
 
@@ -2570,6 +2622,7 @@ namespace RandomStart
 
             LogginSyatem("LoadUp");
 
+            Ahhhhhh.Load();
             PedPools();
             WeatherList();
             IHearVoices();
@@ -2579,7 +2632,7 @@ namespace RandomStart
             LoadupWeaponXML();
             NSPMComXml();
             LoadSetXML();
-            
+
             SetUpMod();
 
             StartTheMod(0, true);
@@ -2588,7 +2641,7 @@ namespace RandomStart
         {
             LogginSyatem("StartTheMod, iSelects == " + iSelects + ", bLoading == " + bLoading);
 
-            if (MyPedCollection.Count == 1)
+            if (MyPedCollection.Count == 0)
             {
                 bSavedPed = false;
                 WriteSetXML();
@@ -2637,10 +2690,10 @@ namespace RandomStart
                 {
                     if (bMainProtag)
                     {
-                        if (Game.Player.Character.Model != PedHash.Franklin || Game.Player.Character.Model != PedHash.Michael || Game.Player.Character.Model != PedHash.Trevor)
+                        if (!IsMainChar())
                             YourRanPed(sMainChar);
-
-                        PlayerBelter();
+                        else
+                            PlayerBelter();
                     }
                     else
                     {
@@ -2670,7 +2723,7 @@ namespace RandomStart
                     MethEdd(true);
 
                 if (iSelects == 0)
-                    RandomLocations(FindRandom(1, 1, 23));
+                    RandomLocations(FindRandom(2, 1, 23));
                 else
                     RandomLocations(iSelects);
             }
@@ -2696,7 +2749,7 @@ namespace RandomStart
                 World.CurrentDayTime = TimeSpan.FromHours(12);
                 World.Weather = Weather.ExtraSunny;
 
-                if (BoolList(1))
+                if (FindRandom(16, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(84.15928f, 870.0395f, 196.9632f)); fHeading.Add(198.6257f);
                     Pos_01.Add(new Vector3(1085.424f, -623.1199f, 55.74931f)); fHeading.Add(231.864f);
@@ -2802,7 +2855,7 @@ namespace RandomStart
             {
                 World.Weather = Weather.Raining;
 
-                if (BoolList(2))
+                if (FindRandom(17, 1, 4) < 2)
                 {
                     World.CurrentDayTime = TimeSpan.FromHours(12);
 
@@ -2840,7 +2893,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (BoolList(3))
+                if (FindRandom(18, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(-1354.29f, -140.058f, 49.57456f));
                     Pos_01.Add(new Vector3(-1026.242f, 315.9842f, 66.88311f));
@@ -3061,7 +3114,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (BoolList(4))
+                if (FindRandom(19, 1, 4) < 2)
                 {
 
                     Pos_01.Add(new Vector3(-356.741f, 16.12581f, 47.85474f));
@@ -3437,7 +3490,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (BoolList(5))
+                if (FindRandom(20, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(1258.926f, -1761.398f, 49.67699f));
                     Pos_01.Add(new Vector3(1250.658f, -1734.747f, 52.03196f));
@@ -3610,7 +3663,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (BoolList(6))
+                if (FindRandom(21, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(-122.6672f, -863.2216f, 33.33057f)); fHeading.Add(104.0432f);
                     Pos_01.Add(new Vector3(-209.1611f, -785.0453f, 30.45403f)); fHeading.Add(250.6104f);
@@ -3778,7 +3831,7 @@ namespace RandomStart
                     Pos_01.Add(new Vector3(968.5342f, -118.6646f, 74.35315f)); fHeading.Add(121.6418f);
                     Pos_01.Add(new Vector3(974.248f, -113.7502f, 74.35315f)); fHeading.Add(90.07847f); //peds
                 }           //Lost ... Vs Impex
-                else if (iSubSet == 11)
+                else
                 {
                     Pos_01.Add(new Vector3(83.97136f, 260.0858f, 108.9136f)); fHeading.Add(154.9512f);
                     Pos_01.Add(new Vector3(1581.418f, 6453.026f, 25.31714f)); fHeading.Add(152.6169f);
@@ -4315,7 +4368,7 @@ namespace RandomStart
                 World.CurrentDayTime = TimeSpan.FromHours(12);
                 World.Weather = Weather.ExtraSunny;
 
-                if (BoolList(7))
+                if (FindRandom(22, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(-1364.786f, 88.02513f, 60.62911f)); fHeading.Add(4.459937f);//no cart
                     Pos_01.Add(new Vector3(-1341.147f, 58.34372f, 55.24565f)); fHeading.Add(255.8883f);
@@ -4428,7 +4481,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (BoolList(8))
+                if (FindRandom(23, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(606.2311f, 6460.72f, 30.36371f)); fHeading.Add(5.789507f);
                     Pos_01.Add(new Vector3(320.5405f, 6446.443f, 31.04944f)); fHeading.Add(270.2463f);
@@ -5037,7 +5090,7 @@ namespace RandomStart
                 }       //"Chemical Plant Worker");  
                 else if (iSubSet == 11)
                 {
-                    if (BoolList(9))
+                    if (FindRandom(24, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(2368.954f, 2191.936f, 142.1283f)); fHeading.Add(177.7558f);
                         Pos_01.Add(new Vector3(941.1194f, 2420.352f, 80.66275f)); fHeading.Add(354.4607f);
@@ -5067,7 +5120,7 @@ namespace RandomStart
                 }       //"construction Worker 2"); 
                 else if (iSubSet == 12)
                 {
-                    if (BoolList(10))
+                    if (FindRandom(25, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(944.6815f, -2933.804f, 49.12353f)); fHeading.Add(289.2962f);
                         Pos_01.Add(new Vector3(1011.372f, -2896.42f, 39.15219f)); fHeading.Add(172.0232f);
@@ -5173,7 +5226,7 @@ namespace RandomStart
                 }       //"Pest Control");  
                 else if (iSubSet == 19)
                 {
-                    if (BoolList(11))
+                    if (FindRandom(26, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(126.8316f, 217.908f, 107.2581f)); fHeading.Add(250.0984f);
                         Pos_01.Add(new Vector3(-63.64765f, 38.78681f, 72.05331f)); fHeading.Add(246.6971f);
@@ -5193,7 +5246,7 @@ namespace RandomStart
                 }       //"Postal Worker Male 2");  
                 else if (iSubSet == 20)
                 {
-                    if (BoolList(12))
+                    if (FindRandom(27, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(775.7664f, -983.2467f, 26.1865f)); fHeading.Add(179.6391f);
                         Pos_01.Add(new Vector3(970.2875f, -1458.307f, 31.24547f)); fHeading.Add(357.9949f);
@@ -5231,7 +5284,7 @@ namespace RandomStart
                 {
                     Pos_01.Add(new Vector3(-663.5873f, -183.1233f, 37.67239f)); fHeading.Add(130.6762f);
                 }       //"Valet");  
-                else if (iSubSet == 23)
+                else
                 {
                     Pos_01.Add(new Vector3(-74.24763f, -837.0442f, 318.9297f)); fHeading.Add(167.2113f);
                     Pos_01.Add(new Vector3(-148.4851f, -611.0936f, 204.009f)); fHeading.Add(36.52973f);
@@ -5367,7 +5420,7 @@ namespace RandomStart
                     World.Weather = Weather.ExtraSunny;
                     World.CurrentDayTime = TimeSpan.FromHours(12);
 
-                    if (BoolList(13))
+                    if (FindRandom(28, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-2006.46f, -557.0941f, 12.88623f)); fHeading.Add(131.999f);
                         Pos_01.Add(new Vector3(-1904.047f, -710.8903f, 8.832588f)); fHeading.Add(142.1092f);
@@ -5419,7 +5472,7 @@ namespace RandomStart
                 }       //"US Coastguard
                 else if (iSubSet == 3)
                 {
-                    if (BoolList(14))
+                    if (FindRandom(29, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(358.6237f, -1583.362f, 29.29193f)); fHeading.Add(327.5265f);
                         Pos_01.Add(new Vector3(824.7567f, -1288.554f, 28.24066f)); fHeading.Add(87.50066f);
@@ -5578,7 +5631,7 @@ namespace RandomStart
                 }       //><!-- Sherif
                 else if (iSubSet == 7)
                 {
-                    if (BoolList(15))
+                    if (FindRandom(30, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(142.8676f, -721.2127f, 42.02895f)); fHeading.Add(38.59577f);
                         Pos_01.Add(new Vector3(180.8606f, -698.6846f, 47.07698f)); fHeading.Add(305.9764f);
@@ -5657,7 +5710,7 @@ namespace RandomStart
                 }       //><!-- swat
                 else if (iSubSet == 9)
                 {
-                    if (BoolList(16))
+                    if (FindRandom(31, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-2348.52f, 3270.065f, 32.81076f)); fHeading.Add(332.1701f);
                         Pos_01.Add(new Vector3(-2352.183f, 3263.234f, 32.81076f)); fHeading.Add(130.7586f);
@@ -5710,7 +5763,7 @@ namespace RandomStart
 
                     iAction = 1;
                 }      //medic
-                else if (iSubSet == 11)
+                else
                 {
                     Pos_01.Add(new Vector3(-370.2138f, 6128.188f, 31.52059f)); fHeading.Add(43.32635f);
                     Pos_01.Add(new Vector3(1696.062f, 3588.495f, 35.69079f)); fHeading.Add(203.5357f);
@@ -5733,7 +5786,7 @@ namespace RandomStart
 
                 if (iSubSet == 1)
                 {
-                    if (BoolList(17))
+                    if (FindRandom(32, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-3376.623f, 7834.382f, 1500.00f)); fHeading.Add(217.4295f);
                         Pos_01.Add(new Vector3(4364.612f, -4151.208f, 1500.00f)); fHeading.Add(42.93307f);
@@ -5753,7 +5806,7 @@ namespace RandomStart
                 }       //civilian
                 else if (iSubSet == 2)
                 {
-                    if (BoolList(18))
+                    if (FindRandom(33, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-3376.623f, 7834.382f, 700.00f)); fHeading.Add(217.4295f);
                         Pos_01.Add(new Vector3(4364.612f, -4151.208f, 700.00f)); fHeading.Add(42.93307f);
@@ -5795,7 +5848,7 @@ namespace RandomStart
 
                     iEnterVeh = 3;
                 }       //helitours
-                else if (iSubSet == 4)
+                else
                 {
                     Pos_01.Add(new Vector3(-286.1589f, 6130.172f, 32.13292f)); fHeading.Add(275.265f);
                     Pos_01.Add(new Vector3(-286.3647f, 6130.907f, 65.98f)); fHeading.Add(281.1871f);
@@ -5834,7 +5887,11 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                iSubSet = FindRandom(13, 1, 14);
+                if (bMainProtag || bSavedPed)
+                    iSubSet = FindRandom(14, 1, 11);
+                else
+                    iSubSet = FindRandom(13, 1, 14);
+
                 float fRando = RandInt(0, 360);
 
                 if (iSubSet == 1)
@@ -5849,7 +5906,7 @@ namespace RandomStart
                     Pos_01.Add(new Vector3(31.35694f, 4340.92f, 42.37447f)); fHeading.Add(144.4754f);
                     Pos_01.Add(new Vector3(-368.3591f, 4368.038f, 52.54329f)); fHeading.Add(353.8307f);
                     Pos_01.Add(new Vector3(2193.633f, 4682.529f, 34.95401f)); fHeading.Add(225.1884f);
-                }       //a_c_boar
+                }           //a_c_boar
                 else if (iSubSet == 2)
                 {
                     Pos_01.Add(new Vector3(-489.1449f, 6272.717f, 13.33084f)); fHeading.Add(146.1511f);
@@ -5902,93 +5959,48 @@ namespace RandomStart
                     Pos_01.Add(new Vector3(1232.821f, -644.1865f, 66.87959f)); fHeading.Add(11.07453f);
                     Pos_01.Add(new Vector3(1019.167f, -500.7501f, 60.69093f)); fHeading.Add(19.97879f);
                     Pos_01.Add(new Vector3(809.7609f, -126.2644f, 77.24301f)); fHeading.Add(56.15232f);
-                }       //cats/dogs
+                }      //cats/dogs
                 else if (iSubSet == 3)
                 {
-                    List<Vector3> vCenter = new List<Vector3>
-                    {
-                        new Vector3(-2505.106f, 757.7692f, 402.0063f),
-                        new Vector3(-2338.906f, 1359.295f, 434.8655f),
-                        new Vector3(-1208.171f, 1196.468f, 393.5298f),
-                        new Vector3(-917.9607f, 1425.409f, 398.0696f),
-                        new Vector3(-465.1019f, 1526.887f, 491.0108f),
-                        new Vector3(758.509f, 1274.176f, 546.1901f),
-                        new Vector3(1789.931f, 686.2056f, 367.2453f),
-                        new Vector3(2215.134f, 245.5946f, 359.8406f),
-                        new Vector3(2046.679f, -1554.435f, 343.4529f),
-                        new Vector3(2900.099f, 2383.188f, 270.8425f),
-                        new Vector3(3293.974f, 3141.153f, 353.1701f),
-                        new Vector3(3444.243f, 4197.86f, 340.2985f),
-                        new Vector3(2877.255f, 5911.345f, 469.6395f),
-                        new Vector3(450.718f, 5566.614f, 906.1833f),
-                        new Vector3(-1213.257f, 3848.571f, 590.4387f)
-                    };
-
-                    Vector3 MyRandV = vCenter[RandInt(0, vCenter.Count - 1)];
-                    Vector3 MyVec = MyRandV.Around(75.00f);
-                    MyVec.Z = MyRandV.Z + 0.5f;
-
-                    Pos_01.Add(MyVec); fHeading.Add(fRando);
-                }       //a_c_chickenhawk
+                    Pos_01.Add(new Vector3(-1798.327f, -367.8435f, 63.32634f)); fHeading.Add(193.4475f);
+                    Pos_01.Add(new Vector3(-1754.362f, -398.6084f, 61.47853f)); fHeading.Add(271.401f);
+                    Pos_01.Add(new Vector3(-1699.881f, -447.604f, 51.85827f)); fHeading.Add(284.0296f);
+                    Pos_01.Add(new Vector3(-1648.967f, -364.9341f, 57.85902f)); fHeading.Add(90.00666f);
+                    Pos_01.Add(new Vector3(-1500.419f, -365.9177f, 53.64492f)); fHeading.Add(270.9501f);
+                    Pos_01.Add(new Vector3(-1556.568f, -222.7807f, 61.25249f)); fHeading.Add(272.3614f);
+                    Pos_01.Add(new Vector3(-1482.511f, -194.8814f, 61.88908f)); fHeading.Add(242.8922f);
+                    Pos_01.Add(new Vector3(-1351.707f, -207.7835f, 56.73883f)); fHeading.Add(254.2633f);
+                    Pos_01.Add(new Vector3(-1131.186f, -338.4612f, 49.96766f)); fHeading.Add(267.795f);
+                    Pos_01.Add(new Vector3(-1154.988f, -370.9339f, 60.99239f)); fHeading.Add(82.19715f);
+                    Pos_01.Add(new Vector3(-1170.928f, -469.0142f, 63.362f)); fHeading.Add(170.2042f);
+                    Pos_01.Add(new Vector3(-1432.225f, -700.3183f, 34.43598f)); fHeading.Add(266.5981f);
+                    Pos_01.Add(new Vector3(-1260.698f, -773.0103f, 28.08051f)); fHeading.Add(288.7174f);
+                    Pos_01.Add(new Vector3(-1277.13f, -1036.979f, 30.61119f)); fHeading.Add(276.1534f);
+                    Pos_01.Add(new Vector3(-1250.884f, -1349.212f, 11.00681f)); fHeading.Add(271.3377f);
+                    Pos_01.Add(new Vector3(-1036.955f, -1564.975f, 13.71508f)); fHeading.Add(115.3018f);
+                    Pos_01.Add(new Vector3(-174.3833f, -1286.126f, 51.57734f)); fHeading.Add(191.2564f);
+                    Pos_01.Add(new Vector3(-68.70186f, -1329.357f, 39.16204f)); fHeading.Add(204.9683f);
+                    Pos_01.Add(new Vector3(-16.61767f, -1551.997f, 37.85777f)); fHeading.Add(236.8366f);
+                    Pos_01.Add(new Vector3(196.3551f, -1878.706f, 29.22336f)); fHeading.Add(91.73615f);
+                    Pos_01.Add(new Vector3(472.7628f, -1890.018f, 31.78282f)); fHeading.Add(291.9175f);
+                }     //a_c_pigeon
                 else if (iSubSet == 4)
                 {
-                    Pos_01.Add(new Vector3(-647.1717f, 6381.847f, 55.23498f)); fHeading.Add(116.049f);
-                    Pos_01.Add(new Vector3(-996.1914f, 6127.102f, 65.05244f)); fHeading.Add(134.0498f);
-                    Pos_01.Add(new Vector3(-1386.921f, 5662.692f, 47.45169f)); fHeading.Add(144.4735f);
-                    Pos_01.Add(new Vector3(-1762.023f, 5236.699f, 55.13129f)); fHeading.Add(131.9612f);
-                    Pos_01.Add(new Vector3(-2233.242f, 4773.679f, 45.847f)); fHeading.Add(141.0407f);
-                    Pos_01.Add(new Vector3(-2531.957f, 4265.873f, 47.47537f)); fHeading.Add(155.767f);
-                    Pos_01.Add(new Vector3(-2917.601f, 3701.053f, 38.22935f)); fHeading.Add(142.8838f);
-                    Pos_01.Add(new Vector3(-2998.329f, 3139.244f, 74.07671f)); fHeading.Add(213.4786f);
-                    Pos_01.Add(new Vector3(-2752.106f, 2674.014f, 26.49481f)); fHeading.Add(181.8097f);
-                    Pos_01.Add(new Vector3(-2876.323f, 2343.454f, 32.5507f)); fHeading.Add(141.9623f);
-                    Pos_01.Add(new Vector3(-3161.823f, 1995.468f, 46.15065f)); fHeading.Add(162.9095f);
-                    Pos_01.Add(new Vector3(-3308.383f, 1324.952f, 24.35565f)); fHeading.Add(170.2323f);
-                    Pos_01.Add(new Vector3(-3257.926f, 801.7152f, 19.8493f)); fHeading.Add(208.8283f);
-                    Pos_01.Add(new Vector3(-3165.103f, 389.472f, 21.80201f)); fHeading.Add(178.8124f);
-                    Pos_01.Add(new Vector3(-3060.918f, 39.02373f, 41.1531f)); fHeading.Add(225.9778f);
-                    Pos_01.Add(new Vector3(-2584.827f, -262.5694f, 20.47069f)); fHeading.Add(240.8913f);
-                    Pos_01.Add(new Vector3(-1946.684f, -760.1068f, 17.09371f)); fHeading.Add(227.7444f);
-                    Pos_01.Add(new Vector3(-1756.316f, -1033.566f, 48.26628f)); fHeading.Add(208.7735f);
-                    Pos_01.Add(new Vector3(-1576.124f, -1275.015f, 56.18793f)); fHeading.Add(226.497f);
-                    Pos_01.Add(new Vector3(-1365.415f, -1603.034f, 22.2108f)); fHeading.Add(204.662f);
-                    Pos_01.Add(new Vector3(-1285.784f, -2006.483f, 29.93159f)); fHeading.Add(141.3346f);
-                    Pos_01.Add(new Vector3(-1678.79f, -2464.347f, 31.70895f)); fHeading.Add(138.5401f);
-                    Pos_01.Add(new Vector3(-1955.164f, -3219.351f, 27.96449f)); fHeading.Add(229.7054f);
-                    Pos_01.Add(new Vector3(-1491.28f, -3433.852f, 24.46868f)); fHeading.Add(255.0693f);
-                    Pos_01.Add(new Vector3(-450.818f, -2932.367f, 59.03496f)); fHeading.Add(315.9116f);
-                    Pos_01.Add(new Vector3(-170.4312f, -2751.726f, 35.55687f)); fHeading.Add(281.9165f);
-                    Pos_01.Add(new Vector3(84.32108f, -3011.168f, 38.66256f)); fHeading.Add(186.9482f);
-                    Pos_01.Add(new Vector3(381.5255f, -3088.718f, 43.53959f)); fHeading.Add(184.7814f);
-                    Pos_01.Add(new Vector3(810.2408f, -3349.875f, 76.97131f)); fHeading.Add(255.1599f);
-                    Pos_01.Add(new Vector3(1011.955f, -2818.816f, 67.02275f)); fHeading.Add(275.2491f);
-                    Pos_01.Add(new Vector3(1381.353f, -2785.423f, 25.2271f)); fHeading.Add(275.3469f);
-                    Pos_01.Add(new Vector3(1899.568f, -2698.206f, 29.57582f)); fHeading.Add(290.0086f);
-                    Pos_01.Add(new Vector3(2253.048f, -2338.232f, 22.41039f)); fHeading.Add(327.0099f);
-                    Pos_01.Add(new Vector3(2695.794f, -1842.093f, 60.28313f)); fHeading.Add(350.8695f);
-                    Pos_01.Add(new Vector3(2617.608f, -1242.502f, 42.30254f)); fHeading.Add(353.048f);
-                    Pos_01.Add(new Vector3(2812.688f, -885.5068f, 39.93338f)); fHeading.Add(336.1742f);
-                    Pos_01.Add(new Vector3(3090.899f, -303.8704f, 28.63768f)); fHeading.Add(331.2384f);
-                    Pos_01.Add(new Vector3(3137.391f, 290.1704f, 31.95886f)); fHeading.Add(10.3887f);
-                    Pos_01.Add(new Vector3(2952.225f, 871.7095f, 49.21233f)); fHeading.Add(27.73952f);
-                    Pos_01.Add(new Vector3(3045.487f, 1832.076f, 51.5413f)); fHeading.Add(328.3755f);
-                    Pos_01.Add(new Vector3(3373.457f, 2541.495f, 30.65476f)); fHeading.Add(342.1697f);
-                    Pos_01.Add(new Vector3(3592.438f, 2930.6f, 55.46889f)); fHeading.Add(321.836f);
-                    Pos_01.Add(new Vector3(3891.745f, 3392.547f, 49.76966f)); fHeading.Add(337.126f);
-                    Pos_01.Add(new Vector3(3812.255f, 3768.048f, 42.65887f)); fHeading.Add(308.2817f);
-                    Pos_01.Add(new Vector3(3995.321f, 4042.65f, 28.32089f)); fHeading.Add(353.3696f);
-                    Pos_01.Add(new Vector3(3945.367f, 4453.691f, 21.29278f)); fHeading.Add(24.97192f);
-                    Pos_01.Add(new Vector3(3637.679f, 4847.447f, 11.86491f)); fHeading.Add(35.3928f);
-                    Pos_01.Add(new Vector3(3398.107f, 5422.701f, 35.40386f)); fHeading.Add(282.6931f);
-                    Pos_01.Add(new Vector3(3462.258f, 5879.85f, 29.49525f)); fHeading.Add(359.8459f);
-                    Pos_01.Add(new Vector3(3425.451f, 6118.301f, 37.708f)); fHeading.Add(22.10388f);
-                    Pos_01.Add(new Vector3(3049.092f, 6444.611f, 35.03535f)); fHeading.Add(62.56868f);
-                    Pos_01.Add(new Vector3(2403.384f, 6718.95f, 39.0113f)); fHeading.Add(69.30715f);
-                    Pos_01.Add(new Vector3(1678.953f, 6731.902f, 71.92032f)); fHeading.Add(96.16738f);
-                    Pos_01.Add(new Vector3(622.5536f, 6737.898f, 21.04184f)); fHeading.Add(47.28201f);
-                    Pos_01.Add(new Vector3(145.2582f, 7054.913f, 40.39904f)); fHeading.Add(76.91423f);
-                    Pos_01.Add(new Vector3(-147.7463f, 6729.933f, 13.17056f)); fHeading.Add(153.3098f);
-                }      //a_c_cormorant
+                    Pos_01.Add(new Vector3(461.2985f, -3104.381f, 6.070058f)); fHeading.Add(291.4764f);
+                    Pos_01.Add(new Vector3(-1199.754f, -2704.224f, 13.95425f)); fHeading.Add(223.3566f);
+                    Pos_01.Add(new Vector3(-347.7987f, -2661.436f, 6.000296f)); fHeading.Add(359.5485f);
+                    Pos_01.Add(new Vector3(-76.08307f, -2666.825f, 6.00089f)); fHeading.Add(65.05595f);
+                    Pos_01.Add(new Vector3(-443.0275f, -2180.255f, 10.31819f)); fHeading.Add(100.1932f);
+                    Pos_01.Add(new Vector3(875.7438f, -1351.802f, 26.31284f)); fHeading.Add(262.73f);
+                    Pos_01.Add(new Vector3(682.5385f, -1213.703f, 24.96063f)); fHeading.Add(181.9295f);
+                    Pos_01.Add(new Vector3(690.9706f, -1016.897f, 22.62444f)); fHeading.Add(1.884157f);
+                    Pos_01.Add(new Vector3(727.1188f, -927.6669f, 24.61855f)); fHeading.Add(53.66885f);
+                    Pos_01.Add(new Vector3(1143.96f, -785.0414f, 57.58156f)); fHeading.Add(250.645f);
+                    Pos_01.Add(new Vector3(1536.905f, 3798.235f, 34.45097f)); fHeading.Add(115.1182f);
+                    Pos_01.Add(new Vector3(2055.688f, 3172.045f, 45.16896f)); fHeading.Add(199.4242f);
+                    Pos_01.Add(new Vector3(2192.997f, 5600.538f, 53.66485f)); fHeading.Add(321.3761f);
+                    Pos_01.Add(new Vector3(66.26553f, 6663.012f, 31.78686f)); fHeading.Add(11.51797f);
+                }     //a_c_rat
                 else if (iSubSet == 5)
                 {
                     List<Vector3> vCenter = new List<Vector3>
@@ -6113,29 +6125,6 @@ namespace RandomStart
                 }      //a_c_deer/a_c_rabbit_01
                 else if (iSubSet == 9)
                 {
-                    Pos_01.Add(new Vector3(1829.751f, -2962.983f, -41.09711f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(881.9769f, -3480.864f, -12.39751f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(271.4858f, -2290.783f, -8.27566f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-199.2741f, -2862.99f, -11.28995f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-1892.526f, -1307.415f, -35.69325f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-2843.658f, -574.4394f, -44.94706f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-3189.769f, 3026.521f, -30.46286f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-3252.511f, 3681.582f, -23.06396f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-3374.703f, 504.2789f, -24.57951f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-3163.912f, 3003.868f, -38.98509f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(2655.749f, -1395.955f, -12.85984f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(3164.551f, -364.2288f, -19.23776f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(3886.64f, 3041.357f, -16.14589f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(4279.323f, 2971.412f, -170.3207f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(4218.59f, 3616.418f, -34.40534f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(3401.174f, 6310.327f, -44.94764f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(3269.4f, 6419.564f, -46.06504f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(2649.136f, 6661.476f, -17.16622f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(747.8029f, 7393.903f, -108.1086f)); fHeading.Add(fRando);
-                    Pos_01.Add(new Vector3(-951.4739f, 6692.083f, -32.37279f)); fHeading.Add(fRando);
-                }      //Fish/sharks
-                else if (iSubSet == 10)
-                {
                     List<Vector3> vCenter = new List<Vector3>
                     {
                         new Vector3(3294.645f, 5188.46f, 18.41536f),
@@ -6202,12 +6191,12 @@ namespace RandomStart
                         new Vector3(982.1971f, 2669.811f, 40.06126f),
                         new Vector3(1582.44f, 2906.777f, 56.95695f)
                     };
-                    
+
                     Vector3 MyVec = vCenter[RandInt(0, vCenter.Count - 1)];
 
                     Pos_01.Add(MyVec); fHeading.Add(fRando);
-                }      //a_c_hen                
-                else if (iSubSet == 11)
+                }     //a_c_hen                
+                else if (iSubSet == 10)
                 {
                     Pos_01.Add(new Vector3(661.5698f, 5612.078f, 716.1574f)); fHeading.Add(231.2322f);
                     Pos_01.Add(new Vector3(985.664f, 5640.936f, 628.7191f)); fHeading.Add(264.3497f);
@@ -6221,8 +6210,8 @@ namespace RandomStart
                     Pos_01.Add(new Vector3(-1214.425f, 3848.331f, 490.2165f)); fHeading.Add(177.0983f);
                     Pos_01.Add(new Vector3(-966.5247f, 3824.745f, 427.8647f)); fHeading.Add(277.0794f);
                     Pos_01.Add(new Vector3(-2357.528f, 1282.13f, 330.8891f)); fHeading.Add(225.1253f);
-                }      //a_c_mtlion-mountain lion
-                else if (iSubSet == 12)
+                }     //a_c_mtlion-mountain lion
+                else if (iSubSet == 11)
                 {
                     List<Vector3> vCenter = new List<Vector3>
                     {
@@ -6252,55 +6241,123 @@ namespace RandomStart
                     MyVec.Z = MyRandV.Z + 0.5f;
 
                     Pos_01.Add(MyVec); fHeading.Add(fRando);
-                }      //a_c_pig
+                }     //a_c_pig
+                else if (iSubSet == 12)
+                {
+                    Pos_01.Add(new Vector3(1829.751f, -2962.983f, -41.09711f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(881.9769f, -3480.864f, -12.39751f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(271.4858f, -2290.783f, -8.27566f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-199.2741f, -2862.99f, -11.28995f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-1892.526f, -1307.415f, -35.69325f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-2843.658f, -574.4394f, -44.94706f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-3189.769f, 3026.521f, -30.46286f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-3252.511f, 3681.582f, -23.06396f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-3374.703f, 504.2789f, -24.57951f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-3163.912f, 3003.868f, -38.98509f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(2655.749f, -1395.955f, -12.85984f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(3164.551f, -364.2288f, -19.23776f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(3886.64f, 3041.357f, -16.14589f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(4279.323f, 2971.412f, -170.3207f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(4218.59f, 3616.418f, -34.40534f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(3401.174f, 6310.327f, -44.94764f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(3269.4f, 6419.564f, -46.06504f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(2649.136f, 6661.476f, -17.16622f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(747.8029f, 7393.903f, -108.1086f)); fHeading.Add(fRando);
+                    Pos_01.Add(new Vector3(-951.4739f, 6692.083f, -32.37279f)); fHeading.Add(fRando);
+                }      //Fish/sharks
                 else if (iSubSet == 13)
                 {
-                    Pos_01.Add(new Vector3(-1798.327f, -367.8435f, 63.32634f)); fHeading.Add(193.4475f);
-                    Pos_01.Add(new Vector3(-1754.362f, -398.6084f, 61.47853f)); fHeading.Add(271.401f);
-                    Pos_01.Add(new Vector3(-1699.881f, -447.604f, 51.85827f)); fHeading.Add(284.0296f);
-                    Pos_01.Add(new Vector3(-1648.967f, -364.9341f, 57.85902f)); fHeading.Add(90.00666f);
-                    Pos_01.Add(new Vector3(-1500.419f, -365.9177f, 53.64492f)); fHeading.Add(270.9501f);
-                    Pos_01.Add(new Vector3(-1556.568f, -222.7807f, 61.25249f)); fHeading.Add(272.3614f);
-                    Pos_01.Add(new Vector3(-1482.511f, -194.8814f, 61.88908f)); fHeading.Add(242.8922f);
-                    Pos_01.Add(new Vector3(-1351.707f, -207.7835f, 56.73883f)); fHeading.Add(254.2633f);
-                    Pos_01.Add(new Vector3(-1131.186f, -338.4612f, 49.96766f)); fHeading.Add(267.795f);
-                    Pos_01.Add(new Vector3(-1154.988f, -370.9339f, 60.99239f)); fHeading.Add(82.19715f);
-                    Pos_01.Add(new Vector3(-1170.928f, -469.0142f, 63.362f)); fHeading.Add(170.2042f);
-                    Pos_01.Add(new Vector3(-1432.225f, -700.3183f, 34.43598f)); fHeading.Add(266.5981f);
-                    Pos_01.Add(new Vector3(-1260.698f, -773.0103f, 28.08051f)); fHeading.Add(288.7174f);
-                    Pos_01.Add(new Vector3(-1277.13f, -1036.979f, 30.61119f)); fHeading.Add(276.1534f);
-                    Pos_01.Add(new Vector3(-1250.884f, -1349.212f, 11.00681f)); fHeading.Add(271.3377f);
-                    Pos_01.Add(new Vector3(-1036.955f, -1564.975f, 13.71508f)); fHeading.Add(115.3018f);
-                    Pos_01.Add(new Vector3(-174.3833f, -1286.126f, 51.57734f)); fHeading.Add(191.2564f);
-                    Pos_01.Add(new Vector3(-68.70186f, -1329.357f, 39.16204f)); fHeading.Add(204.9683f);
-                    Pos_01.Add(new Vector3(-16.61767f, -1551.997f, 37.85777f)); fHeading.Add(236.8366f);
-                    Pos_01.Add(new Vector3(196.3551f, -1878.706f, 29.22336f)); fHeading.Add(91.73615f);
-                    Pos_01.Add(new Vector3(472.7628f, -1890.018f, 31.78282f)); fHeading.Add(291.9175f);
-                }      //a_c_pigeon
-                else if (iSubSet == 14)
+                    List<Vector3> vCenter = new List<Vector3>
+                    {
+                        new Vector3(-2505.106f, 757.7692f, 402.0063f),
+                        new Vector3(-2338.906f, 1359.295f, 434.8655f),
+                        new Vector3(-1208.171f, 1196.468f, 393.5298f),
+                        new Vector3(-917.9607f, 1425.409f, 398.0696f),
+                        new Vector3(-465.1019f, 1526.887f, 491.0108f),
+                        new Vector3(758.509f, 1274.176f, 546.1901f),
+                        new Vector3(1789.931f, 686.2056f, 367.2453f),
+                        new Vector3(2215.134f, 245.5946f, 359.8406f),
+                        new Vector3(2046.679f, -1554.435f, 343.4529f),
+                        new Vector3(2900.099f, 2383.188f, 270.8425f),
+                        new Vector3(3293.974f, 3141.153f, 353.1701f),
+                        new Vector3(3444.243f, 4197.86f, 340.2985f),
+                        new Vector3(2877.255f, 5911.345f, 469.6395f),
+                        new Vector3(450.718f, 5566.614f, 906.1833f),
+                        new Vector3(-1213.257f, 3848.571f, 590.4387f)
+                    };
+
+                    Vector3 MyRandV = vCenter[RandInt(0, vCenter.Count - 1)];
+                    Vector3 MyVec = MyRandV.Around(75.00f);
+                    MyVec.Z = MyRandV.Z + 0.5f;
+
+                    Pos_01.Add(MyVec); fHeading.Add(fRando);
+                }      //a_c_chickenhawk
+                else
                 {
-                    Pos_01.Add(new Vector3(461.2985f, -3104.381f, 6.070058f)); fHeading.Add(291.4764f);
-                    Pos_01.Add(new Vector3(-1199.754f, -2704.224f, 13.95425f)); fHeading.Add(223.3566f);
-                    Pos_01.Add(new Vector3(-347.7987f, -2661.436f, 6.000296f)); fHeading.Add(359.5485f);
-                    Pos_01.Add(new Vector3(-76.08307f, -2666.825f, 6.00089f)); fHeading.Add(65.05595f);
-                    Pos_01.Add(new Vector3(-443.0275f, -2180.255f, 10.31819f)); fHeading.Add(100.1932f);
-                    Pos_01.Add(new Vector3(875.7438f, -1351.802f, 26.31284f)); fHeading.Add(262.73f);
-                    Pos_01.Add(new Vector3(682.5385f, -1213.703f, 24.96063f)); fHeading.Add(181.9295f);
-                    Pos_01.Add(new Vector3(690.9706f, -1016.897f, 22.62444f)); fHeading.Add(1.884157f);
-                    Pos_01.Add(new Vector3(727.1188f, -927.6669f, 24.61855f)); fHeading.Add(53.66885f);
-                    Pos_01.Add(new Vector3(1143.96f, -785.0414f, 57.58156f)); fHeading.Add(250.645f);
-                    Pos_01.Add(new Vector3(1536.905f, 3798.235f, 34.45097f)); fHeading.Add(115.1182f);
-                    Pos_01.Add(new Vector3(2055.688f, 3172.045f, 45.16896f)); fHeading.Add(199.4242f);
-                    Pos_01.Add(new Vector3(2192.997f, 5600.538f, 53.66485f)); fHeading.Add(321.3761f);
-                    Pos_01.Add(new Vector3(66.26553f, 6663.012f, 31.78686f)); fHeading.Add(11.51797f);
-                }      //a_c_rat
+                    Pos_01.Add(new Vector3(-647.1717f, 6381.847f, 55.23498f)); fHeading.Add(116.049f);
+                    Pos_01.Add(new Vector3(-996.1914f, 6127.102f, 65.05244f)); fHeading.Add(134.0498f);
+                    Pos_01.Add(new Vector3(-1386.921f, 5662.692f, 47.45169f)); fHeading.Add(144.4735f);
+                    Pos_01.Add(new Vector3(-1762.023f, 5236.699f, 55.13129f)); fHeading.Add(131.9612f);
+                    Pos_01.Add(new Vector3(-2233.242f, 4773.679f, 45.847f)); fHeading.Add(141.0407f);
+                    Pos_01.Add(new Vector3(-2531.957f, 4265.873f, 47.47537f)); fHeading.Add(155.767f);
+                    Pos_01.Add(new Vector3(-2917.601f, 3701.053f, 38.22935f)); fHeading.Add(142.8838f);
+                    Pos_01.Add(new Vector3(-2998.329f, 3139.244f, 74.07671f)); fHeading.Add(213.4786f);
+                    Pos_01.Add(new Vector3(-2752.106f, 2674.014f, 26.49481f)); fHeading.Add(181.8097f);
+                    Pos_01.Add(new Vector3(-2876.323f, 2343.454f, 32.5507f)); fHeading.Add(141.9623f);
+                    Pos_01.Add(new Vector3(-3161.823f, 1995.468f, 46.15065f)); fHeading.Add(162.9095f);
+                    Pos_01.Add(new Vector3(-3308.383f, 1324.952f, 24.35565f)); fHeading.Add(170.2323f);
+                    Pos_01.Add(new Vector3(-3257.926f, 801.7152f, 19.8493f)); fHeading.Add(208.8283f);
+                    Pos_01.Add(new Vector3(-3165.103f, 389.472f, 21.80201f)); fHeading.Add(178.8124f);
+                    Pos_01.Add(new Vector3(-3060.918f, 39.02373f, 41.1531f)); fHeading.Add(225.9778f);
+                    Pos_01.Add(new Vector3(-2584.827f, -262.5694f, 20.47069f)); fHeading.Add(240.8913f);
+                    Pos_01.Add(new Vector3(-1946.684f, -760.1068f, 17.09371f)); fHeading.Add(227.7444f);
+                    Pos_01.Add(new Vector3(-1756.316f, -1033.566f, 48.26628f)); fHeading.Add(208.7735f);
+                    Pos_01.Add(new Vector3(-1576.124f, -1275.015f, 56.18793f)); fHeading.Add(226.497f);
+                    Pos_01.Add(new Vector3(-1365.415f, -1603.034f, 22.2108f)); fHeading.Add(204.662f);
+                    Pos_01.Add(new Vector3(-1285.784f, -2006.483f, 29.93159f)); fHeading.Add(141.3346f);
+                    Pos_01.Add(new Vector3(-1678.79f, -2464.347f, 31.70895f)); fHeading.Add(138.5401f);
+                    Pos_01.Add(new Vector3(-1955.164f, -3219.351f, 27.96449f)); fHeading.Add(229.7054f);
+                    Pos_01.Add(new Vector3(-1491.28f, -3433.852f, 24.46868f)); fHeading.Add(255.0693f);
+                    Pos_01.Add(new Vector3(-450.818f, -2932.367f, 59.03496f)); fHeading.Add(315.9116f);
+                    Pos_01.Add(new Vector3(-170.4312f, -2751.726f, 35.55687f)); fHeading.Add(281.9165f);
+                    Pos_01.Add(new Vector3(84.32108f, -3011.168f, 38.66256f)); fHeading.Add(186.9482f);
+                    Pos_01.Add(new Vector3(381.5255f, -3088.718f, 43.53959f)); fHeading.Add(184.7814f);
+                    Pos_01.Add(new Vector3(810.2408f, -3349.875f, 76.97131f)); fHeading.Add(255.1599f);
+                    Pos_01.Add(new Vector3(1011.955f, -2818.816f, 67.02275f)); fHeading.Add(275.2491f);
+                    Pos_01.Add(new Vector3(1381.353f, -2785.423f, 25.2271f)); fHeading.Add(275.3469f);
+                    Pos_01.Add(new Vector3(1899.568f, -2698.206f, 29.57582f)); fHeading.Add(290.0086f);
+                    Pos_01.Add(new Vector3(2253.048f, -2338.232f, 22.41039f)); fHeading.Add(327.0099f);
+                    Pos_01.Add(new Vector3(2695.794f, -1842.093f, 60.28313f)); fHeading.Add(350.8695f);
+                    Pos_01.Add(new Vector3(2617.608f, -1242.502f, 42.30254f)); fHeading.Add(353.048f);
+                    Pos_01.Add(new Vector3(2812.688f, -885.5068f, 39.93338f)); fHeading.Add(336.1742f);
+                    Pos_01.Add(new Vector3(3090.899f, -303.8704f, 28.63768f)); fHeading.Add(331.2384f);
+                    Pos_01.Add(new Vector3(3137.391f, 290.1704f, 31.95886f)); fHeading.Add(10.3887f);
+                    Pos_01.Add(new Vector3(2952.225f, 871.7095f, 49.21233f)); fHeading.Add(27.73952f);
+                    Pos_01.Add(new Vector3(3045.487f, 1832.076f, 51.5413f)); fHeading.Add(328.3755f);
+                    Pos_01.Add(new Vector3(3373.457f, 2541.495f, 30.65476f)); fHeading.Add(342.1697f);
+                    Pos_01.Add(new Vector3(3592.438f, 2930.6f, 55.46889f)); fHeading.Add(321.836f);
+                    Pos_01.Add(new Vector3(3891.745f, 3392.547f, 49.76966f)); fHeading.Add(337.126f);
+                    Pos_01.Add(new Vector3(3812.255f, 3768.048f, 42.65887f)); fHeading.Add(308.2817f);
+                    Pos_01.Add(new Vector3(3995.321f, 4042.65f, 28.32089f)); fHeading.Add(353.3696f);
+                    Pos_01.Add(new Vector3(3945.367f, 4453.691f, 21.29278f)); fHeading.Add(24.97192f);
+                    Pos_01.Add(new Vector3(3637.679f, 4847.447f, 11.86491f)); fHeading.Add(35.3928f);
+                    Pos_01.Add(new Vector3(3398.107f, 5422.701f, 35.40386f)); fHeading.Add(282.6931f);
+                    Pos_01.Add(new Vector3(3462.258f, 5879.85f, 29.49525f)); fHeading.Add(359.8459f);
+                    Pos_01.Add(new Vector3(3425.451f, 6118.301f, 37.708f)); fHeading.Add(22.10388f);
+                    Pos_01.Add(new Vector3(3049.092f, 6444.611f, 35.03535f)); fHeading.Add(62.56868f);
+                    Pos_01.Add(new Vector3(2403.384f, 6718.95f, 39.0113f)); fHeading.Add(69.30715f);
+                    Pos_01.Add(new Vector3(1678.953f, 6731.902f, 71.92032f)); fHeading.Add(96.16738f);
+                    Pos_01.Add(new Vector3(622.5536f, 6737.898f, 21.04184f)); fHeading.Add(47.28201f);
+                    Pos_01.Add(new Vector3(145.2582f, 7054.913f, 40.39904f)); fHeading.Add(76.91423f);
+                    Pos_01.Add(new Vector3(-147.7463f, 6729.933f, 13.17056f)); fHeading.Add(153.3098f);
+                }      //a_c_cormorant
                 iWeapons = 0;
             }           //Animals
             else if (iSelect == 24)
             {
                 RandomWeatherTime();
 
-                if (BoolList(20))
+                if (FindRandom(34, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(5308.355f, -5222.566f, 83.51822f)); fHeading.Add(177.7005f);
                     Pos_01.Add(new Vector3(4473.773f, -5041.711f, 112.4676f)); fHeading.Add(3.755754f);
@@ -6327,7 +6384,7 @@ namespace RandomStart
                 if (!bInYankton)
                     Yankton(true);
             }           //North Yankton
-            else if (iSelect == 25)
+            else
             {
                 World.CurrentDayTime = TimeSpan.FromHours(12);
                 World.Weather = Weather.ExtraSunny;
@@ -6353,7 +6410,7 @@ namespace RandomStart
                 }       //A_F_Y_Beach_02
                 else if (iSubSet == 3)
                 {
-                    if (BoolList(20))
+                    if (FindRandom(35, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(4877.928f, -4488.06f, 26.93383f)); fHeading.Add(7.88381f);
                         Pos_01.Add(new Vector3(5032.213f, -4630.636f, 21.68462f)); fHeading.Add(75.61213f);
@@ -6426,10 +6483,10 @@ namespace RandomStart
 
             if (bMainProtag)
             {
-                if (Game.Player.Character.Model != PedHash.Franklin || Game.Player.Character.Model != PedHash.Michael || Game.Player.Character.Model != PedHash.Trevor)
+                if (!IsMainChar())
                     YourRanPed(sMainChar);
-
-                PlayerBelter();
+                else
+                    PlayerBelter();
             }
             else
             {
@@ -6607,9 +6664,9 @@ namespace RandomStart
                         fRot = 141.1448f;
                         AddVeh("BALLER", VPos, fRot, 7, iSelect, 5);
 
-                        RelateReset = World.GetRelationshipBetweenGroups(PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"), PlayerGroups);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"), GP_Player);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_BALLAS"));
+
                         iGrouping = 1;
                     }           //Ballas-- Davis, Vs --Families 
                     else if (iSubSet == 4)
@@ -6646,9 +6703,8 @@ namespace RandomStart
                         fRot = 273.4159f;
                         AddVeh("EMPEROR", VPos, fRot, 7, iSelect, 3);
 
-                        RelateReset = World.GetRelationshipBetweenGroups(PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"), PlayerGroups);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"), GP_Player);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_FAMILY"));
                         iGrouping = 2;
                     }           //Families --Strawberry--Chamberlain Hills, Vs  Ballas
                     else if (iSubSet == 6)
@@ -6705,9 +6761,8 @@ namespace RandomStart
                         fRot = 316.9213f;
                         AddVeh("RUMPO3", VPos, fRot, 7, iSelect, 9);
 
-                        RelateReset = World.GetRelationshipBetweenGroups(PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"), PlayerGroups);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"), GP_Player);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_MEXICAN"));
                         iGrouping = 3;
                     }           //Mexican --Rancho--Central Cypress Flats, Vs Salvadoran
                     else if (iSubSet == 8)
@@ -6764,9 +6819,8 @@ namespace RandomStart
                         fRot = 115.6373f;
                         AddVeh("RUMPO3", VPos, fRot, 7, iSelect, 7);
 
-                        RelateReset = World.GetRelationshipBetweenGroups(PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"), PlayerGroups);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"), GP_Player);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_SALVA"));
                         iGrouping = 4;
                     }           //"Salvadoran --El Burro Heights--Vespucci Beach(night)--East Vinewood Drain Canal, Vs Mexican
                     else if (iSubSet == 10)
@@ -6796,9 +6850,8 @@ namespace RandomStart
                         fRot = 322.8134f;
                         AddVeh("MOONBEAM2", VPos, fRot, 7, iSelect, 1);
 
-                        RelateReset = World.GetRelationshipBetweenGroups(PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, PlayerGroups, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"));
-                        World.SetRelationshipBetweenGroups(Relationship.Respect, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"), PlayerGroups);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"), GP_Player);
+                        Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 0, GP_Player, Function.Call<int>(Hash.GET_HASH_KEY, "AMBIENT_GANG_LOST"));
                         iGrouping = 5;
                     }           //Lost ... Vs Impex
                     else if (iSubSet == 11)
@@ -7445,7 +7498,7 @@ namespace RandomStart
                 {
                     sVeh.Add("BOXVILLE2");
                 }
-                else if (iSubSet == 20)
+                else
                 {
                     sVeh.Add("BOXVILLE2");
                     sVeh.Add("Mule2");
@@ -7529,7 +7582,7 @@ namespace RandomStart
                 {
                     sVeh.Add("AMBULANCE");
                 }       //medic
-                else if (iSubSet == 11)
+                else
                 {
                     sVeh.Add("FIRETRUK");
                 }       //fireman
@@ -7564,7 +7617,7 @@ namespace RandomStart
                 {
                     sVeh.Add("FROGGER"); //>
                 }       //Hell tours
-                else if (iSubSet == 4)
+                else
                 {
                     sVeh.Add("SUPERVOLITO2"); //>
                 }       //office Hell
@@ -7579,7 +7632,7 @@ namespace RandomStart
                 sVeh.Add("SADLER2"); //>
                 sVeh.Add("BURRITO5"); //>
             }
-            else if (iList == 24)
+            else
             {
                 if (iSubSet == 1)
                 {
@@ -7888,7 +7941,7 @@ namespace RandomStart
                     sPeddy.Add("g_m_y_lost_02");                //"The Lost MC Male 2");  
                     sPeddy.Add("g_m_y_lost_03");                //"The Lost MC Male 3");
                 }
-                else if (iSubType == 11)
+                else
                 {
                     sPeddy.Add("g_m_y_strpunk_01");                //"Street Punk");  
                     sPeddy.Add("g_m_y_strpunk_02");                //"Street Punk 2");  
@@ -8079,7 +8132,7 @@ namespace RandomStart
                 {
                     sPeddy.Add("s_m_y_valet_01");                //"Valet");  
                 }
-                else if (iSubType == 23)
+                else
                 {
                     sPeddy.Add("s_m_y_winclean_01");                //"Window Cleaner");   
                 }
@@ -8148,7 +8201,7 @@ namespace RandomStart
                 {
                     sPeddy.Add("s_m_m_paramedic_01");                //"Paramedic"); 
                 }
-                else if (iSubType == 11)
+                else
                 {
                     sPeddy.Add("s_m_y_fireman_01");                //"Fireman Male"); 
                 }
@@ -8161,7 +8214,7 @@ namespace RandomStart
                     sPeddy.Add("s_m_m_pilot_02");                //"Pilot 2"); 
                 else if (iSubType == 3)
                     sPeddy.Add("s_m_m_pilot_01");                //"Pilot");  
-                else if (iSubType == 4)
+                else
                     sPeddy.Add("mp_f_helistaff_01");                //"Heli-Staff Female" />
             }       //Pilot
             else if (iPedtype == 23)
@@ -8180,12 +8233,9 @@ namespace RandomStart
                     sPeddy.Add("a_c_westy");
                 }                //"Cats/dogs"); 
                 else if (iSubType == 3)
-                    sPeddy.Add("a_c_chickenhawk");                //"a_c_chickenhawk");  
+                    sPeddy.Add("a_c_pigeon");                //"a_c_pigeon" />
                 else if (iSubType == 4)
-                {
-                    sPeddy.Add("a_c_cormorant");                //"a_c_cormorant" />
-                    sPeddy.Add("a_c_seagull");
-                }
+                    sPeddy.Add("a_c_rat");                //"a_c_rat" />
                 else if (iSubType == 5)
                     sPeddy.Add("a_c_cow");                //"a_c_cow" />
                 else if (iSubType == 6)
@@ -8198,6 +8248,12 @@ namespace RandomStart
                     sPeddy.Add("a_c_deer");                //"a_c_deer" />
                 }
                 else if (iSubType == 9)
+                    sPeddy.Add("a_c_hen");                //"a_c_hen" />
+                else if (iSubType == 10)
+                    sPeddy.Add("a_c_mtlion");                //"mountain lion" />
+                else if (iSubType == 11)
+                    sPeddy.Add("a_c_pig");                //"a_c_pig" />
+                else if (iSubType == 12)
                 {
                     sPeddy.Add("a_c_dolphin");                //"fish/sharks" />
                     sPeddy.Add("a_c_fish");
@@ -8207,16 +8263,13 @@ namespace RandomStart
                     sPeddy.Add("a_c_stingray");
                     sPeddy.Add("a_c_sharktiger");
                 }
-                else if (iSubType == 10)
-                    sPeddy.Add("a_c_hen");                //"a_c_hen" />
-                else if (iSubType == 11)
-                    sPeddy.Add("a_c_mtlion");                //"mountain lion" />
-                else if (iSubType == 12)
-                    sPeddy.Add("a_c_pig");                //"a_c_pig" />
                 else if (iSubType == 13)
-                    sPeddy.Add("a_c_pigeon");                //"a_c_pigeon" />
-                else if (iSubType == 14)
-                    sPeddy.Add("a_c_rat");                //"a_c_rat" />
+                    sPeddy.Add("a_c_chickenhawk");                //"a_c_chickenhawk");  
+                else
+                {
+                    sPeddy.Add("a_c_cormorant");                //"a_c_cormorant" />
+                    sPeddy.Add("a_c_seagull");
+                }
             }       //animals
             else if (iPedtype == 24)
             {
@@ -8227,7 +8280,7 @@ namespace RandomStart
                 sPeddy.Add("u_f_o_prolhost_01");
                 sPeddy.Add("u_f_m_promourn_01");
             }       //Yankton
-            else if (iPedtype == 25)
+            else
             {
                 if (iSubType == 1)
                 {
@@ -8298,19 +8351,22 @@ namespace RandomStart
                     Wait(1);
                 Game.Player.ChangeModel(model);
 
-                if (Game.Player.Character.Model == PedHash.Michael || Game.Player.Character.Model == PedHash.Trevor || Game.Player.Character.Model == PedHash.Franklin)
-                    Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character);
+                if (IsMainChar())
+                    Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character.Handle);
                 else
-                    Function.Call(Hash.SET_PED_RANDOM_COMPONENT_VARIATION, Game.Player.Character, false);
+                    Function.Call(Hash.SET_PED_RANDOM_COMPONENT_VARIATION, Game.Player.Character.Handle, false);
 
-                int iHats = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS, Game.Player.Character, 0);
-                Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character, 0, RandInt(-1, iHats), 0, false);
+                int iHats = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS, Game.Player.Character.Handle, 0);
+                Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, 0, RandInt(-1, iHats), 0, false);
                 Function.Call(Hash.SET_MODEL_AS_NO_LONGER_NEEDED, model.Hash);
             }
             if (bKeepWeapons)
                 ReturnWeaps();
 
             PlayerBelter();
+
+            if (GP_Player != Game.Player.Character.RelationshipGroup)
+                SetPlayRellGrp();
         }
         private void YourPickedPed(Ped ThisPed)
         {
@@ -8318,6 +8374,7 @@ namespace RandomStart
             if (ThisPed != null)
             {
                 iCurrentPed = 0;
+                iAmModelHash = ThisPed.Model.Hash;
                 Ped CurrentPlayer = Game.Player.Character;
 
                 Function.Call(Hash.CHANGE_PLAYER_PED, Function.Call<int>(Hash.PLAYER_ID), ThisPed.Handle, true, true);
@@ -8329,13 +8386,16 @@ namespace RandomStart
                     ReturnWeaps();
 
                 PlayerBelter();
+
+                if (GP_Player != Game.Player.Character.RelationshipGroup)
+                    SetPlayRellGrp();
             }
         }
         private void YourSavedPed()
         {
             LogginSyatem("YourSavedPed");
 
-            if (MyPedCollection.Count > 1)
+            if (MyPedCollection.Count > 0)
             {
                 iCurrentPed = RandInt(1, MyPedCollection.Count - 1);
                 SavePedLoader(iCurrentPed);
@@ -8368,44 +8428,47 @@ namespace RandomStart
                 ReturnWeaps();
 
             PlayerBelter();
+
+            if (GP_Player != Game.Player.Character.RelationshipGroup)
+                SetPlayRellGrp();
         }
         private void FillMyPed(NewClothBank MyWoven)
         {
             LogginSyatem("FillMyPed, ");
             Ped Peddy = Game.Player.Character;
             for (int i = 0; i < MyWoven.ClothA.Count; i++)
-                Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Peddy, i, MyWoven.ClothA[i], MyWoven.ClothB[i], 2);
+                Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Peddy.Handle, i, MyWoven.ClothA[i], MyWoven.ClothB[i], 2);
 
-            Function.Call(Hash.CLEAR_ALL_PED_PROPS, Peddy);
+            Function.Call(Hash.CLEAR_ALL_PED_PROPS, Peddy.Handle);
 
             for (int i = 0; i < MyWoven.ExtraA.Count; i++)
-                Function.Call(Hash.SET_PED_PROP_INDEX, Peddy, i, MyWoven.ExtraA[i], MyWoven.ExtraB[i], false);
+                Function.Call(Hash.SET_PED_PROP_INDEX, Peddy.Handle, i, MyWoven.ExtraA[i], MyWoven.ExtraB[i], false);
 
             for (int i = 0; i < MyWoven.Tattoo_COl.Count; i++)
-                Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, MyWoven.Tattoo_COl[i]), Function.Call<int>(Hash.GET_HASH_KEY, MyWoven.Tattoo_Nam[i]));
+                Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character.Handle, Function.Call<int>(Hash.GET_HASH_KEY, MyWoven.Tattoo_COl[i]), Function.Call<int>(Hash.GET_HASH_KEY, MyWoven.Tattoo_Nam[i]));
 
             if (MyWoven.PedVoice != "")
-                Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character, MyWoven.PedVoice);
+                Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character.Handle, MyWoven.PedVoice);
 
             if (MyWoven.FreeMode)
             {
-                Function.Call(Hash.SET_PED_HEAD_BLEND_DATA, Peddy, MyWoven.XshapeFirstID, MyWoven.XshapeSecondID, MyWoven.XshapeThirdID, MyWoven.XskinFirstID, MyWoven.XskinSecondID, MyWoven.XskinThirdID, MyWoven.XshapeMix, MyWoven.XskinMix, MyWoven.XthirdMix, false);
+                Function.Call(Hash.SET_PED_HEAD_BLEND_DATA, Peddy.Handle, MyWoven.XshapeFirstID, MyWoven.XshapeSecondID, MyWoven.XshapeThirdID, MyWoven.XskinFirstID, MyWoven.XskinSecondID, MyWoven.XskinThirdID, MyWoven.XshapeMix, MyWoven.XskinMix, MyWoven.XthirdMix, false);
 
-                Function.Call(Hash._SET_PED_HAIR_COLOR, Peddy, MyWoven.HairColour, MyWoven.HairStreaks);
-                Function.Call(Hash._SET_PED_EYE_COLOR, Peddy, MyWoven.EyeColour);
+                Function.Call(Hash._SET_PED_HAIR_COLOR, Peddy.Handle, MyWoven.HairColour, MyWoven.HairStreaks);
+                Function.Call(Hash._SET_PED_EYE_COLOR, Peddy.Handle, MyWoven.EyeColour);
 
                 for (int i = 0; i < MyWoven.Overlay.Count; i++)
                 {
-                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Peddy, i, MyWoven.Overlay[i], MyWoven.OverlayOpc[i]);
+                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Peddy.Handle, i, MyWoven.Overlay[i], MyWoven.OverlayOpc[i]);
 
                     if (i == 1 || i == 2 || i == 10)
-                        Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy, i, 1, MyWoven.OverlayColour[i], 0);
+                        Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy.Handle, i, 1, MyWoven.OverlayColour[i], 0);
                     else if (i == 5 || i == 8)
-                        Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy, i, 2, MyWoven.OverlayColour[i], 0);
+                        Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Peddy.Handle, i, 2, MyWoven.OverlayColour[i], 0);
                 }
 
                 for (int i = 0; i < MyWoven.FaceScale.Count; i++)
-                    Function.Call(Hash._SET_PED_FACE_FEATURE, Game.Player.Character, i, MyWoven.FaceScale[i]);
+                    Function.Call(Hash._SET_PED_FACE_FEATURE, Game.Player.Character.Handle, i, MyWoven.FaceScale[i]);
             }
         }
         private void AddVeh(string sVehic, Vector3 Vpos, float fHead, int iEnterV, int iPedtype, int iSubType)
@@ -8442,7 +8505,7 @@ namespace RandomStart
 
             LogginSyatem("MaxMods");
 
-            Function.Call(Hash.SET_VEHICLE_MOD_KIT, Vehic, 0);
+            Function.Call(Hash.SET_VEHICLE_MOD_KIT, Vehic.Handle, 0);
             bool bMotoBike = Vehic.ClassType == VehicleClass.Motorcycles;
             for (int i = 0; i < 50; i++)
             {
@@ -8485,7 +8548,7 @@ namespace RandomStart
                     Game.Player.Character.Position = V3;
                     YouTheDriver(Vehic, Game.Player.Character);
                     Script.Wait(500);
-                    Function.Call(Hash.TASK_PLANE_MISSION﻿, Game.Player.Character, Vehic, 0, 0, vPlayerTarget.X, vPlayerTarget.Y, vPlayerTarget.Z, 4, 100.0f, 0.0f, 90.0f, 0, 600.0f);
+                    Function.Call(Hash.TASK_PLANE_MISSION﻿, Game.Player.Character.Handle, Vehic.Handle, 0, 0, vPlayerTarget.X, vPlayerTarget.Y, vPlayerTarget.Z, 4, 100.0f, 0.0f, 90.0f, 0, 600.0f);
                 }
                 else if (Vehic.ClassType == VehicleClass.Helicopters)
                 {
@@ -8517,7 +8580,7 @@ namespace RandomStart
                     Game.Player.Character.Position = V3;
                     YouTheDriver(Vehic, Game.Player.Character);
                     Script.Wait(500);
-                    Function.Call(Hash.TASK_PLANE_MISSION﻿, Game.Player.Character, Vehic, 0, 0, vPlayerTarget.X, vPlayerTarget.Y, vPlayerTarget.Z, 4, 100.0f, 0.0f, 90.0f, 0, 600.0f);
+                    Function.Call(Hash.TASK_PLANE_MISSION﻿, Game.Player.Character.Handle, Vehic.Handle, 0, 0, vPlayerTarget.X, vPlayerTarget.Y, vPlayerTarget.Z, 4, 100.0f, 0.0f, 90.0f, 0, 600.0f);
                 }
                 else if (Vehic.ClassType == VehicleClass.Helicopters)
                 {
@@ -8551,7 +8614,7 @@ namespace RandomStart
                     Game.Player.Character.Position = V3;
                     YouTheDriver(Vehic, Game.Player.Character);
                     Script.Wait(500);
-                    Function.Call(Hash.TASK_PLANE_MISSION﻿, Game.Player.Character, Vehic, 0, 0, vPlayerTarget.X, vPlayerTarget.Y, vPlayerTarget.Z, 4, 100.0f, 0.0f, 90.0f, 0, 600.0f);
+                    Function.Call(Hash.TASK_PLANE_MISSION﻿, Game.Player.Character.Handle, Vehic.Handle, 0, 0, vPlayerTarget.X, vPlayerTarget.Y, vPlayerTarget.Z, 4, 100.0f, 0.0f, 90.0f, 0, 600.0f);
                 }
                 else if (Vehic.ClassType == VehicleClass.Helicopters)
                 {
@@ -8752,9 +8815,9 @@ namespace RandomStart
                     PedTasks(Peddy, iTask, Vehicary);
 
                 if (bFriend)
-                    Peddy.RelationshipGroup = PlayerGroups;
+                    Peddy.RelationshipGroup = GP_Friend;
                 else
-                    Peddy.RelationshipGroup = AttackingNPCs;
+                    Peddy.RelationshipGroup = GP_Attack;
                 PeddyList.Add(new Ped(Peddy.Handle));
             }
         }
@@ -8769,9 +8832,9 @@ namespace RandomStart
                 Peddy.MaxHealth = 150;
                 Peddy.Health = 150;
                 Peddy.CanBeTargette﻿d﻿ = false;
-                Peddy.RelationshipGroup = FriendlyNPCs;
-                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy, 0, true);
-                Function.Call(Hash.SET_PED_COMBAT_MOVEMENT, Peddy, 1);
+                Peddy.RelationshipGroup = GP_Friend;
+                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy.Handle, 0, true);
+                Function.Call(Hash.SET_PED_COMBAT_MOVEMENT, Peddy.Handle, 1);
             }            //FriendPed
             else if (iTask == 2)
             {
@@ -8780,9 +8843,9 @@ namespace RandomStart
                 Peddy.Health = 150;
                 Peddy.IsEnemy = true;
                 Peddy.CanBeTargette﻿d﻿ = true;
-                Peddy.RelationshipGroup = AttackingNPCs;
-                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy, 0, true);
-                Function.Call(Hash.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, Peddy, true);
+                Peddy.RelationshipGroup = GP_Attack;
+                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy.Handle, 0, true);
+                Function.Call(Hash.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, Peddy.Handle, true);
                 Peddy.Task.FightAgainst(Game.Player.Character);
                 Peddy.AlwaysKeepTask = true;
             }       //EnemyPed
@@ -8792,7 +8855,7 @@ namespace RandomStart
                 Peddy.MaxHealth = 150;
                 Peddy.Health = 150;
                 Peddy.CanBeTargette﻿d﻿ = false;
-                Peddy.RelationshipGroup = FriendlyNPCs;
+                Peddy.RelationshipGroup = GP_Friend;
 
                 if (Vehicary != null)
                 {
@@ -8812,9 +8875,9 @@ namespace RandomStart
                 Peddy.Health = 150;
                 Peddy.IsEnemy = true;
                 Peddy.CanBeTargette﻿d﻿ = true;
-                Peddy.RelationshipGroup = AttackingNPCs;
-                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy, 0, true);
-                Function.Call(Hash.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, Peddy, true);
+                Peddy.RelationshipGroup = GP_Attack;
+                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy.Handle, 0, true);
+                Function.Call(Hash.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, Peddy.Handle, true);
                 Peddy.Task.FightAgainst(Game.Player.Character);
 
                 if (Vehicary != null)
@@ -8836,9 +8899,8 @@ namespace RandomStart
                 Peddy.Health = 150;
                 Peddy.IsEnemy = true;
                 Peddy.CanBeTargette﻿d﻿ = true;
-                Peddy.RelationshipGroup = AttackingNPCs;
-                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy, 0, true);
-                //Function.Call(Hash.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, Peddy, true);
+                Peddy.RelationshipGroup = GP_Attack;
+                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy.Handle, 0, true);
                 Peddy.Task.FightAgainst(Game.Player.Character);
 
                 if (Vehicary != null)
@@ -8846,15 +8908,15 @@ namespace RandomStart
             }       //EnemyPassenger
             else if (iTask == 7)
             {
-                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy, 0, true);
-                Function.Call(Hash.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, Peddy, true);
+                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy.Handle, 0, true);
+                Function.Call(Hash.TASK_SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, Peddy.Handle, true);
 
                 ForceAnim(Peddy, "amb@world_human_bum_standing@depressed@base", "base", Peddy.Position, Peddy.Rotation);
             }       //SolomPriest
             else if (iTask == 8)
             {
                 pPilot = Peddy;
-                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy, 0, true);
+                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy.Handle, 0, true);
                 if (Vehicary != null)
                 {
                     YouTheDriver(Vehicary, Peddy);
@@ -8871,7 +8933,7 @@ namespace RandomStart
                 Peddy.MaxHealth = 150;
                 Peddy.Health = 150;
                 Peddy.CanBeTargette﻿d﻿ = false;
-                Peddy.RelationshipGroup = FriendlyNPCs;
+                Peddy.RelationshipGroup = GP_Friend;
 
                 if (Vehicary != null)
                 {
@@ -8886,7 +8948,7 @@ namespace RandomStart
                 Peddy.Health = 150;
                 Peddy.IsEnemy = true;
                 Peddy.CanBeTargette﻿d﻿ = true;
-                Peddy.RelationshipGroup = AttackingNPCs;
+                Peddy.RelationshipGroup = GP_Attack;
                 if (Vehicary != null)
                 {
                     YouTheDriver(Vehicary, Peddy);
@@ -8899,9 +8961,9 @@ namespace RandomStart
                 Peddy.MaxHealth = 150;
                 Peddy.Health = 150;
                 Peddy.CanBeTargette﻿d﻿ = false;
-                Peddy.RelationshipGroup = FriendlyNPCs;
-                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy, 0, true);
-                Function.Call(Hash.SET_PED_COMBAT_MOVEMENT, Peddy, 1);
+                Peddy.RelationshipGroup = GP_Friend;
+                Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, Peddy.Handle, 0, true);
+                Function.Call(Hash.SET_PED_COMBAT_MOVEMENT, Peddy.Handle, 1);
                 if (Vehicary != null)
                     YouTheDriver(Vehicary, Peddy);
             }       //PedWait
@@ -8953,41 +9015,41 @@ namespace RandomStart
             if (iWeapons == 1)
             {
                 string sYourWeap = sWeapList[RandInt(0, 17)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just Melee
             else if (iWeapons == 2)
             {
                 string sYourWeap = sWeapList[RandInt(18, 33)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just Hand
             else if (iWeapons == 3)
             {
                 string sYourWeap = sWeapList[RandInt(55, 64)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just Assult
             else if (iWeapons == 4)
             {
                 string sYourWeap = sWeapList[RandInt(45, 54)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just ShotGun
             else if (iWeapons == 5)
             {
                 string sYourWeap = sWeapList[RandInt(0, 17)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
 
                 sYourWeap = sWeapList[RandInt(18, 33)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
 
                 sYourWeap = sWeapList[RandInt(45, 54)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
 
                 sYourWeap = sWeapList[RandInt(55, 64)];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
             }       //RandomCombos
             else
             {
                 string sYourWeap = sWeapList[6];
-                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
+                Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), MaxAmmo(sYourWeap, Peddy), false, true);
             }       //GolfClub
         }
         private void PedFindMeASeat(Vehicle Vhick, Ped Peddy)
@@ -8997,7 +9059,7 @@ namespace RandomStart
 
             while (!Peddy.IsInVehicle())
             {
-                Function.Call(Hash.TASK_WARP_PED_INTO_VEHICLE, Peddy, Vhick, -2);
+                Function.Call(Hash.TASK_WARP_PED_INTO_VEHICLE, Peddy.Handle, Vhick.Handle, -2);
                 Script.Wait(10);
             }
         }
@@ -9008,7 +9070,7 @@ namespace RandomStart
 
             while (!Peddy.IsInVehicle())
             {
-                Function.Call(Hash.TASK_ENTER_VEHICLE, Peddy, Vhick, -1, -1, 2.00f, 16, 0);
+                Function.Call(Hash.TASK_ENTER_VEHICLE, Peddy.Handle, Vhick.Handle, -1, -1, 2.00f, 16, 0);
                 Script.Wait(10);
             }
         }
@@ -9023,7 +9085,7 @@ namespace RandomStart
                 if (iCountEm > 0)
                 {
                     Ped MadP = MadPeds[i];
-                    if (!MadP.IsOnScreen && !MadP.IsInVehicle() && Function.Call<int>(Hash.GET_PED_TYPE, MadP) != 28 && MadP != Game.Player.Character && !MadP.IsPersistent)
+                    if (!MadP.IsOnScreen && !MadP.IsInVehicle() && Function.Call<int>(Hash.GET_PED_TYPE, MadP.Handle) != 28 && MadP != Game.Player.Character && !MadP.IsPersistent)
                     {
                         iCountEm -= 1;
                         NPCSpawn(AddAnyPed(iAnyPedList), MadP.Position, MadP.Heading, iTask, iWeapons, null, bFriend);
@@ -9041,91 +9103,216 @@ namespace RandomStart
         }
         private void RandomWeatherTime()
         {
-
             LogginSyatem("RandomWeatherTime");
 
-            int iTimes = RandInt(0, 23);
+            int iTimes = FindRandom(0, 0, 23);
             double dTime = (int)iTimes;
-            int iRain = FindRandom(2, 0, 9);
+            int iRain = FindRandom(15, 0, 9);
             World.Weather = WetherBe[iRain];
             World.CurrentDayTime = TimeSpan.FromHours(dTime);
         }
-        private void DeathArrestCont(bool bProg)
+        private void SetTimeWeather(Weather TheWeather, double TheTime)
         {
-            LogginSyatem("DeathArrestCont bProg == " + bProg);
+            World.Weather = TheWeather;
+            World.CurrentDayTime = TimeSpan.FromHours(TheTime);
+        }
+        private void DeathArrestCont(bool bDead, bool bMenuPause)
+        {
+            LogginSyatem("DeathArrestCont bProg == " + bDead);
 
-            if (Game.Player.Character.Model != PedHash.Michael && Game.Player.Character.Model != PedHash.Trevor && Game.Player.Character.Model != PedHash.Franklin)
+            bool bMale = false;
+
+            if (Game.Player.Character.Gender == Gender.Male)
+                bMale = true;
+            Game.Player.Character.IsVisible = true;
+            Game.Player.Character.HasCollision = true;
+
+            if (bMenuPause)
             {
-                vHeaven = World.GetNextPositionOnSidewalk(Game.Player.Character.Position);
-
-                Game.Player.Character.Position = vHeaven;
-                Game.Player.Character.IsVisible = true;
-                Game.Player.Character.HasCollision = true;
-
-                bool bMale = false;
-
-                if (Game.Player.Character.Gender == Gender.Male)
-                    bMale = true;
-
-                if (bDontStopMe)
+                if (bDead)
                 {
-                    Game.Player.IgnoredByPolice = false;
-                    Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character, true);
-                    Function.Call(Has﻿h.REQUEST_SCRIPT, "restrictedareas");
-                    Function.Call(Has﻿h.REQUEST_SCRIPT, "re_armybase");
-                    Script.Wait(100);
+                    while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
+                        Script.Wait(100);
 
-                    if (bPrisHeli)
-                    {
-                        bPrisHeli = false;
-                        PrisEscape.CurrentBlip.Remove();
-                        PrisEscape.MarkAsNoLongerNeeded();
-                    }
-                    bDontStopMe = false;
-                }
+                    Vector3 VMep = Game.Player.Character.Position;
+                    while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character.Handle, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
+                        Script.Wait(100);
 
-                if (bMenyooZZ)
-                {
-                    if (bProg)
-                    {
-                        while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
-                            Script.Wait(100);
-
-                        Vector3 VMep = Game.Player.Character.Position;
-                        while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
-                            Script.Wait(100);
-
+                    if (bReincarn)
+                        Game.Player.Character.Position = vHeaven;
+                    else
                         YourRanPed(sMainChar);
 
-                        YouDied(bMale);
-                    }
-                    else
-                    {
-                        while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
-                            Script.Wait(100);
-
-                        Vector3 VMep = Game.Player.Character.Position;
-                        while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
-                            Script.Wait(100);
-
-                        YouArrest();
-                    }
-                }
-                else if (bEnhanceT)
-                {
-                    if (!bProg)
-                        YouArrest();
+                    YouDied(bMale);
                 }
                 else
                 {
-                    if (bProg)
-                    {
-                        YourRanPed(sMainChar);
-                        YouDied(bMale);
-                    }
-                    else
-                        YouArrest();
+                    while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
+                        Script.Wait(100);
+
+                    Vector3 VMep = Game.Player.Character.Position;
+                    while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character.Handle, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
+                        Script.Wait(100);
+
+                    YouArrest();
                 }
+            }
+            else
+            {
+                if (bDead)
+                {
+                    if (Game.Player.Character.Position.Z < -1.00f)
+                    {
+                        while (!Function.Call<bool>(Hash.IS_PLAYER_PLAYING))
+                            Script.Wait(100);
+                    }
+                    Function.Call(Hash.NETWORK_REQUEST_CONTROL_OF_ENTITY, Game.Player.Character.Handle);
+                    Function.Call(Hash.NETWORK_RESURRECT_LOCAL_PLAYER, Game.Player.Character.Position.X, Game.Player.Character.Position.Y, Game.Player.Character.Position.Z, 0.0, 0.0, 0.0);
+                    Function.Call(Hash._RESET_LOCALPLAYER_STATE);
+                    Function.Call(Hash.SET_FADE_OUT_AFTER_DEATH, false);
+
+                    if (!bReincarn)
+                        YourRanPed(sMainChar);
+                    YouDied(bMale);
+                }
+                else
+                {
+                    while (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
+                        Script.Wait(100);
+                    Function.Call(Hash.NETWORK_REQUEST_CONTROL_OF_ENTITY, Game.Player.Character.Handle);
+                    Function.Call(Hash.RESET_PLAYER_ARREST_STATE, Game.Player.Character.Handle);
+                    Function.Call(Hash._RESET_LOCALPLAYER_STATE);
+                    Function.Call(Hash.SET_FADE_OUT_AFTER_ARREST, false);
+
+                    YouArrest();
+                }
+
+                Function.Call(Hash.DISPLAY_HUD, true);
+                Game.Player.Character.FreezePosition = false;
+            }
+
+            if (bInYankton)
+                Yankton(false);
+            else if (bInCayoPerico)
+                CayoPerico(false);
+
+            if (bDontStopMe)
+            {
+                Game.Player.IgnoredByPolice = false;
+                Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character.Handle, true);
+                Function.Call(Has﻿h.REQUEST_SCRIPT, "restrictedareas");
+                Function.Call(Has﻿h.REQUEST_SCRIPT, "re_armybase");
+                Script.Wait(100);
+
+                if (bPrisHeli)
+                {
+                    bPrisHeli = false;
+                    PrisEscape.CurrentBlip.Remove();
+                    PrisEscape.MarkAsNoLongerNeeded();
+                }
+                bDontStopMe = false;
+            }
+        }
+        private void PlayerBelter()
+        {
+            Function.Call(Hash.SET_PED_CONFIG_FLAG, Game.Player.Character.Handle, 32, !bBeltUp);
+        }
+        private void EveryBodyDies()
+        {
+            DeadWeather = World.Weather;
+            DeadTime = World.CurrentDayTime.Hours;
+            vHell = Game.Player.Character.Position;
+            vHeaven = World.GetNextPositionOnSidewalk(Game.Player.Character.Position);
+
+            if (IsMainChar())
+            {
+                if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED) || Function.Call<bool>(Hash.IS_PLAYER_DEAD))
+                {
+                    if (bInYankton)
+                        Yankton(false);
+                    else if (bInCayoPerico)
+                        CayoPerico(false);
+                }
+                else if (Function.Call<bool>(Hash.HAS_SCRIPT_LOADED, "director_mode"))
+                {
+                    Script.Wait(500);
+                    Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "director_mode");
+                }
+            }
+            else if (bMenyooZZ)
+            {
+                if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
+                {
+                    if (bAllowControl)
+                        CleanUpMess();
+                    bDeadorArrest = true;
+                    DeathArrestCont(false, true);
+                }
+                else if (Function.Call<bool>(Hash.IS_PLAYER_DEAD))
+                {
+                    if (bAllowControl)
+                        CleanUpMess();
+                    bDeadorArrest = true;
+                    DeathArrestCont(true, true);
+                }
+            }
+            else
+            {
+                if (Function.Call<bool>(Hash.HAS_SCRIPT_LOADED, "director_mode"))
+                {
+                    if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
+                    {
+                        Script.Wait(5000);
+                        Game.FadeScreenOut(1);
+
+                        if (bAllowControl)
+                            CleanUpMess();
+                        bDeadorArrest = true;
+                        DeathArrestCont(false, false);
+                    }
+                    else if (Function.Call<bool>(Hash.IS_PLAYER_DEAD))
+                    {
+                        Script.Wait(5000);
+                        Game.FadeScreenOut(1);
+
+                        if (bAllowControl)
+                            CleanUpMess();
+                        bDeadorArrest = true;
+                        DeathArrestCont(true, false);
+                    }
+                }
+                else
+                {
+                    Script.Wait(500);
+                    Function.Call(Hash.REQUEST_SCRIPT, "director_mode");
+                }
+            }
+        }
+        private void YouDied(bool bMale)
+        {
+            LogginSyatem("YouDied");
+
+            if (bMethActor)
+                MethEdd(true);
+
+            if (bReincarn && !bInYankton && !bInCayoPerico)
+            {
+                int iFail = 25;
+                if (vHell.Z > -1 && World.GetZoneNameLabel(vHell) != "JAIL" && World.GetZoneNameLabel(vHell) != "ARMYB")
+                {
+                    while (!SelectingPeds(true) && iFail > 0)
+                    {
+                        Script.Wait(100);
+                        iFail -= 1;
+                    }
+
+                    if (iFail < 1)
+                        Reicarnations(true);
+                    else
+                        Reicarnations(false);
+                }
+                else
+                    Reicarnations(true);
             }
             else
             {
@@ -9133,114 +9320,103 @@ namespace RandomStart
                     Yankton(false);
                 else if (bInCayoPerico)
                     CayoPerico(false);
-            }
-        }
-        private void ClearDASCript(bool bProg)
-        {
 
-            LogginSyatem("ClearDASCript bProg == " + bProg);
+                SetTimeWeather(Weather.Clear, 12);
 
-            if (bProg)
-            {
-                Function.Call(Hash.NETWORK_REQUEST_CONTROL_OF_ENTITY, Game.Player.Character);
-                Function.Call(Hash.NETWORK_RESURRECT_LOCAL_PLAYER, Game.Player.Character.Position.X, Game.Player.Character.Position.Y, Game.Player.Character.Position.Z, 0.0, 0.0, 0.0);
-                Function.Call(Hash._RESET_LOCALPLAYER_STATE);
-                Function.Call(Hash.SET_FADE_OUT_AFTER_DEATH, false);
-            }
-            else
-            {
-                while (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
-                    Script.Wait(100);
-                Function.Call(Hash.NETWORK_REQUEST_CONTROL_OF_ENTITY, Game.Player.Character);
-                Function.Call(Hash.RESET_PLAYER_ARREST_STATE, Game.Player.Character);
-                Function.Call(Hash._RESET_LOCALPLAYER_STATE);
-                Function.Call(Hash.SET_FADE_OUT_AFTER_ARREST, false);
-            }
+                Game.FadeScreenIn(1000);
+                MyPropBuild("prop_coffin_01", new Vector3(-278.3422f, 2844.4617f, 52.8818f), new Vector3(-4.20f, 1.015f, -30.6686f), 0);
 
-            Function.Call(Hash.DISPLAY_HUD, true);
-            Game.Player.Character.FreezePosition = false;
+                Vector3 vPriest = new Vector3(-276.5638f, 2844.45f, 53.75225f);
+                float fPriest = 134.9461f;
+                NPCSpawn("ig_priest", vPriest, fPriest, 7, 0, null, true);
 
-            bDead = true;
-            DeathArrestCont(bProg);
-        }
-        private void PlayerBelter()
-        {
-            Function.Call(Hash.SET_PED_CONFIG_FLAG, Game.Player.Character, 32, !bBeltUp);
-        }
-        private void YouDied(bool bMale)
-        {
+                Vector3 vMorn02 = new Vector3(-281.5462f, 2844.153f, 54.07914f);
+                float fMorn02 = 279.358f;
+                NPCSpawn(sFunChar01, vMorn02, fMorn02, 7, 0, null, true);
 
-            LogginSyatem("YouDied");
+                Vector3 vMorn01 = new Vector3(-276.7029f, 2841.419f, 53.96595f);
+                float fMorn01 = 29.87679f;
+                NPCSpawn(sFunChar02, vMorn01, fMorn01, 7, 0, null, true);
 
-            if (bMethActor)
-                MethEdd(true);
+                Vector3 vPlayer = new Vector3(-281.0132f, 2840.851f, 54.34494f);
+                float fPlayer = 320.0452f;
 
-            if (bInYankton)
-                Yankton(false);
-            else if (bInCayoPerico)
-                CayoPerico(false);
+                Game.Player.Character.Position = vPlayer;
+                Game.Player.Character.Heading = fPlayer;
 
-            Game.FadeScreenIn(1000);
-            MyPropBuild("prop_coffin_01", new Vector3(-278.3422f, 2844.4617f, 52.8818f), new Vector3(-4.20f, 1.015f, -30.6686f), 0);
-
-            Vector3 vPriest = new Vector3(-276.5638f, 2844.45f, 53.75225f);
-            float fPriest = 134.9461f;
-            NPCSpawn("ig_priest", vPriest, fPriest, 7, 0, null, true);
-
-            Vector3 vMorn02 = new Vector3(-281.5462f, 2844.153f, 54.07914f);
-            float fMorn02 = 279.358f;
-            NPCSpawn(sFunChar01, vMorn02, fMorn02, 7, 0, null, true);
-
-            Vector3 vMorn01 = new Vector3(-276.7029f, 2841.419f, 53.96595f);
-            float fMorn01 = 29.87679f;
-            NPCSpawn(sFunChar02, vMorn01, fMorn01, 7, 0, null, true);
-
-            Vector3 vPlayer = new Vector3(-281.0132f, 2840.851f, 54.34494f);
-            float fPlayer = 320.0452f;
-
-            Game.Player.Character.Position = vPlayer;
-            Game.Player.Character.Heading = fPlayer;
-
-            if (sFirstName == "PlayerX" || sFirstName == "Current")
-            {
-                if (Game.Player.Character.Gender == Gender.Male)
-                    sFirstName = sNameMal[RandInt(0, sNameMal.Count() - 1)];
-                else
-                    sFirstName = sNameFem[RandInt(0, sNameFem.Count() - 1)];
-            }
-
-            int iNameSir = sNameSir.Count();
-            if (iNameSir > 0)
-            {
-                if (iNameSir == 1)
+                if (sFirstName == "PlayerX" || sFirstName == "Current")
                 {
-                    if (bMale)
-                        UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[0] + sLangfile[3]);
+                    if (Game.Player.Character.Gender == Gender.Male)
+                        sFirstName = sNameMal[RandInt(0, sNameMal.Count() - 1)];
                     else
-                        UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[0] + sLangfile[4]);
+                        sFirstName = sNameFem[RandInt(0, sNameFem.Count() - 1)];
+                }
+
+                int iNameSir = sNameSir.Count();
+                if (iNameSir > 0)
+                {
+                    if (iNameSir == 1)
+                    {
+                        if (bMale)
+                            UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[0] + sLangfile[3]);
+                        else
+                            UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[0] + sLangfile[4]);
+                    }
+                    else
+                    {
+                        iNameSir = RandInt(0, iNameSir - 1);
+                        if (bMale)
+                            UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[iNameSir] + sLangfile[3]);
+                        else
+                            UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[iNameSir] + sLangfile[4]);
+                    }
                 }
                 else
                 {
-                    iNameSir = RandInt(0, iNameSir - 1);
                     if (bMale)
-                        UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[iNameSir] + sLangfile[3]);
+                        UI.Notify(sLangfile[2] + sFirstName + " Davis. " + sLangfile[3]);
                     else
-                        UI.Notify(sLangfile[2] + sFirstName + " " + sNameSir[iNameSir] + sLangfile[4]);
+                        UI.Notify(sLangfile[2] + sFirstName + " Davis. " + sLangfile[4]);
                 }
+
+                ReturnWeaps();
+
+                Script.Wait(7000);
+                CleanUpMess();
+            }
+            bDeadorArrest = false;
+        }
+        private void Reicarnations(bool bDeadZoneEmpty)
+        {
+            if (bDeadZoneEmpty)
+            {
+                Script.Wait(10000);
+                Game.Player.Character.Task.ClearAll();
+                YourRanPed("cs_chrisformage");
+                Game.FadeScreenIn(1000);
             }
             else
             {
-                if (bMale)
-                    UI.Notify(sLangfile[2] + sFirstName + " Davis. " + sLangfile[3]);
-                else
-                    UI.Notify(sLangfile[2] + sFirstName + " Davis. " + sLangfile[4]);
+                SetTimeWeather(DeadWeather, DeadTime);
+                Game.FadeScreenIn(1000);
+            }                        
+            Ahhhhhh.Play();
+            Vector3 Campo = Game.Player.Character.Position;
+            Vector3 Camro = new Vector3(-90.00f, 0.00f, 0.00f);
+            Function.Call(Hash.DISPLAY_RADAR, false);
+            Campo.Z += 155.00f;
+            Camera cCams = World.CreateCamera(Campo, Camro, 150.00f);
+            Function.Call(Hash.RENDER_SCRIPT_CAMS, 1, 1, cCams.Handle, 0, 0);
+            Script.Wait(3000);
+            while (cCams.Position.Z > Game.Player.Character.Position.Z + 2.00f)
+            {
+                Campo.Z -= 1.00f;
+                cCams.Position = Campo;
+                Script.Wait(1);
             }
-
-            ReturnWeaps();
-
-            Script.Wait(7000);
-            CleanUpMess();
-            bDead = false;
+            Function.Call(Hash.RENDER_SCRIPT_CAMS, 0, 1, 0, 0, 0);
+            cCams.Destroy();
+            Function.Call(Hash.DISPLAY_RADAR, true);
         }
         private void YouArrest()
         {
@@ -9271,7 +9447,7 @@ namespace RandomStart
             Vector3 Pris_03 = new Vector3(1655.93f, 2544.805f, 45.56487f);
             NPCSpawn("s_m_m_prisguard_01", Pris_03, 0.00f, 2, 1, null, false);
 
-            bDead = false;
+            bDeadorArrest = false;
         }
         private void YouJog()
         {
@@ -10233,7 +10409,7 @@ namespace RandomStart
                 bMethActor = false;
                 Function.Call(Hash.CLEAR_TIMECYCLE_MODIFIER);
                 if (bMethFail)
-                    Function.Call(Hash.RESET_PED_MOVEMENT_CLIPSET, Game.Player.Character, 0.00f);
+                    Function.Call(Hash.RESET_PED_MOVEMENT_CLIPSET, Game.Player.Character.Handle, 0.00f);
                 bMethFail = false;
             }
             else
@@ -10270,12 +10446,12 @@ namespace RandomStart
 
             Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "restrictedareas");
             bDontStopMe = true;
-            bDead = false;
+            bDeadorArrest = false;
         }
         private void InRestrictedArea()
         {
             Game.Player.WantedLevel = 0;
-            Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character, false);
+            Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character.Handle, false);
             Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "re_prison");
             Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "re_armybase");
             Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "re_lossantosintl");
@@ -10358,7 +10534,7 @@ namespace RandomStart
                 bPrisHeli = false;
             }
             Game.Player.IgnoredByPolice = false;
-            Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character, true);
+            Function.Call(Hash.SET_DISPATCH_COPS_FOR_PLAYER, Game.Player.Character.Handle, true);
             Function.Call(Has﻿h.REQUEST_SCRIPT, "restrictedareas");
             Function.Call(Has﻿h.REQUEST_SCRIPT, "re_armybase");
             Function.Call(Has﻿h.REQUEST_SCRIPT, "re_lossantosintl");
@@ -10422,6 +10598,13 @@ namespace RandomStart
             Vector3 V3 = vGetAway.Position + (vGetAway.RightVector * 4);
             FillthisVeh(vGetAway, 2, 0, V3, 6, 2, false);
         }
+        public bool IsMainChar()
+        {
+            bool bYes = false;
+            if (Game.Player.Character.Model == PedHash.Franklin || Game.Player.Character.Model == PedHash.Michael || Game.Player.Character.Model == PedHash.Trevor)
+                bYes = true;
+            return bYes;
+        }
         public string AddAnyPed(int iType)
         {
             LogginSyatem("AddAnyPed");
@@ -10458,13 +10641,7 @@ namespace RandomStart
             LogginSyatem("RandInt");
 
             int iMyRanInt = Function.Call<int>(Hash.GET_RANDOM_INT_IN_RANGE, minNumber, maxNumber);
-            if (minNumber + 1 == maxNumber)
-            {
-                if (BoolList(19))
-                    iMyRanInt = maxNumber;
-                else
-                    iMyRanInt = minNumber;
-            }
+
             return iMyRanInt;
         }
         public float RandFloat(float fMin, float fMax)
@@ -12368,23 +12545,6 @@ namespace RandomStart
                 xml.Serialize(sw, config);
             }
         }
-        public bool BoolList(int iList)
-        {
-            LogginSyatem("BoolList, iList == " + iList);
-            bool bOnOff = true;
-
-            if (iList > bRandList.Count() -1)
-            {
-                for (int i = bRandList.Count(); i < iList + 1; i++)
-                {
-                    bOnOff = !bOnOff;
-                    bRandList.Add(bOnOff);
-                }
-            }
-            bRandList[iList] = !bRandList[iList];
-
-            return bRandList[iList];
-        }
         public int FindRandom(int iList, int iMin, int iMax)
         {
             LogginSyatem("FindRandom, iList == " + iList);
@@ -12393,24 +12553,49 @@ namespace RandomStart
             RandomPlusList XSets = new RandomPlusList();
 
             if (File.Exists(sRandFile))
+            {
                 XSets = LoadRando(sRandFile);
 
-            if (XSets.BigRanList.Count() < iList + 1)
-            {
-                RandomPlus iBlank = new RandomPlus();
-                for (int i = XSets.BigRanList.Count(); i < iList + 1; i++)
-                    XSets.BigRanList.Add(iBlank);
-            }
+                if (XSets.BigRanList.Count() < iList + 1)
+                {
+                    for (int i = XSets.BigRanList.Count() - 1; i < iList + 1; i++)
+                    {
+                        RandomPlus iBlank = new RandomPlus();
+                        XSets.BigRanList.Add(iBlank);
+                    }
+                }
 
-            if (XSets.BigRanList[iList].RandNums.Count < 1)
+                for (int i = 0; i < XSets.BigRanList[iList].RandNums.Count; i++)
+                {
+                    if (XSets.BigRanList[iList].RandNums[i] > iMax || XSets.BigRanList[iList].RandNums[i] < iMin)
+                        XSets.BigRanList[iList].RandNums.RemoveAt(i);
+                }
+
+                if (XSets.BigRanList[iList].RandNums.Count == 0)
+                {
+                    for (int i = iMin; i < iMax + 1; i++)
+                        XSets.BigRanList[iList].RandNums.Add(i);
+                }
+
+                int iRanNum = RandInt(0, XSets.BigRanList[iList].RandNums.Count - 1);
+                iBe = XSets.BigRanList[iList].RandNums[iRanNum];
+                XSets.BigRanList[iList].RandNums.RemoveAt(iRanNum);
+            }
+            else
             {
+                for (int i = 0; i < iList + 1; i++)
+                {
+                    RandomPlus iBlank = new RandomPlus();
+                    XSets.BigRanList.Add(iBlank);
+                }
+
                 for (int i = iMin; i < iMax + 1; i++)
                     XSets.BigRanList[iList].RandNums.Add(i);
-            }
-            int iRanNum = RandInt(0, XSets.BigRanList[iList].RandNums.Count - 1);
-            iBe = XSets.BigRanList[iList].RandNums[iRanNum];
-            XSets.BigRanList[iList].RandNums.RemoveAt(iRanNum);
 
+                int iRanNum = RandInt(0, XSets.BigRanList[iList].RandNums.Count - 1);
+                iBe = XSets.BigRanList[iList].RandNums[iRanNum];
+                XSets.BigRanList[iList].RandNums.RemoveAt(iRanNum);
+            }
             SaveRando(XSets, sRandFile);
 
             return iBe;
@@ -12726,6 +12911,7 @@ namespace RandomStart
             SetMenuKey(mainMenu);
             SelectSaved(mainMenu);
             PedPosses(mainMenu);
+            InstantReincarnate(mainMenu);
             DisRecord(mainMenu);
             AddBeachParty(mainMenu);
             SeatBeltON(mainMenu);
@@ -12734,16 +12920,36 @@ namespace RandomStart
             bMenuOpen = true;
             mainMenu.Visible = !mainMenu.Visible;
         }
-        private void SelectingPeds()
+        public bool SelectingPeds(bool bRando)
         {
             WhileButtonDown(21, true);
+            bool bDone = false;
+            float fDis = 50.00f;
+            if (bRando)
+                fDis = 150.00f;
             List<Ped> NearPeds = new List<Ped>();
-            Ped[] PedXs = World.GetNearbyPeds(Game.Player.Character.Position, 40.00f);
+            Ped[] PedXs = World.GetNearbyPeds(Game.Player.Character.Position, fDis);
 
-            for (int i = 0; i < PedXs.Count(); i++)
+            if (bRando)
             {
-                if (PedXs[i] != Game.Player.Character)
-                    NearPeds.Add(new Ped(PedXs[i].Handle));
+                for (int i = 0; i < PedXs.Count(); i++)
+                {
+                    if (PedXs[i] != Game.Player.Character && !PedXs[i].IsPersistent && !PedXs[i].IsDead && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_pigeon") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_crow") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_chickenhawk") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_cormorant") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_seagull") && PedXs[i].Model.Hash != iAmModelHash)
+                    {
+                        if (bReCritters)
+                            NearPeds.Add(new Ped(PedXs[i].Handle));
+                        else if (Function.Call<int>(Hash.GET_PED_TYPE, PedXs[i].Handle) != 28)
+                            NearPeds.Add(new Ped(PedXs[i].Handle));
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < PedXs.Count(); i++)
+                {
+                    if (PedXs[i] != Game.Player.Character && !PedXs[i].IsPersistent && !PedXs[i].IsDead)
+                        NearPeds.Add(new Ped(PedXs[i].Handle));
+                }
             }
 
             int iPerPickP = NearPeds.Count - 1;
@@ -12752,29 +12958,58 @@ namespace RandomStart
             {
                 if (iPerPickP > -1)
                 {
-                    while (bLooking && NearPeds[iPerPickP].Exists())
+                    if (bRando)
                     {
-                        Script.Wait(1);
-                        TopCornerUI(sLangfile[138]);
-                        World.DrawMarker(MarkerType.UpsideDownCone, new Vector3(NearPeds[iPerPickP].Position.X, NearPeds[iPerPickP].Position.Y, NearPeds[iPerPickP].Position.Z + 1.50f), Vector3.Zero, Vector3.Zero, new Vector3(0.75f, 0.75f, 0.75f), Color.Red);
-                        if (WhileButtonDown(51, true))
+                        iPerPickP = RandInt(0, NearPeds.Count - 1);
+                        Vector3 Campo = Game.Player.Character.Position;
+                        if (bReCurrentPd)
                         {
-                            iPerPickP -= 1;
-                            if (iPerPickP < 0)
-                                iPerPickP = NearPeds.Count - 1;
-
-                            NearPeds[iPerPickP].Position = (Game.Player.Character.Position) + (Game.Player.Character.ForwardVector * 3);
+                            Vector3 Pedpos = NearPeds[iPerPickP].Position;
+                            float PedHed = NearPeds[iPerPickP].Heading;
+                            NearPeds[iPerPickP].Delete();
+                            Game.Player.Character.Position = Pedpos;
+                            Game.Player.Character.Heading = PedHed;
                         }
-                        else if (WhileButtonDown(21, true))
+                        else if (bReSavedPed)
                         {
+                            Vector3 Pedpos = NearPeds[iPerPickP].Position;
+                            float PedHed = NearPeds[iPerPickP].Heading;
+                            NearPeds[iPerPickP].Delete();
+                            YourSavedPed();
+                            Game.Player.Character.Position = Pedpos;
+                            Game.Player.Character.Heading = PedHed;
+                        }
+                        else
                             YourPickedPed(NearPeds[iPerPickP]);
-                            bLooking = false;
+                        bDone = true;
+                    }
+                    else
+                    {
+                        while (bLooking && NearPeds[iPerPickP].Exists())
+                        {
+                            Script.Wait(1);
+                            TopCornerUI(sLangfile[138]);
+                            World.DrawMarker(MarkerType.UpsideDownCone, new Vector3(NearPeds[iPerPickP].Position.X, NearPeds[iPerPickP].Position.Y, NearPeds[iPerPickP].Position.Z + 1.50f), Vector3.Zero, Vector3.Zero, new Vector3(0.75f, 0.75f, 0.75f), Color.Red);
+                            if (WhileButtonDown(51, true))
+                            {
+                                iPerPickP -= 1;
+                                if (iPerPickP < 0)
+                                    iPerPickP = NearPeds.Count - 1;
+
+                                NearPeds[iPerPickP].Position = (Game.Player.Character.Position) + (Game.Player.Character.ForwardVector * 3);
+                            }
+                            else if (WhileButtonDown(21, true))
+                            {
+                                YourPickedPed(NearPeds[iPerPickP]);
+                                bLooking = false;
+                            }
+                            else if (WhileButtonDown(23, true))
+                                bLooking = false;
                         }
-                        else if (WhileButtonDown(23, true))
-                            bLooking = false;
                     }
                 }
             }
+            return bDone;
         }
         private void PedPosses(UIMenu XMen)
         {
@@ -12787,7 +13022,7 @@ namespace RandomStart
                 if (item == playermodelmenu)
                 {
                     MyMenuPool.CloseAllMenus();
-                    SelectingPeds();
+                    SelectingPeds(false);
                 }
             };
         }
@@ -12953,13 +13188,13 @@ namespace RandomStart
 
             for (int i = 0; i < 12; i++)
             {
-                MyBanks.ClothA.Add(Function.Call<int>(Hash.GET_PED_DRAWABLE_VARIATION, Peddy, i));
-                MyBanks.ClothB.Add(Function.Call<int>(Hash.GET_PED_TEXTURE_VARIATION, Peddy, i));
+                MyBanks.ClothA.Add(Function.Call<int>(Hash.GET_PED_DRAWABLE_VARIATION, Peddy.Handle, i));
+                MyBanks.ClothB.Add(Function.Call<int>(Hash.GET_PED_TEXTURE_VARIATION, Peddy.Handle, i));
             }
             for (int i = 0; i < 5; i++)
             {
-                MyBanks.ExtraA.Add(Function.Call<int>(Hash.GET_PED_PROP_INDEX, Peddy, i));
-                MyBanks.ExtraB.Add(Function.Call<int>(Hash.GET_PED_PROP_TEXTURE_INDEX, Peddy, i));
+                MyBanks.ExtraA.Add(Function.Call<int>(Hash.GET_PED_PROP_INDEX, Peddy.Handle, i));
+                MyBanks.ExtraB.Add(Function.Call<int>(Hash.GET_PED_PROP_TEXTURE_INDEX, Peddy.Handle, i));
             }
 
             MyBanks.PedVoice = "";
@@ -12988,7 +13223,7 @@ namespace RandomStart
         {
             for (int i = 0; i < 13; i++)
             {
-                int iValue = Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character, i);
+                int iValue = Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character.Handle, i);
                 ThisBank.Overlay.Add(iValue);
                 if (iValue == 255)
                 {
@@ -13059,7 +13294,7 @@ namespace RandomStart
             {
                 if (item == newitem)
                 {
-                    Function.Call(Hash._SET_PED_HAIR_COLOR, Game.Player.Character, index, NewBank.HairStreaks);
+                    Function.Call(Hash._SET_PED_HAIR_COLOR, Game.Player.Character.Handle, index, NewBank.HairStreaks);
                     NewBank.HairColour = index;
                 }
 
@@ -13081,7 +13316,7 @@ namespace RandomStart
             {
                 if (item == newitem)
                 {
-                    Function.Call(Hash._SET_PED_HAIR_COLOR, Game.Player.Character, NewBank.HairColour, index);
+                    Function.Call(Hash._SET_PED_HAIR_COLOR, Game.Player.Character.Handle, NewBank.HairColour, index);
                     NewBank.HairStreaks = index;
                 }
             };
@@ -13103,7 +13338,7 @@ namespace RandomStart
             {
                 if (item == newitem)
                 {
-                    Function.Call(Hash._SET_PED_EYE_COLOR, Game.Player.Character, index);
+                    Function.Call(Hash._SET_PED_EYE_COLOR, Game.Player.Character.Handle, index);
                     NewBank.EyeColour = index;
                 }
             };
@@ -13126,8 +13361,8 @@ namespace RandomStart
             playermodelmenu.OnItemSelect += (sender, item, index) =>
             {
                 NewBank.PedVoice = ThemVoices[index];
-                Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character, NewBank.PedVoice);
-                Function.Call((Hash)0x4ADA3F19BE4A6047, Game.Player.Character);
+                Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character.Handle, NewBank.PedVoice);
+                Function.Call((Hash)0x4ADA3F19BE4A6047, Game.Player.Character.Handle);
                 UI.Notify("Voice set to " + NewBank.PedVoice);
             };
         }
@@ -13182,14 +13417,14 @@ namespace RandomStart
                     int iOver = index - 1;
                     if (iOver == -1)
                         iOver = 255;
-                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character, OverLayId, iOver, NewBank.OverlayOpc[OverLayId]);
+                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character.Handle, OverLayId, iOver, NewBank.OverlayOpc[OverLayId]);
                     NewBank.Overlay[OverLayId] = iOver;
                 }
                 else if (item == newitemOpac)
                 {
                     float fOpal = (int)index;
                     fOpal = fOpal / 100;
-                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character, OverLayId, Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character, OverLayId), fOpal);
+                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character.Handle, OverLayId, Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character.Handle, OverLayId), fOpal);
                     NewBank.OverlayOpc[OverLayId] = fOpal;
                 }
             };
@@ -13235,19 +13470,19 @@ namespace RandomStart
                     int iOver = index - 1;
                     if (iOver == -1)
                         iOver = 255;
-                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character, OverLayId, iOver, NewBank.OverlayOpc[OverLayId]);
+                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character.Handle, OverLayId, iOver, NewBank.OverlayOpc[OverLayId]);
                     NewBank.Overlay[OverLayId] = iOver;
                 }
                 else if (item == newitem2)
                 {
-                    Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Game.Player.Character, OverLayId, 1, index, 0);
+                    Function.Call(Hash._SET_PED_HEAD_OVERLAY_COLOR, Game.Player.Character.Handle, OverLayId, 1, index, 0);
                     NewBank.OverlayColour[OverLayId] = index;
                 }
                 else if (item == newitemOpac)
                 {
                     float fOpal = (int)index;
                     fOpal = fOpal / 100;
-                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character, OverLayId, Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character, OverLayId), fOpal);
+                    Function.Call(Hash.SET_PED_HEAD_OVERLAY, Game.Player.Character.Handle, OverLayId, Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character.Handle, OverLayId), fOpal);
                     NewBank.OverlayOpc[OverLayId] = fOpal;
                 }
             };
@@ -13259,7 +13494,7 @@ namespace RandomStart
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[27]);
 
-            if (Game.Player.Character.Model != PedHash.Michael && Game.Player.Character.Model != PedHash.Trevor && Game.Player.Character.Model != PedHash.Franklin)
+            if (!IsMainChar())
                 Componets(playermodelmenu, 0, sLangfile[28]);
             Componets(playermodelmenu, 1, sLangfile[29]);
             Componets(playermodelmenu, 2, sLangfile[30]);
@@ -13290,7 +13525,7 @@ namespace RandomStart
 
             List<dynamic> Txture = new List<dynamic>();
 
-            int iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS, Game.Player.Character, CompId, iZero) + 1;
+            int iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS, Game.Player.Character.Handle, CompId, iZero) + 1;
             CompileMenuTotals(Txture, iTexTotal, 0);
             var newitem2 = new UIMenuListItem(sText, Txture, 0);
             newitem2.Index = 0;
@@ -13301,16 +13536,16 @@ namespace RandomStart
                 if (item == newitem)
                 {
                     int iDex = index - 1;
-                    iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS, Game.Player.Character, CompId, iDex) + 1;
+                    iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_TEXTURE_VARIATIONS, Game.Player.Character.Handle, CompId, iDex) + 1;
                     newitem2.Items.Clear();
                     CompileMenuTotals(newitem2.Items, iTexTotal, 0);
                     newitem2.Index = 0;
-                    Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Game.Player.Character, CompId, iDex, 0, 2);
+                    Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Game.Player.Character.Handle, CompId, iDex, 0, 2);
                 }
                 else if (item == newitem2)
                 {
-                    int iAmComp = Function.Call<int>(Hash.GET_PED_DRAWABLE_VARIATION, Game.Player.Character, CompId);
-                    Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Game.Player.Character, CompId, iAmComp, index, 2);
+                    int iAmComp = Function.Call<int>(Hash.GET_PED_DRAWABLE_VARIATION, Game.Player.Character.Handle, CompId);
+                    Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Game.Player.Character.Handle, CompId, iAmComp, index, 2);
                 }
             };
         }
@@ -13334,8 +13569,8 @@ namespace RandomStart
 
             List<dynamic> Comp = new List<dynamic>();
 
-            int iCount = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS, Game.Player.Character, CompId) + 1;
-            int iZero = Function.Call<int>(Hash.GET_PED_PROP_INDEX, Game.Player.Character, CompId);
+            int iCount = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS, Game.Player.Character.Handle, CompId) + 1;
+            int iZero = Function.Call<int>(Hash.GET_PED_PROP_INDEX, Game.Player.Character.Handle, CompId);
             CompileMenuTotals(Comp, iCount, -1);
             var newitem = new UIMenuListItem(sName, Comp, 0);
             newitem.Index = iZero;
@@ -13343,7 +13578,7 @@ namespace RandomStart
 
             List<dynamic> Txture = new List<dynamic>();
 
-            int iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS, Game.Player.Character, CompId, iZero) + 1;
+            int iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS, Game.Player.Character.Handle, CompId, iZero) + 1;
             CompileMenuTotals(Txture, iTexTotal, 0);
             var newitem2 = new UIMenuListItem(sText, Txture, 0);
             newitem2.Index = 0;
@@ -13354,19 +13589,19 @@ namespace RandomStart
                 if (item == newitem)
                 {
                     int iDex = index - 1;
-                    iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS, Game.Player.Character, CompId, iDex) + 1;
+                    iTexTotal = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_TEXTURE_VARIATIONS, Game.Player.Character.Handle, CompId, iDex) + 1;
                     newitem2.Items.Clear();
                     CompileMenuTotals(newitem2.Items, iTexTotal, 0);
                     newitem2.Index = 0;
                     if (iDex == -1)
-                        Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, CompId);
+                        Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character.Handle, CompId);
                     else
-                        Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character, CompId, iDex, 0, false);
+                        Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, CompId, iDex, 0, false);
                 }
                 else if (item == newitem2)
                 {
-                    int iAmComp = Function.Call<int>(Hash.GET_PED_PROP_INDEX, Game.Player.Character, CompId);
-                    Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character, CompId, iAmComp, index, false);
+                    int iAmComp = Function.Call<int>(Hash.GET_PED_PROP_INDEX, Game.Player.Character.Handle, CompId);
+                    Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, CompId, iAmComp, index, false);
                 }
             };
         }
@@ -13381,11 +13616,11 @@ namespace RandomStart
             {
                 if (item == playermodelmenu)
                 {
-                    Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character);
-                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, 0);
-                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, 1);
-                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, 2);
-                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character, 3);
+                    Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character.Handle);
+                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character.Handle, 0);
+                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character.Handle, 1);
+                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character.Handle, 2);
+                    Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character.Handle, 3);
                 }
             };
         }
@@ -13446,14 +13681,14 @@ namespace RandomStart
                     TattoosList(iChar, iSkin);
                     if (sub_01[index] != "No Tattoos Available")
                     {
-                        Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character);
+                        Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character.Handle);
 
                         if (!NewBank.Tattoo_Nam.Contains(sTatName[index]))
                         {
                             item.SetRightBadge(UIMenuItem.BadgeStyle.Tatoo);
                             NewBank.Tattoo_COl.Add(sTatBase[index]);
                             NewBank.Tattoo_Nam.Add(sTatName[index]);
-                            Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, sTatBase[index]), Function.Call<int>(Hash.GET_HASH_KEY, sTatName[index]));
+                            Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sTatBase[index]), Function.Call<int>(Hash.GET_HASH_KEY, sTatName[index]));
                         }
                         else
                         {
@@ -13468,9 +13703,9 @@ namespace RandomStart
                 };
                 playermodelmenu.OnMenuClose += (sender) =>
                 {
-                    Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character);
+                    Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character.Handle);
                     for (int i = 0; i < NewBank.Tattoo_COl.Count; i++)
-                        Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character, Function.Call<int>(Hash.GET_HASH_KEY, NewBank.Tattoo_COl[i]), Function.Call<int>(Hash.GET_HASH_KEY, NewBank.Tattoo_Nam[i]));
+                        Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character.Handle, Function.Call<int>(Hash.GET_HASH_KEY, NewBank.Tattoo_COl[i]), Function.Call<int>(Hash.GET_HASH_KEY, NewBank.Tattoo_Nam[i]));
                 };
             }
         }
@@ -13485,7 +13720,7 @@ namespace RandomStart
             {
                 if (item == playermodelmenu)
                 {
-                    Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character);
+                    Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character.Handle);
                     NewBank.Tattoo_COl.Clear();
                     NewBank.Tattoo_Nam.Clear();
                 }
@@ -13538,7 +13773,7 @@ namespace RandomStart
                 {
                     float fOpal = (int)index -99 ;
                     fOpal = (fOpal / 100);
-                    Function.Call(Hash._SET_PED_FACE_FEATURE, Game.Player.Character, CompId, fOpal);
+                    Function.Call(Hash._SET_PED_FACE_FEATURE, Game.Player.Character.Handle, CompId, fOpal);
                     NewBank.FaceScale[CompId] = fOpal;
                 }
             };
@@ -13720,13 +13955,10 @@ namespace RandomStart
 
             var SetCharOpt = new UIMenuItem(sLangfile[96], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (Function.Call<bool>(Hash.GET_PED_CONFIG_FLAG, Game.Player.Character, 32, true))
-            {
+            if (Function.Call<bool>(Hash.GET_PED_CONFIG_FLAG, Game.Player.Character.Handle, 32, true) == bBeltUp)
+                PlayerBelter();
+            if (bBeltUp)
                 SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
-                bBeltUp = true;
-            }
-            else
-                bBeltUp = false;
 
             XMen.AddItem(SetCharOpt);
             XMen.OnItemSelect += (sender, item, index) =>
@@ -13743,10 +13975,113 @@ namespace RandomStart
                 }
             };
         }
+        private void InstantReincarnate(UIMenu XMen)
+        {
+            LogginSyatem("InstantReincarnate");
+
+            var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[140]);
+
+            var Rand_01 = new UIMenuItem(sLangfile[140], sLangfile[141]);
+            if (bReincarn)
+                Rand_01.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+
+            var Rand_02 = new UIMenuItem(sLangfile[142], "");
+            if (bReCritters)
+                Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+
+            var Rand_03 = new UIMenuItem(sLangfile[143], "");
+            if (bReSavedPed)
+                Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+
+            var Rand_04 = new UIMenuItem(sLangfile[144], "");
+            if (bReCurrentPd)
+                Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+
+            playermodelmenu.AddItem(Rand_01);
+            playermodelmenu.AddItem(Rand_02);
+            playermodelmenu.AddItem(Rand_03);
+            playermodelmenu.AddItem(Rand_04);
+
+            playermodelmenu.OnItemSelect += (sender, item, index) =>
+            {
+                if (item == Rand_01)
+                {
+                    bReincarn = !bReincarn;
+                    if (bReincarn)
+                        Rand_01.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+                    else
+                        Rand_01.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                    WriteSetXML();
+                }
+                else if (item == Rand_02)
+                {
+                    bReCritters = !bReCritters;
+                    if (bReCritters)
+                    {
+                        Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+                        if (bReSavedPed)
+                        {
+                            bReSavedPed = !bReSavedPed;
+                            Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                        }
+                        if (bReCurrentPd)
+                        {
+                            bReCurrentPd = !bReCurrentPd;
+                            Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                        }
+                    }
+                    else
+                        Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.None);
+
+                    WriteSetXML();
+                }
+                else if (item == Rand_03)
+                {
+                    bReSavedPed = !bReSavedPed;
+                    if (bReSavedPed)
+                    {
+                        Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+                        if (bReCritters)
+                        {
+                            bReCritters = !bReCritters;
+                            Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                        }
+                        if (bReCurrentPd)
+                        {
+                            bReCurrentPd = !bReCurrentPd;
+                            Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                        }
+                    }
+                    else
+                        Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                    WriteSetXML();
+                }
+                else if (item == Rand_04)
+                {
+                    bReCurrentPd = !bReCurrentPd;
+                    if (bReCurrentPd)
+                    {
+                        Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+                        if (bReCritters)
+                        {
+                            bReCritters = !bReCritters;
+                            Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                        }
+                        if (bReSavedPed)
+                        {
+                            bReSavedPed = !bReSavedPed;
+                            Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                        }
+                    }
+                    else
+                        Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.None);
+                    WriteSetXML();
+                }
+            };
+        }
         private void AddBeachParty(UIMenu XMen)
         {
-            
-                LogginSyatem("AddBeachParty");
+            LogginSyatem("AddBeachParty");
 
             var SetCharOpt = new UIMenuItem(sLangfile[97], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
@@ -13978,72 +14313,8 @@ namespace RandomStart
             }
             else
             {
-                if (!bDead)
-                {
-                    if (Game.Player.Character.Model == PedHash.Franklin || Game.Player.Character.Model == PedHash.Michael || Game.Player.Character.Model == PedHash.Trevor)
-                    {
-                        if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED) || Function.Call<bool>(Hash.IS_PLAYER_DEAD))
-                        {
-                            if (bInYankton)
-                                Yankton(false);
-                            else if (bInCayoPerico)
-                                CayoPerico(false);
-                        }
-                        else if (Function.Call<bool>(Hash.HAS_SCRIPT_LOADED, "director_mode"))
-                        {
-                            Script.Wait(500);
-                            Function.Call(Hash.TERMINATE_ALL_SCRIPTS_WITH_THIS_NAME, "director_mode");
-                        }
-                    }
-                    else if (bMenyooZZ)
-                    {
-                        if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
-                        {
-                            if (bAllowControl)
-                                CleanUpMess();
-                            bDead = true;
-                            DeathArrestCont(false);
-                        }
-                        else if (Function.Call<bool>(Hash.IS_PLAYER_DEAD))
-                        {
-                            if (bAllowControl)
-                                CleanUpMess();
-                            bDead = true;
-                            DeathArrestCont(true);
-                        }
-                    }
-                    else
-                    {
-                        if (Function.Call<bool>(Hash.HAS_SCRIPT_LOADED, "director_mode"))
-                        {
-                            if (Function.Call<bool>(Hash.IS_PLAYER_BEING_ARRESTED))
-                            {
-                                Script.Wait(5000);
-                                Game.FadeScreenOut(1);
-
-                                if (bAllowControl)
-                                    CleanUpMess();
-
-                                ClearDASCript(false);
-                            }
-                            else if (Function.Call<bool>(Hash.IS_PLAYER_DEAD))
-                            {
-                                Script.Wait(5000);
-                                Game.FadeScreenOut(1);
-
-                                if (bAllowControl)
-                                    CleanUpMess();
-
-                                ClearDASCript(true);
-                            }
-                        }
-                        else
-                        {
-                            Script.Wait(500);
-                            Function.Call(Hash.REQUEST_SCRIPT, "director_mode");
-                        }
-                    }
-                }
+                if (!bDeadorArrest)
+                    EveryBodyDies();
 
                 if (bAllowControl)
                 {
