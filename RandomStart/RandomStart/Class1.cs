@@ -59,27 +59,21 @@ namespace RandomStart
         private int iPath = 0;
         private int iWait4 = 0;
         private int iUnlock = 0;
-        private int iVersion = 0;
         private int iGrouping = 0;
         private int iPostAction = 0;
         private int iActionTime = 0;
         private int iCurrentPed = 0;
         private int iAmModelHash = 0;
-        private int iLangSupport = -1;
 
         private int GP_Player = Game.Player.Character.RelationshipGroup;
         private readonly int GP_Friend = World.AddRelationshipGroup("FriendNPCs");
         private readonly int GP_Attack = World.AddRelationshipGroup("AttackNPCs");
 
         private bool bStart = true;
-        private bool bRandLocate = true;
 
         private bool bDeadorArrest = false;
         private bool bFound = false;
         private bool bLoaded = false;
-        private bool bBeltUp = false;
-        private bool bReincarn = false;
-        private bool bSavedPed = false;
         private bool bMenyooZZ = false;
         private bool bPrisHeli = false;
         private bool bMethFail = false;
@@ -90,21 +84,14 @@ namespace RandomStart
         private bool bKeyFinder = false;
         private bool bMethActor = false;
         private bool bDontStopMe = false;
-        private bool bMainProtag = false;
-        private bool bReCritters = true;
-        private bool bReSavedPed = false;
-        private bool bReCurrentPd = false;
-        private bool bKeepWeapons = false;
         private bool bAllowControl = false;
         private bool bInCayoPerico = false;
-        private bool bAddBeachParty = true;
         private bool bDisableDLCVeh = true;
-        private bool bDisableRecord = false;
         private bool bLoadUpOnYacht = false;
         private bool bPlayingNewMissions = false;
 
 
-        private readonly string sVersion = "2.5";
+        private readonly string sVersion = "2.61";
         private string sFirstName = "PlayerX";
         private string sMainChar = "player_zero";
         private string sFunChar01 = "player_one";
@@ -154,7 +141,6 @@ namespace RandomStart
         private Vector3 vHeaven = Vector3.Zero;
 
         private Ped pPilot = null;
-        private Keys KBuild = Keys.L;
 
         private Vehicle Shoaf = null;
         private Vehicle RideThis = null;
@@ -166,6 +152,8 @@ namespace RandomStart
         private NewClothBank NewBank = null;
         private ScriptSettings MenyooTest;
         private MenuPool MyMenuPool;
+
+        private SettingsXML MySettingsXML = null;
 
         public Main()
         {
@@ -323,6 +311,80 @@ namespace RandomStart
             Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Attack, GP_Player);
             Function.Call(Hash.SET_RELATIONSHIP_BETWEEN_GROUPS, 5, GP_Player, GP_Attack);
         }
+        public int RandomSeletor()
+        {
+            int iYourSell = -1;
+
+            if (MySettingsXML.RandStarts.Count < 1)
+                MySettingsXML.RandStarts = BuildRandStartsList();
+
+            if (!MySettingsXML.BeachPed)
+                MySettingsXML.RandStarts.Remove(1);
+            if (!MySettingsXML.Tramps)
+                MySettingsXML.RandStarts.Remove(2);
+            if (!MySettingsXML.Highclass)
+                MySettingsXML.RandStarts.Remove(3);
+            if (!MySettingsXML.Midclass)
+                MySettingsXML.RandStarts.Remove(4);
+            if (!MySettingsXML.Lowclass)
+                MySettingsXML.RandStarts.Remove(5);
+            if (!MySettingsXML.Business)
+                MySettingsXML.RandStarts.Remove(6);
+            if (!MySettingsXML.Bodybuilder)
+                MySettingsXML.RandStarts.Remove(7);
+            if (!MySettingsXML.GangStars)
+                MySettingsXML.RandStarts.Remove(8);
+            if (!MySettingsXML.Epsilon)
+                MySettingsXML.RandStarts.Remove(9);
+            if (!MySettingsXML.Jogger)
+                MySettingsXML.RandStarts.Remove(10);
+            if (!MySettingsXML.Golfer)
+                MySettingsXML.RandStarts.Remove(11);
+            if (!MySettingsXML.Hiker)
+                MySettingsXML.RandStarts.Remove(12);
+            if (!MySettingsXML.Methaddict)
+                MySettingsXML.RandStarts.Remove(13);
+            if (!MySettingsXML.Rural)
+                MySettingsXML.RandStarts.Remove(14);
+            if (!MySettingsXML.Cyclist)
+                MySettingsXML.RandStarts.Remove(15);
+            if (!MySettingsXML.LGBTWXYZ)
+                MySettingsXML.RandStarts.Remove(16);
+            if (!MySettingsXML.PoolPeds)
+                MySettingsXML.RandStarts.Remove(17);
+            if (!MySettingsXML.Workers)
+                MySettingsXML.RandStarts.Remove(18);
+            if (!MySettingsXML.Jetski)
+                MySettingsXML.RandStarts.Remove(19);
+            if (!MySettingsXML.BikeATV)
+                MySettingsXML.RandStarts.Remove(20);
+            if (!MySettingsXML.Services)
+                MySettingsXML.RandStarts.Remove(21);
+            if (!MySettingsXML.Pilot)
+                MySettingsXML.RandStarts.Remove(22);
+            if (!MySettingsXML.Animals)
+                MySettingsXML.RandStarts.Remove(23);
+            if (!MySettingsXML.Yankton)
+                MySettingsXML.RandStarts.Remove(24);
+            if (!MySettingsXML.Cayo)
+                MySettingsXML.RandStarts.Remove(25);
+
+            if (MySettingsXML.RandStarts.Count < 1)
+                MySettingsXML.Locate = false;
+            else
+                iYourSell = MySettingsXML.RandStarts[RandInt(0, MySettingsXML.RandStarts.Count - 1)];
+
+            return iYourSell;
+        }
+        public List<int> BuildRandStartsList()
+        {
+            List<int> iSel = new List<int>();
+
+            for (int i = 1; i < 26; i++)
+                iSel.Add(i);
+
+            return iSel;
+        }
         public bool WhileButtonDown(int CButt, bool bDisable)
         {
             if (bDisable)
@@ -379,13 +441,45 @@ namespace RandomStart
             public bool ReCritter { get; set; }
             public bool ReSave { get; set; }
             public bool ReCurr { get; set; }
+            public bool BeachPart { get; set; }
             public int Version { get; set; }
             public int LangSupport { get; set; }
+
+            public bool BeachPed { get; set; }
+            public bool Tramps { get; set; }
+            public bool Highclass { get; set; }
+            public bool Midclass { get; set; }
+            public bool Lowclass { get; set; }
+            public bool Business { get; set; }
+            public bool Bodybuilder { get; set; }
+            public bool GangStars { get; set; }
+            public bool Epsilon { get; set; }
+            public bool Jogger { get; set; }
+            public bool Golfer { get; set; }
+            public bool Hiker { get; set; }
+            public bool Methaddict { get; set; }
+            public bool Rural { get; set; }
+            public bool Cyclist { get; set; }
+            public bool LGBTWXYZ { get; set; }
+            public bool PoolPeds { get; set; }
+            public bool Workers { get; set; }
+            public bool Jetski { get; set; }
+            public bool BikeATV { get; set; }
+            public bool Services { get; set; }
+            public bool Pilot { get; set; }
+            public bool Animals { get; set; }
+            public bool Yankton { get; set; }
+            public bool Cayo { get; set; }
+
+            public List<int> RandStarts { get; set; }
+
             public List<WeaponSaver> YourWeaps { get; set; }
+
 
             public SettingsXML()
             {
                 YourWeaps = new List<WeaponSaver>();
+                RandStarts = new List<int>();
             }
         }
         public SettingsXML LoadSettings(string fileName)
@@ -410,89 +504,93 @@ namespace RandomStart
             bool bNagg = false;
             if (File.Exists(sSettings))
             {
-                SettingsXML SetsXML = LoadSettings(sSettings);
-                KBuild = SetsXML.MenuKey;
-                bMainProtag = SetsXML.Spawn;
-                bRandLocate = SetsXML.Locate;
-                bSavedPed = SetsXML.Saved;
-                bDisableRecord = SetsXML.DisableRecord;
-                bKeepWeapons = SetsXML.KeepWeapons;
-                iLangSupport = SetsXML.LangSupport;
-                iVersion = SetsXML.Version;
+                MySettingsXML = LoadSettings(sSettings);
 
-                bBeltUp = SetsXML.BeltUp;
-
-                if (bMainProtag && bSavedPed)
+                if (MySettingsXML.Spawn && MySettingsXML.Saved)
                 {
-                    bMainProtag = false;
-                    bSavedPed = false;
+                    MySettingsXML.Spawn = false;
+                    MySettingsXML.Saved = false;
                 }
 
-                if (bRandLocate && bLoadUpOnYacht)
-                    bRandLocate = false;
+                if (MySettingsXML.Locate && bLoadUpOnYacht)
+                    MySettingsXML.Locate = false;
 
-                if (iVersion != 25000)
-                {
-                    GetWeaps();
+                if (MySettingsXML.Version != 26100)
                     bNagg = true;
-                }
+
+                if (MySettingsXML.YourWeaps.Count > 0)
+                    wMyWeaps = MySettingsXML.YourWeaps;
                 else
-                {
-                    bReCritters = SetsXML.ReCritter;
-                    bReCurrentPd = SetsXML.ReCurr;
-                    bReSavedPed = SetsXML.ReSave;
-                    bReincarn = SetsXML.Reincarn;
-                    if (SetsXML.YourWeaps.Count > 0)
-                        wMyWeaps = SetsXML.YourWeaps;
-                    else
-                        GetWeaps();
-                }
+                    GetWeaps();
             }
             else
             {
                 GetWeaps();
+                WriteSetXML();
                 bNagg = true;
             }
-
             FindaLang();
 
             if (bNagg)
                 NagScreen();
-
         }
         private void NagScreen()
         {
             UI.Notify(sLangfile[0]);
-            iVersion = 25000;
+            MySettingsXML.Version = 26100;
             if (File.Exists(sRandFile))
                 File.Delete(sRandFile);
-            WriteSetXML();
+            SaveSetMain(MySettingsXML, sSettings);
         }
         private void WriteSetXML()
         {
             LogginSyatem("WriteSetXML");
 
-            if (KBuild == Keys.None)
-                KBuild = Keys.L;
-
-            SettingsXML Set = new SettingsXML
+            MySettingsXML = new SettingsXML
             {
-                MenuKey = KBuild,
-                Spawn = bMainProtag,
-                Locate = bRandLocate,
-                Saved = bSavedPed,
-                DisableRecord = bDisableRecord,
-                KeepWeapons = bKeepWeapons,
-                BeltUp = bBeltUp,
-                Version = iVersion,
-                LangSupport = iLangSupport,
-                Reincarn = bReincarn,
-                ReCritter = bReCritters,
-                ReCurr = bReCurrentPd,
-                ReSave = bReSavedPed,
-                YourWeaps = wMyWeaps
+                MenuKey = Keys.L,
+                Spawn = false,
+                Locate = true,
+                Saved = false,
+                DisableRecord = false,
+                KeepWeapons = false,
+                BeltUp = false,
+                Version = 0,
+                LangSupport = 0,
+                Reincarn = false,
+                ReCritter = true,
+                ReCurr = false,
+                ReSave = false,
+                YourWeaps = wMyWeaps,
+                BeachPart = true,
+
+                BeachPed = true,
+                Tramps = true,
+                Highclass = true,
+                Midclass = true,
+                Lowclass = true,
+                Business = true,
+                Bodybuilder = true,
+                GangStars = true,
+                Epsilon = true,
+                Jogger = true,
+                Golfer = true,
+                Hiker = true,
+                Methaddict = true,
+                Rural = true,
+                Cyclist = true,
+                LGBTWXYZ = true,
+                PoolPeds = true,
+                Workers = true,
+                Jetski = true,
+                BikeATV = true,
+                Services = true,
+                Pilot = true,
+                Animals = true,
+                Yankton = true,
+                Cayo = true,
+                RandStarts = BuildRandStartsList()
             };
-            SaveSetMain(Set, sSettings);
         }
         public class LangXML
         {
@@ -684,8 +782,8 @@ namespace RandomStart
         {
             bool bNoLAng = true;
             LogginSyatem("LangReader");
-
-            if (iLangSupport == -1)
+            int iLangSupport = MySettingsXML.Version;
+            if (iLangSupport == 0)
             {
                 if (Game.Language == Language.American)
                     iLangSupport = 1;
@@ -2548,7 +2646,7 @@ namespace RandomStart
                     wMyWeaps.Add(AdThis);
                 }
             }
-            WriteSetXML();
+            SaveSetMain(MySettingsXML, sSettings);
         }
         public int MaxAmmo(string sWeap, Ped Peddy)
         {
@@ -2609,8 +2707,7 @@ namespace RandomStart
 
             Vector3 Vpos = new Vector3(-282.8405f, 2834.9153f, 53.3622f);
             Vector3 Vrot = new Vector3(0.00f, 0.00f, 151.3774f);
-            Prop Props = World.CreateProp(Function.Call<int>(Hash.GET_HASH_KEY, "prop_fib_3b_cover1"), Vpos, Vrot, true, false);
-            Props.IsPersistent = true;
+            Prop Props = MyPropBuild("prop_fib_3b_cover1", Vpos, Vrot, 0, false);
         }
         private void LoadUp()
         {
@@ -2643,8 +2740,8 @@ namespace RandomStart
 
             if (MyPedCollection.Count == 0)
             {
-                bSavedPed = false;
-                WriteSetXML();
+                MySettingsXML.Saved = false;
+                SaveSetMain(MySettingsXML, sSettings);
             }
 
             Game.Player.WantedLevel = 0;
@@ -2684,11 +2781,13 @@ namespace RandomStart
                     sFunChar02 = "player_two"; ;
                 }
 
-                if (bRandLocate)
-                    RandomLocations(FindRandom(1, 1, 25));
+                int iRanSel = RandomSeletor();
+
+                if (iRanSel != -1 && MySettingsXML.Locate)               
+                    RandomLocations(iRanSel);
                 else
                 {
-                    if (bMainProtag)
+                    if (MySettingsXML.Spawn)
                     {
                         if (!IsMainChar())
                             YourRanPed(sMainChar);
@@ -2697,7 +2796,7 @@ namespace RandomStart
                     }
                     else
                     {
-                        if (bSavedPed)
+                        if (MySettingsXML.Saved)
                             YourSavedPed();
                     }
                     Game.Player.Character.IsInvincible = false;
@@ -2727,7 +2826,6 @@ namespace RandomStart
                 else
                     RandomLocations(iSelects);
             }
-            WriteSetXML();
         }
         private void RandomLocations(int iSelect)
         {
@@ -5887,7 +5985,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (bMainProtag || bSavedPed)
+                if (MySettingsXML.Spawn || MySettingsXML.Saved)
                     iSubSet = FindRandom(14, 1, 11);
                 else
                     iSubSet = FindRandom(13, 1, 14);
@@ -6481,7 +6579,7 @@ namespace RandomStart
                     CayoPerico(true);
             }           //Cayo Perico
 
-            if (bMainProtag)
+            if (MySettingsXML.Spawn)
             {
                 if (!IsMainChar())
                     YourRanPed(sMainChar);
@@ -6490,7 +6588,7 @@ namespace RandomStart
             }
             else
             {
-                if (bSavedPed)
+                if (MySettingsXML.Saved)
                     YourSavedPed();
                 else
                     YourRanPed(BuildRandomPed(iSelect, iSubSet));
@@ -6545,7 +6643,7 @@ namespace RandomStart
                     sExitAn_01 = "amb@prop_human_bum_bin@exit";
                     sExitAn_02 = "exit";
 
-                    MyPropBuild(sProper, Pos_01[iPlace], Vector3.Zero, 1);
+                    MyPropBuild(sProper, Pos_01[iPlace], Vector3.Zero, 1, true);
 
                     iPostAction = 2;
                 }       //TrampSign
@@ -7040,7 +7138,7 @@ namespace RandomStart
                 Function.Call(Hash.SET_PED_POPULATION_BUDGET, 3);
             }
 
-            if (!bKeepWeapons)
+            if (!MySettingsXML.KeepWeapons)
             {
                 Game.Player.Character.Weapons.RemoveAll();
 
@@ -8360,7 +8458,7 @@ namespace RandomStart
                 Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, 0, RandInt(-1, iHats), 0, false);
                 Function.Call(Hash.SET_MODEL_AS_NO_LONGER_NEEDED, model.Hash);
             }
-            if (bKeepWeapons)
+            if (MySettingsXML.KeepWeapons)
                 ReturnWeaps();
 
             PlayerBelter();
@@ -8382,7 +8480,7 @@ namespace RandomStart
                 if (CurrentPlayer != Game.Player.Character)
                     CurrentPlayer.MarkAsNoLongerNeeded();
 
-                if (bKeepWeapons)
+                if (MySettingsXML.KeepWeapons)
                     ReturnWeaps();
 
                 PlayerBelter();
@@ -8401,7 +8499,7 @@ namespace RandomStart
                 SavePedLoader(iCurrentPed);
             }
             else
-                bSavedPed = false;
+                MySettingsXML.Saved = false;
         }
         private void SavePedLoader(int iBe)
         {
@@ -8424,7 +8522,7 @@ namespace RandomStart
 
                 FillMyPed(MyWoven);
             }
-            if (bKeepWeapons)
+            if (MySettingsXML.KeepWeapons)
                 ReturnWeaps();
 
             PlayerBelter();
@@ -8720,27 +8818,44 @@ namespace RandomStart
             for (int i = 0; i < Vehic.PassengerSeats; i++)
                 NPCSpawn(BuildRandomPed(iPedtype, iSubType), vPos, 0.00f, iTask, iWeapons, Vehic, bFriend);
         }
-        private void MyPropBuild(string sPop, Vector3 Local, Vector3 Rotate, int iPropTask)
+        public Prop MyPropBuild(string sPop, Vector3 Local, Vector3 Rotate, int iPropTask, bool bAddToLiist)
         {
 
             LogginSyatem("MyPropBuild, sPop == " + sPop + ", iPropTask == " + iPropTask);
 
             Prop Propper = null;
-            Propper = World.CreateProp(Function.Call<int>(Hash.GET_HASH_KEY, sPop), Local, Rotate, true, false);
 
-            if (Propper != null)
+            int iPropHash = Function.Call<int>(Hash.GET_HASH_KEY, sPop);
+
+            if (!Function.Call<bool>(Hash.IS_MODEL_IN_CDIMAGE, iPropHash))
             {
+                LogginSyatem("BuildProp, spropMissing...");
+                iPropHash = Function.Call<int>(Hash.GET_HASH_KEY, "zprop_bin_01a_old");
+            }
+
+            Function.Call(Hash.REQUEST_MODEL, iPropHash);
+            while (!Function.Call<bool>(Hash.HAS_MODEL_LOADED, iPropHash))
+                Script.Wait(1);
+
+            int iProps = Function.Call<int>(Hash.CREATE_OBJECT, iPropHash, Local.X, Local.Y, Local.Z, false, true, false);
+            Propper = new Prop(iProps);
+
+            if (Propper.Exists())
+            {
+                Propper.Rotation = Rotate;
                 Propper.IsPersistent = true;
-                PropList.Add(new Prop(Propper.Handle));
+
+                if (bAddToLiist)
+                    PropList.Add(new Prop(Propper.Handle));
                 if (iPropTask > 0)
                     PropTasks(Propper, iPropTask);
             }
             else
-            {
-                Script.Wait(100);
-                MyPropBuild(sPop, Local, Rotate, iPropTask);
-            }
+                Propper = null;
 
+            Function.Call(Hash.SET_MODEL_AS_NO_LONGER_NEEDED, iPropHash);
+
+            return Propper;
         }
         private void PropTasks(Prop Popp, int iPopTask)
         {
@@ -9138,7 +9253,7 @@ namespace RandomStart
                     while (!Function.Call<bool>(Hash.IS_PED_MODEL, Game.Player.Character.Handle, iAmModelHash) && Game.Player.Character.Position.DistanceTo(VMep) < 45.00f)
                         Script.Wait(100);
 
-                    if (bReincarn)
+                    if (MySettingsXML.Reincarn)
                         Game.Player.Character.Position = vHeaven;
                     else
                         YourRanPed(sMainChar);
@@ -9171,7 +9286,7 @@ namespace RandomStart
                     Function.Call(Hash._RESET_LOCALPLAYER_STATE);
                     Function.Call(Hash.SET_FADE_OUT_AFTER_DEATH, false);
 
-                    if (!bReincarn)
+                    if (!MySettingsXML.Reincarn)
                         YourRanPed(sMainChar);
                     YouDied(bMale);
                 }
@@ -9215,7 +9330,7 @@ namespace RandomStart
         }
         private void PlayerBelter()
         {
-            Function.Call(Hash.SET_PED_CONFIG_FLAG, Game.Player.Character.Handle, 32, !bBeltUp);
+            Function.Call(Hash.SET_PED_CONFIG_FLAG, Game.Player.Character.Handle, 32, !MySettingsXML.BeltUp);
         }
         private void EveryBodyDies()
         {
@@ -9295,7 +9410,7 @@ namespace RandomStart
             if (bMethActor)
                 MethEdd(true);
 
-            if (bReincarn && !bInYankton && !bInCayoPerico)
+            if (MySettingsXML.Reincarn && !bInYankton && !bInCayoPerico)
             {
                 int iFail = 25;
                 if (vHell.Z > -1 && World.GetZoneNameLabel(vHell) != "JAIL" && World.GetZoneNameLabel(vHell) != "ARMYB")
@@ -9324,7 +9439,7 @@ namespace RandomStart
                 SetTimeWeather(Weather.Clear, 12);
 
                 Game.FadeScreenIn(1000);
-                MyPropBuild("prop_coffin_01", new Vector3(-278.3422f, 2844.4617f, 52.8818f), new Vector3(-4.20f, 1.015f, -30.6686f), 0);
+                MyPropBuild("prop_coffin_01", new Vector3(-278.3422f, 2844.4617f, 52.8818f), new Vector3(-4.20f, 1.015f, -30.6686f), 0, true);
 
                 Vector3 vPriest = new Vector3(-276.5638f, 2844.45f, 53.75225f);
                 float fPriest = 134.9461f;
@@ -9783,7 +9898,7 @@ namespace RandomStart
                 for (int i = 0; i < CayoPericoIPLs.Count; i++)
                     Function.Call(Hash.REQUEST_IPL, CayoPericoIPLs[i]);
 
-                if (bAddBeachParty)
+                if (MySettingsXML.BeachPart)
                 {
                     List<Vector3> vPartays = new List<Vector3>();
                     List<Vector3> vPartB = new List<Vector3>();
@@ -12643,7 +12758,6 @@ namespace RandomStart
                 {
                     if (MyPedCollection[i].Name == MyNewChar.Name)
                     {
-                        bOverWrite = false;
                         MyPedCollection[i].ModelX = MyNewChar.ModelX;
 
                         MyPedCollection[i].ClothA = new List<int>(MyNewChar.ClothA);
@@ -12679,6 +12793,9 @@ namespace RandomStart
                         MyPedCollection[i].FaceScale = new List<float>(MyNewChar.FaceScale);
 
                         MyPedCollection[i].PedVoice = MyNewChar.PedVoice;
+
+                        bOverWrite = false;
+
                         break;
                     }
                 }
@@ -12936,7 +13053,7 @@ namespace RandomStart
                 {
                     if (PedXs[i] != Game.Player.Character && !PedXs[i].IsPersistent && !PedXs[i].IsDead && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_pigeon") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_crow") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_chickenhawk") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_cormorant") && PedXs[i].Model.Hash != Function.Call<int>(Hash.GET_HASH_KEY, "a_c_seagull") && PedXs[i].Model.Hash != iAmModelHash)
                     {
-                        if (bReCritters)
+                        if (MySettingsXML.ReCritter)
                             NearPeds.Add(new Ped(PedXs[i].Handle));
                         else if (Function.Call<int>(Hash.GET_PED_TYPE, PedXs[i].Handle) != 28)
                             NearPeds.Add(new Ped(PedXs[i].Handle));
@@ -12962,7 +13079,7 @@ namespace RandomStart
                     {
                         iPerPickP = RandInt(0, NearPeds.Count - 1);
                         Vector3 Campo = Game.Player.Character.Position;
-                        if (bReCurrentPd)
+                        if (MySettingsXML.ReCurr)
                         {
                             Vector3 Pedpos = NearPeds[iPerPickP].Position;
                             float PedHed = NearPeds[iPerPickP].Heading;
@@ -12970,7 +13087,7 @@ namespace RandomStart
                             Game.Player.Character.Position = Pedpos;
                             Game.Player.Character.Heading = PedHed;
                         }
-                        else if (bReSavedPed)
+                        else if (MySettingsXML.ReSave)
                         {
                             Vector3 Pedpos = NearPeds[iPerPickP].Position;
                             float PedHed = NearPeds[iPerPickP].Heading;
@@ -13489,7 +13606,6 @@ namespace RandomStart
         }
         private void SetComponents(UIMenu XMen)
         {
-
             LogginSyatem("SetComponents");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[27]);
@@ -13541,11 +13657,13 @@ namespace RandomStart
                     CompileMenuTotals(newitem2.Items, iTexTotal, 0);
                     newitem2.Index = 0;
                     Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Game.Player.Character.Handle, CompId, iDex, 0, 2);
+                    NewBank.ClothA[CompId] = iDex;
                 }
                 else if (item == newitem2)
                 {
                     int iAmComp = Function.Call<int>(Hash.GET_PED_DRAWABLE_VARIATION, Game.Player.Character.Handle, CompId);
                     Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Game.Player.Character.Handle, CompId, iAmComp, index, 2);
+                    NewBank.ClothB[CompId] = index;
                 }
             };
         }
@@ -13597,11 +13715,13 @@ namespace RandomStart
                         Function.Call(Hash.CLEAR_PED_PROP, Game.Player.Character.Handle, CompId);
                     else
                         Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, CompId, iDex, 0, false);
+                    NewBank.ExtraA[CompId] = iDex;
                 }
                 else if (item == newitem2)
                 {
                     int iAmComp = Function.Call<int>(Hash.GET_PED_PROP_INDEX, Game.Player.Character.Handle, CompId);
                     Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, CompId, iAmComp, index, false);
+                    NewBank.ExtraB[CompId] = index;
                 }
             };
         }
@@ -13814,7 +13934,7 @@ namespace RandomStart
             {
                 if (item == playermodelmenu)
                 {
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                     WritePedSave(NewBank);
                     MyMenuPool.CloseAllMenus();
                     UI.ShowSubtitle("~g~" + sLangfile[50] + MyPedCollection[iCurrentPed].Name);
@@ -13836,7 +13956,7 @@ namespace RandomStart
                     NewBank.Name = Game.GetUserInput(255);
                     if (NewBank.Name != "")
                     {
-                        WriteSetXML();
+                        SaveSetMain(MySettingsXML, sSettings);
                         WritePedSave(NewBank);
                         UI.ShowSubtitle("~g~" + sLangfile[50] + NewBank.Name);
                         MyMenuPool.CloseAllMenus();
@@ -13845,32 +13965,62 @@ namespace RandomStart
                 }
             };
         }
+        private void ReEnableScenarios()
+        {
+            MySettingsXML.BeachPed = true;
+            MySettingsXML.Tramps = true;
+            MySettingsXML.Highclass = true;
+            MySettingsXML.Midclass = true;
+            MySettingsXML.Lowclass = true;
+            MySettingsXML.Business = true;
+            MySettingsXML.Bodybuilder = true;
+            MySettingsXML.GangStars = true;
+            MySettingsXML.Epsilon = true;
+            MySettingsXML.Jogger = true;
+            MySettingsXML.Golfer = true;
+            MySettingsXML.Hiker = true;
+            MySettingsXML.Methaddict = true;
+            MySettingsXML.Rural = true;
+            MySettingsXML.Cyclist = true;
+            MySettingsXML.LGBTWXYZ = true;
+            MySettingsXML.PoolPeds = true;
+            MySettingsXML.Workers = true;
+            MySettingsXML.Jetski = true;
+            MySettingsXML.BikeATV = true;
+            MySettingsXML.Services = true;
+            MySettingsXML.Pilot = true;
+            MySettingsXML.Animals = true;
+            MySettingsXML.Yankton = true;
+            MySettingsXML.Cayo = true;
+        }
         private void SetLocate(UIMenu XMen)
         {
-            
-                LogginSyatem("SetLocate");
+            LogginSyatem("SetLocate");
 
             var playermodelmenu = new UIMenuItem(sLangfile[51], sLangfile[52]);
             playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (bRandLocate)
+            if (MySettingsXML.Locate)
                 playermodelmenu.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
             XMen.AddItem(playermodelmenu);
             XMen.OnItemSelect += (sender, item, index) =>
             {
                 if (item == playermodelmenu)
                 {
-                    bRandLocate = !bRandLocate;
-                    if (bRandLocate)
+                    MySettingsXML.Locate = !MySettingsXML.Locate;
+                    if (MySettingsXML.Locate)
+                    {
+                        ReEnableScenarios();
                         playermodelmenu.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
+                    }
                     else
                         playermodelmenu.SetRightBadge(UIMenuItem.BadgeStyle.None);
 
-                    if (bRandLocate && bLoadUpOnYacht)
+                    if (MySettingsXML.Locate && bLoadUpOnYacht)
                     {
                         bLoadUpOnYacht = false;
                         NSPMSetXml();
                     }
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
             };
         }
@@ -13881,13 +14031,13 @@ namespace RandomStart
 
             var SetCharOpt = new UIMenuItem(sLangfile[53], sLangfile[54]);
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (bMainProtag)
+            if (MySettingsXML.Spawn)
                 SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);          
             XMen.AddItem(SetCharOpt);
 
             var SetSVSaveOpt = new UIMenuItem(sLangfile[57], sLangfile[58]);
             SetSVSaveOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (bSavedPed)
+            if (MySettingsXML.Saved)
                 SetSVSaveOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
             XMen.AddItem(SetSVSaveOpt);
 
@@ -13896,13 +14046,13 @@ namespace RandomStart
             {
                 if (item == SetCharOpt)
                 {
-                    bMainProtag = !bMainProtag;
-                    if (bSavedPed && bMainProtag)
+                    MySettingsXML.Spawn = !MySettingsXML.Spawn;
+                    if (MySettingsXML.Saved && MySettingsXML.Spawn)
                     {
-                        bSavedPed = false;
+                        MySettingsXML.Saved = false;
                         SetSVSaveOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
                     }
-                    if (bMainProtag)
+                    if (MySettingsXML.Spawn)
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                     else
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
@@ -13911,19 +14061,19 @@ namespace RandomStart
                 {
                     if (MyPedCollection.Count > 0)
                     {
-                        bSavedPed = !bSavedPed;
-                        if (bSavedPed && bMainProtag)
+                        MySettingsXML.Saved = !MySettingsXML.Saved;
+                        if (MySettingsXML.Saved && MySettingsXML.Spawn)
                         {
-                            bMainProtag = false;
+                            MySettingsXML.Spawn = false;
                             SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
                         }
-                        if (bSavedPed)
+                        if (MySettingsXML.Saved)
                             SetSVSaveOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                         else
                             SetSVSaveOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
                     }
                 }
-                WriteSetXML();
+                SaveSetMain(MySettingsXML, sSettings);
             };
         }
         private void DisRecord(UIMenu XMen)
@@ -13933,19 +14083,19 @@ namespace RandomStart
 
             var SetCharOpt = new UIMenuItem(sLangfile[55], sLangfile[56]);
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (bDisableRecord)
+            if (MySettingsXML.DisableRecord)
                 SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
             XMen.AddItem(SetCharOpt);
             XMen.OnItemSelect += (sender, item, index) =>
             {
                 if (item == SetCharOpt)
                 {
-                    bDisableRecord = !bDisableRecord;
-                    if (bDisableRecord)
+                    MySettingsXML.DisableRecord = !MySettingsXML.DisableRecord;
+                    if (MySettingsXML.DisableRecord)
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                     else
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
             };
         }
@@ -13955,9 +14105,9 @@ namespace RandomStart
 
             var SetCharOpt = new UIMenuItem(sLangfile[96], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (Function.Call<bool>(Hash.GET_PED_CONFIG_FLAG, Game.Player.Character.Handle, 32, true) == bBeltUp)
+            if (Function.Call<bool>(Hash.GET_PED_CONFIG_FLAG, Game.Player.Character.Handle, 32, true) == MySettingsXML.BeltUp)
                 PlayerBelter();
-            if (bBeltUp)
+            if (MySettingsXML.BeltUp)
                 SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
 
             XMen.AddItem(SetCharOpt);
@@ -13965,13 +14115,13 @@ namespace RandomStart
             {
                 if (item == SetCharOpt)
                 {
-                    bBeltUp = !bBeltUp;
+                    MySettingsXML.BeltUp = !MySettingsXML.BeltUp;
                     PlayerBelter();
-                    if (bBeltUp)
+                    if (MySettingsXML.BeltUp)
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                     else
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
             };
         }
@@ -13982,19 +14132,19 @@ namespace RandomStart
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sLangfile[140]);
 
             var Rand_01 = new UIMenuItem(sLangfile[140], sLangfile[141]);
-            if (bReincarn)
+            if (MySettingsXML.Reincarn)
                 Rand_01.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
 
             var Rand_02 = new UIMenuItem(sLangfile[142], "");
-            if (bReCritters)
+            if (MySettingsXML.ReCritter)
                 Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
 
             var Rand_03 = new UIMenuItem(sLangfile[143], "");
-            if (bReSavedPed)
+            if (MySettingsXML.ReSave)
                 Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
 
             var Rand_04 = new UIMenuItem(sLangfile[144], "");
-            if (bReCurrentPd)
+            if (MySettingsXML.ReCurr)
                 Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
 
             playermodelmenu.AddItem(Rand_01);
@@ -14006,76 +14156,76 @@ namespace RandomStart
             {
                 if (item == Rand_01)
                 {
-                    bReincarn = !bReincarn;
-                    if (bReincarn)
+                    MySettingsXML.Reincarn = !MySettingsXML.Reincarn;
+                    if (MySettingsXML.Reincarn)
                         Rand_01.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                     else
                         Rand_01.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
                 else if (item == Rand_02)
                 {
-                    bReCritters = !bReCritters;
-                    if (bReCritters)
+                    MySettingsXML.ReCritter = !MySettingsXML.ReCritter;
+                    if (MySettingsXML.ReCritter)
                     {
                         Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
-                        if (bReSavedPed)
+                        if (MySettingsXML.ReSave)
                         {
-                            bReSavedPed = !bReSavedPed;
+                            MySettingsXML.ReSave = !MySettingsXML.ReSave;
                             Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.None);
                         }
-                        if (bReCurrentPd)
+                        if (MySettingsXML.ReCurr)
                         {
-                            bReCurrentPd = !bReCurrentPd;
+                            MySettingsXML.ReCurr = !MySettingsXML.ReCurr;
                             Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.None);
                         }
                     }
                     else
                         Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.None);
 
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
                 else if (item == Rand_03)
                 {
-                    bReSavedPed = !bReSavedPed;
-                    if (bReSavedPed)
+                    MySettingsXML.ReSave = !MySettingsXML.ReSave;
+                    if (MySettingsXML.ReSave)
                     {
                         Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
-                        if (bReCritters)
+                        if (MySettingsXML.ReCritter)
                         {
-                            bReCritters = !bReCritters;
+                            MySettingsXML.ReCritter = !MySettingsXML.ReCritter;
                             Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.None);
                         }
-                        if (bReCurrentPd)
+                        if (MySettingsXML.ReCurr)
                         {
-                            bReCurrentPd = !bReCurrentPd;
+                            MySettingsXML.ReCurr = !MySettingsXML.ReCurr;
                             Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.None);
                         }
                     }
                     else
                         Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
                 else if (item == Rand_04)
                 {
-                    bReCurrentPd = !bReCurrentPd;
-                    if (bReCurrentPd)
+                    MySettingsXML.ReCurr = !MySettingsXML.ReCurr;
+                    if (MySettingsXML.ReCurr)
                     {
                         Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
-                        if (bReCritters)
+                        if (MySettingsXML.ReCritter)
                         {
-                            bReCritters = !bReCritters;
+                            MySettingsXML.ReCritter = !MySettingsXML.ReCritter;
                             Rand_02.SetRightBadge(UIMenuItem.BadgeStyle.None);
                         }
-                        if (bReSavedPed)
+                        if (MySettingsXML.ReSave)
                         {
-                            bReSavedPed = !bReSavedPed;
+                            MySettingsXML.ReSave = !MySettingsXML.ReSave;
                             Rand_03.SetRightBadge(UIMenuItem.BadgeStyle.None);
                         }
                     }
                     else
                         Rand_04.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
             };
         }
@@ -14085,19 +14235,19 @@ namespace RandomStart
 
             var SetCharOpt = new UIMenuItem(sLangfile[97], "");
             SetCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (bAddBeachParty)
+            if (MySettingsXML.BeachPart)
                 SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
             XMen.AddItem(SetCharOpt);
             XMen.OnItemSelect += (sender, item, index) =>
             {
                 if (item == SetCharOpt)
                 {
-                    bAddBeachParty = !bAddBeachParty;
-                    if (bAddBeachParty)
+                    MySettingsXML.BeachPart = !MySettingsXML.BeachPart;
+                    if (MySettingsXML.BeachPart)
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                     else
                         SetCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
             };
         }
@@ -14107,19 +14257,19 @@ namespace RandomStart
 
             var SetSVCharOpt = new UIMenuItem(sLangfile[59], sLangfile[60]);
             SetSVCharOpt.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
-            if (bKeepWeapons)
+            if (MySettingsXML.KeepWeapons)
                 SetSVCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
             XMen.AddItem(SetSVCharOpt);
             XMen.OnItemSelect += (sender, item, index) =>
             {
                 if (item == SetSVCharOpt)
                 {
-                    bKeepWeapons = !bKeepWeapons;
-                    if (bKeepWeapons)
+                    MySettingsXML.KeepWeapons = !MySettingsXML.KeepWeapons;
+                    if (MySettingsXML.KeepWeapons)
                         SetSVCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.Tick);
                     else
                         SetSVCharOpt.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                    WriteSetXML();
+                    SaveSetMain(MySettingsXML, sSettings);
                 }
             };
         }
@@ -14409,7 +14559,7 @@ namespace RandomStart
                     }
                 }
 
-                if (bDisableRecord)
+                if (MySettingsXML.DisableRecord)
                 {
                     if (Function.Call<bool>(Hash._IS_RECORDING))
                         Function.Call(Hash._STOP_RECORDING_AND_DISCARD_CLIP);
@@ -14427,12 +14577,12 @@ namespace RandomStart
             {
                 if (bKeyFinder)
                 {
-                    KBuild = e.KeyCode;
-                    UI.ShowSubtitle("~r~" + KBuild + "' ~w~" + sLangfile[90]);
-                    WriteSetXML();
+                    MySettingsXML.MenuKey = e.KeyCode;
+                    UI.ShowSubtitle("~r~" + MySettingsXML.MenuKey + "' ~w~" + sLangfile[90]);
+                    SaveSetMain(MySettingsXML, sSettings);
                     bKeyFinder = false;
                 }
-                else if (e.KeyCode == KBuild)
+                else if (e.KeyCode == MySettingsXML.MenuKey)
                 {
                     Game.FadeScreenIn(1);
                     if (bAllowControl)
