@@ -1,0 +1,11 @@
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\bin\Debug\RandomStartSettings.exe.config
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\bin\Debug\RandomStartSettings.exe
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\bin\Debug\RandomStartSettings.pdb
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.Form1.resources
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.Properties.Resources.resources
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.csproj.GenerateResource.cache
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.csproj.CoreCompileInputs.cache
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.exe
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.pdb
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.csproj.AssemblyReference.cache
+C:\Users\Ado\source\repos\RandomStartSettings\RandomStartSettings\obj\Debug\RandomStartSettings.csproj.SuggestedBindingRedirects.cache
