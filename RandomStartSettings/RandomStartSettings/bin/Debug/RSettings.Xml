@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SettingsXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <MenuKey>L</MenuKey>
+  <Locate>true</Locate>
+  <Spawn>false</Spawn>
+  <Saved>false</Saved>
+  <DisableRecord>false</DisableRecord>
+  <KeepWeapons>true</KeepWeapons>
+  <BeltUp>false</BeltUp>
+  <Reincarn>false</Reincarn>
+  <ReCritter>false</ReCritter>
+  <ReSave>false</ReSave>
+  <ReCurr>false</ReCurr>
+  <BeachPart>false</BeachPart>
+  <Version>1</Version>
+  <LangSupport>1</LangSupport>
+  <YourWeaps />
+</SettingsXML>
