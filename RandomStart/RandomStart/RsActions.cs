@@ -117,7 +117,6 @@ namespace RandomStart
         }
         public static void CleanProps()
         {
-
             LoggerLight.Loggers("CleanProps");
 
             for (int i = 0; i < DataStore.PropList.Count; i++)
@@ -129,7 +128,6 @@ namespace RandomStart
         }
         public static void CleanVeh()
         {
-
             LoggerLight.Loggers("CleanVeh");
 
             for (int i = 0; i < DataStore.VehList.Count; i++)
@@ -248,7 +246,7 @@ namespace RandomStart
                     if (DataStore.MySettingsXML.Spawn)
                     {
                         if (!RsReturns.GetMainChar())
-                            YourRanPed(DataStore.sMainChar);
+                            YourRanPed(DataStore.sMainChar, -1, -1);
                         else
                             PlayerBelter();
                     }
@@ -279,7 +277,7 @@ namespace RandomStart
                     MethEdd(true);
 
                 if (iSelects == 0)
-                    RandomLocations(RsReturns.FindRandom(2, 1, 23));
+                    RandomLocations(RandomNum.FindRandom(2, 1, 23));
                 else
                     RandomLocations(iSelects);
             }
@@ -303,7 +301,7 @@ namespace RandomStart
                 World.CurrentDayTime = TimeSpan.FromHours(12);
                 World.Weather = Weather.ExtraSunny;
 
-                if (RsReturns.FindRandom(16, 1, 4) < 2)
+                if (RandomNum.FindRandom(16, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(84.15928f, 870.0395f, 196.9632f)); fHeading.Add(198.6257f);
                     Pos_01.Add(new Vector3(1085.424f, -623.1199f, 55.74931f)); fHeading.Add(231.864f);
@@ -354,7 +352,7 @@ namespace RandomStart
 
                     iAction = 1;
 
-                    iEnterVeh = RsReturns.RandInt(1, 3);
+                    iEnterVeh = RandomNum.RandInt(1, 3);
                 }
                 else
                 {
@@ -409,7 +407,7 @@ namespace RandomStart
             {
                 World.Weather = Weather.Raining;
 
-                if (RsReturns.FindRandom(17, 1, 4) < 2)
+                if (RandomNum.FindRandom(17, 1, 4) < 2)
                 {
                     World.CurrentDayTime = TimeSpan.FromHours(12);
 
@@ -447,7 +445,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (RsReturns.FindRandom(18, 1, 4) < 2)
+                if (RandomNum.FindRandom(18, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(-1354.29f, -140.058f, 49.57456f));
                     Pos_01.Add(new Vector3(-1026.242f, 315.9842f, 66.88311f));
@@ -659,7 +657,7 @@ namespace RandomStart
 
                     iAction = 1;
 
-                    iEnterVeh = RsReturns.RandInt(1, 2);
+                    iEnterVeh = RandomNum.RandInt(1, 2);
                 }
 
                 iWeapons = 2;
@@ -668,7 +666,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (RsReturns.FindRandom(19, 1, 4) < 2)
+                if (RandomNum.FindRandom(19, 1, 4) < 2)
                 {
 
                     Pos_01.Add(new Vector3(-356.741f, 16.12581f, 47.85474f));
@@ -1035,7 +1033,7 @@ namespace RandomStart
 
                     iAction = 1;
 
-                    iEnterVeh = RsReturns.RandInt(1, 2);
+                    iEnterVeh = RandomNum.RandInt(1, 2);
                 }
 
                 iWeapons = 3;
@@ -1044,7 +1042,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (RsReturns.FindRandom(20, 1, 4) < 2)
+                if (RandomNum.FindRandom(20, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(1258.926f, -1761.398f, 49.67699f));
                     Pos_01.Add(new Vector3(1250.658f, -1734.747f, 52.03196f));
@@ -1208,7 +1206,7 @@ namespace RandomStart
 
                     iAction = 1;
 
-                    iEnterVeh = RsReturns.RandInt(1, 3);
+                    iEnterVeh = RandomNum.RandInt(1, 3);
                 }
 
                 iWeapons = 3;
@@ -1217,7 +1215,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (RsReturns.FindRandom(21, 1, 4) < 2)
+                if (RandomNum.FindRandom(21, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(-122.6672f, -863.2216f, 33.33057f)); fHeading.Add(104.0432f);
                     Pos_01.Add(new Vector3(-209.1611f, -785.0453f, 30.45403f)); fHeading.Add(250.6104f);
@@ -1233,7 +1231,7 @@ namespace RandomStart
                 }
                 else
                 {
-                    int iRanLand = RsReturns.FindRandom(11, 1, 5);
+                    int iRanLand = RandomNum.FindRandom(11, 1, 5);
                     if (iRanLand == 1)
                     {
                         Pos_01.Add(new Vector3(142.9556f, -418.5663f, 357.813f)); fHeading.Add(146.1803f);
@@ -1304,7 +1302,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                iSubSet = RsReturns.FindRandom(9, 1, 11);
+                iSubSet = RandomNum.FindRandom(9, 1, 11);
                 if (iSubSet == 1)
                 {
                     Pos_01.Add(new Vector3(-272.6266f, 325.0637f, 93.25459f)); fHeading.Add(102.7661f);
@@ -1420,8 +1418,8 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                int iPosX = RsReturns.FindRandom(3, 1, 6);
-                int iSelectmDrops = RsReturns.FindRandom(4, 1, 5);
+                int iPosX = RandomNum.FindRandom(3, 1, 6);
+                int iSelectmDrops = RandomNum.FindRandom(4, 1, 5);
 
                 if (iPosX == 1)
                 {
@@ -1922,7 +1920,7 @@ namespace RandomStart
                 World.CurrentDayTime = TimeSpan.FromHours(12);
                 World.Weather = Weather.ExtraSunny;
 
-                if (RsReturns.FindRandom(22, 1, 4) < 2)
+                if (RandomNum.FindRandom(22, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(-1364.786f, 88.02513f, 60.62911f)); fHeading.Add(4.459937f);//no cart
                     Pos_01.Add(new Vector3(-1341.147f, 58.34372f, 55.24565f)); fHeading.Add(255.8883f);
@@ -2035,7 +2033,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (RsReturns.FindRandom(23, 1, 4) < 2)
+                if (RandomNum.FindRandom(23, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(606.2311f, 6460.72f, 30.36371f)); fHeading.Add(5.789507f);
                     Pos_01.Add(new Vector3(320.5405f, 6446.443f, 31.04944f)); fHeading.Add(270.2463f);
@@ -2089,7 +2087,7 @@ namespace RandomStart
 
                 World.CurrentDayTime = TimeSpan.FromHours(12);
 
-                iSubSet = RsReturns.FindRandom(5, 1, 7);
+                iSubSet = RandomNum.FindRandom(5, 1, 7);
 
                 if (iSubSet == 1)
                 {
@@ -2480,7 +2478,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                iSubSet = RsReturns.FindRandom(6, 1, 23);
+                iSubSet = RandomNum.FindRandom(6, 1, 23);
 
                 if (iSubSet == 1)
                 {
@@ -2644,7 +2642,7 @@ namespace RandomStart
                 }       //"Chemical Plant Worker");  
                 else if (iSubSet == 11)
                 {
-                    if (RsReturns.FindRandom(24, 1, 4) < 2)
+                    if (RandomNum.FindRandom(24, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(2368.954f, 2191.936f, 142.1283f)); fHeading.Add(177.7558f);
                         Pos_01.Add(new Vector3(941.1194f, 2420.352f, 80.66275f)); fHeading.Add(354.4607f);
@@ -2674,7 +2672,7 @@ namespace RandomStart
                 }       //"construction Worker 2"); 
                 else if (iSubSet == 12)
                 {
-                    if (RsReturns.FindRandom(25, 1, 4) < 2)
+                    if (RandomNum.FindRandom(25, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(944.6815f, -2933.804f, 49.12353f)); fHeading.Add(289.2962f);
                         Pos_01.Add(new Vector3(1011.372f, -2896.42f, 39.15219f)); fHeading.Add(172.0232f);
@@ -2780,7 +2778,7 @@ namespace RandomStart
                 }       //"Pest Control");  
                 else if (iSubSet == 19)
                 {
-                    if (RsReturns.FindRandom(26, 1, 4) < 2)
+                    if (RandomNum.FindRandom(26, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(126.8316f, 217.908f, 107.2581f)); fHeading.Add(250.0984f);
                         Pos_01.Add(new Vector3(-63.64765f, 38.78681f, 72.05331f)); fHeading.Add(246.6971f);
@@ -2800,7 +2798,7 @@ namespace RandomStart
                 }       //"Postal Worker Male 2");  
                 else if (iSubSet == 20)
                 {
-                    if (RsReturns.FindRandom(27, 1, 4) < 2)
+                    if (RandomNum.FindRandom(27, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(775.7664f, -983.2467f, 26.1865f)); fHeading.Add(179.6391f);
                         Pos_01.Add(new Vector3(970.2875f, -1458.307f, 31.24547f)); fHeading.Add(357.9949f);
@@ -2868,7 +2866,7 @@ namespace RandomStart
 
                 World.CurrentDayTime = TimeSpan.FromHours(12);
 
-                iSubSet = RsReturns.FindRandom(7, 1, 4);
+                iSubSet = RandomNum.FindRandom(7, 1, 4);
 
                 if (iSubSet == 1)
                 {
@@ -2967,14 +2965,14 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                iSubSet = RsReturns.FindRandom(8, 1, 11);
+                iSubSet = RandomNum.FindRandom(8, 1, 11);
 
                 if (iSubSet == 1)
                 {
                     World.Weather = Weather.ExtraSunny;
                     World.CurrentDayTime = TimeSpan.FromHours(12);
 
-                    if (RsReturns.FindRandom(28, 1, 4) < 2)
+                    if (RandomNum.FindRandom(28, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-2006.46f, -557.0941f, 12.88623f)); fHeading.Add(131.999f);
                         Pos_01.Add(new Vector3(-1904.047f, -710.8903f, 8.832588f)); fHeading.Add(142.1092f);
@@ -3026,7 +3024,7 @@ namespace RandomStart
                 }       //"US Coastguard
                 else if (iSubSet == 3)
                 {
-                    if (RsReturns.FindRandom(29, 1, 4) < 2)
+                    if (RandomNum.FindRandom(29, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(358.6237f, -1583.362f, 29.29193f)); fHeading.Add(327.5265f);
                         Pos_01.Add(new Vector3(824.7567f, -1288.554f, 28.24066f)); fHeading.Add(87.50066f);
@@ -3185,7 +3183,7 @@ namespace RandomStart
                 }       //><!-- Sherif
                 else if (iSubSet == 7)
                 {
-                    if (RsReturns.FindRandom(30, 1, 4) < 2)
+                    if (RandomNum.FindRandom(30, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(142.8676f, -721.2127f, 42.02895f)); fHeading.Add(38.59577f);
                         Pos_01.Add(new Vector3(180.8606f, -698.6846f, 47.07698f)); fHeading.Add(305.9764f);
@@ -3264,7 +3262,7 @@ namespace RandomStart
                 }       //><!-- swat
                 else if (iSubSet == 9)
                 {
-                    if (RsReturns.FindRandom(31, 1, 4) < 2)
+                    if (RandomNum.FindRandom(31, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-2348.52f, 3270.065f, 32.81076f)); fHeading.Add(332.1701f);
                         Pos_01.Add(new Vector3(-2352.183f, 3263.234f, 32.81076f)); fHeading.Add(130.7586f);
@@ -3336,11 +3334,11 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                iSubSet = RsReturns.FindRandom(10, 1, 4);
+                iSubSet = RandomNum.FindRandom(10, 1, 4);
 
                 if (iSubSet == 1)
                 {
-                    if (RsReturns.FindRandom(32, 1, 4) < 2)
+                    if (RandomNum.FindRandom(32, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-3376.623f, 7834.382f, 1500.00f)); fHeading.Add(217.4295f);
                         Pos_01.Add(new Vector3(4364.612f, -4151.208f, 1500.00f)); fHeading.Add(42.93307f);
@@ -3360,7 +3358,7 @@ namespace RandomStart
                 }       //civilian
                 else if (iSubSet == 2)
                 {
-                    if (RsReturns.FindRandom(33, 1, 4) < 2)
+                    if (RandomNum.FindRandom(33, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(-3376.623f, 7834.382f, 700.00f)); fHeading.Add(217.4295f);
                         Pos_01.Add(new Vector3(4364.612f, -4151.208f, 700.00f)); fHeading.Add(42.93307f);
@@ -3442,11 +3440,11 @@ namespace RandomStart
                 RandomWeatherTime();
 
                 if (DataStore.MySettingsXML.Spawn || DataStore.MySettingsXML.Saved)
-                    iSubSet = RsReturns.FindRandom(14, 1, 11);
+                    iSubSet = RandomNum.FindRandom(14, 1, 11);
                 else
-                    iSubSet = RsReturns.FindRandom(13, 1, 14);
+                    iSubSet = RandomNum.FindRandom(13, 1, 14);
 
-                float fRando = RsReturns.RandInt(0, 360);
+                float fRando = RandomNum.RandInt(0, 360);
 
                 if (iSubSet == 1)
                 {
@@ -3586,7 +3584,7 @@ namespace RandomStart
                         new Vector3(1388.754f, 1428.129f, 104.5997f)
                     };
 
-                    Vector3 MyRandV = vCenter[RsReturns.RandInt(0, vCenter.Count - 1)];
+                    Vector3 MyRandV = vCenter[RandomNum.RandInt(0, vCenter.Count - 1)];
                     Vector3 MyVec = MyRandV.Around(4.00f);
                     MyVec.Z = MyRandV.Z + 0.5f;
 
@@ -3746,7 +3744,7 @@ namespace RandomStart
                         new Vector3(1582.44f, 2906.777f, 56.95695f)
                     };
 
-                    Vector3 MyVec = vCenter[RsReturns.RandInt(0, vCenter.Count - 1)];
+                    Vector3 MyVec = vCenter[RandomNum.RandInt(0, vCenter.Count - 1)];
 
                     Pos_01.Add(MyVec); fHeading.Add(fRando);
                 }     //a_c_hen                
@@ -3790,7 +3788,7 @@ namespace RandomStart
                         new Vector3(1581.271f, 2167.549f, 79.28706f)
                     };
 
-                    Vector3 MyRandV = vCenter[RsReturns.RandInt(0, vCenter.Count - 1)];
+                    Vector3 MyRandV = vCenter[RandomNum.RandInt(0, vCenter.Count - 1)];
                     Vector3 MyVec = MyRandV.Around(4.00f);
                     MyVec.Z = MyRandV.Z + 0.5f;
 
@@ -3840,7 +3838,7 @@ namespace RandomStart
                         new Vector3(-1213.257f, 3848.571f, 590.4387f)
                     };
 
-                    Vector3 MyRandV = vCenter[RsReturns.RandInt(0, vCenter.Count - 1)];
+                    Vector3 MyRandV = vCenter[RandomNum.RandInt(0, vCenter.Count - 1)];
                     Vector3 MyVec = MyRandV.Around(75.00f);
                     MyVec.Z = MyRandV.Z + 0.5f;
 
@@ -3911,7 +3909,7 @@ namespace RandomStart
             {
                 RandomWeatherTime();
 
-                if (RsReturns.FindRandom(34, 1, 4) < 2)
+                if (RandomNum.FindRandom(34, 1, 4) < 2)
                 {
                     Pos_01.Add(new Vector3(5308.355f, -5222.566f, 83.51822f)); fHeading.Add(177.7005f);
                     Pos_01.Add(new Vector3(4473.773f, -5041.711f, 112.4676f)); fHeading.Add(3.755754f);
@@ -3930,7 +3928,7 @@ namespace RandomStart
                     Pos_01.Add(new Vector3(4738.257f, -5103.999f, 106.8863f)); fHeading.Add(357.4206f);
                     iAction = 1;
 
-                    iEnterVeh = RsReturns.RandInt(1, 2);
+                    iEnterVeh = RandomNum.RandInt(1, 2);
                 }
 
                 iWeapons = 5;
@@ -3943,7 +3941,7 @@ namespace RandomStart
                 World.CurrentDayTime = TimeSpan.FromHours(12);
                 World.Weather = Weather.ExtraSunny;
 
-                iSubSet = RsReturns.FindRandom(12, 1, 6);
+                iSubSet = RandomNum.FindRandom(12, 1, 6);
                 if (iSubSet == 1)
                 {
                     Pos_01.Add(new Vector3(4979.349f, -5764.603f, 20.87796f)); fHeading.Add(45.00f);
@@ -3964,7 +3962,7 @@ namespace RandomStart
                 }       //A_F_Y_Beach_02
                 else if (iSubSet == 3)
                 {
-                    if (RsReturns.FindRandom(35, 1, 4) < 2)
+                    if (RandomNum.FindRandom(35, 1, 4) < 2)
                     {
                         Pos_01.Add(new Vector3(4877.928f, -4488.06f, 26.93383f)); fHeading.Add(7.88381f);
                         Pos_01.Add(new Vector3(5032.213f, -4630.636f, 21.68462f)); fHeading.Add(75.61213f);
@@ -3992,7 +3990,7 @@ namespace RandomStart
                         Pos_01.Add(new Vector3(4500.685f, -4494.414f, 3.665595f)); fHeading.Add(287.3625f);
                         iAction = 1;
 
-                        iEnterVeh = RsReturns.RandInt(1, 2);
+                        iEnterVeh = RandomNum.RandInt(1, 2);
                     }
 
                     iWeapons = 5;
@@ -4038,7 +4036,7 @@ namespace RandomStart
             if (DataStore.MySettingsXML.Spawn)
             {
                 if (!RsReturns.GetMainChar())
-                    YourRanPed(DataStore.sMainChar);
+                    YourRanPed(DataStore.sMainChar, iSelect, iSubSet);
                 else
                     PlayerBelter();
             }
@@ -4047,7 +4045,7 @@ namespace RandomStart
                 if (DataStore.MySettingsXML.Saved)
                     YourSavedPed();
                 else
-                    YourRanPed(RsReturns.BuildRandomPed(iSelect, iSubSet));
+                    YourRanPed("", iSelect, iSubSet);
             }
 
             if (iAction > 0)
@@ -4066,14 +4064,14 @@ namespace RandomStart
                         if (iPlace == 1)
                             iPlace = 0;
                         else
-                            iPlace = RsReturns.RandInt(0, iPlace - 1);
+                            iPlace = RandomNum.RandInt(0, iPlace - 1);
                         AddVeh(RsReturns.BuildRandVeh(iSelect, iSubSet), Pos_01[iPlace], fHeading[iPlace], iEnterVeh, iSelect, iSubSet);
                         DataStore.iPostAction = 1;
                     }
                 }            //drive
                 else if (iAction == 2)
                 {
-                    int iPlace = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                    int iPlace = RandomNum.RandInt(0, Pos_01.Count() - 1);
 
                     Game.Player.Character.Position = Pos_01[iPlace];
                     Game.Player.Character.Heading = fHeading[iPlace];
@@ -4084,7 +4082,7 @@ namespace RandomStart
                 }       //Sunbath
                 else if (iAction == 3)
                 {
-                    int iPlace = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                    int iPlace = RandomNum.RandInt(0, Pos_01.Count() - 1);
                     Game.Player.Character.Position = Pos_01[iPlace];
 
                     List<string> sPropers = new List<string>();
@@ -4093,7 +4091,7 @@ namespace RandomStart
                     sPropers.Add("prop_beggers_sign_02");
                     sPropers.Add("prop_beggers_sign_03");
                     sPropers.Add("prop_beggers_sign_04");
-                    string sProper = sPropers[RsReturns.RandInt(0, 3)];
+                    string sProper = sPropers[RandomNum.RandInt(0, 3)];
                     ForceAnim(Game.Player.Character, "amb@lo_res_idles@", "world_human_bum_freeway_lo_res_base", Pos_01[iPlace], new Vector3(0.00f, 0.00f, fHeading[iPlace]));
 
                     DataStore.sExitAn_01 = "amb@prop_human_bum_bin@exit";
@@ -4105,7 +4103,7 @@ namespace RandomStart
                 }       //TrampSign
                 else if (iAction == 4)
                 {
-                    int iPlace = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                    int iPlace = RandomNum.RandInt(0, Pos_01.Count() - 1);
                     Game.Player.Character.Position = Pos_01[iPlace];
 
                     ForceAnim(Game.Player.Character, "switch@trevor@scares_tramp", "trev_scares_tramp_idle_tramp", Pos_01[iPlace], new Vector3(0.00f, 0.00f, fHeading[iPlace]));
@@ -4115,7 +4113,7 @@ namespace RandomStart
                 }       //TrampSleap
                 else if (iAction == 5)
                 {
-                    int iPlace = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                    int iPlace = RandomNum.RandInt(0, Pos_01.Count() - 1);
                     Game.Player.Character.Position = Pos_01[iPlace];
                     Game.FadeScreenIn(1);
                     Script.Wait(2);
@@ -4128,7 +4126,7 @@ namespace RandomStart
                             PedScenario(Game.Player.Character, "PROP_HUMAN_MUSCLE_CHIN_UPS", Pos_01[iPlace], fHeading[iPlace], false);
                         else
                         {
-                            int iPose = RsReturns.RandInt(0, 30);
+                            int iPose = RandomNum.RandInt(0, 30);
                             if (iPose < 10)
                                 PedScenario(Game.Player.Character, "WORLD_HUMAN_SIT_UPS", Pos_01[iPlace], fHeading[iPlace], false);
                             else if (iPose < 20)
@@ -4410,13 +4408,13 @@ namespace RandomStart
                     }           //Lost ... Vs Impex
                     else if (iSubSet == 11)
                     {
-                        int iLocate = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                        int iLocate = RandomNum.RandInt(0, Pos_01.Count() - 1);
 
                         Game.Player.Character.Position = Pos_01[iLocate];
                         Game.Player.Character.Heading = fHeading[iLocate];
 
                         Script.Wait(1000);
-                        FindReplacePed(1, Pos_01[iLocate], 55.00f, RsReturns.RandInt(3, 6), 2, 1, false);
+                        FindReplacePed(1, Pos_01[iLocate], 55.00f, RandomNum.RandInt(3, 6), 2, 1, false);
 
                         DataStore.iWait4 = Game.GameTime + 8000;
                         DataStore.iPostAction = 8;
@@ -4427,7 +4425,7 @@ namespace RandomStart
                     DataStore.RanLoc_01.Clear();
                     DataStore.RanLoc_01 = Pos_01;
 
-                    DataStore.iPath = RsReturns.RandInt(1, DataStore.RanLoc_01.Count() - 1);
+                    DataStore.iPath = RandomNum.RandInt(1, DataStore.RanLoc_01.Count() - 1);
                     Game.Player.Character.Position = DataStore.RanLoc_01[DataStore.iPath];
 
                     DataStore.iPostAction = 4;
@@ -4446,7 +4444,7 @@ namespace RandomStart
                             if (iPlace == 1)
                                 iPlace = 0;
                             else
-                                iPlace = RsReturns.RandInt(0, iPlace - 1);
+                                iPlace = RandomNum.RandInt(0, iPlace - 1);
                             AddVeh(RsReturns.BuildRandVeh(iSelect, iSubSet), Pos_01[iPlace], fHeading[iPlace], 1, iSelect, iSubSet);
                             DataStore.iPostAction = 1;
                         }
@@ -4456,7 +4454,7 @@ namespace RandomStart
                         DataStore.RanLoc_01.Clear();
                         DataStore.RanLoc_01 = Pos_01;
 
-                        DataStore.iPath = RsReturns.RandInt(1, DataStore.RanLoc_01.Count() - 1);
+                        DataStore.iPath = RandomNum.RandInt(1, DataStore.RanLoc_01.Count() - 1);
                         DataStore.vPlayerTarget = DataStore.RanLoc_01[DataStore.iPath];
                         AddVeh(RsReturns.BuildRandVeh(iSelect, iSubSet), DataStore.vPlayerTarget, fHeading[DataStore.iPath], iEnterVeh, iSelect, iSubSet);
 
@@ -4474,30 +4472,30 @@ namespace RandomStart
                     DataStore.RanLoc_01 = Pos_01;
                     DataStore.fHeads = fHeading;
 
-                    DataStore.iPath = RsReturns.RandInt(1, DataStore.RanLoc_01.Count() - 1);
+                    DataStore.iPath = RandomNum.RandInt(1, DataStore.RanLoc_01.Count() - 1);
                     DataStore.vPlayerTarget = Pos_01[DataStore.iPath];
                     AddVeh(RsReturns.BuildRandVeh(iSelect, iSubSet), DataStore.vPlayerTarget, fHeading[DataStore.iPath], iEnterVeh, 3, 0);
                     DataStore.iPostAction = 7;
                 }      //Helitour
                 else if (iAction == 11)
                 {
-                    int iPlace = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                    int iPlace = RandomNum.RandInt(0, Pos_01.Count() - 1);
 
                     Game.Player.Character.Position = Pos_01[iPlace];
 
                     if (fHeading.Count() == Pos_01.Count())
                         Game.Player.Character.Heading = fHeading[iPlace];
                     else
-                        Game.Player.Character.Heading = (float)RsReturns.RandInt(0, 360);
+                        Game.Player.Character.Heading = (float)RandomNum.RandInt(0, 360);
 
                     if (iSelect > 5)
                     {
-                        for (int i = 0; i < RsReturns.RandInt(2, 5); i++)
+                        for (int i = 0; i < RandomNum.RandInt(2, 5); i++)
                         {
                             Vector3 vRonud = Pos_01[iPlace].Around(10.00f);
                             vRonud.Z = World.GetGroundHeight(vRonud) + 0.50f;
 
-                            NPCSpawn(RsReturns.BuildRandomPed(iSelect, iSubSet), vRonud, (float)RsReturns.RandInt(0, 360), 1, 0, null, true);
+                            NPCSpawn(RsReturns.BuildRandomPed(iSelect, iSubSet), vRonud, (float)RandomNum.RandInt(0, 360), 1, 0, null, true);
                         }
                     }
 
@@ -4507,14 +4505,14 @@ namespace RandomStart
                 }      //MethActing
                 else if (iAction == 12)
                 {
-                    int iPlace = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                    int iPlace = RandomNum.RandInt(0, Pos_01.Count() - 1);
                     Game.Player.Character.Position = Pos_01[iPlace];
 
                     List<string> DanceSteps = new List<string>();
                     if (Game.Player.Character.Gender == Gender.Male)
-                        DanceSteps = RsReturns.DanceList(true, RsReturns.RandInt(1, 3));
+                        DanceSteps = RsReturns.DanceList(true, RandomNum.RandInt(1, 3));
                     else
-                        DanceSteps = RsReturns.DanceList(false, RsReturns.RandInt(1, 3));
+                        DanceSteps = RsReturns.DanceList(false, RandomNum.RandInt(1, 3));
 
                     if (DanceSteps.Count() > 0)
                         ForceAnim(Game.Player.Character, DanceSteps[0], DanceSteps[1], Game.Player.Character.Position, new Vector3(0.00f, 0.00f, fHeading[iPlace]));
@@ -4554,23 +4552,23 @@ namespace RandomStart
             }
             else
             {
-                int iPlace = RsReturns.RandInt(0, Pos_01.Count() - 1);
+                int iPlace = RandomNum.RandInt(0, Pos_01.Count() - 1);
 
                 Game.Player.Character.Position = Pos_01[iPlace];
 
                 if (fHeading.Count() == Pos_01.Count())
                     Game.Player.Character.Heading = fHeading[iPlace];
                 else
-                    Game.Player.Character.Heading = (float)RsReturns.RandInt(0, 360);
+                    Game.Player.Character.Heading = (float)RandomNum.RandInt(0, 360);
 
                 if (iSelect > 5 && iSelect != 24)
                 {
-                    for (int i = 0; i < RsReturns.RandInt(2, 5); i++)
+                    for (int i = 0; i < RandomNum.RandInt(2, 5); i++)
                     {
                         Vector3 vRonud = Pos_01[iPlace].Around(10.00f);
                         vRonud.Z = World.GetGroundHeight(vRonud) + 0.50f;
 
-                        NPCSpawn(RsReturns.BuildRandomPed(iSelect, iSubSet), vRonud, (float)RsReturns.RandInt(0, 360), 1, 0, null, true);
+                        NPCSpawn(RsReturns.BuildRandomPed(iSelect, iSubSet), vRonud, (float)RandomNum.RandInt(0, 360), 1, 0, null, true);
                     }
                 }
 
@@ -4601,9 +4599,64 @@ namespace RandomStart
                     PedWeapons(Game.Player.Character, iWeapons);
             }
         }
-        public static void YourRanPed(string PedName)
+        public static void YourRanPed(string PedName, int iSelect, int iSubset)
         {
             LoggerLight.Loggers("YourRanPed, PedName == " + PedName);
+
+            int iFree = -1;
+            bool bMale = false;
+            if (PedName == "")
+            {
+                if (iSelect == 1)
+                    iFree = 1;
+                else if (iSelect == 3)
+                    iFree = 2;
+                else if (iSelect == 4)
+                    iFree = 3;
+                else if (iSelect == 6)
+                    iFree = 4;
+                else if (iSelect == 9)
+                    iFree = 5;
+                else if (iSelect == 10)
+                    iFree = 6;
+                else if (iSelect == 17)
+                    iFree = 7;
+                else if (iSelect == 20)
+                    iFree = 8;
+                else if (iSelect == 20)
+                    iFree = 8;
+                else if (iSelect == 25)
+                    iFree = 9;
+                else if (iSelect == 21)
+                {
+                    if (iSubset == 3 || iSubset == 4 || iSubset == 5 || iSubset == 6)
+                        iFree = 10;
+                    else if (iSubset == 7)
+                        iFree = 13;
+                    else if (iSubset == 10)
+                        iFree = 11;
+                    else if (iSubset == 11)
+                        iFree = 12;
+                }
+                if (iFree != -1)
+                {
+                    if (RandomNum.FindRandom(50, 0, 10) < 5)
+                        PedName = RsReturns.BuildRandomPed(iSelect, iSubset);
+                    else
+                    {
+                        if (RandomNum.FindRandom(51, 0, 10) < 5)
+                        {
+                            bMale = true;
+                            PedName = "mp_m_freemode_01";
+                        }
+                        else
+                            PedName = "mp_f_freemode_01";
+                    }
+                }
+                else
+                    PedName = RsReturns.BuildRandomPed(iSelect, iSubset);
+            }
+
             DataStore.iCurrentPed = 0;
             var model = new Model(PedName);
             model.Request();    // Check if the model is valid
@@ -4614,13 +4667,20 @@ namespace RandomStart
                     Script.Wait(1);
                 Game.Player.ChangeModel(model);
 
-                if (RsReturns.GetMainChar())
-                    Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character.Handle);
-                else
-                    Function.Call(Hash.SET_PED_RANDOM_COMPONENT_VARIATION, Game.Player.Character.Handle, false);
+                if (iFree == -1)
+                {
+                    if (RsReturns.GetMainChar())
+                        Function.Call(Hash.SET_PED_DEFAULT_COMPONENT_VARIATION, Game.Player.Character.Handle);
+                    else
+                        Function.Call(Hash.SET_PED_RANDOM_COMPONENT_VARIATION, Game.Player.Character.Handle, false);
 
-                int iHats = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS, Game.Player.Character.Handle, 0);
-                Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, 0, RsReturns.RandInt(-1, iHats), 0, false);
+                    int iHats = Function.Call<int>(Hash.GET_NUMBER_OF_PED_PROP_DRAWABLE_VARIATIONS, Game.Player.Character.Handle, 0);
+                    Function.Call(Hash.SET_PED_PROP_INDEX, Game.Player.Character.Handle, 0, RandomNum.RandInt(-1, iHats), 0, false);
+                }
+                else
+                    FreePed.MakeFaces(bMale, iFree);
+
+
                 Function.Call(Hash.SET_MODEL_AS_NO_LONGER_NEEDED, model.Hash);
             }
             if (DataStore.MySettingsXML.KeepWeapons)
@@ -4634,6 +4694,7 @@ namespace RandomStart
         public static void YourPickedPed(Ped ThisPed)
         {
             LoggerLight.Loggers("YourPickedPed");
+
             if (ThisPed != null)
             {
                 DataStore.iCurrentPed = 0;
@@ -4660,7 +4721,7 @@ namespace RandomStart
 
             if (DataStore.MyPedCollection.Count > 0)
             {
-                DataStore.iCurrentPed = RsReturns.RandInt(1, DataStore.MyPedCollection.Count - 1);
+                DataStore.iCurrentPed = RandomNum.RandInt(1, DataStore.MyPedCollection.Count - 1);
                 SavePedLoader(DataStore.iCurrentPed);
             }
             else
@@ -4698,6 +4759,7 @@ namespace RandomStart
         public static void FillMyPed(NewClothBank MyWoven)
         {
             LoggerLight.Loggers("FillMyPed, ");
+
             Ped Peddy = Game.Player.Character;
             for (int i = 0; i < MyWoven.ClothA.Count; i++)
                 Function.Call(Hash.SET_PED_COMPONENT_VARIATION, Peddy.Handle, i, MyWoven.ClothA[i], MyWoven.ClothB[i], 2);
@@ -4736,7 +4798,6 @@ namespace RandomStart
         }
         public static void AddVeh(string sVehic, Vector3 Vpos, float fHead, int iEnterV, int iPedtype, int iSubType)
         {
-
             LoggerLight.Loggers("AddVeh, sVehic == " + sVehic + ", iEnterV == " + iEnterV + ", iPedtype == " + iPedtype + ", iSubType == " + iSubType);
 
             int iVehHash = Function.Call<int>(Hash.GET_HASH_KEY, sVehic);
@@ -4765,7 +4826,6 @@ namespace RandomStart
         }
         public static void MaxMods(Vehicle Vehic)
         {
-
             LoggerLight.Loggers("MaxMods");
 
             Function.Call(Hash.SET_VEHICLE_MOD_KIT, Vehic.Handle, 0);
@@ -4788,7 +4848,7 @@ namespace RandomStart
                 else
                 {
                     if (iSpoilher != 0)
-                        Function.Call(Hash.SET_VEHICLE_MOD, Vehic.Handle, i, RsReturns.RandInt(0, iSpoilher - 1), true);
+                        Function.Call(Hash.SET_VEHICLE_MOD, Vehic.Handle, i, RandomNum.RandInt(0, iSpoilher - 1), true);
                 }
             }
             if (Vehic.ClassType != VehicleClass.Cycles || Vehic.ClassType != VehicleClass.Helicopters || Vehic.ClassType != VehicleClass.Boats || Vehic.ClassType != VehicleClass.Planes)
@@ -4799,7 +4859,6 @@ namespace RandomStart
         }
         public static void EnterVeh(Vehicle Vehic, int iEnterV, int iPedtype, int iSubType)
         {
-
             LoggerLight.Loggers("EnterVeh, iEnterV == " + iEnterV + ", iPedtype == " + iPedtype + ", iSubType == " + iSubType);
 
             Vector3 V3 = Vehic.Position + (Vehic.RightVector * 3.50f);
@@ -4977,7 +5036,6 @@ namespace RandomStart
         }
         public static void FillthisVeh(Vehicle Vehic, int iPedtype, int iSubType, Vector3 vPos, int iTask, int iWeapons, bool bFriend)
         {
-
             LoggerLight.Loggers("FillthisVeh, iPedtype == " + iPedtype + ", iSubType == " + iSubType + ", iTask == " + iTask);
 
             for (int i = 0; i < Vehic.PassengerSeats; i++)
@@ -4985,7 +5043,6 @@ namespace RandomStart
         }
         public static void PropTasks(Prop Popp, int iPopTask)
         {
-
             LoggerLight.Loggers("PropTasks, iPopTask == " + iPopTask);
 
             if (iPopTask == 1)
@@ -4995,7 +5052,6 @@ namespace RandomStart
         }
         public static void CayoNPCSpawn(string sPed, Prop pMyChair, Vector3 Vpos, float fAce, int iTask)
         {
-
             LoggerLight.Loggers("CayoNPCSpawn, sPed == " + sPed + ", iTask == " + iTask);
 
             Vector3 vLocal = Vpos;
@@ -5025,7 +5081,7 @@ namespace RandomStart
                     SitVArs.Add("PROP_HUMAN_SEAT_CHAIR_UPRIGHT");
                     SitVArs.Add("PROP_HUMAN_SEAT_CHAIR_MP_PLAYER");
 
-                    PedScenario(Peddy, SitVArs[RsReturns.RandInt(0, SitVArs.Count() - 1)], pMyChair.Position, pMyChair.Heading - 180.00f, true);
+                    PedScenario(Peddy, SitVArs[RandomNum.RandInt(0, SitVArs.Count() - 1)], pMyChair.Position, pMyChair.Heading - 180.00f, true);
                 }
                 else
                 {
@@ -5038,7 +5094,6 @@ namespace RandomStart
         }
         public static void NPCSpawn(string sPed, Vector3 vLocal, float fAce, int iTask, int iWeapons, Vehicle Vehicary, bool bFriend)
         {
-
             LoggerLight.Loggers("NPCSpawn, sPed == " + sPed + ", iTask == " + iTask);
 
             var model = new Model(sPed);
@@ -5064,7 +5119,6 @@ namespace RandomStart
         }
         public static void PedTasks(Ped Peddy, int iTask, Vehicle Vehicary)
         {
-
             LoggerLight.Loggers("NPCSpawn, iTask == " + iTask);
 
             if (iTask == 1)
@@ -5212,9 +5266,9 @@ namespace RandomStart
             {
                 List<string> DanceSteps = new List<string>();
                 if (Peddy.Gender == Gender.Male)
-                    DanceSteps = RsReturns.DanceList(true, RsReturns.RandInt(1, 3));
+                    DanceSteps = RsReturns.DanceList(true, RandomNum.RandInt(1, 3));
                 else
-                    DanceSteps = RsReturns.DanceList(false, RsReturns.RandInt(1, 3));
+                    DanceSteps = RsReturns.DanceList(false, RandomNum.RandInt(1, 3));
 
                 if (DanceSteps.Count() > 0)
                     ForceAnim(Peddy, DanceSteps[0], DanceSteps[1], Peddy.Position, Peddy.Rotation);
@@ -5227,9 +5281,9 @@ namespace RandomStart
             {
                 List<string> DanceSteps = new List<string>();
                 if (Peddy.Gender == Gender.Male)
-                    DanceSteps = RsReturns.DanceList(true, RsReturns.RandInt(1, 3));
+                    DanceSteps = RsReturns.DanceList(true, RandomNum.RandInt(1, 3));
                 else
-                    DanceSteps = RsReturns.DanceList(false, RsReturns.RandInt(1, 3));
+                    DanceSteps = RsReturns.DanceList(false, RandomNum.RandInt(1, 3));
 
                 if (DanceSteps.Count() > 0)
                     ForceAnim(Peddy, DanceSteps[0], DanceSteps[1], Peddy.Position, Peddy.Rotation);
@@ -5255,36 +5309,36 @@ namespace RandomStart
 
             if (iWeapons == 1)
             {
-                string sYourWeap = DataStore.sWeapList[RsReturns.RandInt(0, 17)];
+                string sYourWeap = DataStore.sWeapList[RandomNum.RandInt(0, 17)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just Melee
             else if (iWeapons == 2)
             {
-                string sYourWeap = DataStore.sWeapList[RsReturns.RandInt(18, 33)];
+                string sYourWeap = DataStore.sWeapList[RandomNum.RandInt(18, 33)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just Hand
             else if (iWeapons == 3)
             {
-                string sYourWeap = DataStore.sWeapList[RsReturns.RandInt(55, 64)];
+                string sYourWeap = DataStore.sWeapList[RandomNum.RandInt(55, 64)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just Assult
             else if (iWeapons == 4)
             {
-                string sYourWeap = DataStore.sWeapList[RsReturns.RandInt(45, 54)];
+                string sYourWeap = DataStore.sWeapList[RandomNum.RandInt(45, 54)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
             }       //Just ShotGun
             else if (iWeapons == 5)
             {
-                string sYourWeap = DataStore.sWeapList[RsReturns.RandInt(0, 17)];
+                string sYourWeap = DataStore.sWeapList[RandomNum.RandInt(0, 17)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
 
-                sYourWeap = DataStore.sWeapList[RsReturns.RandInt(18, 33)];
+                sYourWeap = DataStore.sWeapList[RandomNum.RandInt(18, 33)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
 
-                sYourWeap = DataStore.sWeapList[RsReturns.RandInt(45, 54)];
+                sYourWeap = DataStore.sWeapList[RandomNum.RandInt(45, 54)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
 
-                sYourWeap = DataStore.sWeapList[RsReturns.RandInt(55, 64)];
+                sYourWeap = DataStore.sWeapList[RandomNum.RandInt(55, 64)];
                 Function.Call(Hash.GIVE_WEAPON_TO_PED, Peddy.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sYourWeap), RsReturns.MaxAmmo(sYourWeap, Peddy), false, true);
             }       //RandomCombos
             else
@@ -5295,7 +5349,6 @@ namespace RandomStart
         }
         public static void PedFindMeASeat(Vehicle Vhick, Ped Peddy)
         {
-
             LoggerLight.Loggers("PedFindMeASeat");
 
             while (!Peddy.IsInVehicle())
@@ -5306,7 +5359,6 @@ namespace RandomStart
         }
         public static void YouTheDriver(Vehicle Vhick, Ped Peddy)
         {
-
             LoggerLight.Loggers("YouTheDriver");
 
             while (!Peddy.IsInVehicle())
@@ -5317,7 +5369,6 @@ namespace RandomStart
         }
         public static void FindReplacePed(int iAnyPedList, Vector3 vZone, float fRadius, int iCountEm, int iTask, int iWeapons, bool bFriend)
         {
-
             LoggerLight.Loggers("FindReplacePed, iCountEm == " + iCountEm + ", iTask == " + iTask);
 
             Ped[] MadPeds = World.GetNearbyPeds(vZone, fRadius);
@@ -5346,9 +5397,9 @@ namespace RandomStart
         {
             LoggerLight.Loggers("RandomWeatherTime");
 
-            int iTimes = RsReturns.FindRandom(0, 0, 23);
+            int iTimes = RandomNum.FindRandom(40, 0, 23);
             double dTime = (int)iTimes;
-            int iRain = RsReturns.FindRandom(15, 0, 9);
+            int iRain = RandomNum.FindRandom(15, 0, 9);
             World.Weather = DataStore.WetherBe[iRain];
             World.CurrentDayTime = TimeSpan.FromHours(dTime);
         }
@@ -5382,7 +5433,7 @@ namespace RandomStart
                     if (DataStore.MySettingsXML.Reincarn)
                         Game.Player.Character.Position = DataStore.vHeaven;
                     else
-                        YourRanPed(DataStore.sMainChar);
+                        YourRanPed(DataStore.sMainChar, -1, -1);
 
                     YouDied(bMale);
                 }
@@ -5413,7 +5464,7 @@ namespace RandomStart
                     Function.Call(Hash.SET_FADE_OUT_AFTER_DEATH, false);
 
                     if (!DataStore.MySettingsXML.Reincarn)
-                        YourRanPed(DataStore.sMainChar);
+                        YourRanPed(DataStore.sMainChar, -1, -1);
                     YouDied(bMale);
 
                     if (DataStore.bDontStopMe)
@@ -5588,9 +5639,9 @@ namespace RandomStart
                 if (DataStore.sFirstName == "PlayerX" || DataStore.sFirstName == "Current")
                 {
                     if (Game.Player.Character.Gender == Gender.Male)
-                        DataStore.sFirstName = DataStore.MyNames.MaleName[RsReturns.RandInt(0, DataStore.MyNames.MaleName.Count() - 1)];
+                        DataStore.sFirstName = DataStore.MyNames.MaleName[RandomNum.RandInt(0, DataStore.MyNames.MaleName.Count() - 1)];
                     else
-                        DataStore.sFirstName = DataStore.MyNames.FemaleName[RsReturns.RandInt(0, DataStore.MyNames.FemaleName.Count() - 1)];
+                        DataStore.sFirstName = DataStore.MyNames.FemaleName[RandomNum.RandInt(0, DataStore.MyNames.FemaleName.Count() - 1)];
                 }
 
                 int iNameSir = DataStore.MyNames.SurnName.Count();
@@ -5605,7 +5656,7 @@ namespace RandomStart
                     }
                     else
                     {
-                        iNameSir = RsReturns.RandInt(0, iNameSir - 1);
+                        iNameSir = RandomNum.RandInt(0, iNameSir - 1);
                         if (bMale)
                             UI.Notify(DataStore.MyLang.Langfile[2] + DataStore.sFirstName + " " + DataStore.MyNames.SurnName[iNameSir] + DataStore.MyLang.Langfile[3]);
                         else
@@ -5633,7 +5684,7 @@ namespace RandomStart
             {
                 Script.Wait(10000);
                 Game.Player.Character.Task.ClearAll();
-                YourRanPed("cs_chrisformage");
+                YourRanPed("cs_chrisformage", -1, -1);
                 Game.FadeScreenIn(1000);
             }
             else
@@ -5693,7 +5744,6 @@ namespace RandomStart
         }
         public static void YouJog()
         {
-
             LoggerLight.Loggers("YouJog");
 
             DataStore.iActionTime = Game.GameTime + 100;
@@ -5708,7 +5758,6 @@ namespace RandomStart
         }
         public static void YouDrive()
         {
-
             LoggerLight.Loggers("YouDrive");
 
             DataStore.iActionTime = Game.GameTime + 100;
@@ -5801,7 +5850,6 @@ namespace RandomStart
         }
         public static void PedScenario(Ped Peddy, string sCenario, Vector3 Vpos, float fHeadings, bool bSeated)
         {
-
             LoggerLight.Loggers("PedScenario sCenario == " + sCenario);
 
             Function.Call(Hash.TASK_START_SCENARIO_AT_POSITION, Peddy.Handle, sCenario, Vpos.X, Vpos.Y, Vpos.Z, fHeadings, 0, 0, 1);
@@ -6063,22 +6111,22 @@ namespace RandomStart
 
                     Game.Player.Character.Position = vPartays[1];
                     Script.Wait(1000);
-                    int iRan = RsReturns.RandInt(4, 7);
+                    int iRan = RandomNum.RandInt(4, 7);
 
                     for (int i = 0; i < iRan; i++)
                     {
                         Vector3 vDance = vPartays[0].Around(5.00f);
                         vDance.Z = vPartays[0].Z;
-                        CayoNPCSpawn(RsReturns.AddAnyPed(2), null, vDance, RsReturns.RandInt(0, 360), 12);
+                        CayoNPCSpawn(RsReturns.AddAnyPed(2), null, vDance, RandomNum.RandInt(0, 360), 12);
                     }
 
-                    iRan = RsReturns.RandInt(7, 13);
+                    iRan = RandomNum.RandInt(7, 13);
 
                     for (int i = 0; i < iRan; i++)
                     {
                         Vector3 vDance = vPartays[1].Around(8.00f);
                         vDance.Z = vPartays[1].Z;
-                        CayoNPCSpawn(RsReturns.AddAnyPed(2), null, vDance, RsReturns.RandInt(0, 360), 12);
+                        CayoNPCSpawn(RsReturns.AddAnyPed(2), null, vDance, RandomNum.RandInt(0, 360), 12);
                     }
 
                     for (int i = 2; i < vPartays.Count; i++)
@@ -6088,8 +6136,8 @@ namespace RandomStart
                         {
                             if (PSit[ii].Model == Function.Call<int>(Hash.GET_HASH_KEY, "h4_prop_h4_couch_01a") || PSit[ii].Model == Function.Call<int>(Hash.GET_HASH_KEY, "h4_prop_h4_chair_01a"))
                             {
-                                if (RsReturns.RandInt(0, 20) < 10)
-                                    CayoNPCSpawn(RsReturns.AddAnyPed(2), PSit[ii], Vector3.Zero, RsReturns.RandInt(0, 360), 12);
+                                if (RandomNum.RandInt(0, 20) < 10)
+                                    CayoNPCSpawn(RsReturns.AddAnyPed(2), PSit[ii], Vector3.Zero, RandomNum.RandInt(0, 360), 12);
                             }
                         }
                     }
@@ -6100,13 +6148,13 @@ namespace RandomStart
 
                     for (int i = 4; i < 6; i++)
                     {
-                        if (RsReturns.RandInt(0, 20) < 10)
+                        if (RandomNum.RandInt(0, 20) < 10)
                             CayoNPCSpawn(RsReturns.AddAnyPed(2), null, vPartB[i], vPartBHead[i], 15);
                     }
 
                     for (int i = 6; i < vPartB.Count; i++)
                     {
-                        if (RsReturns.RandInt(0, 20) < 10)
+                        if (RandomNum.RandInt(0, 20) < 10)
                             CayoNPCSpawn(RsReturns.AddAnyPed(2), null, vPartB[i], vPartBHead[i], 16);
                     }
 
@@ -6167,7 +6215,6 @@ namespace RandomStart
         }
         public static void LoadOnlineIps()
         {
-
             LoggerLight.Loggers("LoadOnlineIps");
 
             List<string> sAddIpl = new List<string>();
@@ -6195,7 +6242,6 @@ namespace RandomStart
         }
         public static void FlyHeliHere(Vector3 Vloc, float fHeadin, Vehicle Heli, Ped Plot, bool bLand)
         {
-
             LoggerLight.Loggers("FlyHeliHere, bLand == " + bLand);
 
             float HeliDesX = Vloc.X;
@@ -6212,7 +6258,6 @@ namespace RandomStart
         }
         public static void MethEdd(bool bOver)
         {
-
             LoggerLight.Loggers("MethEdd, bOver == " + bOver);
 
             if (bOver)
@@ -6552,6 +6597,55 @@ namespace RandomStart
             Function.Call(Hash._SET_TEXT_COMPONENT_FORMAT, "STRING");
             Function.Call(Hash._ADD_TEXT_COMPONENT_STRING, sText);
             Function.Call(Hash._0x238FFE5C7B0498A6, 0, 0, 1, -1);
+        }
+        public static void GetControlsSet()
+        {
+            Notification Note = UI.Notify("Press and hold the first key");
+            int iFirst = -1;
+            int iTimes = Game.GameTime + 7000;
+            while (iFirst < 0)
+            {
+                iFirst = RsReturns.GetButtonDown();
+                Script.Wait(1);
+                if (iTimes < Game.GameTime)
+                    iFirst = 99999;
+            }
+
+            if (iFirst < DataStore.ControlerList.Count)
+            {
+                Note.Hide();
+                UI.ShowSubtitle(DataStore.ControlerList[iFirst]);
+                Notification Note2 = UI.Notify("Press and hold the second key");
+
+                int iSecond = -1;
+                iTimes = Game.GameTime + 7000;
+                while (iSecond < 0)
+                {
+                    iSecond = RsReturns.GetButtonDown();
+                    Script.Wait(1);
+                    if (iTimes < Game.GameTime)
+                        iSecond = 99999;
+                }
+
+                if (iSecond < DataStore.ControlerList.Count)
+                {
+                    UI.ShowSubtitle(DataStore.ControlerList[iSecond]);
+                    DataStore.MySettingsXML.ControlA = iFirst;
+                    DataStore.MySettingsXML.ControlB = iSecond;
+                    DataStore.MySettingsXML.ControlSupport = true;
+                    XmlReadWrite.SaveSetMain(DataStore.MySettingsXML, DataStore.sSettings);
+                }
+                else
+                {
+                    Note2.Hide();
+                    UI.Notify("No control found");
+                }
+            }
+            else
+            {
+                Note.Hide();
+                UI.Notify("No control found");
+            }
         }
     }
 }

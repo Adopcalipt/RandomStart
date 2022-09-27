@@ -53,13 +53,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ClothX.cs" />
+    <Compile Include="Classes\Tattoo.cs" />
+    <Compile Include="RandomNum.cs" />
+    <Compile Include="FreePed.cs" />
     <Compile Include="RsReturns.cs" />
     <Compile Include="RsActions.cs" />
     <Compile Include="RandomS.cs" />
     <Compile Include="Classes\ClothBank.cs" />
     <Compile Include="Classes\NameList.cs" />
-    <Compile Include="Classes\RandomPlusList.cs" />
-    <Compile Include="Classes\RandomPlus.cs" />
     <Compile Include="Classes\ClothBankist.cs" />
     <Compile Include="Classes\NewClothBank.cs" />
     <Compile Include="Classes\XmlSetings.cs" />

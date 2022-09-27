@@ -79,7 +79,7 @@ namespace RandomStart
             if (DataStore.MySettingsXML.RandStarts.Count < 1)
                 DataStore.MySettingsXML.Locate = false;
             else
-                iYourSell = DataStore.MySettingsXML.RandStarts[RandInt(0, DataStore.MySettingsXML.RandStarts.Count - 1)];
+                iYourSell = DataStore.MySettingsXML.RandStarts[RandomNum.RandInt(0, DataStore.MySettingsXML.RandStarts.Count - 1)];
 
             return iYourSell;
         }
@@ -103,6 +103,20 @@ namespace RandomStart
             if (bDisable)
                 RsActions.ButtonDisabler(CButt);
             return Function.Call<bool>(Hash.IS_DISABLED_CONTROL_PRESSED, 0, CButt);
+        }
+        public static int GetButtonDown()
+        {
+            int iB = -1;
+            for (int i = 0; i < DataStore.ControlerList.Count; i++)
+            {
+                Script.Wait(100);
+                if (ButtonDown(i,true))
+                {
+                    iB = i;
+                    break;
+                }
+            }
+            return iB;
         }
         public static int Mk2AmmoFix(string sWeapo)
         {
@@ -130,7 +144,6 @@ namespace RandomStart
         }
         public static string BuildRandVeh(int iList, int iSubSet)
         {
-
             LoggerLight.Loggers("BuildRandVeh, iList == " + iList + ", iSubSet == " + iSubSet);
 
             List<string> sVeh = new List<string>();
@@ -311,6 +324,15 @@ namespace RandomStart
                     sVeh.Add("champion"); //Dewbauchee Champion
                     sVeh.Add("ignus"); //Pegassi Ignus
                     sVeh.Add("zeno"); //Overflod Zeno
+
+                    sVeh.Add("sentinel4"); //
+                    sVeh.Add("tenf2"); //
+                    sVeh.Add("tenf"); //
+                    sVeh.Add("sm722"); //
+                    sVeh.Add("omnisegt"); //
+                    sVeh.Add("corsita"); //
+                    sVeh.Add("torero2"); //
+                    sVeh.Add("lm87"); //
                 }
             }
             else if (iList == 4)
@@ -452,6 +474,11 @@ namespace RandomStart
                     sVeh.Add("iwagen"); //Obey I-Wagen
                     sVeh.Add("jubilee"); //Enus Jubilee
                     sVeh.Add("patriot3"); //Mammoth Patriot Mil-Spec
+                    sVeh.Add("greenwood");
+                    sVeh.Add("ruiner4");
+                    sVeh.Add("vigero2");
+                    sVeh.Add("weevil2");
+                    sVeh.Add("draugur");
                 }
             }
             else if (iList == 5)
@@ -506,6 +533,10 @@ namespace RandomStart
                     sVeh.Add("NEBULA"); //>                 ------------DIssapears....
                     sVeh.Add("cinquemila"); //Lampadati Cinquemila
                     sVeh.Add("deity"); //Enus Deity
+                    sVeh.Add("kanjosj"); //>
+                    sVeh.Add("postlude"); //>
+                    sVeh.Add("brioso3"); //>
+                    sVeh.Add("rhinehart"); //>
                 }
             }
             else if (iList == 6)
@@ -760,13 +791,12 @@ namespace RandomStart
             if (sVeh.Count() == 1)
                 sVehc = sVeh[0];
             else
-                sVehc = sVeh[RandInt(0, sVeh.Count() - 1)];
+                sVehc = sVeh[RandomNum.RandInt(0, sVeh.Count() - 1)];
 
             return sVehc;
         }
         public static string BuildRandomPed(int iPedtype, int iSubType)
         {
-
             LoggerLight.Loggers("BuildRandomPed, iPedtype == " + iPedtype + ", iSubType == " + iSubType);
 
             List<string> sPeddy = new List<string>();
@@ -810,12 +840,16 @@ namespace RandomStart
                 sPeddy.Add("a_f_y_clubcust_03");                //"Club Customer Female 3"); 
                 sPeddy.Add("a_f_y_smartcaspat_01");                //"Formel Casino Guest");  
                 sPeddy.Add("s_f_y_movprem_01");                //"Movie Premiere Female");  
+                sPeddy.Add("A_F_Y_StudioParty_01");
+                sPeddy.Add("A_F_Y_StudioParty_02");
 
                 sPeddy.Add("a_m_y_bevhills_02");                //"Beverly Hills Young Male 2"); 
                 sPeddy.Add("a_m_y_smartcaspat_01");                //"Formel Casino Guests"); 
                 sPeddy.Add("a_m_m_malibu_01");                //"Malibu Male");  
                 sPeddy.Add("a_m_y_soucent_04");                //"South Central Young Male 4");  
                 sPeddy.Add("s_m_m_movprem_01");                //"Movie Premiere Male");  
+                sPeddy.Add("A_M_M_StudioParty_01");
+                sPeddy.Add("A_M_Y_StudioParty_01");
             }       //High class
             else if (iPedtype == 4)
             {
@@ -836,6 +870,8 @@ namespace RandomStart
                 sPeddy.Add("a_f_y_vinewood_02");                //"Vinewood Female 2");  
                 sPeddy.Add("a_f_y_vinewood_03");                //"Vinewood Female 3");  
                 sPeddy.Add("a_f_y_vinewood_04");                //"Vinewood Female 4"); 
+                sPeddy.Add("A_F_Y_CarClub_01");
+                sPeddy.Add("A_M_Y_CarClub_01");
 
                 sPeddy.Add("a_m_m_afriamer_01");                //"African American Male");  
                 sPeddy.Add("a_m_m_bevhills_01");                //"Beverly Hills Male");  
@@ -863,6 +899,7 @@ namespace RandomStart
                 sPeddy.Add("a_m_y_clubcust_01");                //"Club Customer Male 1");  
                 sPeddy.Add("a_m_y_clubcust_02");                //"Club Customer Male 2");  
                 sPeddy.Add("a_m_y_clubcust_03");                //"Club Customer Male 3"); 
+                sPeddy.Add("A_M_Y_CarClub_01");
             }       //Mid class
             else if (iPedtype == 5)
             {
@@ -1020,11 +1057,15 @@ namespace RandomStart
                     sPeddy.Add("g_m_y_lost_01");                //"The Lost MC Male");  
                     sPeddy.Add("g_m_y_lost_02");                //"The Lost MC Male 2");  
                     sPeddy.Add("g_m_y_lost_03");                //"The Lost MC Male 3");
+                    sPeddy.Add("A_F_M_GenBiker_01");                //
+                    sPeddy.Add("A_M_M_GenBiker_01");                //
                 }
                 else
                 {
                     sPeddy.Add("g_m_y_strpunk_01");                //"Street Punk");  
                     sPeddy.Add("g_m_y_strpunk_02");                //"Street Punk 2");  
+                    sPeddy.Add("G_M_M_GenThug_01");
+                    sPeddy.Add("G_M_M_Goons_01");
                 }
             }       //GangStars--Subset
             else if (iPedtype == 9)
@@ -1119,6 +1160,8 @@ namespace RandomStart
                     sPeddy.Add("s_f_y_factory_01");                //"Factory Worker Female");  
                     sPeddy.Add("s_f_m_sweatshop_01");                //"Sweatshop Worker");  
                     sPeddy.Add("s_f_y_sweatshop_01");                //"Sweatshop Worker Young");  
+                    sPeddy.Add("S_F_M_Warehouse_01");
+                    sPeddy.Add("S_M_M_Warehouse_01");
                 }
                 else if (iSubType == 4)
                 {
@@ -1414,13 +1457,12 @@ namespace RandomStart
             if (sPeddy.Count() == 1)
                 sPed = sPeddy[0];
             else
-                sPed = sPeddy[RandInt(0, sPeddy.Count() - 1)];
+                sPed = sPeddy[RandomNum.RandInt(0, sPeddy.Count() - 1)];
 
             return sPed;
         }
         public static Prop MyPropBuild(string sPop, Vector3 Local, Vector3 Rotate, int iPropTask, bool bAddToLiist)
         {
-
             LoggerLight.Loggers("MyPropBuild, sPop == " + sPop + ", iPropTask == " + iPropTask);
 
             Prop Propper;
@@ -1459,7 +1501,6 @@ namespace RandomStart
         }
         public static List<string> DanceList(bool bMale, int iSpeed)
         {
-
             LoggerLight.Loggers("DanceList, bMale == " + bMale + ", iSpeed == " + iSpeed);
 
             List<string> sDancing = new List<string>();
@@ -1876,7 +1917,7 @@ namespace RandomStart
             }
             if (Dance.Count() > 0)
             {
-                int iRand = RandInt(0, Dance.Count() - 1);
+                int iRand = RandomNum.RandInt(0, Dance.Count() - 1);
                 sDancing.Add(Dance[iRand]);
                 sDancing.Add(DanceVar[iRand]);
             }
@@ -1917,15 +1958,7 @@ namespace RandomStart
                 sPeds.Add("A_M_Y_Beach_04");
             }           //DancingBeach
 
-            return sPeds[RandInt(0, sPeds.Count() - 1)];
-        }
-        public static int RandInt(int minNumber, int maxNumber)
-        {
-            LoggerLight.Loggers("RandInt");
-
-            int iMyRanInt = Function.Call<int>(Hash.GET_RANDOM_INT_IN_RANGE, minNumber, maxNumber);
-
-            return iMyRanInt;
+            return sPeds[RandomNum.RandInt(0, sPeds.Count() - 1)];
         }
         public static float RandFloat(float fMin, float fMax)
         {
@@ -1933,141 +1966,138 @@ namespace RandomStart
 
             return iMyRanFlow;
         }
-        public static List<string> TattoosList(int iPed, int iZone)
+        public static List<Tattoo> TattoosList(int iPed, int iZone)
         {
             LoggerLight.Loggers("TattoosList, iPed == " + iPed + ", iZone == " + iZone);
 
             bool bEmpty = false;
-            List<string> MyTat = new List<string>();
-
-            DataStore.sTatBase.Clear();
-            DataStore.sTatName.Clear();
+            List<Tattoo> TatList = new List<Tattoo>();
 
             if (iPed == 1)
             {
                 if (iZone == 1)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_018"); MyTat.Add("Impotent Rage");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_014"); MyTat.Add("Chinese Dragon");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_008"); MyTat.Add("Trinity Knot");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_004"); MyTat.Add("Lucky");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_020"); MyTat.Add("Way of the Gun");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_017"); MyTat.Add("Whiskey Life");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_015"); MyTat.Add("Flaming Shamrock");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_006"); MyTat.Add("Eagle and Serpent");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_018", Name = "Impotent Rage" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_014", Name = "Chinese Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_008", Name = "Trinity Knot" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_004", Name = "Lucky" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_020", Name = "Way of the Gun" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_017", Name = "Whiskey Life" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_015", Name = "Flaming Shamrock" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_006", Name = "Eagle and Serpent" });
                 }//TORSO
                 else if (iZone == 2)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_003"); MyTat.Add("The Rose of My Heart");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_003", Name = "The Rose of My Heart" });
                 }//HEAD
                 else if (iZone == 3)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_019"); MyTat.Add("Dragon");//     
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_012"); MyTat.Add("Faith");//   
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_010"); MyTat.Add("Lady M");//   
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_009"); MyTat.Add("Lucky Celtic Dogs");//  
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_007"); MyTat.Add("Mermaid");//       
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_000"); MyTat.Add("Mandy");//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_019", Name = "Dragon" });//     
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_012", Name = "Faith" });//   
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_010", Name = "Lady M" });//   
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_009", Name = "Lucky Celtic Dogs" });//  
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_007", Name = "Mermaid" });//       
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_000", Name = "Mandy" });//    
                 }//LEFT ARM 
                 else if (iZone == 4)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_016"); MyTat.Add("Michael and Amanda");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_013"); MyTat.Add("Flower Mural");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_005"); MyTat.Add("Virgin Mary");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_001"); MyTat.Add("Family is Forever");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_016", Name = "Michael and Amanda" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_013", Name = "Flower Mural" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_005", Name = "Virgin Mary" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_001", Name = "Family is Forever" });
                 }//RIGHT ARM
                 else if (iZone == 5)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_002"); MyTat.Add("Smoking Dagger");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_002", Name = "Smoking Dagger" });
                 }//LEFT LEG
                 else
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("MK_011"); MyTat.Add("Tiki Pinup ");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "MK_011", Name = "Tiki Pinup " });
                 }//RIGHT LEG
             }// Michael
             else if (iPed == 2)
             {
                 if (iZone == 1)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_038"); MyTat.Add("Angel of Los Santos");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_010"); MyTat.Add("Grace and Power");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_004"); MyTat.Add("Dragon");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_039"); MyTat.Add("Impotent Rage");//   
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_037"); MyTat.Add("Los Santos Bills");// 
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_036"); MyTat.Add("These Streets");//    
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_035"); MyTat.Add("Families");//      
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_032"); MyTat.Add("LS Flames");//  
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_031"); MyTat.Add("Fam 4 Life");//   
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_030"); MyTat.Add("Families Symbol");//      
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_029"); MyTat.Add("FAM Power");//    
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_028"); MyTat.Add("Flaming Cross");//  
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_021"); MyTat.Add("Chamberlain Families LS");//  
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_020"); MyTat.Add("LS Heart ");//   
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_018"); MyTat.Add("Families Kings");//  
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_011"); MyTat.Add("Forum4Life");//      
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_000"); MyTat.Add("Chamberlain");//     
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_038", Name = "Angel of Los Santos" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_010", Name = "Grace and Power" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_004", Name = "Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_039", Name = "Impotent Rage" });//   
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_037", Name = "Los Santos Bills" });// 
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_036", Name = "These Streets" });//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_035", Name = "Families" });//      
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_032", Name = "LS Flames" });//  
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_031", Name = "Fam 4 Life" });//   
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_030", Name = "Families Symbol" });//      
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_029", Name = "FAM Power" });//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_028", Name = "Flaming Cross" });//  
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_021", Name = "Chamberlain Families LS" });//  
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_020", Name = "LS Heart " });//   
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_018", Name = "Families Kings" });//  
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_011", Name = "Forum4Life" });//      
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_000", Name = "Chamberlain" });//     
                     //Not in List
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_025"); MyTat.Add("Skull on the Cross");//    
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_024"); MyTat.Add("Skull and Dragon");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_025", Name = "Skull on the Cross" });//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_024", Name = "Skull and Dragon" });
                 }//TORSO
                 else if (iZone == 2)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_022"); MyTat.Add("Chamberlain Families");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_005"); MyTat.Add("Faith");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_034"); MyTat.Add("LS Bold");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_033"); MyTat.Add("LS Script");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_014"); MyTat.Add("F King");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_013"); MyTat.Add("F Crown ");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_022", Name = "Chamberlain Families" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_005", Name = "Faith" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_034", Name = "LS Bold" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_033", Name = "LS Script" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_014", Name = "F King" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_013", Name = "F Crown " });
                 }//HEAD
                 else if (iZone == 3)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_019"); MyTat.Add("FAMILIES");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_017"); MyTat.Add("Lion");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_016"); MyTat.Add("Dragon Mural");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_007"); MyTat.Add("Serpent Skull");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_001"); MyTat.Add("Brotherhood");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_019", Name = "FAMILIES" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_017", Name = "Lion" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_016", Name = "Dragon Mural" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_007", Name = "Serpent Skull" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_001", Name = "Brotherhood" });
                 }//LEFT ARM
                 else if (iZone == 4)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_023"); MyTat.Add("Fiery Dragon");//    
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_012"); MyTat.Add("Oriental Mural");//    
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_009"); MyTat.Add("Chop");//    
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_008"); MyTat.Add("Mother");//    
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_006"); MyTat.Add("Serpents");//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_023", Name = "Fiery Dragon" });//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_012", Name = "Oriental Mural" });//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_009", Name = "Chop" });//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_008", Name = "Mother" });//    
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_006", Name = "Serpents" });//    
                 }//RIGHT ARM
                 else if (iZone == 5)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_027"); MyTat.Add("Hottie");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_015"); MyTat.Add("The Warrior");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_002"); MyTat.Add("Dragons");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_027", Name = "Hottie" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_015", Name = "The Warrior" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_002", Name = "Dragons" });
                 }//LEFT LEG
                 else
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_026"); MyTat.Add("Trust No One");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("fr_003"); MyTat.Add("Melting Skull");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_026", Name = "Trust No One" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "fr_003", Name = "Melting Skull" });
                 }//RIGHT LEG
             }// Franklin
             else if (iPed == 3)
             {
                 if (iZone == 1)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_032"); MyTat.Add("Lucky");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_031"); MyTat.Add("Unzipped");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_026"); MyTat.Add("Skulls and Rose");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_022"); MyTat.Add("Chinese Dragon");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_033"); MyTat.Add("Impotent Rage");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_030"); MyTat.Add("Fuck Cops");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_029"); MyTat.Add("Smiley");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_028"); MyTat.Add("Ace");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_027"); MyTat.Add("Piggy");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_023"); MyTat.Add("Monster Pups");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_021"); MyTat.Add("Stone Cross");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_015"); MyTat.Add("Tweaker");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_013"); MyTat.Add("Betraying Scroll");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_012"); MyTat.Add("Eye Catcher");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_006"); MyTat.Add("Blackjack");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_004"); MyTat.Add("Evil Clown");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_000"); MyTat.Add("Imperial Douche");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_032", Name = "Lucky" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_031", Name = "Unzipped" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_026", Name = "Skulls and Rose" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_022", Name = "Chinese Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_033", Name = "Impotent Rage" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_030", Name = "Fuck Cops" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_029", Name = "Smiley" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_028", Name = "Ace" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_027", Name = "Piggy" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_023", Name = "Monster Pups" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_021", Name = "Stone Cross" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_015", Name = "Tweaker" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_013", Name = "Betraying Scroll" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_012", Name = "Eye Catcher" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_006", Name = "Blackjack" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_004", Name = "Evil Clown" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_000", Name = "Imperial Douche" });
                 }//TORSO
                 else if (iZone == 2)
                 {
@@ -2075,1563 +2105,1722 @@ namespace RandomStart
                 }//HEAD
                 else if (iZone == 3)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_024"); MyTat.Add("Grim Reaper Smoking Gun");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_018"); MyTat.Add("Dope Skull");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_017"); MyTat.Add("The Wages of Sin");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_016"); MyTat.Add("Dragon and Dagger");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_003"); MyTat.Add("Zodiac Skull");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_001"); MyTat.Add("R.I.P Michael");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_024", Name = "Grim Reaper Smoking Gun" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_018", Name = "Dope Skull" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_017", Name = "The Wages of Sin" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_016", Name = "Dragon and Dagger" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_003", Name = "Zodiac Skull" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_001", Name = "R.I.P Michael" });
                 }//LEFT ARM
                 else if (iZone == 4)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_020"); MyTat.Add("Indian Ram");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_014"); MyTat.Add("Muertos");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_010"); MyTat.Add("Flaming Skull");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_009"); MyTat.Add("Broken Skull");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_008"); MyTat.Add("Dagger");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_007"); MyTat.Add("Tribal");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_020", Name = "Indian Ram" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_014", Name = "Muertos" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_010", Name = "Flaming Skull" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_009", Name = "Broken Skull" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_008", Name = "Dagger" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_007", Name = "Tribal" });
                 }//RIGHT ARM
                 else if (iZone == 5)
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_011"); MyTat.Add("Serpant Skull");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_002"); MyTat.Add("Grim Reaper");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_011", Name = "Serpant Skull" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_002", Name = "Grim Reaper" });
                 }//LEFT LEG
                 else
                 {
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_025"); MyTat.Add("Freedom");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_019"); MyTat.Add("Flaming Scorpion");
-                    DataStore.sTatBase.Add("singleplayer_overlays"); DataStore.sTatName.Add("TP_005"); MyTat.Add("Love to Hate");
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_025", Name = "Freedom" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_019", Name = "Flaming Scorpion" });
+                    TatList.Add(new Tattoo { BaseName = "singleplayer_overlays", TatName = "TP_005", Name = "Love to Hate" });
                 }//RIGHT LEG
             }// Trevor
             else if (iPed == 4)
             {
                 if (iZone == 1)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_021_F"); MyTat.Add("Skull Surfer");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_020_F"); MyTat.Add("Speaker Tower");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_019_F"); MyTat.Add("Record Shot");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_018_F"); MyTat.Add("Record Head");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_017_F"); MyTat.Add("Tropical Sorcerer");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_016_F"); MyTat.Add("Rose Panther");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_015_F"); MyTat.Add("Paradise Ukulele");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_014_F"); MyTat.Add("Paradise Nap");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_013_F"); MyTat.Add("Wild Dancers");//
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_006_F", Name = "Painted Micro SMG" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_007_F", Name = "Weapon King" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_035_F", Name = "Sniff Sniff" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_036_F", Name = "Charm Pattern" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_037_F", Name = "Witch & Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_038_F", Name = "Pumpkin Bug" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_039_F", Name = "Sinner" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_057_F", Name = "Gray Demon" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_039_F"); MyTat.Add("Space Rangers");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_038_F"); MyTat.Add("Robot Bubblegum");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_036_F"); MyTat.Add("LS Shield");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_030_F"); MyTat.Add("Howitzer");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_028_F"); MyTat.Add("Bananas Gone Bad");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_027_F"); MyTat.Add("Epsilon");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_024_F"); MyTat.Add("Mount Chiliad");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_023_F"); MyTat.Add("Bigfoot");//
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_004_F", Name = "Hood Heart" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_008_F", Name = "Los Santos Tag" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_013_F", Name = "Blessed Boombox" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_014_F", Name = "Chamberlain Hills" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_015_F", Name = "Smoking Barrels" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_026_F", Name = "Dollar Guns Crossed" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_032_F"); MyTat.Add("Play Your Ace");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_029_F"); MyTat.Add("The Table");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_021_F"); MyTat.Add("Show Your Hand");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_017_F"); MyTat.Add("Roll the Dice");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_015_F"); MyTat.Add("The Jolly Joker");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_011_F"); MyTat.Add("Life's a Gamble");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_010_F"); MyTat.Add("Photo Finish");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_009_F"); MyTat.Add("Till Death Do Us Part");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_008_F"); MyTat.Add("Snake Eyes");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_007_F"); MyTat.Add("777");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_006_F"); MyTat.Add("Wheel of Suits");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_001_F"); MyTat.Add("Jackpot");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_021_F", Name = "Skull Surfer" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_020_F", Name = "Speaker Tower" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_019_F", Name = "Record Shot" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_018_F", Name = "Record Head" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_017_F", Name = "Tropical Sorcerer" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_016_F", Name = "Rose Panther" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_015_F", Name = "Paradise Ukulele" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_014_F", Name = "Paradise Nap" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_013_F", Name = "Wild Dancers" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_027_F"); MyTat.Add("Molon Labe");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_024_F"); MyTat.Add("Dragon Slayer");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_022_F"); MyTat.Add("Spartan and Horse");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_021_F"); MyTat.Add("Spartan and Lion");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_016_F"); MyTat.Add("Odin and Raven");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_015_F"); MyTat.Add("Samurai Combat");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_011_F"); MyTat.Add("Weathered Skull");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_010_F"); MyTat.Add("Spartan Shield");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_009_F"); MyTat.Add("Norse Rune");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_005_F"); MyTat.Add("Ghost Dragon");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_002_F"); MyTat.Add("Kabuto");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_039_F", Name = "Space Rangers" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_038_F", Name = "Robot Bubblegum" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_036_F", Name = "LS Shield" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_030_F", Name = "Howitzer" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_028_F", Name = "Bananas Gone Bad" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_027_F", Name = "Epsilon" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_024_F", Name = "Mount Chiliad" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_023_F", Name = "Bigfoot" });//
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_025_F"); MyTat.Add("Claimed By The Beast");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_024_F"); MyTat.Add("Pirate Captain");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_022_F"); MyTat.Add("X Marks The Spot");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_018_F"); MyTat.Add("Finders Keepers");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_017_F"); MyTat.Add("Framed Tall Ship");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_016_F"); MyTat.Add("Skull Compass");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_013_F"); MyTat.Add("Torn Wings");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_009_F"); MyTat.Add("Tall Ship Conflict");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_006_F"); MyTat.Add("Never Surrender");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_003_F"); MyTat.Add("Give Nothing Back");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_032_F", Name = "Play Your Ace" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_029_F", Name = "The Table" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_021_F", Name = "Show Your Hand" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_017_F", Name = "Roll the Dice" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_015_F", Name = "The Jolly Joker" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_011_F", Name = "Life's a Gamble" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_010_F", Name = "Photo Finish" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_009_F", Name = "Till Death Do Us Part" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_008_F", Name = "Snake Eyes" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_007_F", Name = "777" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_006_F", Name = "Wheel of Suits" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_001_F", Name = "Jackpot" });//
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_007_F"); MyTat.Add("Eagle Eyes");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_005_F"); MyTat.Add("Parachute Belle");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_004_F"); MyTat.Add("Balloon Pioneer");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_002_F"); MyTat.Add("Winged Bombshell");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_001_F"); MyTat.Add("Pilot Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_027_F", Name = "Molon Labe" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_024_F", Name = "Dragon Slayer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_022_F", Name = "Spartan and Horse" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_021_F", Name = "Spartan and Lion" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_016_F", Name = "Odin and Raven" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_015_F", Name = "Samurai Combat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_011_F", Name = "Weathered Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_010_F", Name = "Spartan Shield" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_009_F", Name = "Norse Rune" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_005_F", Name = "Ghost Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_002_F", Name = "Kabuto" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_022_F"); MyTat.Add("Explosive Heart");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_019_F"); MyTat.Add("Pistol Wings");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_018_F"); MyTat.Add("Dual Wield Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_014_F"); MyTat.Add("Backstabber");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_013_F"); MyTat.Add("Wolf Insignia");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_009_F"); MyTat.Add("Butterfly Knife");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_001_F"); MyTat.Add("Crossed Weapons");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_000_F"); MyTat.Add("Bullet Proof");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_025_F", Name = "Claimed By The Beast" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_024_F", Name = "Pirate Captain" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_022_F", Name = "X Marks The Spot" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_018_F", Name = "Finders Keepers" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_017_F", Name = "Framed Tall Ship" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_016_F", Name = "Skull Compass" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_013_F", Name = "Torn Wings" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_009_F", Name = "Tall Ship Conflict" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_006_F", Name = "Never Surrender" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_003_F", Name = "Give Nothing Back" });
 
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_011_F"); MyTat.Add("Talk Shit Get Hit");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_010_F"); MyTat.Add("Take the Wheel");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_009_F"); MyTat.Add("Serpents of Destruction");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_002_F"); MyTat.Add("Tuned to Death");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_001_F"); MyTat.Add("Power Plant");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_000_F"); MyTat.Add("Block Back");
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_007_F", Name = "Eagle Eyes" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_005_F", Name = "Parachute Belle" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_004_F", Name = "Balloon Pioneer" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_002_F", Name = "Winged Bombshell" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_001_F", Name = "Pilot Skull" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_043_F"); MyTat.Add("Ride Forever");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_030_F"); MyTat.Add("Brothers For Life");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_021_F"); MyTat.Add("Flaming Reaper");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_017_F"); MyTat.Add("Clawed Beast");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_011_F"); MyTat.Add("R.I.P. My Brothers");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_008_F"); MyTat.Add("Freedom Wheels");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_006_F"); MyTat.Add("Chopper Freedom");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_022_F", Name = "Explosive Heart" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_019_F", Name = "Pistol Wings" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_018_F", Name = "Dual Wield Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_014_F", Name = "Backstabber" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_013_F", Name = "Wolf Insignia" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_009_F", Name = "Butterfly Knife" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_001_F", Name = "Crossed Weapons" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_000_F", Name = "Bullet Proof" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_048_F"); MyTat.Add("Racing Doll");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_046_F"); MyTat.Add("Full Throttle");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_041_F"); MyTat.Add("Brapp");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_040_F"); MyTat.Add("Monkey Chopper");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_037_F"); MyTat.Add("Big Grills");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_034_F"); MyTat.Add("Feather Road Kill");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_030_F"); MyTat.Add("Man's Ruin");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_029_F"); MyTat.Add("Majestic Finish");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_026_F"); MyTat.Add("Winged Wheel");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_024_F"); MyTat.Add("Road Kill");
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_011_F", Name = "Talk Shit Get Hit" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_010_F", Name = "Take the Wheel" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_009_F", Name = "Serpents of Destruction" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_002_F", Name = "Tuned to Death" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_001_F", Name = "Power Plant" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_000_F", Name = "Block Back" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_032_F"); MyTat.Add("Reign Over");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_031_F"); MyTat.Add("Dead Pretty");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_008_F"); MyTat.Add("Love the Game");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_000_F"); MyTat.Add("SA Assault");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_043_F", Name = "Ride Forever" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_030_F", Name = "Brothers For Life" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_021_F", Name = "Flaming Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_017_F", Name = "Clawed Beast" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_011_F", Name = "R.I.P. My Brothers" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_008_F", Name = "Freedom Wheels" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_006_F", Name = "Chopper Freedom" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_021_F"); MyTat.Add("Sad Angel");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_014_F"); MyTat.Add("Love is Blind");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_010_F"); MyTat.Add("Bad Angel");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_009_F"); MyTat.Add("Amazon");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_048_F", Name = "Racing Doll" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_046_F", Name = "Full Throttle" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_041_F", Name = "Brapp" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_040_F", Name = "Monkey Chopper" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_037_F", Name = "Big Grills" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_034_F", Name = "Feather Road Kill" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_030_F", Name = "Man's Ruin" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_029_F", Name = "Majestic Finish" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_026_F", Name = "Winged Wheel" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_024_F", Name = "Road Kill" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_029_F"); MyTat.Add("Geometric Design");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_022_F"); MyTat.Add("Cloaked Angel");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_024_F"); MyTat.Add("Feather Mural");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_006_F"); MyTat.Add("Adorned Wolf");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_032_F", Name = "Reign Over" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_031_F", Name = "Dead Pretty" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_008_F", Name = "Love the Game" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_000_F", Name = "SA Assault" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_015"); MyTat.Add("Japanese Warrior");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_011"); MyTat.Add("Roaring Tiger");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_006"); MyTat.Add("Carp Shaded");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_005"); MyTat.Add("Carp Outline");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_021_F", Name = "Sad Angel" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_014_F", Name = "Love is Blind" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_010_F", Name = "Bad Angel" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_009_F", Name = "Amazon" });//
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_046"); MyTat.Add("Triangles");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_041"); MyTat.Add("Tooth");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_032"); MyTat.Add("Paper Plane");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_031"); MyTat.Add("Skateboard");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_030"); MyTat.Add("Shark Fin");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_025"); MyTat.Add("Watch Your Step");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_024"); MyTat.Add("Pyamid");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_012"); MyTat.Add("Antlers");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_011"); MyTat.Add("Infinity");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_000"); MyTat.Add("Crossed Arrows");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_029_F", Name = "Geometric Design" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_022_F", Name = "Cloaked Angel" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_024_F", Name = "Feather Mural" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_006_F", Name = "Adorned Wolf" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Back_001"); MyTat.Add("Gold Digger");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Back_000"); MyTat.Add("Respect");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_015", Name = "Japanese Warrior" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_011", Name = "Roaring Tiger" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_006", Name = "Carp Shaded" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_005", Name = "Carp Outline" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Should_000"); MyTat.Add("Sea Horses");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Back_002"); MyTat.Add("Shrimp");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Should_001"); MyTat.Add("Catfish");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Back_000"); MyTat.Add("Rock Solid");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Back_001"); MyTat.Add("Hibiscus Flower Duo");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_046", Name = "Triangles" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_041", Name = "Tooth" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_032", Name = "Paper Plane" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_031", Name = "Skateboard" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_030", Name = "Shark Fin" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_025", Name = "Watch Your Step" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_024", Name = "Pyamid" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_012", Name = "Antlers" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_011", Name = "Infinity" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_000", Name = "Crossed Arrows" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_045"); MyTat.Add("Skulls and Rose");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_030"); MyTat.Add("Lucky Celtic Dogs");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_020"); MyTat.Add("Dragon");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_019"); MyTat.Add("The Wages of Sin");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_016"); MyTat.Add("Evil Clown");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_013"); MyTat.Add("Eagle and Serpent");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_011"); MyTat.Add("LS Script");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_009"); MyTat.Add("Skull on the Cross");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Back_001", Name = "Gold Digger" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Back_000", Name = "Respect" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_019"); MyTat.Add("Clown Dual Wield Dollars");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_018"); MyTat.Add("Clown Dual Wield");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_017"); MyTat.Add("Clown and Gun");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_016"); MyTat.Add("Clown");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_014"); MyTat.Add("Trust No One");//Car Bomb Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_008"); MyTat.Add("Los Santos Customs");//Mod a Car Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_005"); MyTat.Add("Angel");//Win Every Game Mode Award
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Should_000", Name = "Sea Horses" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Back_002", Name = "Shrimp" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Should_001", Name = "Catfish" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Back_000", Name = "Rock Solid" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Back_001", Name = "Hibiscus Flower Duo" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_045", Name = "Skulls and Rose" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_030", Name = "Lucky Celtic Dogs" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_020", Name = "Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_019", Name = "The Wages of Sin" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_016", Name = "Evil Clown" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_013", Name = "Eagle and Serpent" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_011", Name = "LS Script" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_009", Name = "Skull on the Cross" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_019", Name = "Clown Dual Wield Dollars" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_018", Name = "Clown Dual Wield" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_017", Name = "Clown and Gun" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_016", Name = "Clown" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_014", Name = "Trust No One" });//Car Bomb Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_008", Name = "Los Santos Customs" });//Mod a Car Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_005", Name = "Angel" });//Win Every Game Mode Award
                     //Not In List
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_046"); MyTat.Add("Zip?");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_006"); MyTat.Add("Feather Birds");
-                    DataStore.sTatBase.Add("mpchristmas2018_overlays"); DataStore.sTatName.Add("MP_Christmas2018_Tat_000_F"); MyTat.Add("???");
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_046", Name = "Zip?" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_006", Name = "Feather Birds" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2018_overlays", TatName = "MP_Christmas2018_Tat_000_F", Name = "???" });
                 }//BACK
                 else if (iZone == 2)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_023_F"); MyTat.Add("Techno Glitch");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_022_F"); MyTat.Add("Paradise Sirens");//
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_003_F", Name = "Bullet Mouth" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_004_F", Name = "Smoking Barrel" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_040_F", Name = "Carved Pumpkin" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_041_F", Name = "Branched Werewolf" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_042_F", Name = "Winged Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_058_F", Name = "Shrieking Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_059_F", Name = "Swords & City" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_035_F"); MyTat.Add("LS Panic");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_033_F"); MyTat.Add("LS City");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_026_F"); MyTat.Add("Dignity");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_025_F"); MyTat.Add("Davis");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_016_F", Name = "All From The Same Tree" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_017_F", Name = "King of the Jungle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_018_F", Name = "Night Owl" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_022_F"); MyTat.Add("Blood Money");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_003_F"); MyTat.Add("Royal Flush");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_000_F"); MyTat.Add("In the Pocket");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_023_F", Name = "Techno Glitch" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_022_F", Name = "Paradise Sirens" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_026_F"); MyTat.Add("Spartan Skull");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_020_F"); MyTat.Add("Medusa's Gaze");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_019_F"); MyTat.Add("Strike Force");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_003_F"); MyTat.Add("Native Warrior");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_000_F"); MyTat.Add("Thor - Goblin");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_035_F", Name = "LS Panic" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_033_F", Name = "LS City" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_026_F", Name = "Dignity" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_025_F", Name = "Davis" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_021_F"); MyTat.Add("Dead Tales");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_019_F"); MyTat.Add("Lost At Sea");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_007_F"); MyTat.Add("No Honor");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_000_F"); MyTat.Add("Bless The Dead");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_022_F", Name = "Blood Money" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_003_F", Name = "Royal Flush" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_000_F", Name = "In the Pocket" });//
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_000_F"); MyTat.Add("Turbulence");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_026_F", Name = "Spartan Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_020_F", Name = "Medusa's Gaze" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_019_F", Name = "Strike Force" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_003_F", Name = "Native Warrior" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_000_F", Name = "Thor - Goblin" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_028_F"); MyTat.Add("Micro SMG Chain");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_020_F"); MyTat.Add("Crowned Weapons");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_017_F"); MyTat.Add("Dog Tags");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_012_F"); MyTat.Add("Dollar Daggers");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_021_F", Name = "Dead Tales" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_019_F", Name = "Lost At Sea" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_007_F", Name = "No Honor" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_000_F", Name = "Bless The Dead" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_060_F"); MyTat.Add("We Are The Mods!");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_059_F"); MyTat.Add("Faggio");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_058_F"); MyTat.Add("Reaper Vulture");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_050_F"); MyTat.Add("Unforgiven");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_041_F"); MyTat.Add("No Regrets");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_034_F"); MyTat.Add("Brotherhood of Bikes");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_032_F"); MyTat.Add("Western Eagle");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_029_F"); MyTat.Add("Bone Wrench");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_026_F"); MyTat.Add("American Dream");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_023_F"); MyTat.Add("Western MC");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_019_F"); MyTat.Add("Gruesome Talons");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_018_F"); MyTat.Add("Skeletal Chopper");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_013_F"); MyTat.Add("Demon Crossbones");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_005_F"); MyTat.Add("Made In America");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_001_F"); MyTat.Add("Both Barrels");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_000_F"); MyTat.Add("Demon Rider");
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_000_F", Name = "Turbulence" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_044_F"); MyTat.Add("Ram Skull");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_033_F"); MyTat.Add("Sugar Skull Trucker");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_027_F"); MyTat.Add("Punk Road Hog");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_019_F"); MyTat.Add("Engine Heart");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_018_F"); MyTat.Add("Vintage Bully");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_011_F"); MyTat.Add("Wheels of Death");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_028_F", Name = "Micro SMG Chain" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_020_F", Name = "Crowned Weapons" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_017_F", Name = "Dog Tags" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_012_F", Name = "Dollar Daggers" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_019_F"); MyTat.Add("Death Behind");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_012_F"); MyTat.Add("Royal Kiss");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_060_F", Name = "We Are The Mods!" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_059_F", Name = "Faggio" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_058_F", Name = "Reaper Vulture" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_050_F", Name = "Unforgiven" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_041_F", Name = "No Regrets" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_034_F", Name = "Brotherhood of Bikes" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_032_F", Name = "Western Eagle" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_029_F", Name = "Bone Wrench" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_026_F", Name = "American Dream" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_023_F", Name = "Western MC" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_019_F", Name = "Gruesome Talons" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_018_F", Name = "Skeletal Chopper" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_013_F", Name = "Demon Crossbones" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_005_F", Name = "Made In America" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_001_F", Name = "Both Barrels" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_000_F", Name = "Demon Rider" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_026_F"); MyTat.Add("Royal Takeover");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_013_F"); MyTat.Add("Love Gamble");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_002_F"); MyTat.Add("Holy Mary");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_001_F"); MyTat.Add("King Fight");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_044_F", Name = "Ram Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_033_F", Name = "Sugar Skull Trucker" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_027_F", Name = "Punk Road Hog" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_019_F", Name = "Engine Heart" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_018_F", Name = "Vintage Bully" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_011_F", Name = "Wheels of Death" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_027_F"); MyTat.Add("Cobra Dawn");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_025_F"); MyTat.Add("Reaper Sway");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_012_F"); MyTat.Add("Geometric Galaxy");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_002_F"); MyTat.Add("The Howler");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_019_F", Name = "Death Behind" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_012_F", Name = "Royal Kiss" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_015_F"); MyTat.Add("Smoking Sisters");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_014_F"); MyTat.Add("Ancient Queen");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_008_F"); MyTat.Add("Flying Eye");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_007_F"); MyTat.Add("Eye of the Griffin");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_026_F", Name = "Royal Takeover" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_013_F", Name = "Love Gamble" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_002_F", Name = "Holy Mary" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_001_F", Name = "King Fight" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_019"); MyTat.Add("Royal Dagger Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_018"); MyTat.Add("Royal Dagger Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_017"); MyTat.Add("Loose Lips Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_016"); MyTat.Add("Loose Lips Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_009"); MyTat.Add("Time To Die");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_027_F", Name = "Cobra Dawn" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_025_F", Name = "Reaper Sway" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_012_F", Name = "Geometric Galaxy" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_002_F", Name = "The Howler" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_047"); MyTat.Add("Cassette");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_033"); MyTat.Add("Stag");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_013"); MyTat.Add("Boombox");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_002"); MyTat.Add("Chemistry");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_015_F", Name = "Smoking Sisters" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_014_F", Name = "Ancient Queen" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_008_F", Name = "Flying Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_007_F", Name = "Eye of the Griffin" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Chest_002"); MyTat.Add("Love Money");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Chest_001"); MyTat.Add("Makin' Money");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Chest_000"); MyTat.Add("High Roller");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_019", Name = "Royal Dagger Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_018", Name = "Royal Dagger Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_017", Name = "Loose Lips Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_016", Name = "Loose Lips Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_009", Name = "Time To Die" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Chest_001"); MyTat.Add("Anchor");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Chest_000"); MyTat.Add("Anchor");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Chest_002"); MyTat.Add("Los Santos Wreath");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_047", Name = "Cassette" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_033", Name = "Stag" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_013", Name = "Boombox" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_002", Name = "Chemistry" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_044"); MyTat.Add("Stone Cross");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_034"); MyTat.Add("Flaming Shamrock");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_025"); MyTat.Add("LS Bold");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_024"); MyTat.Add("Flaming Cross");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_010"); MyTat.Add("LS Flames");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Chest_002", Name = "Love Money" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Chest_001", Name = "Makin' Money" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Chest_000", Name = "High Roller" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_013"); MyTat.Add("Seven Deadly Sins");//Kill 1000 Players Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_012"); MyTat.Add("Embellished Scroll");//Kill 500 Players Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_011"); MyTat.Add("Blank Scroll");////Kill 100 Players Award?
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_003"); MyTat.Add("Blackjack");
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Chest_001", Name = "Anchor" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Chest_000", Name = "Anchor" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Chest_002", Name = "Los Santos Wreath" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_044", Name = "Stone Cross" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_034", Name = "Flaming Shamrock" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_025", Name = "LS Bold" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_024", Name = "Flaming Cross" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_010", Name = "LS Flames" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_013", Name = "Seven Deadly Sins" });//Kill 1000 Players Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_012", Name = "Embellished Scroll" });//Kill 500 Players Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_011", Name = "Blank Scroll" });////Kill 100 Players Award?
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_003", Name = "Blackjack" });
                     //
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Female_Crew_Tat_000"); MyTat.Add("Crew Emblem");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Female_Crew_Tat_000", Name = "Crew Emblem" });
                 }//CHEST
                 else if (iZone == 3)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_030_F"); MyTat.Add("Radio Tape");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_004_F"); MyTat.Add("Skeleton Breeze");//
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_005_F", Name = "Concealed" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_043_F", Name = "Cursed Saki" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_044_F", Name = "Smouldering Bat & Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_060_F", Name = "Blaine County" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_061_F", Name = "Angry Possum" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_062_F", Name = "Floral Demon" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_037_F"); MyTat.Add("LadyBug");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_029_F"); MyTat.Add("Fatal Incursion");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_024_F", Name = "Beatbox Silhouette" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_025_F", Name = "Davis Flames" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_031_F"); MyTat.Add("Gambling Royalty");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_024_F"); MyTat.Add("Cash Mouth");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_016_F"); MyTat.Add("Rose and Aces");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_012_F"); MyTat.Add("Skull of Suits");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_030_F", Name = "Radio Tape" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_004_F", Name = "Skeleton Breeze" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_008_F"); MyTat.Add("Spartan Warrior");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_037_F", Name = "LadyBug" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_029_F", Name = "Fatal Incursion" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_015_F"); MyTat.Add("Jolly Roger");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_010_F"); MyTat.Add("See You In Hell");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_002_F"); MyTat.Add("Dead Lies");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_031_F", Name = "Gambling Royalty" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_024_F", Name = "Cash Mouth" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_016_F", Name = "Rose and Aces" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_012_F", Name = "Skull of Suits" });//
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_006_F"); MyTat.Add("Bombs Away");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_008_F", Name = "Spartan Warrior" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_029_F"); MyTat.Add("Win Some Lose Some");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_010_F"); MyTat.Add("Cash Money");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_015_F", Name = "Jolly Roger" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_010_F", Name = "See You In Hell" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_002_F", Name = "Dead Lies" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_052_F"); MyTat.Add("Biker Mount");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_039_F"); MyTat.Add("Gas Guzzler");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_031_F"); MyTat.Add("Gear Head");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_010_F"); MyTat.Add("Skull Of Taurus");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_003_F"); MyTat.Add("Web Rider");
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_006_F", Name = "Bombs Away" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_014_F"); MyTat.Add("Bat Cat of Spades");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_012_F"); MyTat.Add("Punk Biker");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_029_F", Name = "Win Some Lose Some" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_010_F", Name = "Cash Money" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_016_F"); MyTat.Add("Two Face");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_011_F"); MyTat.Add("Lady Liberty");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_052_F", Name = "Biker Mount" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_039_F", Name = "Gas Guzzler" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_031_F", Name = "Gear Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_010_F", Name = "Skull Of Taurus" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_003_F", Name = "Web Rider" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_004_F"); MyTat.Add("Gun Mic");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_014_F", Name = "Bat Cat of Spades" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_012_F", Name = "Punk Biker" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_003_F"); MyTat.Add("Abstract Skull");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_016_F", Name = "Two Face" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_011_F", Name = "Lady Liberty" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_028"); MyTat.Add("Executioner");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_013"); MyTat.Add("Lizard");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_004_F", Name = "Gun Mic" });//
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_035"); MyTat.Add("Sewn Heart");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_029"); MyTat.Add("Sad");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_006"); MyTat.Add("Feather Birds");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_003_F", Name = "Abstract Skull" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Stom_002"); MyTat.Add("Money Bag");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Stom_001"); MyTat.Add("Santo Capra Logo");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Stom_000"); MyTat.Add("Diamond Back");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_028", Name = "Executioner" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_013", Name = "Lizard" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Stom_000"); MyTat.Add("Swallow");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Stom_002"); MyTat.Add("Dolphin");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Stom_001"); MyTat.Add("Hibiscus Flower");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_RSide_000"); MyTat.Add("Love Dagger");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_035", Name = "Sewn Heart" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_029", Name = "Sad" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_006", Name = "Feather Birds" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_036"); MyTat.Add("Way of the Gun");//500 Pistol kills Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_029"); MyTat.Add("Trinity Knot");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_012"); MyTat.Add("Los Santos Bills");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_004"); MyTat.Add("Faith");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Stom_002", Name = "Money Bag" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Stom_001", Name = "Santo Capra Logo" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Stom_000", Name = "Diamond Back" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_004"); MyTat.Add("Hustler");//Make 50000 from betting Award
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Stom_000", Name = "Swallow" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Stom_002", Name = "Dolphin" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Stom_001", Name = "Hibiscus Flower" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_RSide_000", Name = "Love Dagger" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_036", Name = "Way of the Gun" });//500 Pistol kills Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_029", Name = "Trinity Knot" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_012", Name = "Los Santos Bills" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_004", Name = "Faith" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_004", Name = "Hustler" });//Make 50000 from betting Award
                 }//STOMACH
                 else if (iZone == 4)
                 {
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_022_F"); MyTat.Add("Thong's Sword");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_021_F"); MyTat.Add("Wanted");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_020_F"); MyTat.Add("UFO");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_019_F"); MyTat.Add("Teddy Bear");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_018_F"); MyTat.Add("Stitches");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_017_F"); MyTat.Add("Space Monkey");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_016_F"); MyTat.Add("Sleepy");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_015_F"); MyTat.Add("On/Off");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_014_F"); MyTat.Add("LS Wings");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_013_F"); MyTat.Add("LS Star");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_012_F"); MyTat.Add("Razor Pop");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_011_F"); MyTat.Add("Lipstick Kiss");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_010_F"); MyTat.Add("Green Leaf");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_009_F"); MyTat.Add("Knifed");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_008_F"); MyTat.Add("Ice Cream");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_007_F"); MyTat.Add("Two Horns");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_006_F"); MyTat.Add("Crowned");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_005_F"); MyTat.Add("Spades");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_004_F"); MyTat.Add("Bandage");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_003_F"); MyTat.Add("Assault Rifle");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_002_F"); MyTat.Add("Animal");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_001_F"); MyTat.Add("Ace of Spades");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_000_F"); MyTat.Add("Five Stars");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_000_F", Name = "Live Fast Mono" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_001_F", Name = "Live Fast Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_018_F", Name = "Branched Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_019_F", Name = "Scythed Corpse" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_020_F", Name = "Scythed Corpse & Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_021_F", Name = "Third Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_022_F", Name = "Pierced Third Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_023_F", Name = "Lip Drip" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_024_F", Name = "Skin Mask" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_025_F", Name = "Webbed Scythe" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_026_F", Name = "Oni Demon" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_027_F", Name = "Bat Wings" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_012_F"); MyTat.Add("Thief");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_011_F"); MyTat.Add("Sinner");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_001_F", Name = "Bright Diamond" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_002_F", Name = "Hustle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_027_F", Name = "Black Widow" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_003_F"); MyTat.Add("Lock and Load");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_044_F", Name = "Clubs" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_043_F", Name = "Diamonds" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_042_F", Name = "Hearts" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_051_F"); MyTat.Add("Western Stylized");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_038_F"); MyTat.Add("FTW");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_009_F"); MyTat.Add("Morbid Arachnid");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_022_F", Name = "Thong's Sword" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_021_F", Name = "Wanted" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_020_F", Name = "UFO" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_019_F", Name = "Teddy Bear" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_018_F", Name = "Stitches" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_017_F", Name = "Space Monkey" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_016_F", Name = "Sleepy" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_015_F", Name = "On/Off" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_014_F", Name = "LS Wings" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_013_F", Name = "LS Star" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_012_F", Name = "Razor Pop" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_011_F", Name = "Lipstick Kiss" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_010_F", Name = "Green Leaf" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_009_F", Name = "Knifed" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_008_F", Name = "Ice Cream" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_007_F", Name = "Two Horns" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_006_F", Name = "Crowned" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_005_F", Name = "Spades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_004_F", Name = "Bandage" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_003_F", Name = "Assault Rifle" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_002_F", Name = "Animal" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_001_F", Name = "Ace of Spades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_000_F", Name = "Five Stars" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_042_F"); MyTat.Add("Flaming Quad");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_017_F"); MyTat.Add("Bat Wheel");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_Tat_006_F"); MyTat.Add("Toxic Spider");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_Tat_004_F"); MyTat.Add("Scorpion");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_Tat_000_F"); MyTat.Add("Stunt Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_012_F", Name = "Thief" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_011_F", Name = "Sinner" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_029"); MyTat.Add("Beautiful Death");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_025"); MyTat.Add("Snake Head Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_024"); MyTat.Add("Snake Head Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_007"); MyTat.Add("Los Muertos");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_003_F", Name = "Lock and Load" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_021"); MyTat.Add("Geo Fox");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_005"); MyTat.Add("Beautiful Eye");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_051_F", Name = "Western Stylized" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_038_F", Name = "FTW" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_009_F", Name = "Morbid Arachnid" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Neck_001"); MyTat.Add("Money Rose");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_Neck_000"); MyTat.Add("Val-de-Grace Logo");
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_042_F", Name = "Flaming Quad" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_017_F", Name = "Bat Wheel" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_Tat_006_F", Name = "Toxic Spider" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_Tat_004_F", Name = "Scorpion" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_Tat_000_F", Name = "Stunt Skull" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Neck_000"); MyTat.Add("Tribal Butterfly");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_Neck_000"); MyTat.Add("Little Fish");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_029", Name = "Beautiful Death" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_025", Name = "Snake Head Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_024", Name = "Snake Head Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_007", Name = "Los Muertos" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_000"); MyTat.Add("Skull");//500 Headshots Award
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_021", Name = "Geo Fox" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_005", Name = "Beautiful Eye" });
+
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Neck_001", Name = "Money Rose" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_Neck_000", Name = "Val-de-Grace Logo" });
+
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Neck_000", Name = "Tribal Butterfly" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_Neck_000", Name = "Little Fish" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_000", Name = "Skull" });//500 Headshots Award
                     //Not On the TatlIst     ...                            
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_044_F"); MyTat.Add("Clubs");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_043_F"); MyTat.Add("Diamonds");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_042_F"); MyTat.Add("Hearts");
                 }//HEAD
                 else if (iZone == 5)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_009_F"); MyTat.Add("Scratch Panther");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_008_F", Name = "Bigness Chimp" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_009_F", Name = "Up-n-Atomizer Design" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_010_F", Name = "Rocket Launcher Girl" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_028_F", Name = "Laser Eyes Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_029_F", Name = "Classic Vampire" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_049_F", Name = "Demon Drummer" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_041_F"); MyTat.Add("Mighty Thog");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_040_F"); MyTat.Add("Tiger Heart");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_006_F", Name = "Skeleton Shot" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_010_F", Name = "Music Is The Remedy" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_011_F", Name = "Serpent Mic" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_019_F", Name = "Weed Knuckles" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_026_F"); MyTat.Add("Banknote Rose");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_019_F"); MyTat.Add("Can't Win Them All");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_014_F"); MyTat.Add("Vice");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_005_F"); MyTat.Add("Get Lucky");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_002_F"); MyTat.Add("Suits");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_009_F", Name = "Scratch Panther" });
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_029_F"); MyTat.Add("Cerberus");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_025_F"); MyTat.Add("Winged Serpent");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_013_F"); MyTat.Add("Katana");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_007_F"); MyTat.Add("Spartan Combat");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_004_F"); MyTat.Add("Tiger and Mask");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_001_F"); MyTat.Add("Viking Warrior");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_041_F", Name = "Mighty Thog" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_040_F", Name = "Tiger Heart" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_014_F"); MyTat.Add("Mermaid's Curse");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_008_F"); MyTat.Add("Horrors Of The Deep");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_004_F"); MyTat.Add("Honor");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_026_F", Name = "Banknote Rose" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_019_F", Name = "Can't Win Them All" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_014_F", Name = "Vice" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_005_F", Name = "Get Lucky" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_002_F", Name = "Suits" });//
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_003_F"); MyTat.Add("Toxic Trails");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_029_F", Name = "Cerberus" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_025_F", Name = "Winged Serpent" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_013_F", Name = "Katana" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_007_F", Name = "Spartan Combat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_004_F", Name = "Tiger and Mask" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_001_F", Name = "Viking Warrior" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_027_F"); MyTat.Add("Serpent Revolver");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_025_F"); MyTat.Add("Praying Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_016_F"); MyTat.Add("Blood Money");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_015_F"); MyTat.Add("Spiked Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_008_F"); MyTat.Add("Bandolier");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_004_F"); MyTat.Add("Sidearm");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_014_F", Name = "Mermaid's Curse" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_008_F", Name = "Horrors Of The Deep" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_004_F", Name = "Honor" });
 
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_008_F"); MyTat.Add("Scarlett");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_004_F"); MyTat.Add("Piston Sleeve");
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_003_F", Name = "Toxic Trails" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_055_F"); MyTat.Add("Poison Scorpion");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_053_F"); MyTat.Add("Muffler Helmet");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_045_F"); MyTat.Add("Ride Hard Die Fast");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_035_F"); MyTat.Add("Chain Fist");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_025_F"); MyTat.Add("Good Luck");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_024_F"); MyTat.Add("Live to Ride");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_020_F"); MyTat.Add("Cranial Rose");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_016_F"); MyTat.Add("Macabre Tree");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_012_F"); MyTat.Add("Urban Stunter");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_027_F", Name = "Serpent Revolver" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_025_F", Name = "Praying Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_016_F", Name = "Blood Money" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_015_F", Name = "Spiked Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_008_F", Name = "Bandolier" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_004_F", Name = "Sidearm" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_043_F"); MyTat.Add("Engine Arm");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_039_F"); MyTat.Add("Kaboom");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_035_F"); MyTat.Add("Stuntman's End");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_023_F"); MyTat.Add("Tanked");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_022_F"); MyTat.Add("Piston Head");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_008_F"); MyTat.Add("Moonlight Ride");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_002_F"); MyTat.Add("Big Cat");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_001_F"); MyTat.Add("8 Eyed Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_008_F", Name = "Scarlett" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_004_F", Name = "Piston Sleeve" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_022_F"); MyTat.Add("My Crazy Life");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_018_F"); MyTat.Add("Skeleton Party");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_006_F"); MyTat.Add("Love Hustle");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_055_F", Name = "Poison Scorpion" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_053_F", Name = "Muffler Helmet" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_045_F", Name = "Ride Hard Die Fast" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_035_F", Name = "Chain Fist" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_025_F", Name = "Good Luck" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_024_F", Name = "Live to Ride" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_020_F", Name = "Cranial Rose" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_016_F", Name = "Macabre Tree" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_012_F", Name = "Urban Stunter" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_033_F"); MyTat.Add("City Sorrow");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_027_F"); MyTat.Add("Los Santos Life");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_005_F"); MyTat.Add("No Evil");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_043_F", Name = "Engine Arm" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_039_F", Name = "Kaboom" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_035_F", Name = "Stuntman's End" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_023_F", Name = "Tanked" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_022_F", Name = "Piston Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_008_F", Name = "Moonlight Ride" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_002_F", Name = "Big Cat" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_001_F", Name = "8 Eyed Skull" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_028_F"); MyTat.Add("Python Skull");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_018_F"); MyTat.Add("Divine Goddess");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_016_F"); MyTat.Add("Egyptian Mural");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_005_F"); MyTat.Add("Fatal Dagger");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_022_F", Name = "My Crazy Life" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_018_F", Name = "Skeleton Party" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_006_F", Name = "Love Hustle" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_021_F"); MyTat.Add("Gabriel");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_020_F"); MyTat.Add("Archangel and Mary");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_009_F"); MyTat.Add("Floral Symmetry");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_033_F", Name = "City Sorrow" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_027_F", Name = "Los Santos Life" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_005_F", Name = "No Evil" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_021"); MyTat.Add("Time's Up Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_020"); MyTat.Add("Time's Up Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_012"); MyTat.Add("8 Ball Skull");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_010"); MyTat.Add("Electric Snake");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_000"); MyTat.Add("Skull Rider");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_028_F", Name = "Python Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_018_F", Name = "Divine Goddess" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_016_F", Name = "Egyptian Mural" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_005_F", Name = "Fatal Dagger" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_048"); MyTat.Add("Peace");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_043"); MyTat.Add("Triangle White");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_039"); MyTat.Add("Sleeve");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_037"); MyTat.Add("Sunrise");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_034"); MyTat.Add("Stop");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_028"); MyTat.Add("Thorny Rose");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_027"); MyTat.Add("Padlock");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_026"); MyTat.Add("Pizza");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_016"); MyTat.Add("Lightning Bolt");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_015"); MyTat.Add("Mustache");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_007"); MyTat.Add("Bricks");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_003"); MyTat.Add("Diamond Sparkle");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_021_F", Name = "Gabriel" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_020_F", Name = "Archangel and Mary" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_009_F", Name = "Floral Symmetry" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_LArm_000"); MyTat.Add("Greed is Good");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_021", Name = "Time's Up Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_020", Name = "Time's Up Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_012", Name = "8 Ball Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_010", Name = "Electric Snake" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_000", Name = "Skull Rider" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_LArm_001"); MyTat.Add("Parrot");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_LArm_000"); MyTat.Add("Tribal Flower");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_048", Name = "Peace" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_043", Name = "Triangle White" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_039", Name = "Sleeve" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_037", Name = "Sunrise" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_034", Name = "Stop" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_028", Name = "Thorny Rose" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_027", Name = "Padlock" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_026", Name = "Pizza" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_016", Name = "Lightning Bolt" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_015", Name = "Mustache" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_007", Name = "Bricks" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_003", Name = "Diamond Sparkle" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_041"); MyTat.Add("Dope Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_031"); MyTat.Add("Lady M");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_015"); MyTat.Add("Zodiac Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_006"); MyTat.Add("Oriental Mural");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_005"); MyTat.Add("Serpents");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_LArm_000", Name = "Greed is Good" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_015"); MyTat.Add("Racing Brunette");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_007"); MyTat.Add("Racing Blonde");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_001"); MyTat.Add("Burning Heart");//50 Death Match Award
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_LArm_001", Name = "Parrot" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_LArm_000", Name = "Tribal Flower" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_041", Name = "Dope Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_031", Name = "Lady M" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_015", Name = "Zodiac Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_006", Name = "Oriental Mural" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_005", Name = "Serpents" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_015", Name = "Racing Brunette" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_007", Name = "Racing Blonde" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_001", Name = "Burning Heart" });//50 Death Match Award
                     //not on list
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_031_F"); MyTat.Add("Geometric Design");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_031_F", Name = "Geometric Design" });
                 }//LEFT ARM
                 else if (iZone == 6)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_032_F"); MyTat.Add("K.U.L.T.99.1 FM");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_031_F"); MyTat.Add("Octopus Shades");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_026_F"); MyTat.Add("Shark Water");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_012_F"); MyTat.Add("Still Slipping");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_011_F"); MyTat.Add("Soulwax");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_008_F"); MyTat.Add("Smiley Glitch");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_007_F"); MyTat.Add("Skeleton DJ");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_006_F"); MyTat.Add("Music Locker");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_005_F"); MyTat.Add("LSUR");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_003_F"); MyTat.Add("Lighthouse");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_002_F"); MyTat.Add("Jellyfish Shades");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_001_F"); MyTat.Add("Tropical Dude");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_000_F"); MyTat.Add("Headphone Splat");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_011_F", Name = "Nothing Mini About It" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_012_F", Name = "Snake Revolver" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_013_F", Name = "Weapon Sleeve" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_030_F", Name = "Centipede" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_031_F", Name = "Fleshy Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_045_F", Name = "Armored Arm" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_046_F", Name = "Demon Smile" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_047_F", Name = "Angel & Devil" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_048_F", Name = "Death Is Certain" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_034_F"); MyTat.Add("LS Monogram");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_000_F", Name = "Hood Skeleton" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_005_F", Name = "Peacock" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_007_F", Name = "Ballas 4 Life" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_009_F", Name = "Ascension" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_012_F", Name = "Zombie Rhymes" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_020_F", Name = "Dog Fist" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_028_F"); MyTat.Add("Skull and Aces");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_025_F"); MyTat.Add("Queen of Roses");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_018_F"); MyTat.Add("The Gambler's Life");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_004_F"); MyTat.Add("Lady Luck");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_032_F", Name = "K.U.L.T.99.1 FM" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_031_F", Name = "Octopus Shades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_026_F", Name = "Shark Water" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_012_F", Name = "Still Slipping" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_011_F", Name = "Soulwax" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_008_F", Name = "Smiley Glitch" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_007_F", Name = "Skeleton DJ" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_006_F", Name = "Music Locker" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_005_F", Name = "LSUR" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_003_F", Name = "Lighthouse" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_002_F", Name = "Jellyfish Shades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_001_F", Name = "Tropical Dude" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_000_F", Name = "Headphone Splat" });
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_028_F"); MyTat.Add("Spartan Mural");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_023_F"); MyTat.Add("Samurai Tallship");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_018_F"); MyTat.Add("Muscle Tear");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_017_F"); MyTat.Add("Feather Sleeve");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_014_F"); MyTat.Add("Celtic Band");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_012_F"); MyTat.Add("Tiger Headdress");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_006_F"); MyTat.Add("Medusa");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_034_F", Name = "LS Monogram" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_023_F"); MyTat.Add("Stylized Kraken");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_005_F"); MyTat.Add("Mutiny");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_001_F"); MyTat.Add("Crackshot");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_028_F", Name = "Skull and Aces" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_025_F", Name = "Queen of Roses" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_018_F", Name = "The Gambler's Life" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_004_F", Name = "Lady Luck" });//
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_024_F"); MyTat.Add("Combat Reaper");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_021_F"); MyTat.Add("Have a Nice Day");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_002_F"); MyTat.Add("Grenade");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_028_F", Name = "Spartan Mural" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_023_F", Name = "Samurai Tallship" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_018_F", Name = "Muscle Tear" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_017_F", Name = "Feather Sleeve" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_014_F", Name = "Celtic Band" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_012_F", Name = "Tiger Headdress" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_006_F", Name = "Medusa" });
 
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_007_F"); MyTat.Add("Drive Forever");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_006_F"); MyTat.Add("Engulfed Block");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_005_F"); MyTat.Add("Dialed In");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_003_F"); MyTat.Add("Mechanical Sleeve");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_023_F", Name = "Stylized Kraken" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_005_F", Name = "Mutiny" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_001_F", Name = "Crackshot" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_054_F"); MyTat.Add("Mum");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_049_F"); MyTat.Add("These Colors Don't Run");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_047_F"); MyTat.Add("Snake Bike");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_046_F"); MyTat.Add("Skull Chain");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_042_F"); MyTat.Add("Grim Rider");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_033_F"); MyTat.Add("Eagle Emblem");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_014_F"); MyTat.Add("Lady Mortality");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_007_F"); MyTat.Add("Swooping Eagle");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_024_F", Name = "Combat Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_021_F", Name = "Have a Nice Day" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_002_F", Name = "Grenade" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_049_F"); MyTat.Add("Seductive Mechanic");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_038_F"); MyTat.Add("One Down Five Up");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_036_F"); MyTat.Add("Biker Stallion");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_016_F"); MyTat.Add("Coffin Racer");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_010_F"); MyTat.Add("Grave Vulture");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_009_F"); MyTat.Add("Arachnid of Death");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_003_F"); MyTat.Add("Poison Wrench");
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_007_F", Name = "Drive Forever" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_006_F", Name = "Engulfed Block" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_005_F", Name = "Dialed In" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_003_F", Name = "Mechanical Sleeve" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_035_F"); MyTat.Add("Black Tears");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_028_F"); MyTat.Add("Loving Los Muertos");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_003_F"); MyTat.Add("Lady Vamp");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_054_F", Name = "Mum" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_049_F", Name = "These Colors Don't Run" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_047_F", Name = "Snake Bike" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_046_F", Name = "Skull Chain" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_042_F", Name = "Grim Rider" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_033_F", Name = "Eagle Emblem" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_014_F", Name = "Lady Mortality" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_007_F", Name = "Swooping Eagle" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_015_F"); MyTat.Add("Seductress");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_049_F", Name = "Seductive Mechanic" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_038_F", Name = "One Down Five Up" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_036_F", Name = "Biker Stallion" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_016_F", Name = "Coffin Racer" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_010_F", Name = "Grave Vulture" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_009_F", Name = "Arachnid of Death" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_003_F", Name = "Poison Wrench" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_026_F"); MyTat.Add("Floral Print");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_017_F"); MyTat.Add("Heavenly Deity");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_010_F"); MyTat.Add("Intrometric");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_035_F", Name = "Black Tears" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_028_F", Name = "Loving Los Muertos" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_003_F", Name = "Lady Vamp" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_019_F"); MyTat.Add("Geisha Bloom");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_013_F"); MyTat.Add("Mermaid Harpist");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_004_F"); MyTat.Add("Floral Raven");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_015_F", Name = "Seductress" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_027"); MyTat.Add("Fuck Luck Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_026"); MyTat.Add("Fuck Luck Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_023"); MyTat.Add("You're Next Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_022"); MyTat.Add("You're Next Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_008"); MyTat.Add("Death Before Dishonor");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_004"); MyTat.Add("Snake Shaded");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_003"); MyTat.Add("Snake Outline");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_026_F", Name = "Floral Print" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_017_F", Name = "Heavenly Deity" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_010_F", Name = "Intrometric" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_045"); MyTat.Add("Mesh Band");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_044"); MyTat.Add("Triangle Black");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_036"); MyTat.Add("Shapes");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_023"); MyTat.Add("Smiley");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_022"); MyTat.Add("Pencil");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_020"); MyTat.Add("Geo Pattern");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_018"); MyTat.Add("Origami");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_017"); MyTat.Add("Eye Triangle");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_014"); MyTat.Add("Spray Can");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_010"); MyTat.Add("Horseshoe");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_008"); MyTat.Add("Cube");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_004"); MyTat.Add("Bone");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_001"); MyTat.Add("Single Arrow");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_019_F", Name = "Geisha Bloom" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_013_F", Name = "Mermaid Harpist" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_004_F", Name = "Floral Raven" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_RArm_000"); MyTat.Add("Dollar Sign");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_027", Name = "Fuck Luck Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_026", Name = "Fuck Luck Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_023", Name = "You're Next Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_022", Name = "You're Next Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_008", Name = "Death Before Dishonor" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_004", Name = "Snake Shaded" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_003", Name = "Snake Outline" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_RArm_001"); MyTat.Add("Tribal Fish");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_045", Name = "Mesh Band" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_044", Name = "Triangle Black" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_036", Name = "Shapes" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_023", Name = "Smiley" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_022", Name = "Pencil" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_020", Name = "Geo Pattern" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_018", Name = "Origami" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_017", Name = "Eye Triangle" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_014", Name = "Spray Can" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_010", Name = "Horseshoe" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_008", Name = "Cube" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_004", Name = "Bone" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_001", Name = "Single Arrow" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_047"); MyTat.Add("Lion");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_038"); MyTat.Add("Dagger");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_028"); MyTat.Add("Mermaid");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_027"); MyTat.Add("Virgin Mary");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_018"); MyTat.Add("Serpent Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_014"); MyTat.Add("Flower Mural");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_003"); MyTat.Add("Dragons and Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_001"); MyTat.Add("Dragons");
-                    //DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_000"); MyTat.Add("Brotherhood");-empty load?
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_RArm_000", Name = "Dollar Sign" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_010"); MyTat.Add("Ride or Die");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_002"); MyTat.Add("Grim Reaper Smoking Gun");//Clear 5 Gang Atacks in a Day Award
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_RArm_001", Name = "Tribal Fish" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_047", Name = "Lion" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_038", Name = "Dagger" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_028", Name = "Mermaid" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_027", Name = "Virgin Mary" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_018", Name = "Serpent Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_014", Name = "Flower Mural" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_003", Name = "Dragons and Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_001", Name = "Dragons" });
+                    //TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_000", Name = "Brotherhood" } );-empty load?
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_010", Name = "Ride or Die" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_002", Name = "Grim Reaper Smoking Gun" });//Clear 5 Gang Atacks in a Day Award
                     //Not In List
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Female_Crew_Tat_001"); MyTat.Add("Crew Tattoo");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_030_F"); MyTat.Add("Geometric Design");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Female_Crew_Tat_001", Name = "Crew Tattoo" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_030_F", Name = "Geometric Design" });
                 }//RIGHT ARM
                 else if (iZone == 7)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_029_F"); MyTat.Add("Soundwaves");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_028_F"); MyTat.Add("Skull Waters");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_025_F"); MyTat.Add("Glow Princess");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_024_F"); MyTat.Add("Pineapple Skull");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_010_F"); MyTat.Add("Tropical Serpent");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_002_F", Name = "Cobra Biker" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_014_F", Name = "Minimal SMG" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_015_F", Name = "Minimal Advanced Rifle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_016_F", Name = "Minimal Sniper Rifle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_032_F", Name = "Many-eyed Goat" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_053_F", Name = "Mobster Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_054_F", Name = "Wounded Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_055_F", Name = "Stabbed Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_056_F", Name = "Tiger Blade" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_032_F"); MyTat.Add("Love Fist");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_022_F", Name = "LS Smoking Cartridges" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_023_F", Name = "Trust" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_027_F"); MyTat.Add("8-Ball Rose");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_013_F"); MyTat.Add("One-armed Bandit");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_029_F", Name = "Soundwaves" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_028_F", Name = "Skull Waters" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_025_F", Name = "Glow Princess" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_024_F", Name = "Pineapple Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_010_F", Name = "Tropical Serpent" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_023_F"); MyTat.Add("Rose Revolver");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_011_F"); MyTat.Add("Death Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_007_F"); MyTat.Add("Stylized Tiger");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_005_F"); MyTat.Add("Patriot Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_032_F", Name = "Love Fist" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_057_F"); MyTat.Add("Laughing Skull");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_056_F"); MyTat.Add("Bone Cruiser");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_044_F"); MyTat.Add("Ride Free");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_037_F"); MyTat.Add("Scorched Soul");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_036_F"); MyTat.Add("Engulfed Skull");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_027_F"); MyTat.Add("Bad Luck");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_015_F"); MyTat.Add("Ride or Die");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_002_F"); MyTat.Add("Rose Tribute");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_027_F", Name = "8-Ball Rose" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_013_F", Name = "One-armed Bandit" });//
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_031_F"); MyTat.Add("Stunt Jesus");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_028_F"); MyTat.Add("Quad Goblin");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_021_F"); MyTat.Add("Golden Cobra");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_013_F"); MyTat.Add("Dirt Track Hero");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_007_F"); MyTat.Add("Dagger Devil");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_023_F", Name = "Rose Revolver" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_011_F", Name = "Death Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_007_F", Name = "Stylized Tiger" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_005_F", Name = "Patriot Skull" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_029_F"); MyTat.Add("Death Us Do Part");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_057_F", Name = "Laughing Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_056_F", Name = "Bone Cruiser" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_044_F", Name = "Ride Free" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_037_F", Name = "Scorched Soul" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_036_F", Name = "Engulfed Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_027_F", Name = "Bad Luck" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_015_F", Name = "Ride or Die" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_002_F", Name = "Rose Tribute" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_020_F"); MyTat.Add("Presidents");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_007_F"); MyTat.Add("LS Serpent");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_031_F", Name = "Stunt Jesus" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_028_F", Name = "Quad Goblin" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_021_F", Name = "Golden Cobra" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_013_F", Name = "Dirt Track Hero" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_007_F", Name = "Dagger Devil" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_011_F"); MyTat.Add("Cross of Roses");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_000_F"); MyTat.Add("Serpent of Death");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_029_F", Name = "Death Us Do Part" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_002"); MyTat.Add("Spider Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_001"); MyTat.Add("Spider Outline");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_020_F", Name = "Presidents" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_007_F", Name = "LS Serpent" });//
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_040"); MyTat.Add("Black Anchor");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_019"); MyTat.Add("Charm");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_009"); MyTat.Add("Squares");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_011_F", Name = "Cross of Roses" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_000_F", Name = "Serpent of Death" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_LLeg_000"); MyTat.Add("Single");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_002", Name = "Spider Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_001", Name = "Spider Outline" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_032"); MyTat.Add("Faith");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_037"); MyTat.Add("Grim Reaper");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_035"); MyTat.Add("Dragon");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_033"); MyTat.Add("Chinese Dragon");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_026"); MyTat.Add("Smoking Dagger");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_023"); MyTat.Add("Hottie");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_021"); MyTat.Add("Serpent Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_008"); MyTat.Add("Dragon Mural");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_002"); MyTat.Add("Melting Skull");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_040", Name = "Black Anchor" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_019", Name = "Charm" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_009", Name = "Squares" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_009"); MyTat.Add("Dragon and Dagger");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_LLeg_000", Name = "Single" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_032", Name = "Faith" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_037", Name = "Grim Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_035", Name = "Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_033", Name = "Chinese Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_026", Name = "Smoking Dagger" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_023", Name = "Hottie" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_021", Name = "Serpent Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_008", Name = "Dragon Mural" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_002", Name = "Melting Skull" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_009", Name = "Dragon and Dagger" });
                 }//LEFT LEG
                 else
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_027_F"); MyTat.Add("Skullphones");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_017_F", Name = "Skull Grenade" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_033_F", Name = "Three-eyed Demon" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_034_F", Name = "Smoldering Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_050_F", Name = "Gold Gun" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_051_F", Name = "Blue Serpent" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_052_F", Name = "Night Demon" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_031_F"); MyTat.Add("Kifflom");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_003_F", Name = "Bandana Knife" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_021_F", Name = "Graffiti Skull" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_020_F"); MyTat.Add("Cash is King");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_027_F", Name = "Skullphones" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_020_F"); MyTat.Add("Homeward Bound");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_031_F", Name = "Kifflom" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_030_F"); MyTat.Add("Pistol Ace");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_026_F"); MyTat.Add("Restless Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_006_F"); MyTat.Add("Combat Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_020_F", Name = "Cash is King" });//
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_048_F"); MyTat.Add("STFU");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_040_F"); MyTat.Add("American Made");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_028_F"); MyTat.Add("Dusk Rider");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_022_F"); MyTat.Add("Western Insignia");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_004_F"); MyTat.Add("Dragon's Fury");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_020_F", Name = "Homeward Bound" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_047_F"); MyTat.Add("Brake Knife");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_045_F"); MyTat.Add("Severed Hand");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_032_F"); MyTat.Add("Wheelie Mouse");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_025_F"); MyTat.Add("Speed Freak");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_020_F"); MyTat.Add("Piston Angel");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_015_F"); MyTat.Add("Praying Gloves");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_005_F"); MyTat.Add("Demon Spark Plug");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_030_F", Name = "Pistol Ace" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_026_F", Name = "Restless Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_006_F", Name = "Combat Skull" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_030_F"); MyTat.Add("San Andreas Prayer");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_048_F", Name = "STFU" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_040_F", Name = "American Made" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_028_F", Name = "Dusk Rider" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_022_F", Name = "Western Insignia" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_004_F", Name = "Dragon's Fury" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_023_F"); MyTat.Add("Dance of Hearts");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_017_F"); MyTat.Add("Ink Me");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_047_F", Name = "Brake Knife" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_045_F", Name = "Severed Hand" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_032_F", Name = "Wheelie Mouse" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_025_F", Name = "Speed Freak" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_020_F", Name = "Piston Angel" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_015_F", Name = "Praying Gloves" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_005_F", Name = "Demon Spark Plug" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_023_F"); MyTat.Add("Starmetric");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_030_F", Name = "San Andreas Prayer" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_001_F"); MyTat.Add("Elaborate Los Muertos");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_023_F", Name = "Dance of Hearts" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_017_F", Name = "Ink Me" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_F_Tat_014"); MyTat.Add("Floral Dagger");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_023_F", Name = "Starmetric" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_042"); MyTat.Add("Sparkplug");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_F_Tat_038"); MyTat.Add("Grub");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_001_F", Name = "Elaborate Los Muertos" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_F_RLeg_000"); MyTat.Add("Diamond Crown");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_F_Tat_014", Name = "Floral Dagger" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_F_RLeg_000"); MyTat.Add("School of Fish");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_042", Name = "Sparkplug" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_F_Tat_038", Name = "Grub" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_043"); MyTat.Add("Indian Ram");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_042"); MyTat.Add("Flaming Scorpion");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_040"); MyTat.Add("Flaming Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_039"); MyTat.Add("Broken Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_022"); MyTat.Add("Fiery Dragon");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_017"); MyTat.Add("Tribal");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_F_007"); MyTat.Add("The Warrior");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_F_RLeg_000", Name = "Diamond Crown" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_F_006"); MyTat.Add("Skull and Sword");//Collect 25 Bounties Award
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_F_RLeg_000", Name = "School of Fish" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_043", Name = "Indian Ram" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_042", Name = "Flaming Scorpion" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_040", Name = "Flaming Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_039", Name = "Broken Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_022", Name = "Fiery Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_017", Name = "Tribal" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_F_007", Name = "The Warrior" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_F_006", Name = "Skull and Sword" });//Collect 25 Bounties Award
                 }//RIGHT LEG
             }// FreeFemale
             else if (iPed == 5)
             {
                 if (iZone == 1)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_021_M"); MyTat.Add("Skull Surfer");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_020_M"); MyTat.Add("Speaker Tower");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_019_M"); MyTat.Add("Record Shot");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_018_M"); MyTat.Add("Record Head");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_017_M"); MyTat.Add("Tropical Sorcerer");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_016_M"); MyTat.Add("Rose Panther");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_015_M"); MyTat.Add("Paradise Ukulele");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_014_M"); MyTat.Add("Paradise Nap");//
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_013_M"); MyTat.Add("Wild Dancers");//
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_006_M", Name = "Painted Micro SMG" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_007_M", Name = "Weapon King" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_035_M", Name = "Sniff Sniff" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_036_M", Name = "Charm Pattern" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_037_M", Name = "Witch & Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_038_M", Name = "Pumpkin Bug" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_039_M", Name = "Sinner" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_057_M", Name = "Gray Demon" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_039_M"); MyTat.Add("Space Rangers");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_038_M"); MyTat.Add("Robot Bubblegum");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_036_M"); MyTat.Add("LS Shield");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_030_M"); MyTat.Add("Howitzer");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_028_M"); MyTat.Add("Bananas Gone Bad");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_027_M"); MyTat.Add("Epsilon");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_024_M"); MyTat.Add("Mount Chiliad");//
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_023_M"); MyTat.Add("Bigfoot");//
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_004_M", Name = "Hood Heart" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_008_M", Name = "Los Santos Tag" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_013_M", Name = "Blessed Boombox" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_014_M", Name = "Chamberlain Hills" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_015_M", Name = "Smoking Barrels" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_026_M", Name = "Dollar Guns Crossed" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_032_M"); MyTat.Add("Play Your Ace");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_029_M"); MyTat.Add("The Table");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_021_M"); MyTat.Add("Show Your Hand");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_017_M"); MyTat.Add("Roll the Dice");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_015_M"); MyTat.Add("The Jolly Joker");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_011_M"); MyTat.Add("Life's a Gamble");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_010_M"); MyTat.Add("Photo Finish");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_009_M"); MyTat.Add("Till Death Do Us Part");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_008_M"); MyTat.Add("Snake Eyes");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_007_M"); MyTat.Add("777");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_006_M"); MyTat.Add("Wheel of Suits");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_001_M"); MyTat.Add("Jackpot");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_021_M", Name = "Skull Surfer" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_020_M", Name = "Speaker Tower" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_019_M", Name = "Record Shot" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_018_M", Name = "Record Head" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_017_M", Name = "Tropical Sorcerer" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_016_M", Name = "Rose Panther" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_015_M", Name = "Paradise Ukulele" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_014_M", Name = "Paradise Nap" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_013_M", Name = "Wild Dancers" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_027_M"); MyTat.Add("Molon Labe");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_024_M"); MyTat.Add("Dragon Slayer");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_022_M"); MyTat.Add("Spartan and Horse");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_021_M"); MyTat.Add("Spartan and Lion");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_016_M"); MyTat.Add("Odin and Raven");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_015_M"); MyTat.Add("Samurai Combat");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_011_M"); MyTat.Add("Weathered Skull");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_010_M"); MyTat.Add("Spartan Shield");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_009_M"); MyTat.Add("Norse Rune");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_005_M"); MyTat.Add("Ghost Dragon");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_002_M"); MyTat.Add("Kabuto");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_039_M", Name = "Space Rangers" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_038_M", Name = "Robot Bubblegum" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_036_M", Name = "LS Shield" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_030_M", Name = "Howitzer" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_028_M", Name = "Bananas Gone Bad" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_027_M", Name = "Epsilon" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_024_M", Name = "Mount Chiliad" });//
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_023_M", Name = "Bigfoot" });//
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_025_M"); MyTat.Add("Claimed By The Beast");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_024_M"); MyTat.Add("Pirate Captain");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_022_M"); MyTat.Add("X Marks The Spot");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_018_M"); MyTat.Add("Finders Keepers");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_017_M"); MyTat.Add("Framed Tall Ship");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_016_M"); MyTat.Add("Skull Compass");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_013_M"); MyTat.Add("Torn Wings");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_009_M"); MyTat.Add("Tall Ship Conflict");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_006_M"); MyTat.Add("Never Surrender");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_003_M"); MyTat.Add("Give Nothing Back");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_032_M", Name = "Play Your Ace" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_029_M", Name = "The Table" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_021_M", Name = "Show Your Hand" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_017_M", Name = "Roll the Dice" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_015_M", Name = "The Jolly Joker" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_011_M", Name = "Life's a Gamble" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_010_M", Name = "Photo Finish" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_009_M", Name = "Till Death Do Us Part" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_008_M", Name = "Snake Eyes" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_007_M", Name = "777" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_006_M", Name = "Wheel of Suits" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_001_M", Name = "Jackpot" });//
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_007_M"); MyTat.Add("Eagle Eyes");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_005_M"); MyTat.Add("Parachute Belle");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_004_M"); MyTat.Add("Balloon Pioneer");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_002_M"); MyTat.Add("Winged Bombshell");
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_001_M"); MyTat.Add("Pilot Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_027_M", Name = "Molon Labe" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_024_M", Name = "Dragon Slayer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_022_M", Name = "Spartan and Horse" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_021_M", Name = "Spartan and Lion" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_016_M", Name = "Odin and Raven" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_015_M", Name = "Samurai Combat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_011_M", Name = "Weathered Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_010_M", Name = "Spartan Shield" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_009_M", Name = "Norse Rune" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_005_M", Name = "Ghost Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_002_M", Name = "Kabuto" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_022_M"); MyTat.Add("Explosive Heart");//
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_019_M"); MyTat.Add("Pistol Wings");//
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_018_M"); MyTat.Add("Dual Wield Skull");//
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_014_M"); MyTat.Add("Backstabber");//
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_013_M"); MyTat.Add("Wolf Insignia");//
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_009_M"); MyTat.Add("Butterfly Knife");//
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_001_M"); MyTat.Add("Crossed Weapons");//
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_000_M"); MyTat.Add("Bullet Proof");//
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_025_M", Name = "Claimed By The Beast" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_024_M", Name = "Pirate Captain" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_022_M", Name = "X Marks The Spot" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_018_M", Name = "Finders Keepers" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_017_M", Name = "Framed Tall Ship" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_016_M", Name = "Skull Compass" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_013_M", Name = "Torn Wings" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_009_M", Name = "Tall Ship Conflict" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_006_M", Name = "Never Surrender" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_003_M", Name = "Give Nothing Back" });
 
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_011_M"); MyTat.Add("Talk Shit Get Hit");//
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_010_M"); MyTat.Add("Take the Wheel");//
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_009_M"); MyTat.Add("Serpents of Destruction");//
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_002_M"); MyTat.Add("Tuned to Death");//
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_001_M"); MyTat.Add("Power Plant");//
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_000_M"); MyTat.Add("Block Back");//
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_007_M", Name = "Eagle Eyes" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_005_M", Name = "Parachute Belle" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_004_M", Name = "Balloon Pioneer" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_002_M", Name = "Winged Bombshell" });
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_001_M", Name = "Pilot Skull" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_043_M"); MyTat.Add("Ride Forever");//
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_030_M"); MyTat.Add("Brothers For Life");//
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_021_M"); MyTat.Add("Flaming Reaper");//
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_017_M"); MyTat.Add("Clawed Beast");//
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_011_M"); MyTat.Add("R.I.P. My Brothers");//
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_008_M"); MyTat.Add("Freedom Wheels");//
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_006_M"); MyTat.Add("Chopper Freedom");//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_022_M", Name = "Explosive Heart" });//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_019_M", Name = "Pistol Wings" });//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_018_M", Name = "Dual Wield Skull" });//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_014_M", Name = "Backstabber" });//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_013_M", Name = "Wolf Insignia" });//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_009_M", Name = "Butterfly Knife" });//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_001_M", Name = "Crossed Weapons" });//
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_000_M", Name = "Bullet Proof" });//
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_048_M"); MyTat.Add("Racing Doll");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_046_M"); MyTat.Add("Full Throttle");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_041_M"); MyTat.Add("Brapp");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_040_M"); MyTat.Add("Monkey Chopper");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_037_M"); MyTat.Add("Big Grills");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_034_M"); MyTat.Add("Feather Road Kill");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_030_M"); MyTat.Add("Man's Ruin");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_029_M"); MyTat.Add("Majestic Finish");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_026_M"); MyTat.Add("Winged Wheel");//
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_024_M"); MyTat.Add("Road Kill");//
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_011_M", Name = "Talk Shit Get Hit" });//
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_010_M", Name = "Take the Wheel" });//
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_009_M", Name = "Serpents of Destruction" });//
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_002_M", Name = "Tuned to Death" });//
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_001_M", Name = "Power Plant" });//
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_000_M", Name = "Block Back" });//
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_032_M"); MyTat.Add("Reign Over");//
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_031_M"); MyTat.Add("Dead Pretty");//
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_008_M"); MyTat.Add("Love the Game");//
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_000_M"); MyTat.Add("SA Assault");//
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_043_M", Name = "Ride Forever" });//
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_030_M", Name = "Brothers For Life" });//
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_021_M", Name = "Flaming Reaper" });//
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_017_M", Name = "Clawed Beast" });//
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_011_M", Name = "R.I.P. My Brothers" });//
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_008_M", Name = "Freedom Wheels" });//
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_006_M", Name = "Chopper Freedom" });//
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_021_M"); MyTat.Add("Sad Angel");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_014_M"); MyTat.Add("Love is Blind");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_010_M"); MyTat.Add("Bad Angel");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_009_M"); MyTat.Add("Amazon");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_048_M", Name = "Racing Doll" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_046_M", Name = "Full Throttle" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_041_M", Name = "Brapp" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_040_M", Name = "Monkey Chopper" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_037_M", Name = "Big Grills" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_034_M", Name = "Feather Road Kill" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_030_M", Name = "Man's Ruin" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_029_M", Name = "Majestic Finish" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_026_M", Name = "Winged Wheel" });//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_024_M", Name = "Road Kill" });//
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_029_M"); MyTat.Add("Geometric Design");//   
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_022_M"); MyTat.Add("Cloaked Angel");//  
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_024_M"); MyTat.Add("Feather Mural");//    
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_006_M"); MyTat.Add("Adorned Wolf");//   
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_032_M", Name = "Reign Over" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_031_M", Name = "Dead Pretty" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_008_M", Name = "Love the Game" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_000_M", Name = "SA Assault" });//
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_015"); MyTat.Add("Japanese Warrior");//          
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_011"); MyTat.Add("Roaring Tiger");//      
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_006"); MyTat.Add("Carp Shaded");//   
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_005"); MyTat.Add("Carp Outline");//   
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_021_M", Name = "Sad Angel" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_014_M", Name = "Love is Blind" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_010_M", Name = "Bad Angel" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_009_M", Name = "Amazon" });//
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_046"); MyTat.Add("Triangles");//         
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_041"); MyTat.Add("Tooth");//         
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_032"); MyTat.Add("Paper Plane");//         
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_031"); MyTat.Add("Skateboard");//           
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_030"); MyTat.Add("Shark Fin");//        
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_025"); MyTat.Add("Watch Your Step");//          
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_024"); MyTat.Add("Pyamid");//   
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_012"); MyTat.Add("Antlers");//  
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_011"); MyTat.Add("Infinity");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_000"); MyTat.Add("Crossed Arrows");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_029_M", Name = "Geometric Design" });//   
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_022_M", Name = "Cloaked Angel" });//  
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_024_M", Name = "Feather Mural" });//    
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_006_M", Name = "Adorned Wolf" });//   
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Back_000"); MyTat.Add("Makin' Paper");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_015", Name = "Japanese Warrior" });//          
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_011", Name = "Roaring Tiger" });//      
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_006", Name = "Carp Shaded" });//   
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_005", Name = "Carp Outline" });//   
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Back_000"); MyTat.Add("Ship Arms");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_046", Name = "Triangles" });//         
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_041", Name = "Tooth" });//         
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_032", Name = "Paper Plane" });//         
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_031", Name = "Skateboard" });//           
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_030", Name = "Shark Fin" });//        
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_025", Name = "Watch Your Step" });//          
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_024", Name = "Pyamid" });//   
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_012", Name = "Antlers" });//  
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_011", Name = "Infinity" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_000", Name = "Crossed Arrows" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_045"); MyTat.Add("Skulls and Rose");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_030"); MyTat.Add("Lucky Celtic Dogs");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_020"); MyTat.Add("Dragon");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_019"); MyTat.Add("The Wages of Sin");//Survival Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_016"); MyTat.Add("Evil Clown");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_013"); MyTat.Add("Eagle and Serpent");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_011"); MyTat.Add("LS Script");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_009"); MyTat.Add("Skull on the Cross");//
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Back_000", Name = "Makin' Paper" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_019"); MyTat.Add("Clown Dual Wield Dollars");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_018"); MyTat.Add("Clown Dual Wield");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_017"); MyTat.Add("Clown and Gun");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_016"); MyTat.Add("Clown");//
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_014"); MyTat.Add("Trust No One");//Car Bomb Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_008"); MyTat.Add("Los Santos Customs");//Mod a Car Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_005"); MyTat.Add("Angel");//Win Every Game Mode Award
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Back_000", Name = "Ship Arms" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_045", Name = "Skulls and Rose" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_030", Name = "Lucky Celtic Dogs" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_020", Name = "Dragon" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_019", Name = "The Wages of Sin" });//Survival Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_016", Name = "Evil Clown" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_013", Name = "Eagle and Serpent" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_011", Name = "LS Script" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_009", Name = "Skull on the Cross" });//
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_019", Name = "Clown Dual Wield Dollars" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_018", Name = "Clown Dual Wield" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_017", Name = "Clown and Gun" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_016", Name = "Clown" });//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_014", Name = "Trust No One" });//Car Bomb Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_008", Name = "Los Santos Customs" });//Mod a Car Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_005", Name = "Angel" });//Win Every Game Mode Award
                     //Unknowen
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_046"); MyTat.Add("Zip?");//Zip???
-                    DataStore.sTatBase.Add("mpchristmas2018_overlays"); DataStore.sTatName.Add("MP_Christmas2018_Tat_000_M"); MyTat.Add("Unknowen");//
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_046", Name = "Zip?" });//Zip???
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2018_overlays", TatName = "MP_Christmas2018_Tat_000_M", Name = "Unknowen" });//
                 }//BACK
                 else if (iZone == 2)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_023_M"); MyTat.Add("Techno Glitch");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_022_M"); MyTat.Add("Paradise Sirens");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_003_M", Name = "Bullet Mouth" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_004_M", Name = "Smoking Barrel" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_040_M", Name = "Carved Pumpkin" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_041_M", Name = "Branched Werewolf" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_042_M", Name = "Winged Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_058_M", Name = "Shrieking Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_059_M", Name = "Swords & City" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_035_M"); MyTat.Add("LS Panic");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_033_M"); MyTat.Add("LS City");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_026_M"); MyTat.Add("Dignity");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_025_M"); MyTat.Add("Davis");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_016_M", Name = "All From The Same Tree" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_017_M", Name = "King of the Jungle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_018_M", Name = "Night Owl" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_022_M"); MyTat.Add("Blood Money");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_003_M"); MyTat.Add("Royal Flush");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_000_M"); MyTat.Add("In the Pocket");
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_023_M", Name = "Techno Glitch" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_022_M", Name = "Paradise Sirens" });
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_026_M"); MyTat.Add("Spartan Skull");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_020_M"); MyTat.Add("Medusa's Gaze");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_019_M"); MyTat.Add("Strike Force");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_003_M"); MyTat.Add("Native Warrior");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_000_M"); MyTat.Add("Thor - Goblin");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_035_M", Name = "LS Panic" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_033_M", Name = "LS City" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_026_M", Name = "Dignity" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_025_M", Name = "Davis" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_021_M"); MyTat.Add("Dead Tales");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_019_M"); MyTat.Add("Lost At Sea");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_007_M"); MyTat.Add("No Honor");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_000_M"); MyTat.Add("Bless The Dead");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_022_M", Name = "Blood Money" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_003_M", Name = "Royal Flush" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_000_M", Name = "In the Pocket" });
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_000_M"); MyTat.Add("Turbulence");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_026_M", Name = "Spartan Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_020_M", Name = "Medusa's Gaze" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_019_M", Name = "Strike Force" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_003_M", Name = "Native Warrior" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_000_M", Name = "Thor - Goblin" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_028_M"); MyTat.Add("Micro SMG Chain");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_020_M"); MyTat.Add("Crowned Weapons");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_017_M"); MyTat.Add("Dog Tags");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_012_M"); MyTat.Add("Dollar Daggers");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_021_M", Name = "Dead Tales" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_019_M", Name = "Lost At Sea" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_007_M", Name = "No Honor" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_000_M", Name = "Bless The Dead" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_060_M"); MyTat.Add("We Are The Mods!");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_059_M"); MyTat.Add("Faggio");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_058_M"); MyTat.Add("Reaper Vulture");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_050_M"); MyTat.Add("Unforgiven");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_041_M"); MyTat.Add("No Regrets");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_034_M"); MyTat.Add("Brotherhood of Bikes");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_032_M"); MyTat.Add("Western Eagle");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_029_M"); MyTat.Add("Bone Wrench");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_026_M"); MyTat.Add("American Dream");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_023_M"); MyTat.Add("Western MC");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_019_M"); MyTat.Add("Gruesome Talons");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_018_M"); MyTat.Add("Skeletal Chopper");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_013_M"); MyTat.Add("Demon Crossbones");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_005_M"); MyTat.Add("Made In America");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_001_M"); MyTat.Add("Both Barrels");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_000_M"); MyTat.Add("Demon Rider");
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_000_M", Name = "Turbulence" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_044_M"); MyTat.Add("Ram Skull");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_033_M"); MyTat.Add("Sugar Skull Trucker");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_027_M"); MyTat.Add("Punk Road Hog");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_019_M"); MyTat.Add("Engine Heart");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_018_M"); MyTat.Add("Vintage Bully");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_011_M"); MyTat.Add("Wheels of Death");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_028_M", Name = "Micro SMG Chain" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_020_M", Name = "Crowned Weapons" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_017_M", Name = "Dog Tags" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_012_M", Name = "Dollar Daggers" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_019_M"); MyTat.Add("Death Behind");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_012_M"); MyTat.Add("Royal Kiss");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_060_M", Name = "We Are The Mods!" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_059_M", Name = "Faggio" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_058_M", Name = "Reaper Vulture" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_050_M", Name = "Unforgiven" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_041_M", Name = "No Regrets" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_034_M", Name = "Brotherhood of Bikes" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_032_M", Name = "Western Eagle" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_029_M", Name = "Bone Wrench" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_026_M", Name = "American Dream" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_023_M", Name = "Western MC" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_019_M", Name = "Gruesome Talons" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_018_M", Name = "Skeletal Chopper" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_013_M", Name = "Demon Crossbones" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_005_M", Name = "Made In America" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_001_M", Name = "Both Barrels" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_000_M", Name = "Demon Rider" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_026_M"); MyTat.Add("Royal Takeover");
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_013_M"); MyTat.Add("Love Gamble");
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_002_M"); MyTat.Add("Holy Mary");
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_001_M"); MyTat.Add("King Fight");
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_044_M", Name = "Ram Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_033_M", Name = "Sugar Skull Trucker" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_027_M", Name = "Punk Road Hog" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_019_M", Name = "Engine Heart" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_018_M", Name = "Vintage Bully" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_011_M", Name = "Wheels of Death" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_027_M"); MyTat.Add("Cobra Dawn");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_025_M"); MyTat.Add("Reaper Sway");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_012_M"); MyTat.Add("Geometric Galaxy");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_002_M"); MyTat.Add("The Howler");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_019_M", Name = "Death Behind" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_012_M", Name = "Royal Kiss" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_015_M"); MyTat.Add("Smoking Sisters");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_014_M"); MyTat.Add("Ancient Queen");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_008_M"); MyTat.Add("Flying Eye");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_007_M"); MyTat.Add("Eye of the Griffin");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_026_M", Name = "Royal Takeover" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_013_M", Name = "Love Gamble" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_002_M", Name = "Holy Mary" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_001_M", Name = "King Fight" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_019"); MyTat.Add("Royal Dagger Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_018"); MyTat.Add("Royal Dagger Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_017"); MyTat.Add("Loose Lips Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_016"); MyTat.Add("Loose Lips Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_009"); MyTat.Add("Time To Die");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_027_M", Name = "Cobra Dawn" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_025_M", Name = "Reaper Sway" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_012_M", Name = "Geometric Galaxy" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_002_M", Name = "The Howler" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_047"); MyTat.Add("Cassette");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_033"); MyTat.Add("Stag");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_013"); MyTat.Add("Boombox");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_002"); MyTat.Add("Chemistry");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_015_M", Name = "Smoking Sisters" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_014_M", Name = "Ancient Queen" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_008_M", Name = "Flying Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_007_M", Name = "Eye of the Griffin" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Chest_001"); MyTat.Add("$$$");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Chest_000"); MyTat.Add("Rich");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Chest_001"); MyTat.Add("Tribal Shark");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Chest_000"); MyTat.Add("Tribal Hammerhead");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_019", Name = "Royal Dagger Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_018", Name = "Royal Dagger Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_017", Name = "Loose Lips Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_016", Name = "Loose Lips Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_009", Name = "Time To Die" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_044"); MyTat.Add("Stone Cross");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_034"); MyTat.Add("Flaming Shamrock");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_025"); MyTat.Add("LS Bold");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_024"); MyTat.Add("Flaming Cross");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_010"); MyTat.Add("LS Flames");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_047", Name = "Cassette" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_033", Name = "Stag" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_013", Name = "Boombox" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_002", Name = "Chemistry" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_013"); MyTat.Add("Seven Deadly Sins");//Kill 1000 Players Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_012"); MyTat.Add("Embellished Scroll");//Kill 500 Players Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_011"); MyTat.Add("Blank Scroll");////Kill 100 Players Award?
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_003"); MyTat.Add("Blackjack");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Chest_001", Name = "$$$" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Chest_000", Name = "Rich" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Chest_001", Name = "Tribal Shark" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Chest_000", Name = "Tribal Hammerhead" });
 
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_044", Name = "Stone Cross" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_034", Name = "Flaming Shamrock" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_025", Name = "LS Bold" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_024", Name = "Flaming Cross" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_010", Name = "LS Flames" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_013", Name = "Seven Deadly Sins" });//Kill 1000 Players Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_012", Name = "Embellished Scroll" });//Kill 500 Players Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_011", Name = "Blank Scroll" });////Kill 100 Players Award?
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_003", Name = "Blackjack" });
                     //
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Male_Crew_Tat_000"); MyTat.Add("Crew Emblem");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Male_Crew_Tat_000", Name = "Crew Emblem" });
                 }//CHEST
                 else if (iZone == 3)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_030_M"); MyTat.Add("Radio Tape");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_004_M"); MyTat.Add("Skeleton Breeze");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_005_M", Name = "Concealed" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_043_M", Name = "Cursed Saki" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_044_M", Name = "Smouldering Bat & Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_060_M", Name = "Blaine County" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_061_M", Name = "Angry Possum" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_062_M", Name = "Floral Demon" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_037_M"); MyTat.Add("LadyBug");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_029_M"); MyTat.Add("Fatal Incursion");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_024_M", Name = "Beatbox Silhouette" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_025_M", Name = "Davis Flames" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_031_M"); MyTat.Add("Gambling Royalty");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_024_M"); MyTat.Add("Cash Mouth");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_016_M"); MyTat.Add("Rose and Aces");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("mp_vinewood_tat_012_M"); MyTat.Add("Skull of Suits");
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_030_M", Name = "Radio Tape" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_004_M", Name = "Skeleton Breeze" });
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_008_M"); MyTat.Add("Spartan Warrior");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_037_M", Name = "LadyBug" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_029_M", Name = "Fatal Incursion" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_015_M"); MyTat.Add("Jolly Roger");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_010_M"); MyTat.Add("See You In Hell");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_002_M"); MyTat.Add("Dead Lies");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_031_M", Name = "Gambling Royalty" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_024_M", Name = "Cash Mouth" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_016_M", Name = "Rose and Aces" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "mp_vinewood_tat_012_M", Name = "Skull of Suits" });
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_006_M"); MyTat.Add("Bombs Away");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_008_M", Name = "Spartan Warrior" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_029_M"); MyTat.Add("Win Some Lose Some");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_010_M"); MyTat.Add("Cash Money");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_015_M", Name = "Jolly Roger" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_010_M", Name = "See You In Hell" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_002_M", Name = "Dead Lies" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_052_M"); MyTat.Add("Biker Mount");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_039_M"); MyTat.Add("Gas Guzzler");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_031_M"); MyTat.Add("Gear Head");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_010_M"); MyTat.Add("Skull Of Taurus");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_003_M"); MyTat.Add("Web Rider");
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_006_M", Name = "Bombs Away" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_014_M"); MyTat.Add("Bat Cat of Spades");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_012_M"); MyTat.Add("Punk Biker");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_029_M", Name = "Win Some Lose Some" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_010_M", Name = "Cash Money" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_016_M"); MyTat.Add("Two Face");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_011_M"); MyTat.Add("Lady Liberty");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_052_M", Name = "Biker Mount" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_039_M", Name = "Gas Guzzler" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_031_M", Name = "Gear Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_010_M", Name = "Skull Of Taurus" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_003_M", Name = "Web Rider" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_004_M"); MyTat.Add("Gun Mic");
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_014_M", Name = "Bat Cat of Spades" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_012_M", Name = "Punk Biker" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_003_M"); MyTat.Add("Abstract Skull");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_016_M", Name = "Two Face" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_011_M", Name = "Lady Liberty" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_028"); MyTat.Add("Executioner");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_013"); MyTat.Add("Lizard");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_004_M", Name = "Gun Mic" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_035"); MyTat.Add("Sewn Heart");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_029"); MyTat.Add("Sad");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_006"); MyTat.Add("Feather Birds");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_003_M", Name = "Abstract Skull" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Stomach_000"); MyTat.Add("Refined Hustler");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_028", Name = "Executioner" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_013", Name = "Lizard" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Stom_001"); MyTat.Add("Wheel");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Stom_000"); MyTat.Add("Swordfish");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_035", Name = "Sewn Heart" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_029", Name = "Sad" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_006", Name = "Feather Birds" });
+
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Stomach_000", Name = "Refined Hustler" });
+
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Stom_001", Name = "Wheel" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Stom_000", Name = "Swordfish" });
 
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_036"); MyTat.Add("Way of the Gun");//500 Pistol kills Award
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_029"); MyTat.Add("Trinity Knot");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_012"); MyTat.Add("Los Santos Bills");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_004"); MyTat.Add("Faith");
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_036", Name = "Way of the Gun" });//500 Pistol kills Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_029", Name = "Trinity Knot" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_012", Name = "Los Santos Bills" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_004", Name = "Faith" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_004"); MyTat.Add("Hustler");//Make 50000 from betting Award
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_004", Name = "Hustler" });//Make 50000 from betting Award
                 }//STOMACH
                 else if (iZone == 4)
                 {
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_022_M"); MyTat.Add("Thong's Sword");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_021_M"); MyTat.Add("Wanted");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_020_M"); MyTat.Add("UFO");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_019_M"); MyTat.Add("Teddy Bear");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_018_M"); MyTat.Add("Stitches");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_017_M"); MyTat.Add("Space Monkey");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_016_M"); MyTat.Add("Sleepy");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_015_M"); MyTat.Add("On/Off");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_014_M"); MyTat.Add("LS Wings");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_013_M"); MyTat.Add("LS Star");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_012_M"); MyTat.Add("Razor Pop");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_011_M"); MyTat.Add("Lipstick Kiss");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_010_M"); MyTat.Add("Green Leaf");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_009_M"); MyTat.Add("Knifed");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_008_M"); MyTat.Add("Ice Cream");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_007_M"); MyTat.Add("Two Horns");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_006_M"); MyTat.Add("Crowned");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_005_M"); MyTat.Add("Spades");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_004_M"); MyTat.Add("Bandage");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_003_M"); MyTat.Add("Assault Rifle");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_002_M"); MyTat.Add("Animal");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_001_M"); MyTat.Add("Ace of Spades");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_000_M"); MyTat.Add("Five Stars");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_000_M", Name = "Live Fast Mono" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_001_M", Name = "Live Fast Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_018_M", Name = "Branched Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_019_M", Name = "Scythed Corpse" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_020_M", Name = "Scythed Corpse & Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_021_M", Name = "Third Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_022_M", Name = "Pierced Third Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_023_M", Name = "Lip Drip" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_024_M", Name = "Skin Mask" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_025_M", Name = "Webbed Scythe" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_026_M", Name = "Oni Demon" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_027_M", Name = "Bat Wings" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_012_M"); MyTat.Add("Thief");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_011_M"); MyTat.Add("Sinner");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_001_M", Name = "Bright Diamond" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_002_M", Name = "Hustle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_027_M", Name = "Black Widow" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_003_M"); MyTat.Add("Lock and Load");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_044_M", Name = "Clubs" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_043_M", Name = "Diamonds" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_042_M", Name = "Hearts" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_051_M"); MyTat.Add("Western Stylized");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_038_M"); MyTat.Add("FTW");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_009_M"); MyTat.Add("Morbid Arachnid");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_022_M", Name = "Thong's Sword" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_021_M", Name = "Wanted" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_020_M", Name = "UFO" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_019_M", Name = "Teddy Bear" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_018_M", Name = "Stitches" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_017_M", Name = "Space Monkey" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_016_M", Name = "Sleepy" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_015_M", Name = "On/Off" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_014_M", Name = "LS Wings" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_013_M", Name = "LS Star" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_012_M", Name = "Razor Pop" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_011_M", Name = "Lipstick Kiss" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_010_M", Name = "Green Leaf" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_009_M", Name = "Knifed" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_008_M", Name = "Ice Cream" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_007_M", Name = "Two Horns" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_006_M", Name = "Crowned" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_005_M", Name = "Spades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_004_M", Name = "Bandage" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_003_M", Name = "Assault Rifle" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_002_M", Name = "Animal" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_001_M", Name = "Ace of Spades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_000_M", Name = "Five Stars" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_042_M"); MyTat.Add("Flaming Quad");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_017_M"); MyTat.Add("Bat Wheel");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_Tat_006_M"); MyTat.Add("Toxic Spider");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_Tat_004_M"); MyTat.Add("Scorpion");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_Tat_000_M"); MyTat.Add("Stunt Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_012_M", Name = "Thief" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_011_M", Name = "Sinner" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_029"); MyTat.Add("Beautiful Death");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_025"); MyTat.Add("Snake Head Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_024"); MyTat.Add("Snake Head Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_007"); MyTat.Add("Los Muertos");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_003_M", Name = "Lock and Load" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_021"); MyTat.Add("Geo Fox");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_005"); MyTat.Add("Beautiful Eye");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_051_M", Name = "Western Stylized" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_038_M", Name = "FTW" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_009_M", Name = "Morbid Arachnid" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Neck_003"); MyTat.Add("$100");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Neck_002"); MyTat.Add("Script Dollar Sign");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Neck_001"); MyTat.Add("Bold Dollar Sign");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_Neck_000"); MyTat.Add("Cash is King");
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_042_M", Name = "Flaming Quad" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_017_M", Name = "Bat Wheel" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_Tat_006_M", Name = "Toxic Spider" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_Tat_004_M", Name = "Scorpion" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_Tat_000_M", Name = "Stunt Skull" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Head_002"); MyTat.Add("Shark");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_029", Name = "Beautiful Death" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_025", Name = "Snake Head Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_024", Name = "Snake Head Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_007", Name = "Los Muertos" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Neck_001"); MyTat.Add("Surfs Up");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Neck_000"); MyTat.Add("Little Fish");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_021", Name = "Geo Fox" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_005", Name = "Beautiful Eye" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Head_001"); MyTat.Add("Surf LS");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Head_000"); MyTat.Add("Pirate Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Neck_003", Name = "$100" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Neck_002", Name = "Script Dollar Sign" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Neck_001", Name = "Bold Dollar Sign" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_Neck_000", Name = "Cash is King" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_000"); MyTat.Add("Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Head_002", Name = "Shark" });
+
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Neck_001", Name = "Surfs Up" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Neck_000", Name = "Little Fish" });
+
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Head_001", Name = "Surf LS" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Head_000", Name = "Pirate Skull" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_000", Name = "Skull" });
                     //Not On the TatlIst     ...                            
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_044_M"); MyTat.Add("Clubs");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_043_M"); MyTat.Add("Diamonds");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_042_M"); MyTat.Add("Hearts");
                 }//HEAD
                 else if (iZone == 5)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_009_M"); MyTat.Add("Scratch Panther");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_008_M", Name = "Bigness Chimp" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_009_M", Name = "Up-n-Atomizer Design" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_010_M", Name = "Rocket Launcher Girl" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_028_M", Name = "Laser Eyes Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_029_M", Name = "Classic Vampire" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_049_M", Name = "Demon Drummer" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_041_M"); MyTat.Add("Mighty Thog");
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_040_M"); MyTat.Add("Tiger Heart");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_006_M", Name = "Skeleton Shot" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_010_M", Name = "Music Is The Remedy" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_011_M", Name = "Serpent Mic" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_019_M", Name = "Weed Knuckles" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_026_M"); MyTat.Add("Banknote Rose");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_019_M"); MyTat.Add("Can't Win Them All");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_014_M"); MyTat.Add("Vice");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_005_M"); MyTat.Add("Get Lucky");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_002_M"); MyTat.Add("Suits");
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_009_M", Name = "Scratch Panther" });
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_029_M"); MyTat.Add("Cerberus");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_025_M"); MyTat.Add("Winged Serpent");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_013_M"); MyTat.Add("Katana");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_007_M"); MyTat.Add("Spartan Combat");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_004_M"); MyTat.Add("Tiger and Mask");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_001_M"); MyTat.Add("Viking Warrior");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_041_M", Name = "Mighty Thog" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_040_M", Name = "Tiger Heart" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_014_M"); MyTat.Add("Mermaid's Curse");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_008_M"); MyTat.Add("Horrors Of The Deep");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_004_M"); MyTat.Add("Honor");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_026_M", Name = "Banknote Rose" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_019_M", Name = "Can't Win Them All" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_014_M", Name = "Vice" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_005_M", Name = "Get Lucky" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_002_M", Name = "Suits" });
 
-                    DataStore.sTatBase.Add("mpairraces_overlays"); DataStore.sTatName.Add("MP_Airraces_Tattoo_003_M"); MyTat.Add("Toxic Trails");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_029_M", Name = "Cerberus" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_025_M", Name = "Winged Serpent" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_013_M", Name = "Katana" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_007_M", Name = "Spartan Combat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_004_M", Name = "Tiger and Mask" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_001_M", Name = "Viking Warrior" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_027_M"); MyTat.Add("Serpent Revolver");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_025_M"); MyTat.Add("Praying Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_016_M"); MyTat.Add("Blood Money");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_015_M"); MyTat.Add("Spiked Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_008_M"); MyTat.Add("Bandolier");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_004_M"); MyTat.Add("Sidearm");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_014_M", Name = "Mermaid's Curse" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_008_M", Name = "Horrors Of The Deep" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_004_M", Name = "Honor" });
 
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_008_M"); MyTat.Add("Scarlett");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_004_M"); MyTat.Add("Piston Sleeve");
+                    TatList.Add(new Tattoo { BaseName = "mpairraces_overlays", TatName = "MP_Airraces_Tattoo_003_M", Name = "Toxic Trails" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_055_M"); MyTat.Add("Poison Scorpion");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_053_M"); MyTat.Add("Muffler Helmet");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_045_M"); MyTat.Add("Ride Hard Die Fast");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_035_M"); MyTat.Add("Chain Fist");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_025_M"); MyTat.Add("Good Luck");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_024_M"); MyTat.Add("Live to Ride");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_020_M"); MyTat.Add("Cranial Rose");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_016_M"); MyTat.Add("Macabre Tree");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_012_M"); MyTat.Add("Urban Stunter");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_027_M", Name = "Serpent Revolver" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_025_M", Name = "Praying Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_016_M", Name = "Blood Money" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_015_M", Name = "Spiked Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_008_M", Name = "Bandolier" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_004_M", Name = "Sidearm" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_043_M"); MyTat.Add("Engine Arm");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_039_M"); MyTat.Add("Kaboom");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_035_M"); MyTat.Add("Stuntman's End");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_023_M"); MyTat.Add("Tanked");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_022_M"); MyTat.Add("Piston Head");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_008_M"); MyTat.Add("Moonlight Ride");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_002_M"); MyTat.Add("Big Cat");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_001_M"); MyTat.Add("8 Eyed Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_008_M", Name = "Scarlett" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_004_M", Name = "Piston Sleeve" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_022_M"); MyTat.Add("My Crazy Life");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_018_M"); MyTat.Add("Skeleton Party");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_006_M"); MyTat.Add("Love Hustle");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_055_M", Name = "Poison Scorpion" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_053_M", Name = "Muffler Helmet" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_045_M", Name = "Ride Hard Die Fast" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_035_M", Name = "Chain Fist" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_025_M", Name = "Good Luck" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_024_M", Name = "Live to Ride" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_020_M", Name = "Cranial Rose" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_016_M", Name = "Macabre Tree" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_012_M", Name = "Urban Stunter" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_033_M"); MyTat.Add("City Sorrow");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_027_M"); MyTat.Add("Los Santos Life");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_005_M"); MyTat.Add("No Evil");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_043_M", Name = "Engine Arm" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_039_M", Name = "Kaboom" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_035_M", Name = "Stuntman's End" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_023_M", Name = "Tanked" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_022_M", Name = "Piston Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_008_M", Name = "Moonlight Ride" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_002_M", Name = "Big Cat" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_001_M", Name = "8 Eyed Skull" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_028_M"); MyTat.Add("Python Skull");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_018_M"); MyTat.Add("Divine Goddess");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_016_M"); MyTat.Add("Egyptian Mural");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_005_M"); MyTat.Add("Fatal Dagger");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_022_M", Name = "My Crazy Life" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_018_M", Name = "Skeleton Party" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_006_M", Name = "Love Hustle" });
+
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_033_M", Name = "City Sorrow" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_027_M", Name = "Los Santos Life" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_005_M", Name = "No Evil" });//
+
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_028_M", Name = "Python Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_018_M", Name = "Divine Goddess" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_016_M", Name = "Egyptian Mural" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_005_M", Name = "Fatal Dagger" });
 
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_021_M"); MyTat.Add("Gabriel");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_020_M"); MyTat.Add("Archangel and Mary");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_009_M"); MyTat.Add("Floral Symmetry");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_021_M", Name = "Gabriel" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_020_M", Name = "Archangel and Mary" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_Luxe_Tat_009_M", Name = "Floral Symmetry" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_021"); MyTat.Add("Time's Up Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_020"); MyTat.Add("Time's Up Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_012"); MyTat.Add("8 Ball Skull");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_010"); MyTat.Add("Electric Snake");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_000"); MyTat.Add("Skull Rider");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_021", Name = "Time's Up Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_020", Name = "Time's Up Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_012", Name = "8 Ball Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_010", Name = "Electric Snake" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_000", Name = "Skull Rider" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_048"); MyTat.Add("Peace");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_043"); MyTat.Add("Triangle White");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_039"); MyTat.Add("Sleeve");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_037"); MyTat.Add("Sunrise");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_034"); MyTat.Add("Stop");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_028"); MyTat.Add("Thorny Rose");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_027"); MyTat.Add("Padlock");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_026"); MyTat.Add("Pizza");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_016"); MyTat.Add("Lightning Bolt");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_015"); MyTat.Add("Mustache");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_007"); MyTat.Add("Bricks");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_003"); MyTat.Add("Diamond Sparkle");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_048", Name = "Peace" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_043", Name = "Triangle White" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_039", Name = "Sleeve" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_037", Name = "Sunrise" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_034", Name = "Stop" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_028", Name = "Thorny Rose" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_027", Name = "Padlock" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_026", Name = "Pizza" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_016", Name = "Lightning Bolt" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_015", Name = "Mustache" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_007", Name = "Bricks" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_003", Name = "Diamond Sparkle" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_LeftArm_001"); MyTat.Add("All-Seeing Eye");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_LeftArm_000"); MyTat.Add("$100 Bill");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_LeftArm_001", Name = "All-Seeing Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_LeftArm_000", Name = "$100 Bill" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_LArm_000"); MyTat.Add("Tiki Tower");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_LArm_001"); MyTat.Add("Mermaid L.S.");
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_LArm_000", Name = "Tiki Tower" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_LArm_001", Name = "Mermaid L.S." });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_041"); MyTat.Add("Dope Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_031"); MyTat.Add("Lady M");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_015"); MyTat.Add("Zodiac Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_006"); MyTat.Add("Oriental Mural");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_005"); MyTat.Add("Serpents");
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_041", Name = "Dope Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_031", Name = "Lady M" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_015", Name = "Zodiac Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_006", Name = "Oriental Mural" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_005", Name = "Serpents" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_015"); MyTat.Add("Racing Brunette");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_007"); MyTat.Add("Racing Blonde");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_001"); MyTat.Add("Burning Heart");//50 Death Match Award
-
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_015", Name = "Racing Brunette" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_007", Name = "Racing Blonde" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_001", Name = "Burning Heart" });//50 Death Match Award
                     //not on list
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_031_M"); MyTat.Add("Geometric Design");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_031_M", Name = "Geometric Design" });
                 }//LEFT ARM
                 else if (iZone == 6)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_032_M"); MyTat.Add("K.U.L.T.99.1 FM");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_031_M"); MyTat.Add("Octopus Shades");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_026_M"); MyTat.Add("Shark Water");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_012_M"); MyTat.Add("Still Slipping");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_011_M"); MyTat.Add("Soulwax");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_008_M"); MyTat.Add("Smiley Glitch");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_007_M"); MyTat.Add("Skeleton DJ");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_006_M"); MyTat.Add("Music Locker");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_005_M"); MyTat.Add("LSUR");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_003_M"); MyTat.Add("Lighthouse");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_002_M"); MyTat.Add("Jellyfish Shades");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_001_M"); MyTat.Add("Tropical Dude");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_000_M"); MyTat.Add("Headphone Splat");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_011_M", Name = "Nothing Mini About It" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_012_M", Name = "Snake Revolver" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_013_M", Name = "Weapon Sleeve" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_030_M", Name = "Centipede" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_031_M", Name = "Fleshy Eye" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_045_M", Name = "Armored Arm" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_046_M", Name = "Demon Smile" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_047_M", Name = "Angel & Devil" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_048_M", Name = "Death Is Certain" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_034_M"); MyTat.Add("LS Monogram");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_000_M", Name = "Hood Skeleton" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_005_M", Name = "Peacock" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_007_M", Name = "Ballas 4 Life" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_009_M", Name = "Ascension" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_012_M", Name = "Zombie Rhymes" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_020_M", Name = "Dog Fist" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_028_M"); MyTat.Add("Skull and Aces");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_025_M"); MyTat.Add("Queen of Roses");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_018_M"); MyTat.Add("The Gambler's Life");
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_004_M"); MyTat.Add("Lady Luck");
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_032_M", Name = "K.U.L.T.99.1 FM" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_031_M", Name = "Octopus Shades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_026_M", Name = "Shark Water" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_012_M", Name = "Still Slipping" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_011_M", Name = "Soulwax" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_008_M", Name = "Smiley Glitch" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_007_M", Name = "Skeleton DJ" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_006_M", Name = "Music Locker" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_005_M", Name = "LSUR" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_003_M", Name = "Lighthouse" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_002_M", Name = "Jellyfish Shades" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_001_M", Name = "Tropical Dude" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_000_M", Name = "Headphone Splat" });
 
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_028_M"); MyTat.Add("Spartan Mural");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_023_M"); MyTat.Add("Samurai Tallship");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_018_M"); MyTat.Add("Muscle Tear");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_017_M"); MyTat.Add("Feather Sleeve");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_014_M"); MyTat.Add("Celtic Band");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_012_M"); MyTat.Add("Tiger Headdress");
-                    DataStore.sTatBase.Add("mpchristmas2017_overlays"); DataStore.sTatName.Add("MP_Christmas2017_Tattoo_006_M"); MyTat.Add("Medusa");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_034_M", Name = "LS Monogram" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_023_M"); MyTat.Add("Stylized Kraken");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_005_M"); MyTat.Add("Mutiny");
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_001_M"); MyTat.Add("Crackshot");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_028_M", Name = "Skull and Aces" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_025_M", Name = "Queen of Roses" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_018_M", Name = "The Gambler's Life" });
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_004_M", Name = "Lady Luck" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_024_M"); MyTat.Add("Combat Reaper");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_021_M"); MyTat.Add("Have a Nice Day");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_002_M"); MyTat.Add("Grenade");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_028_M", Name = "Spartan Mural" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_023_M", Name = "Samurai Tallship" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_018_M", Name = "Muscle Tear" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_017_M", Name = "Feather Sleeve" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_014_M", Name = "Celtic Band" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_012_M", Name = "Tiger Headdress" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2017_overlays", TatName = "MP_Christmas2017_Tattoo_006_M", Name = "Medusa" });
 
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_007_M"); MyTat.Add("Drive Forever");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_006_M"); MyTat.Add("Engulfed Block");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_005_M"); MyTat.Add("Dialed In");
-                    DataStore.sTatBase.Add("mpimportexport_overlays"); DataStore.sTatName.Add("MP_MP_ImportExport_Tat_003_M"); MyTat.Add("Mechanical Sleeve");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_023_M", Name = "Stylized Kraken" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_005_M", Name = "Mutiny" });
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_001_M", Name = "Crackshot" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_054_M"); MyTat.Add("Mum");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_049_M"); MyTat.Add("These Colors Don't Run");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_047_M"); MyTat.Add("Snake Bike");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_046_M"); MyTat.Add("Skull Chain");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_042_M"); MyTat.Add("Grim Rider");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_033_M"); MyTat.Add("Eagle Emblem");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_014_M"); MyTat.Add("Lady Mortality");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_007_M"); MyTat.Add("Swooping Eagle");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_024_M", Name = "Combat Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_021_M", Name = "Have a Nice Day" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_002_M", Name = "Grenade" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_049_M"); MyTat.Add("Seductive Mechanic");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_038_M"); MyTat.Add("One Down Five Up");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_036_M"); MyTat.Add("Biker Stallion");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_016_M"); MyTat.Add("Coffin Racer");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_010_M"); MyTat.Add("Grave Vulture");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_009_M"); MyTat.Add("Arachnid of Death");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_003_M"); MyTat.Add("Poison Wrench");
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_007_M", Name = "Drive Forever" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_006_M", Name = "Engulfed Block" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_005_M", Name = "Dialed In" });
+                    TatList.Add(new Tattoo { BaseName = "mpimportexport_overlays", TatName = "MP_MP_ImportExport_Tat_003_M", Name = "Mechanical Sleeve" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_035_M"); MyTat.Add("Black Tears");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_028_M"); MyTat.Add("Loving Los Muertos");
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_003_M"); MyTat.Add("Lady Vamp");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_054_M", Name = "Mum" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_049_M", Name = "These Colors Don't Run" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_047_M", Name = "Snake Bike" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_046_M", Name = "Skull Chain" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_042_M", Name = "Grim Rider" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_033_M", Name = "Eagle Emblem" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_014_M", Name = "Lady Mortality" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_007_M", Name = "Swooping Eagle" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_015_M"); MyTat.Add("Seductress");
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_049_M", Name = "Seductive Mechanic" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_038_M", Name = "One Down Five Up" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_036_M", Name = "Biker Stallion" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_016_M", Name = "Coffin Racer" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_010_M", Name = "Grave Vulture" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_009_M", Name = "Arachnid of Death" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_003_M", Name = "Poison Wrench" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_026_M"); MyTat.Add("Floral Print");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_017_M"); MyTat.Add("Heavenly Deity");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_010_M"); MyTat.Add("Intrometric");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_035_M", Name = "Black Tears" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_028_M", Name = "Loving Los Muertos" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_003_M", Name = "Lady Vamp" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_019_M"); MyTat.Add("Geisha Bloom");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_013_M"); MyTat.Add("Mermaid Harpist");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_004_M"); MyTat.Add("Floral Raven");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_015_M", Name = "Seductress" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_027"); MyTat.Add("Fuck Luck Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_026"); MyTat.Add("Fuck Luck Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_023"); MyTat.Add("You're Next Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_022"); MyTat.Add("You're Next Outline");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_008"); MyTat.Add("Death Before Dishonor");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_004"); MyTat.Add("Snake Shaded");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_003"); MyTat.Add("Snake Outline");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_026_M", Name = "Floral Print" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_017_M", Name = "Heavenly Deity" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_010_M", Name = "Intrometric" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_045"); MyTat.Add("Mesh Band");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_044"); MyTat.Add("Triangle Black");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_036"); MyTat.Add("Shapes");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_023"); MyTat.Add("Smiley");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_022"); MyTat.Add("Pencil");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_020"); MyTat.Add("Geo Pattern");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_018"); MyTat.Add("Origami");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_017"); MyTat.Add("Eye Triangle");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_014"); MyTat.Add("Spray Can");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_010"); MyTat.Add("Horseshoe");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_008"); MyTat.Add("Cube");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_004"); MyTat.Add("Bone");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_001"); MyTat.Add("Single Arrow");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_019_M", Name = "Geisha Bloom" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_013_M", Name = "Mermaid Harpist" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_004_M", Name = "Floral Raven" });
 
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_RightArm_001"); MyTat.Add("Green");
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Buis_M_RightArm_000"); MyTat.Add("Dollar Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_027", Name = "Fuck Luck Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_026", Name = "Fuck Luck Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_023", Name = "You're Next Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_022", Name = "You're Next Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_008", Name = "Death Before Dishonor" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_004", Name = "Snake Shaded" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_003", Name = "Snake Outline" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_RArm_001"); MyTat.Add("Vespucci Beauty");
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_RArm_000"); MyTat.Add("Tribal Sun");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_045", Name = "Mesh Band" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_044", Name = "Triangle Black" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_036", Name = "Shapes" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_023", Name = "Smiley" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_022", Name = "Pencil" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_020", Name = "Geo Pattern" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_018", Name = "Origami" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_017", Name = "Eye Triangle" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_014", Name = "Spray Can" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_010", Name = "Horseshoe" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_008", Name = "Cube" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_004", Name = "Bone" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_001", Name = "Single Arrow" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_047"); MyTat.Add("Lion");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_038"); MyTat.Add("Dagger");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_028"); MyTat.Add("Mermaid");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_027"); MyTat.Add("Virgin Mary");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_018"); MyTat.Add("Serpent Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_014"); MyTat.Add("Flower Mural");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_003"); MyTat.Add("Dragons and Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_001"); MyTat.Add("Dragons");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_000"); MyTat.Add("Brotherhood");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_RightArm_001", Name = "Green" });
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Buis_M_RightArm_000", Name = "Dollar Skull" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_010"); MyTat.Add("Ride or Die");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_002"); MyTat.Add("Grim Reaper Smoking Gun");
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_RArm_001", Name = "Vespucci Beauty" });
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_RArm_000", Name = "Tribal Sun" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_047", Name = "Lion" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_038", Name = "Dagger" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_028", Name = "Mermaid" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_027", Name = "Virgin Mary" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_018", Name = "Serpent Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_014", Name = "Flower Mural" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_003", Name = "Dragons and Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_001", Name = "Dragons" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_000", Name = "Brotherhood" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_010", Name = "Ride or Die" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_002", Name = "Grim Reaper Smoking Gun" });
                     //Not In List
-                    DataStore.sTatBase.Add("mpbusiness_overlays"); DataStore.sTatName.Add("MP_Male_Crew_Tat_001"); MyTat.Add("Crew Tattoo");
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_030_M"); MyTat.Add("Geometric Design");
+                    TatList.Add(new Tattoo { BaseName = "mpbusiness_overlays", TatName = "MP_Male_Crew_Tat_001", Name = "Crew Tattoo" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_030_M", Name = "Geometric Design" });
                 }//RIGHT ARM
                 else if (iZone == 7)
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_029_M"); MyTat.Add("Soundwaves");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_028_M"); MyTat.Add("Skull Waters");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_025_M"); MyTat.Add("Glow Princess");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_024_M"); MyTat.Add("Pineapple Skull");
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_010_M"); MyTat.Add("Tropical Serpent");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_002_M", Name = "Cobra Biker" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_014_M", Name = "Minimal SMG" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_015_M", Name = "Minimal Advanced Rifle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_016_M", Name = "Minimal Sniper Rifle" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_032_M", Name = "Many-eyed Goat" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_053_M", Name = "Mobster Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_054_M", Name = "Wounded Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_055_M", Name = "Stabbed Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_056_M", Name = "Tiger Blade" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_032_M"); MyTat.Add("Love Fist");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_022_M", Name = "LS Smoking Cartridges" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_023_M", Name = "Trust" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_027_M"); MyTat.Add("8-Ball Rose");//
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_013_M"); MyTat.Add("One-armed Bandit");//
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_029_M", Name = "Soundwaves" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_028_M", Name = "Skull Waters" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_025_M", Name = "Glow Princess" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_024_M", Name = "Pineapple Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_010_M", Name = "Tropical Serpent" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_023_M"); MyTat.Add("Rose Revolver");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_011_M"); MyTat.Add("Death Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_007_M"); MyTat.Add("Stylized Tiger");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_005_M"); MyTat.Add("Patriot Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_032_M", Name = "Love Fist" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_057_M"); MyTat.Add("Laughing Skull");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_056_M"); MyTat.Add("Bone Cruiser");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_044_M"); MyTat.Add("Ride Free");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_037_M"); MyTat.Add("Scorched Soul");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_036_M"); MyTat.Add("Engulfed Skull");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_027_M"); MyTat.Add("Bad Luck");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_015_M"); MyTat.Add("Ride or Die");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_002_M"); MyTat.Add("Rose Tribute");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_027_M", Name = "8-Ball Rose" });//
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_013_M", Name = "One-armed Bandit" });//
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_031_M"); MyTat.Add("Stunt Jesus");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_028_M"); MyTat.Add("Quad Goblin");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_021_M"); MyTat.Add("Golden Cobra");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_013_M"); MyTat.Add("Dirt Track Hero");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_007_M"); MyTat.Add("Dagger Devil");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_023_M", Name = "Rose Revolver" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_011_M", Name = "Death Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_007_M", Name = "Stylized Tiger" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_005_M", Name = "Patriot Skull" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_029_M"); MyTat.Add("Death Us Do Part");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_057_M", Name = "Laughing Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_056_M", Name = "Bone Cruiser" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_044_M", Name = "Ride Free" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_037_M", Name = "Scorched Soul" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_036_M", Name = "Engulfed Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_027_M", Name = "Bad Luck" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_015_M", Name = "Ride or Die" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_002_M", Name = "Rose Tribute" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_020_M"); MyTat.Add("Presidents");//
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_007_M"); MyTat.Add("LS Serpent");//
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_031_M", Name = "Stunt Jesus" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_028_M", Name = "Quad Goblin" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_021_M", Name = "Golden Cobra" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_013_M", Name = "Dirt Track Hero" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_007_M", Name = "Dagger Devil" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_Luxe_Tat_011_M"); MyTat.Add("Cross of Roses");
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_000_M"); MyTat.Add("Serpent of Death");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_029_M", Name = "Death Us Do Part" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_002"); MyTat.Add("Spider Color");
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_001"); MyTat.Add("Spider Outline");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_020_M", Name = "Presidents" });//
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_007_M", Name = "LS Serpent" });//
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_040"); MyTat.Add("Black Anchor");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_019"); MyTat.Add("Charm");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_009"); MyTat.Add("Squares");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_Luxe_Tat_011_M", Name = "Cross of Roses" });
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_000_M", Name = "Serpent of Death" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Lleg_000"); MyTat.Add("Tribal Star");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_002", Name = "Spider Color" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_001", Name = "Spider Outline" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_032"); MyTat.Add("Faith");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_037"); MyTat.Add("Grim Reaper");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_035"); MyTat.Add("Dragon");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_033"); MyTat.Add("Chinese Dragon");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_026"); MyTat.Add("Smoking Dagger");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_023"); MyTat.Add("Hottie");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_021"); MyTat.Add("Serpent Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_008"); MyTat.Add("Dragon Mural");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_002"); MyTat.Add("Melting Skull");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_040", Name = "Black Anchor" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_019", Name = "Charm" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_009", Name = "Squares" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_009"); MyTat.Add("Dragon and Dagger");
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Lleg_000", Name = "Tribal Star" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_032", Name = "Faith" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_037", Name = "Grim Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_035", Name = "Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_033", Name = "Chinese Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_026", Name = "Smoking Dagger" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_023", Name = "Hottie" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_021", Name = "Serpent Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_008", Name = "Dragon Mural" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_002", Name = "Melting Skull" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_009", Name = "Dragon and Dagger" });
                 }//LEFT LEG
                 else
                 {
-                    DataStore.sTatBase.Add("mpheist4_overlays"); DataStore.sTatName.Add("MP_Heist4_Tat_027_M"); MyTat.Add("Skullphones");
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_017_M", Name = "Skull Grenade" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_033_M", Name = "Three-eyed Demon" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_034_M", Name = "Smoldering Reaper" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_050_M", Name = "Gold Gun" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_051_M", Name = "Blue Serpent" });
+                    TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_052_M", Name = "Night Demon" });
 
-                    DataStore.sTatBase.Add("mpheist3_overlays"); DataStore.sTatName.Add("mpHeist3_Tat_031_M"); MyTat.Add("Kifflom");
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_003_M", Name = "Bandana Knife" });
+                    TatList.Add(new Tattoo { BaseName = "mpsecurity_overlays", TatName = "MP_Security_Tat_021_M", Name = "Graffiti Skull" });
 
-                    DataStore.sTatBase.Add("mpvinewood_overlays"); DataStore.sTatName.Add("MP_Vinewood_Tat_020_M"); MyTat.Add("Cash is King");
+                    TatList.Add(new Tattoo { BaseName = "mpheist4_overlays", TatName = "MP_Heist4_Tat_027_M", Name = "Skullphones" });
 
-                    DataStore.sTatBase.Add("mpsmuggler_overlays"); DataStore.sTatName.Add("MP_Smuggler_Tattoo_020_M"); MyTat.Add("Homeward Bound");
+                    TatList.Add(new Tattoo { BaseName = "mpheist3_overlays", TatName = "mpHeist3_Tat_031_M", Name = "Kifflom" });
 
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_030_M"); MyTat.Add("Pistol Ace");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_026_M"); MyTat.Add("Restless Skull");
-                    DataStore.sTatBase.Add("mpgunrunning_overlays"); DataStore.sTatName.Add("MP_Gunrunning_Tattoo_006_M"); MyTat.Add("Combat Skull");
+                    TatList.Add(new Tattoo { BaseName = "mpvinewood_overlays", TatName = "MP_Vinewood_Tat_020_M", Name = "Cash is King" });
 
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_048_M"); MyTat.Add("STFU");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_040_M"); MyTat.Add("American Made");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_028_M"); MyTat.Add("Dusk Rider");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_022_M"); MyTat.Add("Western Insignia");
-                    DataStore.sTatBase.Add("mpbiker_overlays"); DataStore.sTatName.Add("MP_MP_Biker_Tat_004_M"); MyTat.Add("Dragon's Fury");
+                    TatList.Add(new Tattoo { BaseName = "mpsmuggler_overlays", TatName = "MP_Smuggler_Tattoo_020_M", Name = "Homeward Bound" });
 
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_047_M"); MyTat.Add("Brake Knife");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_045_M"); MyTat.Add("Severed Hand");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_032_M"); MyTat.Add("Wheelie Mouse");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_025_M"); MyTat.Add("Speed Freak");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_020_M"); MyTat.Add("Piston Angel");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_015_M"); MyTat.Add("Praying Gloves");
-                    DataStore.sTatBase.Add("mpstunt_overlays"); DataStore.sTatName.Add("MP_MP_Stunt_tat_005_M"); MyTat.Add("Demon Spark Plug");
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_030_M", Name = "Pistol Ace" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_026_M", Name = "Restless Skull" });
+                    TatList.Add(new Tattoo { BaseName = "mpgunrunning_overlays", TatName = "MP_Gunrunning_Tattoo_006_M", Name = "Combat Skull" });
 
-                    DataStore.sTatBase.Add("mplowrider2_overlays"); DataStore.sTatName.Add("MP_LR_Tat_030_M"); MyTat.Add("San Andreas Prayer");
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_048_M", Name = "STFU" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_040_M", Name = "American Made" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_028_M", Name = "Dusk Rider" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_022_M", Name = "Western Insignia" });
+                    TatList.Add(new Tattoo { BaseName = "mpbiker_overlays", TatName = "MP_MP_Biker_Tat_004_M", Name = "Dragon's Fury" });
 
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_023_M"); MyTat.Add("Dance of Hearts");
-                    DataStore.sTatBase.Add("mplowrider_overlays"); DataStore.sTatName.Add("MP_LR_Tat_017_M"); MyTat.Add("Ink Me");
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_047_M", Name = "Brake Knife" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_045_M", Name = "Severed Hand" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_032_M", Name = "Wheelie Mouse" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_025_M", Name = "Speed Freak" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_020_M", Name = "Piston Angel" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_015_M", Name = "Praying Gloves" });
+                    TatList.Add(new Tattoo { BaseName = "mpstunt_overlays", TatName = "MP_MP_Stunt_tat_005_M", Name = "Demon Spark Plug" });
 
-                    DataStore.sTatBase.Add("mpluxe2_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_023_M"); MyTat.Add("Starmetric");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider2_overlays", TatName = "MP_LR_Tat_030_M", Name = "San Andreas Prayer" });
 
-                    DataStore.sTatBase.Add("mpluxe_overlays"); DataStore.sTatName.Add("MP_LUXE_TAT_001_M"); MyTat.Add("Elaborate Los Muertos");
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_023_M", Name = "Dance of Hearts" });
+                    TatList.Add(new Tattoo { BaseName = "mplowrider_overlays", TatName = "MP_LR_Tat_017_M", Name = "Ink Me" });
 
-                    DataStore.sTatBase.Add("mpchristmas2_overlays"); DataStore.sTatName.Add("MP_Xmas2_M_Tat_014"); MyTat.Add("Floral Dagger");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe2_overlays", TatName = "MP_LUXE_TAT_023_M", Name = "Starmetric" });
 
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_042"); MyTat.Add("Sparkplug");
-                    DataStore.sTatBase.Add("mphipster_overlays"); DataStore.sTatName.Add("FM_Hip_M_Tat_038"); MyTat.Add("Grub");
+                    TatList.Add(new Tattoo { BaseName = "mpluxe_overlays", TatName = "MP_LUXE_TAT_001_M", Name = "Elaborate Los Muertos" });
 
-                    DataStore.sTatBase.Add("mpbeach_overlays"); DataStore.sTatName.Add("MP_Bea_M_Rleg_000"); MyTat.Add("Tribal Tiki Tower");
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas2_overlays", TatName = "MP_Xmas2_M_Tat_014", Name = "Floral Dagger" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_043"); MyTat.Add("Indian Ram");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_042"); MyTat.Add("Flaming Scorpion");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_040"); MyTat.Add("Flaming Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_039"); MyTat.Add("Broken Skull");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_022"); MyTat.Add("Fiery Dragon");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_017"); MyTat.Add("Tribal");
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_M_007"); MyTat.Add("The Warrior");
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_042", Name = "Sparkplug" });
+                    TatList.Add(new Tattoo { BaseName = "mphipster_overlays", TatName = "FM_Hip_M_Tat_038", Name = "Grub" });
 
-                    DataStore.sTatBase.Add("multiplayer_overlays"); DataStore.sTatName.Add("FM_Tat_Award_M_006"); MyTat.Add("Skull and Sword");
+                    TatList.Add(new Tattoo { BaseName = "mpbeach_overlays", TatName = "MP_Bea_M_Rleg_000", Name = "Tribal Tiki Tower" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_043", Name = "Indian Ram" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_042", Name = "Flaming Scorpion" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_040", Name = "Flaming Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_039", Name = "Broken Skull" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_022", Name = "Fiery Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_017", Name = "Tribal" });
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_M_007", Name = "The Warrior" });
+
+                    TatList.Add(new Tattoo { BaseName = "multiplayer_overlays", TatName = "FM_Tat_Award_M_006", Name = "Skull and Sword" });
                 }//RIGHT LEG
             }// FreeMale
 
             if (bEmpty)
-                MyTat.Add("No Tattoos Available");
+                TatList.Add(new Tattoo { BaseName = "", TatName = "", Name = "No Tattoos Available" });
 
-            return MyTat;
-        }
-        public static int FindRandom(int iList, int iMin, int iMax)
-        {
-            LoggerLight.Loggers("FindRandom, iList == " + iList);
-
-            int iBe = 0;
-            RandomPlusList XSets = new RandomPlusList();
-
-            if (File.Exists(DataStore.sRandFile))
-            {
-                XSets = XmlReadWrite.LoadRando(DataStore.sRandFile);
-
-                if (XSets.BigRanList.Count() < iList + 1)
-                {
-                    for (int i = XSets.BigRanList.Count() - 1; i < iList + 1; i++)
-                    {
-                        RandomPlus iBlank = new RandomPlus();
-                        XSets.BigRanList.Add(iBlank);
-                    }
-                }
-
-                for (int i = 0; i < XSets.BigRanList[iList].RandNums.Count; i++)
-                {
-                    if (XSets.BigRanList[iList].RandNums[i] > iMax || XSets.BigRanList[iList].RandNums[i] < iMin)
-                        XSets.BigRanList[iList].RandNums.RemoveAt(i);
-                }
-
-                if (XSets.BigRanList[iList].RandNums.Count == 0)
-                {
-                    for (int i = iMin; i < iMax + 1; i++)
-                        XSets.BigRanList[iList].RandNums.Add(i);
-                }
-
-                int iRanNum = RandInt(0, XSets.BigRanList[iList].RandNums.Count - 1);
-                iBe = XSets.BigRanList[iList].RandNums[iRanNum];
-                XSets.BigRanList[iList].RandNums.RemoveAt(iRanNum);
-            }
-            else
-            {
-                for (int i = 0; i < iList + 1; i++)
-                {
-                    RandomPlus iBlank = new RandomPlus();
-                    XSets.BigRanList.Add(iBlank);
-                }
-
-                for (int i = iMin; i < iMax + 1; i++)
-                    XSets.BigRanList[iList].RandNums.Add(i);
-
-                int iRanNum = RandInt(0, XSets.BigRanList[iList].RandNums.Count - 1);
-                iBe = XSets.BigRanList[iList].RandNums[iRanNum];
-                XSets.BigRanList[iList].RandNums.RemoveAt(iRanNum);
-            }
-            XmlReadWrite.SaveRando(XSets, DataStore.sRandFile);
-
-            return iBe;
+            return TatList;
         }
         public static List<string> PedCollect()
         {
@@ -3682,7 +3871,7 @@ namespace RandomStart
                 {
                     if (bRando)
                     {
-                        iPerPickP = RandInt(0, NearPeds.Count - 1);
+                        iPerPickP = RandomNum.RandInt(0, NearPeds.Count - 1);
                         Vector3 Campo = Game.Player.Character.Position;
                         if (DataStore.MySettingsXML.ReCurr)
                         {
@@ -3844,7 +4033,7 @@ namespace RandomStart
                 }
                 else
                 {
-                    ThisBank.OverlayColour.Add(RandInt(0, 61));
+                    ThisBank.OverlayColour.Add(RandomNum.RandInt(0, 61));
                     ThisBank.OverlayOpc.Add(RandFloat(0.65f, 0.99f));
                 }
             }

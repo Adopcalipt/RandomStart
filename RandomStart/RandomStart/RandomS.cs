@@ -1,6 +1,7 @@
 ﻿using GTA;
 using GTA.Native;
 using NativeUI;
+using RandomStart.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +21,10 @@ namespace RandomStart
 
             Tick += TickyTock;
             KeyDown += KeyPlunk;
-            Interval = 1; 
+            Interval = 1;
         }
         private void TickyTock(object sender, EventArgs e)
         {
-
             if (bIsReady)
             {
                 if (!Game.IsLoading)
@@ -140,6 +140,17 @@ namespace RandomStart
                         }
                     }
                 }
+                else if (DataStore.MySettingsXML.ControlSupport)
+                {
+                    if (RsReturns.ButtonDown(DataStore.MySettingsXML.ControlA, false))
+                    {
+                        if (RsReturns.ButtonDown(DataStore.MySettingsXML.ControlB, false))
+                        {
+                            DataStore.bMenuOpen = true;
+                            PedMenuMain();
+                        }
+                    }
+                }
 
                 if (DataStore.MySettingsXML.DisableRecord)
                 {
@@ -152,7 +163,6 @@ namespace RandomStart
                 else if (DataStore.bOpenDoors)
                     RsActions.OpeningDoors(DataStore.PeskyDoors[0], DataStore.PeskyDoors[1], DataStore.PeskyDoors[2]);
             }
-
         }
         private void KeyPlunk(object sender, KeyEventArgs e)
         {
@@ -190,6 +200,7 @@ namespace RandomStart
             SetChar(mainMenu);
             SetLoadWeps(mainMenu);
             SetMenuKey(mainMenu);
+            SetControlKey(mainMenu);
             SelectSaved(mainMenu);
             PedPosses(mainMenu);
             InstantReincarnate(mainMenu);
@@ -253,22 +264,25 @@ namespace RandomStart
             LoggerLight.Loggers("SavePedMenu");
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, DataStore.MyLang.Langfile[8]);
+            bool bMale = false;
 
             SetComponents(playermodelmenu);
             SetPedProps(playermodelmenu);
             ResetPedProps(playermodelmenu);
-            SetHVoice(playermodelmenu);
 
             if (Game.Player.Character.Model == PedHash.Michael)
             {
+                bMale = true;
                 AddTatts(playermodelmenu, 1);
             }
             else if (Game.Player.Character.Model == PedHash.Franklin)
             {
+                bMale = true;
                 AddTatts(playermodelmenu, 2);
             }
             else if (Game.Player.Character.Model == PedHash.Trevor)
             {
+                bMale = true;
                 AddTatts(playermodelmenu, 3);
             }
             else if (Game.Player.Character.Model == PedHash.FreemodeFemale01)
@@ -282,7 +296,7 @@ namespace RandomStart
             }
             else if (Game.Player.Character.Model == PedHash.FreemodeMale01)
             {
-
+                bMale = true;
                 SetHair01(playermodelmenu);
                 SetHair02(playermodelmenu);
                 SetHEyes(playermodelmenu);
@@ -290,7 +304,13 @@ namespace RandomStart
                 AddTatts(playermodelmenu, 5);
                 SetFaceFeatures(playermodelmenu);
             }
+            else
+            {
+                if (Game.Player.Character.Gender == Gender.Male)
+                    bMale = true;
+            }
 
+            SetHVoice(playermodelmenu, bMale);
             if (DataStore.iCurrentPed > 0)
                 SaveMyPed(playermodelmenu);
             CreateNewPed(playermodelmenu);
@@ -407,7 +427,7 @@ namespace RandomStart
                 }
             };
         }
-        private void SetHVoice(UIMenu XMen)
+        private void SetHVoice(UIMenu XMen, bool bMale)
         {
             LoggerLight.Loggers("SetHVoice");
 
@@ -415,16 +435,32 @@ namespace RandomStart
 
             List<dynamic> Voices = new List<dynamic>();
 
-            for (int i = 0; i < DataStore.ThemVoices.Count; i++)
+            if (bMale)
             {
-                Voices.Add(DataStore.ThemVoices[i]);
-                var newitem = new UIMenuItem(DataStore.ThemVoices[i]);
-                playermodelmenu.AddItem(newitem);
+                for (int i = 0; i < DataStore.MaleVoices.Count; i++)
+                {
+                    Voices.Add(DataStore.MaleVoices[i]);
+                    var newitem = new UIMenuItem(DataStore.MaleVoices[i]);
+                    playermodelmenu.AddItem(newitem);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < DataStore.FemaleVoices.Count; i++)
+                {
+                    Voices.Add(DataStore.FemaleVoices[i]);
+                    var newitem = new UIMenuItem(DataStore.FemaleVoices[i]);
+                    playermodelmenu.AddItem(newitem);
+                }
             }
 
             playermodelmenu.OnItemSelect += (sender, item, index) =>
             {
-                DataStore.NewBank.PedVoice = DataStore.ThemVoices[index];
+                if (bMale)
+                    DataStore.NewBank.PedVoice = DataStore.MaleVoices[index];
+                else
+                    DataStore.NewBank.PedVoice = DataStore.FemaleVoices[index];
+
                 Function.Call(Hash.SET_AMBIENT_VOICE_NAME, Game.Player.Character.Handle, DataStore.NewBank.PedVoice);
                 Function.Call((Hash)0x4ADA3F19BE4A6047, Game.Player.Character.Handle);
                 UI.Notify("Voice set to " + DataStore.NewBank.PedVoice);
@@ -616,7 +652,6 @@ namespace RandomStart
         }
         private void SetPedProps(UIMenu XMen)
         {
-
             LoggerLight.Loggers("SetPedProps");
 
             var playermodelmenu2 = MyMenuPool.AddSubMenu(XMen, DataStore.MyLang.Langfile[41]);
@@ -674,7 +709,6 @@ namespace RandomStart
         }
         private void ResetPedProps(UIMenu XMen)
         {
-
             LoggerLight.Loggers("ResetPedProps");
 
             var playermodelmenu = new UIMenuItem(DataStore.MyLang.Langfile[46], DataStore.MyLang.Langfile[47]);
@@ -730,15 +764,15 @@ namespace RandomStart
 
             var playermodelmenu = MyMenuPool.AddSubMenu(XMen, sName);
 
-            List<string> sub_01 = RsReturns.TattoosList(iChar, iSkin);
+            List<Tattoo> sub_01 = RsReturns.TattoosList(iChar, iSkin);
 
-            if (sub_01[0] != "No Tattoos Available")
+            if (sub_01[0].Name != "No Tattoos Available")
             {
                 for (int i = 0; i < sub_01.Count; i++)
                 {
-                    var item_ = new UIMenuItem(sub_01[i], "");
+                    var item_ = new UIMenuItem(sub_01[i].Name, "");
                     playermodelmenu.AddItem(item_);
-                    if (DataStore.NewBank.Tattoo_Nam.Contains(DataStore.sTatName[i]))
+                    if (DataStore.NewBank.Tattoo_Nam.Contains(sub_01[i].TatName))
                         item_.SetRightBadge(UIMenuItem.BadgeStyle.Tatoo);
 
                 }
@@ -746,21 +780,21 @@ namespace RandomStart
                 playermodelmenu.OnItemSelect += (sender, item, index) =>
                 {
                     RsReturns.TattoosList(iChar, iSkin);
-                    if (sub_01[index] != "No Tattoos Available")
+                    if (sub_01[index].Name != "No Tattoos Available")
                     {
                         Function.Call(Hash.CLEAR_PED_DECORATIONS, Game.Player.Character.Handle);
 
-                        if (!DataStore.NewBank.Tattoo_Nam.Contains(DataStore.sTatName[index]))
+                        if (!DataStore.NewBank.Tattoo_Nam.Contains(sub_01[index].TatName))
                         {
                             item.SetRightBadge(UIMenuItem.BadgeStyle.Tatoo);
-                            DataStore.NewBank.Tattoo_COl.Add(DataStore.sTatBase[index]);
-                            DataStore.NewBank.Tattoo_Nam.Add(DataStore.sTatName[index]);
-                            Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character.Handle, Function.Call<int>(Hash.GET_HASH_KEY, DataStore.sTatBase[index]), Function.Call<int>(Hash.GET_HASH_KEY, DataStore.sTatName[index]));
+                            DataStore.NewBank.Tattoo_COl.Add(sub_01[index].BaseName);
+                            DataStore.NewBank.Tattoo_Nam.Add(sub_01[index].TatName);
+                            Function.Call(Hash._SET_PED_DECORATION, Game.Player.Character.Handle, Function.Call<int>(Hash.GET_HASH_KEY, sub_01[index].BaseName), Function.Call<int>(Hash.GET_HASH_KEY, sub_01[index].TatName));
                         }
                         else
                         {
                             item.SetRightBadge(UIMenuItem.BadgeStyle.None);
-                            int iAm = DataStore.NewBank.Tattoo_Nam.IndexOf(DataStore.sTatName[index]);
+                            int iAm = DataStore.NewBank.Tattoo_Nam.IndexOf(sub_01[index].TatName);
                             DataStore.NewBank.Tattoo_COl.RemoveAt(iAm);
                             DataStore.NewBank.Tattoo_Nam.RemoveAt(iAm);
                         }
@@ -944,7 +978,6 @@ namespace RandomStart
         }
         private void SetChar(UIMenu XMen)
         {
-
             LoggerLight.Loggers("SetChar");
 
             var SetCharOpt = new UIMenuItem(DataStore.MyLang.Langfile[53], DataStore.MyLang.Langfile[54]);
@@ -996,7 +1029,6 @@ namespace RandomStart
         }
         private void DisRecord(UIMenu XMen)
         {
-
             LoggerLight.Loggers("DisRecord");
 
             var SetCharOpt = new UIMenuItem(DataStore.MyLang.Langfile[55], DataStore.MyLang.Langfile[56]);
@@ -1220,6 +1252,22 @@ namespace RandomStart
                     MyMenuPool.CloseAllMenus();
                     UI.ShowSubtitle(DataStore.MyLang.Langfile[63]);
                     DataStore.bKeyFinder = true;
+                }
+            };
+        }
+        private void SetControlKey(UIMenu XMen)
+        {
+            LoggerLight.Loggers("SetControlKey");
+
+            var playermodelmenu = new UIMenuItem("Add Controler Support", "Add controler load keys");
+            playermodelmenu.SetLeftBadge(UIMenuItem.BadgeStyle.Star);
+            XMen.AddItem(playermodelmenu);
+            XMen.OnItemSelect += (sender, item, index) =>
+            {
+                if (item == playermodelmenu)
+                {
+                    MyMenuPool.CloseAllMenus();
+                    RsActions.GetControlsSet();
                 }
             };
         }

@@ -19,6 +19,9 @@ namespace RandomStart.Classes
         public bool BeachPart { get; set; }
         public int Version { get; set; }
         public int LangSupport { get; set; }
+        public bool ControlSupport { get; set; }
+        public int ControlA { get; set; }
+        public int ControlB { get; set; }
 
         public bool BeachPed { get; set; }
         public bool Tramps { get; set; }

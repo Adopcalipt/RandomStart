@@ -43,20 +43,19 @@ namespace RandomStart
         public static bool bInCayoPerico { get; set; }
         public static bool bDisableDLCVeh { get; set; }
 
-
-        public static string sVersion { get; set; }
         public static string sFirstName { get; set; }
         public static string sMainChar { get; set; }
         public static string sFunChar01 { get; set; }
         public static string sFunChar02 { get; set; }
 
-        public static string sBeeLogs { get; set; }
-        public static string sSettings { get; set; }
-        public static string sWeapsFile { get; set; }
-        public static string sNamesFile { get; set; }
-        public static string sRandFile { get; set; }
-        public static string sSavedFile { get; set; }
-        public static string sRandLanguage { get; set; }
+        public static readonly string sVersion = "2.7";
+        public static readonly string sBeeLogs = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSLog.txt";
+        public static readonly string sSettings = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml";
+        public static readonly string sWeapsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml";
+        public static readonly string sNamesFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml";
+        public static readonly string sRandFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml";
+        public static readonly string sSavedFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml";
+        public static readonly string sRandLanguage = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language";
 
         public static System.Media.SoundPlayer Ahhhhhh { get; set; }
 
@@ -68,9 +67,10 @@ namespace RandomStart
         public static List<string> sWeapList { get; set; }
         public static List<string> sAddsList { get; set; }
         public static List<string> sLangNames { get; set; }
-        public static List<string> sTatBase { get; set; }
-        public static List<string> sTatName { get; set; }
-        public static List<string> ThemVoices { get; set; }
+
+        public static List<string> MaleVoices { get; set; }
+        public static List<string> FemaleVoices { get; set; }
+        public static List<string> ControlerList { get; set; }
 
         public static List<Ped> PeddyList { get; set; }
         public static List<Ped> PedParty { get; set; }
@@ -109,10 +109,9 @@ namespace RandomStart
         public static void LoadUpDataStore()
         {
             bStart = false;
-            sBeeLogs = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSLog.txt";
-
             if (File.Exists(DataStore.sBeeLogs))
                 File.Delete(DataStore.sBeeLogs);
+
 
             iPath = 0;
             iWait4 = 0;
@@ -145,20 +144,11 @@ namespace RandomStart
             bInCayoPerico = false;
             bDisableDLCVeh = true;
 
-
-            sVersion = "2.7";
             sFirstName = "PlayerX";
             sMainChar = "player_zero";
             sFunChar01 = "player_one";
             sFunChar02 = "player_two";
        
-            sSettings = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSettings.Xml";
-            sWeapsFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/AddonWeaponList.Xml";
-            sNamesFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/NamingList.Xml";
-            sRandFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/RSRNum.Xml";
-            sSavedFile = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/SavedPedsList.Xml";
-            sRandLanguage = "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language";
-
             Ahhhhhh = new System.Media.SoundPlayer("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/heavenly_choir.wav");
             Ahhhhhh.Load();
 
@@ -172,9 +162,11 @@ namespace RandomStart
             sWeapList = WeapsList();
             sAddsList = AddonsList();
             sLangNames = LangText();
-            sTatBase = new List<string>();
-            sTatName = new List<string>();
-            ThemVoices = IHearVoices();
+            MaleVoices = MVoices();
+            FemaleVoices = FVoices();
+            ControlerList = ControlList();
+            WetherBe = AllWeathers();
+            Vseats = SeatList();
 
             PeddyList = new List<Ped>();
             PedParty = new List<Ped>();
@@ -182,8 +174,6 @@ namespace RandomStart
             RanLoc_01 = new List<Vector3>();
             PeskyDoors = new List<Vector3>();
             VehList = new List<Vehicle>();
-            WetherBe = AllWeathers();
-            Vseats = SeatList();
             MyPedCollection = new List<NewClothBank>();
 
             vPedTarget = Vector3.Zero;
@@ -253,25 +243,34 @@ namespace RandomStart
         {
             LoggerLight.Loggers("DataStore.AllWeathers");
 
-            List<Weather> Wetter = new List<Weather>();
-
-            Wetter.Add(Weather.ExtraSunny);
-            Wetter.Add(Weather.Clear);
-            Wetter.Add(Weather.Clouds);
-            Wetter.Add(Weather.Smog);
-            Wetter.Add(Weather.Foggy);
-            Wetter.Add(Weather.Overcast);
-            Wetter.Add(Weather.Raining);
-            Wetter.Add(Weather.ThunderStorm);
-            Wetter.Add(Weather.Clearing);
-            Wetter.Add(Weather.Neutral);
+            List<Weather> Wetter = new List<Weather> 
+            {
+                Weather.ExtraSunny,
+                Weather.ExtraSunny,
+                Weather.ExtraSunny,
+                Weather.ExtraSunny,
+                Weather.Clear,
+                Weather.Clear,
+                Weather.Clear,
+                Weather.Clouds,
+                Weather.Clouds,
+                Weather.Smog,
+                Weather.Smog,
+                Weather.Foggy,
+                Weather.Foggy,
+                Weather.Overcast,
+                Weather.Overcast,
+                Weather.Raining,
+                Weather.ThunderStorm,
+                Weather.Neutral
+            };
 
             return Wetter;
         }
-        public static List<string> IHearVoices()
+        public static List<string> FVoices()
         {
-            LoggerLight.Loggers("DataStore.IHearVoices");//Voice list was taken from; https://pastebin.com/vDWd8RYx
-           
+            LoggerLight.Loggers("DataStore.FVoices");//Voice list was taken from; https://pastebin.com/vDWd8RYx
+
             List<string> Voices = new List<string>();
 
             Voices.Add("ABIGAIL"); //073DD899"); //121493657"); //121493657
@@ -281,24 +280,10 @@ namespace RandomStart
             Voices.Add("AFFLUENT_SUBURBAN_FEMALE_04"); //EE1AA433"); //3994723379"); //Voices.Add("300243917
             Voices.Add("AFFLUENT_SUBURBAN_FEMALE_05"); //A47190DE"); //2758906078"); //Voices.Add("1536061218
             Voices.Add("AFFLUENT_SUBURBAN_FEMALE_06"); //B62C3453"); //3056350291"); //Voices.Add("1238617005
-            Voices.Add("AFFLUENT_SUBURBAN_MALE_01"); //85FA12FF"); //2247758591"); //Voices.Add("2047208705
-            Voices.Add("AFFLUENT_SUBURBAN_MALE_02"); //A4394F7D"); //2755219325"); //Voices.Add("1539747971
-            Voices.Add("AGENCYJANITOR"); //5288D370"); //1384698736"); //1384698736
             Voices.Add("AIRCRAFT_WARNING_FEMALE_01"); //85A08F9C"); //2241892252"); //Voices.Add("2053075044
-            Voices.Add("AIRCRAFT_WARNING_MALE_01"); //A65A6402"); //2790941698"); //Voices.Add("1504025598
-            Voices.Add("AIRDUMMER"); //798D01B5"); //2039284149"); //2039284149
-            Voices.Add("AIRGUITARIST"); //A1D7351A"); //2715235610"); //Voices.Add("1579731686
-            Voices.Add("AIRPIANIST"); //B98B1513"); //3112899859"); //Voices.Add("1182067437
             Voices.Add("AIRPORT_PA_FEMALE"); //80D0944F"); //2161153103"); //Voices.Add("2133814193
-            Voices.Add("AIRPORT_PA_MALE"); //4BA3E2F7"); //1269031671"); //1269031671
-            Voices.Add("ALIENS"); //EB86F769"); //3951490921"); //Voices.Add("343476375
             Voices.Add("AMANDA_DRUNK"); //5C0B144D"); //1544229965"); //1544229965
             Voices.Add("AMANDA_NORMAL"); //EC6C9072"); //3966537842"); //Voices.Add("328429454
-            Voices.Add("AMMUCITY"); //D4503291"); //3562025617"); //Voices.Add("732941679
-            Voices.Add("ANDY_MOON"); //B51D1921"); //3038583073"); //Voices.Add("1256384223
-            Voices.Add("ANTON"); //ED9B229C"); //3986367132"); //Voices.Add("308600164
-            Voices.Add("APT_BEAST"); //14F37BC9"); //351501257"); //351501257
-            Voices.Add("AVI"); //EF7A6BDE"); //4017777630"); //Voices.Add("277189666
             Voices.Add("A_F_M_BEACH_01_WHITE_FULL_01"); //6B996380"); //1805214592"); //1805214592
             Voices.Add("A_F_M_BEACH_01_WHITE_MINI_01"); //139EA948"); //329165128"); //329165128
             Voices.Add("A_F_M_BEVHILLS_01_WHITE_FULL_01"); //00A8641D"); //11035677"); //11035677
@@ -432,6 +417,178 @@ namespace RandomStart
             Voices.Add("A_F_Y_VINEWOOD_04_WHITE_FULL_01"); //20C68AC8"); //549882568"); //549882568
             Voices.Add("A_F_Y_VINEWOOD_04_WHITE_MINI_01"); //12763C39"); //309738553"); //309738553
             Voices.Add("A_F_Y_VINEWOOD_04_WHITE_MINI_02"); //C8CB28E4"); //3368757476"); //Voices.Add("926209820
+            Voices.Add("CHASTITY"); //9B4468A9"); //2604951721"); //Voices.Add("1690015575
+            Voices.Add("CHASTITY_MP"); //4E0041AA"); //1308639658"); //1308639658
+            Voices.Add("CST4ACTRESS"); //6A8C4C84"); //1787579524"); //1787579524
+            Voices.Add("DARYL"); //10088962"); //268994914"); //268994914
+            Voices.Add("DENISE"); //860AA79A"); //2248845210"); //Voices.Add("2046122086
+            Voices.Add("EXECPA_FEMALE"); //B6FB2A37"); //3069913655"); //Voices.Add("1225053641
+            Voices.Add("GIRL1"); //9ABA4CB8"); //2595900600"); //Voices.Add("1699066696
+            Voices.Add("GIRL2"); //C38C1E5B"); //3280739931"); //Voices.Add("1014227365
+            Voices.Add("GRIFF"); //03DD4948"); //64833864"); //64833864
+            Voices.Add("FUFU"); //ED8EA575"); //3985548661"); //Voices.Add("309418635
+            Voices.Add("FUFU_MP"); //4EA343CA"); //1319322570"); //1319322570
+            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_01"); //15BB1C9C"); //364584092"); //364584092
+            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_02"); //17F72114"); //402071828"); //402071828
+            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_03"); //1D7F2C2C"); //494873644"); //494873644
+            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_04"); //403F71AC"); //1077899692"); //1077899692
+            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_01"); //4D341506"); //1295258886"); //1295258886
+            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_02"); //69F34E84"); //1777553028"); //1777553028
+            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_03"); //B0B85C0D"); //2964872205"); //Voices.Add("1330095091
+            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_04"); //5B7DB199"); //1534964121"); //1534964121
+            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_05"); //85658568"); //2238023016"); //Voices.Add("2056944280
+            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_06"); //BFA0F9DE"); //3214997982"); //Voices.Add("1079969314
+            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_01"); //0320E887"); //52488327"); //52488327
+            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_02"); //D6930F6C"); //3599961964"); //Voices.Add("695005332
+            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_03"); //7E0BDE5F"); //2114707039"); //2114707039
+            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_04"); //8854F2F1"); //2287268593"); //Voices.Add("2007698703
+            Voices.Add("JANE"); //893E74D0"); //2302571728"); //Voices.Add("1992395568
+            Voices.Add("JANET"); //8498F40B"); //2224616459"); //Voices.Add("2070350837
+            Voices.Add("JULIET"); //27AD5D38"); //665673016"); //665673016
+            Voices.Add("KAREN"); //FBF9CDB2"); //4227452338"); //Voices.Add("67514958
+            Voices.Add("KIDNAPPEDFEMALE"); //064DC6E9"); //105760489"); //105760489
+            Voices.Add("LACEY"); //29CAB776"); //701151094"); //701151094
+            Voices.Add("LI_FEMALE_01"); //E58E5187"); //3851309447"); //Voices.Add("443657849
+            Voices.Add("LOSTKIDNAPGIRL"); //7D8F4F88"); //2106544008"); //2106544008
+            Voices.Add("MAID"); //015EE6C7"); //22996679"); //22996679
+            Voices.Add("MARNIE"); //5FA82CAC"); //1604857004"); //1604857004
+            Voices.Add("MARYANN"); //9FEEF145"); //2683236677"); //Voices.Add("1611730619
+            Voices.Add("MAUDE"); //1AE32960"); //451094880"); //451094880
+            Voices.Add("MRSTHORNHILL"); //C6DE44C8"); //3336455368"); //Voices.Add("958511928
+            Voices.Add("NIGHT_OUT_FEMALE_01"); //33A0908D"); //866160781"); //866160781
+            Voices.Add("NIGHT_OUT_FEMALE_02"); //49EBBD23"); //1240186147"); //1240186147
+            Voices.Add("NIGHT_OUT_FEMALE_03"); //831EAF88"); //2199826312"); //Voices.Add("2095140984
+            Voices.Add("NIGHT_OUT_FEMALE_04"); //A56CF424"); //2775381028"); //Voices.Add("1519586268
+            Voices.Add("NIKKI"); //47F4D564"); //1207227748"); //1207227748
+            Voices.Add("NIKKI_MP"); //11515E1F"); //290545183"); //290545183
+            Voices.Add("PAIGE"); //C2515320"); //3260109600"); //Voices.Add("1034857696
+            Voices.Add("PAIN_FEMALE_01"); //40F0B1B8"); //1089515960"); //1089515960
+            Voices.Add("PAIN_FEMALE_02"); //D828602D"); //3626524717"); //Voices.Add("668442579
+            Voices.Add("PAIN_FEMALE_NORMAL_01"); //6EF36D3C"); //1861446972"); //1861446972
+            Voices.Add("PAIN_FEMALE_NORMAL_02"); //5CECC92F"); //1559021871"); //1559021871
+            Voices.Add("PAIN_FEMALE_NORMAL_03"); //8AA3249B"); //2325947547"); //Voices.Add("1969019749
+            Voices.Add("PAIN_FEMALE_NORMAL_04"); //78878064"); //2022146148"); //2022146148
+            Voices.Add("PAIN_FEMALE_NORMAL_05"); //2629DBA6"); //640277414"); //640277414
+            Voices.Add("PAIN_FEMALE_NORMAL_06"); //0BF1A736"); //200386358"); //200386358
+            Voices.Add("PAIN_FEMALE_NORMAL_07"); //41699229"); //1097437737"); //1097437737
+            Voices.Add("PAIN_FEMALE_NORMAL_08"); //374E7DEF"); //927890927"); //927890927
+            Voices.Add("PAIN_FEMALE_NORMAL_09"); //DCDE4910"); //3705555216"); //Voices.Add("589412080
+            Voices.Add("PAIN_FEMALE_NORMAL_10"); //966B3B23"); //2523609891"); //Voices.Add("1771357405
+            Voices.Add("PAIN_FEMALE_NORMAL_11"); //343976BD"); //876181181"); //876181181
+            Voices.Add("PAIN_FEMALE_NORMAL_12"); //21EAD220"); //569037344"); //569037344
+            Voices.Add("PAIN_FEMALE_TEST_01"); //95928372"); //2509407090"); //Voices.Add("1785560206
+            Voices.Add("PAIN_FEMALE_TEST_02"); //AAE0AE0E"); //2866851342"); //Voices.Add("1428115954
+            Voices.Add("PAIN_FEMALE_TEST_03"); //B89E4989"); //3097381257"); //Voices.Add("1197586039
+            Voices.Add("PAMELA_DRAKE"); //714E62B7"); //1900962487"); //1900962487
+            Voices.Add("PATRICIA"); //D22B34C3"); //3526046915"); //Voices.Add("768920381
+            Voices.Add("PEACH"); //FE7FCDEA"); //4269788650"); //Voices.Add("25178646
+            Voices.Add("PIER_ANNOUNCE_FEMALE"); //3AB5E64D"); //984999501"); //984999501
+            Voices.Add("REHH5BRIDE"); //923B42A5"); //2453357221"); //Voices.Add("1841610075
+            Voices.Add("REHOMGIRL"); //745E2A7D"); //1952328317"); //1952328317
+            Voices.Add("REPRI1LOST"); //4E9991FE"); //1318687230"); //1318687230
+            Voices.Add("SAPPHIRE"); //74F8F352"); //1962472274"); //1962472274
+            Voices.Add("S_F_M_FEMBARBER_BLACK_MINI_01"); //4B82A928"); //1266854184"); //1266854184
+            Voices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_01"); //E085EF87"); //3766873991"); //Voices.Add("528093305
+            Voices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_02"); //EA440303"); //3930325763"); //Voices.Add("364641533
+            Voices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_03"); //51565112"); //1364611346"); //1364611346
+            Voices.Add("S_F_M_PONSEN_01_BLACK_01"); //B60A191B"); //3054115099"); //Voices.Add("1240852197
+            Voices.Add("S_F_M_SHOP_HIGH_WHITE_MINI_01"); //AD7E25AA"); //2910725546"); //Voices.Add("1384241750
+            Voices.Add("S_F_Y_AIRHOSTESS_01_BLACK_FULL_01"); //50B140C7"); //1353793735"); //1353793735
+            Voices.Add("S_F_Y_AIRHOSTESS_01_BLACK_FULL_02"); //D0FFC16E"); //3506422126"); //Voices.Add("788545170
+            Voices.Add("S_F_Y_AIRHOSTESS_01_WHITE_FULL_01"); //090B4CD4"); //151735508"); //151735508
+            Voices.Add("S_F_Y_AIRHOSTESS_01_WHITE_FULL_02"); //E1B67E2B"); //3786833451"); //Voices.Add("508133845
+            Voices.Add("S_F_Y_BAYWATCH_01_BLACK_FULL_01"); //F33860E9"); //4080558313"); //Voices.Add("214408983
+            Voices.Add("S_F_Y_BAYWATCH_01_BLACK_FULL_02"); //880F0A98"); //2282687128"); //Voices.Add("2012280168
+            Voices.Add("S_F_Y_BAYWATCH_01_WHITE_FULL_01"); //26DECE02"); //652135938"); //652135938
+            Voices.Add("S_F_Y_BAYWATCH_01_WHITE_FULL_02"); //35226A89"); //891447945"); //891447945
+            Voices.Add("S_F_Y_Cop_01_BLACK_FULL_01"); //EFB0FA91"); //4021353105"); //Voices.Add("273614191
+            Voices.Add("S_F_Y_COP_01_BLACK_FULL_02"); //62A6E07B"); //1655103611"); //1655103611
+            Voices.Add("S_F_Y_COP_01_WHITE_FULL_01"); //EB73C44F"); //3950232655"); //Voices.Add("344734641
+            Voices.Add("S_F_Y_COP_01_WHITE_FULL_02"); //F9C560F2"); //4190462194"); //Voices.Add("104505102
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_BLACK_MINI_01"); //44ACE464"); //1152181348"); //1152181348
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_BLACK_MINI_02"); //3707C91A"); //923257114"); //923257114
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_01"); //A135DE73"); //2704662131"); //Voices.Add("1590305165
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_02"); //CF08BA18"); //3473455640"); //Voices.Add("821511656
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_03"); //BC269454"); //3156644948"); //Voices.Add("1138322348
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_04"); //EB8E7323"); //3951981347"); //Voices.Add("342985949
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_WHITE_MINI_01"); //E5EAA67A"); //3857360506"); //Voices.Add("437606790
+            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_WHITE_MINI_02"); //39B64E08"); //968248840"); //968248840
+            Voices.Add("S_F_Y_HOOKER_01_WHITE_FULL_01"); //18B73C7E"); //414661758"); //414661758
+            Voices.Add("S_F_Y_HOOKER_01_WHITE_FULL_02"); //66F658FB"); //1727420667"); //1727420667
+            Voices.Add("S_F_Y_HOOKER_01_WHITE_FULL_03"); //75E576D9"); //1977972441"); //1977972441
+            Voices.Add("S_F_Y_HOOKER_02_WHITE_FULL_01"); //77BE674B"); //2008966987"); //2008966987
+            Voices.Add("S_F_Y_HOOKER_02_WHITE_FULL_02"); //09978AFF"); //160926463"); //160926463
+            Voices.Add("S_F_Y_HOOKER_02_WHITE_FULL_03"); //1B382E40"); //456666688"); //456666688
+            Voices.Add("S_F_Y_HOOKER_03_BLACK_FULL_01"); //875814D6"); //2270696662"); //Voices.Add("2024270634
+            Voices.Add("S_F_Y_HOOKER_03_BLACK_FULL_03"); //129DAB5F"); //312322911"); //312322911
+            Voices.Add("S_F_Y_PECKER_01_WHITE_01"); //6B019062"); //1795264610"); //1795264610
+            Voices.Add("S_F_Y_RANGER_01_WHITE_MINI_01"); //47A85382"); //1202213762"); //1202213762
+            Voices.Add("S_F_Y_SHOP_LOW_WHITE_MINI_01"); //ED77E493"); //3984057491"); //Voices.Add("310909805
+            Voices.Add("S_F_Y_SHOP_MID_WHITE_MINI_01"); //77B47F14"); //2008317716"); //2008317716
+            Voices.Add("TALINA"); //ED031790"); //3976402832"); //Voices.Add("318564464
+            Voices.Add("TAXIGANGGIRL1"); //E2228087"); //3793911943"); //Voices.Add("501055353
+            Voices.Add("TAXIGANGGIRL2"); //F7E3AC09"); //4158893065"); //Voices.Add("136074231
+            Voices.Add("TAXIKEYLA"); //23ACB127"); //598520103"); //598520103
+            Voices.Add("TAXILIZ"); //C8B6AC99"); //3367414937"); //Voices.Add("927552359
+            Voices.Add("TAXIMIRANDA"); //97A199A8"); //2543950248"); //Voices.Add("1751017048
+            Voices.Add("TONYA"); //FCB43161"); //4239667553"); //Voices.Add("55299743
+            Voices.Add("TRACEY"); //5A7D2459"); //1518150745"); //1518150745
+            Voices.Add("VB_FEMALE_01"); //CB2136C8"); //3407951560"); //Voices.Add("887015736
+            Voices.Add("VB_FEMALE_02"); //E4EA6A5A"); //3840567898"); //Voices.Add("454399398
+            Voices.Add("VB_FEMALE_03"); //B1510330"); //2974876464"); //Voices.Add("1320090832
+            Voices.Add("VB_FEMALE_04"); //C397A7BD"); //3281495997"); //Voices.Add("1013471299
+            Voices.Add("WAVELOAD_PAIN_FEMALE"); //332128AB"); //857811115"); //857811115
+            Voices.Add("WFSTEWARDESS"); //84EDE1BF"); //2230182335"); //Voices.Add("2064784961
+            Voices.Add("HS4_KAYLEE_PVG");
+            Voices.Add("HS4_JACKIE_PVG");
+            Voices.Add("FEMALE_CLUB_R2PVG");
+            Voices.Add("BTL_CONNIE_PVG");
+
+            // Voices.Add("CHEETAH"); //B1D95DA0"); //2983812512"); //Voices.Add("1311154784
+            //  Voices.Add("PEYOTE_ATTRACT_BOAR"); //44E0B0C1"); //1155576001"); //1155576001
+            //  Voices.Add("PEYOTE_ATTRACT_CAT"); //957D8693"); //2508031635"); //Voices.Add("1786935661
+            //  Voices.Add("PEYOTE_ATTRACT_CHICKENHAWK"); //37642D77"); //929312119"); //929312119
+            //  Voices.Add("PEYOTE_ATTRACT_CORMORANT"); //25B89DC4"); //632856004"); //632856004
+            //   Voices.Add("PEYOTE_ATTRACT_COW"); //D18269E8"); //3514984936"); //Voices.Add("779982360
+            //   Voices.Add("PEYOTE_ATTRACT_COYOTE"); //CACF8A4A"); //3402598986"); //Voices.Add("892368310
+            //  Voices.Add("PEYOTE_ATTRACT_CROW"); //4ECC966B"); //1322030699"); //1322030699
+            //   Voices.Add("PEYOTE_ATTRACT_DEER"); //F0A3CD5D"); //4037266781"); //Voices.Add("257700515
+            //   Voices.Add("PEYOTE_ATTRACT_DOLPHIN"); //59448EA4"); //1497665188"); //1497665188
+            // Voices.Add("PEYOTE_ATTRACT_HEN"); //E2D7CD2E"); //3805793582"); //Voices.Add("489173714
+            //   Voices.Add("PEYOTE_ATTRACT_HUSKY"); //3E0E6964"); //1041131876"); //1041131876
+            //   Voices.Add("PEYOTE_ATTRACT_MTLION"); //14EF12E9"); //351212265"); //351212265
+            //  Voices.Add("PEYOTE_ATTRACT_PIG"); //49848323"); //1233421091"); //1233421091
+            //  Voices.Add("PEYOTE_ATTRACT_PIGEON"); //8E48AAC7"); //2387126983"); //Voices.Add("1907840313
+            //  Voices.Add("PEYOTE_ATTRACT_RABBIT"); //93CBB169"); //2479599977"); //Voices.Add("1815367319
+            //  Voices.Add("PEYOTE_ATTRACT_RETRIEVER"); //7B353C1A"); //2067086362"); //2067086362
+            //  Voices.Add("PEYOTE_ATTRACT_ROTTWEILER"); //0131CB79"); //20040569"); //20040569
+            //  Voices.Add("PEYOTE_ATTRACT_SASQUATCH"); //068101D6"); //109117910"); //109117910
+            //  Voices.Add("PEYOTE_ATTRACT_SEAGULL"); //427EF9C8"); //1115617736"); //1115617736
+            //  Voices.Add("PEYOTE_ATTRACT_SEA_CREATURE"); //5A3979EC"); //1513716204"); //1513716204
+            //  Voices.Add("PEYOTE_ATTRACT_SHEPHERD"); //5CA8ACB0"); //1554558128"); //1554558128
+            //   Voices.Add("PEYOTE_ATTRACT_SMALL_DOG"); //517711B0"); //1366757808"); //1366757808
+            //   Voices.Add("PLAYER_RINGTONES"); //3A3B02D3"); //976945875"); //976945875
+            return Voices;
+        }
+        public static List<string> MVoices()
+        {
+            LoggerLight.Loggers("DataStore.IHearVoices");//Voice list was taken from; https://pastebin.com/vDWd8RYx
+           
+            List<string> Voices = new List<string>();
+            Voices.Add("AFFLUENT_SUBURBAN_MALE_01"); //85FA12FF"); //2247758591"); //Voices.Add("2047208705
+            Voices.Add("AFFLUENT_SUBURBAN_MALE_02"); //A4394F7D"); //2755219325"); //Voices.Add("1539747971
+            Voices.Add("AGENCYJANITOR"); //5288D370"); //1384698736"); //1384698736
+            Voices.Add("AIRCRAFT_WARNING_MALE_01"); //A65A6402"); //2790941698"); //Voices.Add("1504025598
+            Voices.Add("AIRDUMMER"); //798D01B5"); //2039284149"); //2039284149
+            Voices.Add("AIRGUITARIST"); //A1D7351A"); //2715235610"); //Voices.Add("1579731686
+            Voices.Add("AIRPIANIST"); //B98B1513"); //3112899859"); //Voices.Add("1182067437
+            Voices.Add("AIRPORT_PA_MALE"); //4BA3E2F7"); //1269031671"); //1269031671
+            Voices.Add("ALIENS"); //EB86F769"); //3951490921"); //Voices.Add("343476375
+            Voices.Add("AMMUCITY"); //D4503291"); //3562025617"); //Voices.Add("732941679
+            Voices.Add("ANDY_MOON"); //B51D1921"); //3038583073"); //Voices.Add("1256384223
+            Voices.Add("ANTON"); //ED9B229C"); //3986367132"); //Voices.Add("308600164
+            Voices.Add("APT_BEAST"); //14F37BC9"); //351501257"); //351501257
+            Voices.Add("AVI"); //EF7A6BDE"); //4017777630"); //Voices.Add("277189666
             Voices.Add("A_M_M_AFRIAMER_01_BLACK_FULL_01"); //43367BD1"); //1127644113"); //1127644113
             Voices.Add("A_M_M_BEACH_01_BLACK_MINI_01"); //D01013F6"); //3490714614"); //Voices.Add("804252682
             Voices.Add("A_M_M_BEACH_01_LATINO_FULL_01"); //26669A41"); //644258369"); //644258369
@@ -678,9 +835,6 @@ namespace RandomStart
             Voices.Add("CHAR_INTRO_FRANKLIN_01"); //420FF5A0"); //1108342176"); //1108342176
             Voices.Add("CHAR_INTRO_MICHAEL_01"); //E4A08B92"); //3835726738"); //Voices.Add("459240558
             Voices.Add("CHAR_INTRO_TREVOR_01"); //8F52758F"); //2404545935"); //Voices.Add("1890421361
-            Voices.Add("CHASTITY"); //9B4468A9"); //2604951721"); //Voices.Add("1690015575
-            Voices.Add("CHASTITY_MP"); //4E0041AA"); //1308639658"); //1308639658
-            Voices.Add("CHEETAH"); //B1D95DA0"); //2983812512"); //Voices.Add("1311154784
             Voices.Add("CHEF"); //BF59CC9A"); //3210333338"); //Voices.Add("1084633958
             Voices.Add("CHENG"); //65BBBE48"); //1706802760"); //1706802760
             Voices.Add("CLETUS"); //9B00816A"); //2600501610"); //Voices.Add("1694465686
@@ -691,13 +845,9 @@ namespace RandomStart
             Voices.Add("CONSTRUCTION_SITE_MALE_03"); //82A1C003"); //2191638531"); //Voices.Add("2103328765
             Voices.Add("CONSTRUCTION_SITE_MALE_04"); //93CE625C"); //2479776348"); //Voices.Add("1815190948
             Voices.Add("COOK"); //5673232D"); //1450386221"); //1450386221
-            Voices.Add("CST4ACTRESS"); //6A8C4C84"); //1787579524"); //1787579524
-            Voices.Add("DARYL"); //10088962"); //268994914"); //268994914
             Voices.Add("DAVE"); //B1F68A9D"); //2985724573"); //Voices.Add("1309242723
-            Voices.Add("DENISE"); //860AA79A"); //2248845210"); //Voices.Add("2046122086
             Voices.Add("DOM"); //BBF2D511"); //3153253649"); //Voices.Add("1141713647
             Voices.Add("EDDIE"); //C5FB1FF5"); //3321569269"); //Voices.Add("973398027
-            Voices.Add("EXECPA_FEMALE"); //B6FB2A37"); //3069913655"); //Voices.Add("1225053641
             Voices.Add("EXECPA_MALE"); //0C5C69CC"); //207382988"); //207382988
             Voices.Add("EXT1HELIPILOT"); //EF004581"); //4009772417"); //Voices.Add("285194879
             Voices.Add("FACILITY_ANNOUNCER"); //A9F8234D"); //2851611469"); //Voices.Add("1443355827
@@ -710,30 +860,11 @@ namespace RandomStart
             Voices.Add("FRANKLIN_ANGRY"); //D227A0A9"); //3525812393"); //Voices.Add("769154903
             Voices.Add("FRANKLIN_DRUNK"); //E6EFD5C5"); //3874477509"); //Voices.Add("420489787
             Voices.Add("FRANKLIN_NORMAL"); //64CCE782"); //1691150210"); //1691150210
-            Voices.Add("FUFU"); //ED8EA575"); //3985548661"); //Voices.Add("309418635
-            Voices.Add("FUFU_MP"); //4EA343CA"); //1319322570"); //1319322570
             Voices.Add("GARDENER"); //4260B7F4"); //1113634804"); //1113634804
             Voices.Add("GAYMILITARY"); //212EBC3B"); //556710971"); //556710971
             Voices.Add("GERALD"); //07DCC381"); //131908481"); //131908481
-            Voices.Add("GIRL1"); //9ABA4CB8"); //2595900600"); //Voices.Add("1699066696
-            Voices.Add("GIRL2"); //C38C1E5B"); //3280739931"); //Voices.Add("1014227365
-            Voices.Add("GRIFF"); //03DD4948"); //64833864"); //64833864
             Voices.Add("GROOM"); //4A735AF1"); //1249073905"); //1249073905
             Voices.Add("GUSTAVO"); //E5A7195C"); //3852933468"); //Voices.Add("442033828
-            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_01"); //15BB1C9C"); //364584092"); //364584092
-            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_02"); //17F72114"); //402071828"); //402071828
-            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_03"); //1D7F2C2C"); //494873644"); //494873644
-            Voices.Add("G_F_Y_BALLAS_01_BLACK_MINI_04"); //403F71AC"); //1077899692"); //1077899692
-            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_01"); //4D341506"); //1295258886"); //1295258886
-            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_02"); //69F34E84"); //1777553028"); //1777553028
-            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_03"); //B0B85C0D"); //2964872205"); //Voices.Add("1330095091
-            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_04"); //5B7DB199"); //1534964121"); //1534964121
-            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_05"); //85658568"); //2238023016"); //Voices.Add("2056944280
-            Voices.Add("G_F_Y_FAMILIES_01_BLACK_MINI_06"); //BFA0F9DE"); //3214997982"); //Voices.Add("1079969314
-            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_01"); //0320E887"); //52488327"); //52488327
-            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_02"); //D6930F6C"); //3599961964"); //Voices.Add("695005332
-            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_03"); //7E0BDE5F"); //2114707039"); //2114707039
-            Voices.Add("G_F_Y_VAGOS_01_LATINO_MINI_04"); //8854F2F1"); //2287268593"); //Voices.Add("2007698703
             Voices.Add("G_M_M_ARMBOSS_01_WHITE_ARMENIAN_MINI_01"); //F840ABA3"); //4164987811"); //Voices.Add("129979485
             Voices.Add("G_M_M_ARMBOSS_01_WHITE_ARMENIAN_MINI_02"); //DD7F7641"); //3716118081"); //Voices.Add("578849215
             Voices.Add("G_M_M_ARMLIEUT_01_WHITE_ARMENIAN_MINI_01"); //9B88EB80"); //2609441664"); //Voices.Add("1685525632
@@ -854,8 +985,6 @@ namespace RandomStart
             Voices.Add("HUGH"); //F4EE78A9"); //4109269161"); //Voices.Add("185698135
             Voices.Add("IMPOTENT_RAGE"); //BE080ED8"); //3188199128"); //Voices.Add("1106768168
             Voices.Add("INFERNUS"); //18F25AC7"); //418536135"); //418536135
-            Voices.Add("JANE"); //893E74D0"); //2302571728"); //Voices.Add("1992395568
-            Voices.Add("JANET"); //8498F40B"); //2224616459"); //Voices.Add("2070350837
             Voices.Add("JEROME"); //D982DA50"); //3649231440"); //Voices.Add("645735856
             Voices.Add("JESSE"); //916BB095"); //2439753877"); //Voices.Add("1855213419
             Voices.Add("JIMMY_DRUNK"); //43C1EB55"); //1136782165"); //1136782165
@@ -863,12 +992,8 @@ namespace RandomStart
             Voices.Add("JOE"); //07CC375A"); //130824026"); //130824026
             Voices.Add("JOSEF"); //F63ED80C"); //4131313676"); //Voices.Add("163653620
             Voices.Add("JOSH"); //F4DDE967"); //4108183911"); //Voices.Add("186783385
-            Voices.Add("JULIET"); //27AD5D38"); //665673016"); //665673016
-            Voices.Add("KAREN"); //FBF9CDB2"); //4227452338"); //Voices.Add("67514958
             Voices.Add("KARIM"); //DB158746"); //3675621190"); //Voices.Add("619346106
             Voices.Add("KARL"); //D29BCDFD"); //3533426173"); //Voices.Add("761541123
-            Voices.Add("KIDNAPPEDFEMALE"); //064DC6E9"); //105760489"); //105760489
-            Voices.Add("LACEY"); //29CAB776"); //701151094"); //701151094
             Voices.Add("LAMAR"); //EA22BC4D"); //3928144973"); //Voices.Add("366822323
             Voices.Add("LAMAR_1_NORMAL"); //35FE7226"); //905867814"); //905867814
             Voices.Add("LAMAR_2_NORMAL"); //25068D1D"); //621186333"); //621186333
@@ -877,18 +1002,12 @@ namespace RandomStart
             Voices.Add("LESTER"); //8DB38846"); //2377353286"); //Voices.Add("1917614010
             Voices.Add("LIENGINEER"); //BD5D1E88"); //3176996488"); //Voices.Add("1117970808
             Voices.Add("LIENGINEER2"); //3A58B62B"); //978892331"); //978892331
-            Voices.Add("LI_FEMALE_01"); //E58E5187"); //3851309447"); //Voices.Add("443657849
             Voices.Add("LI_GEORGE_01"); //F22854E3"); //4062729443"); //Voices.Add("232237853
             Voices.Add("LI_LOBBY_01"); //3DB175B5"); //1035040181"); //1035040181
             Voices.Add("LI_MALE_01"); //9CF88EB5"); //2633535157"); //Voices.Add("1661432139
             Voices.Add("LI_MALE_02"); //AAB22A28"); //2863802920"); //Voices.Add("1431164376
-            Voices.Add("LOSTKIDNAPGIRL"); //7D8F4F88"); //2106544008"); //2106544008
-            Voices.Add("MAID"); //015EE6C7"); //22996679"); //22996679
             Voices.Add("MALE_STRIP_DJ_WHITE"); //54825131"); //1417826609"); //1417826609
             Voices.Add("MANI"); //9A9B1CC9"); //2593856713"); //Voices.Add("1701110583
-            Voices.Add("MARNIE"); //5FA82CAC"); //1604857004"); //1604857004
-            Voices.Add("MARYANN"); //9FEEF145"); //2683236677"); //Voices.Add("1611730619
-            Voices.Add("MAUDE"); //1AE32960"); //451094880"); //451094880
             Voices.Add("MELVIN"); //558B495C"); //1435191644"); //1435191644
             Voices.Add("MELVINSCIENTIST"); //E90C6953"); //3909904723"); //Voices.Add("385062573
             Voices.Add("MICHAEL_1_NORMAL"); //78BECF39"); //2025770809"); //2025770809
@@ -904,39 +1023,14 @@ namespace RandomStart
             Voices.Add("MP_M_SHOPKEEP_01_LATINO_MINI_01"); //0592C339"); //93504313"); //93504313
             Voices.Add("MP_M_SHOPKEEP_01_PAKISTANI_MINI_01"); //25364924"); //624314660"); //624314660
             Voices.Add("MP_RESIDENT"); //844127A9"); //2218862505"); //Voices.Add("2076104791
-            Voices.Add("MRSTHORNHILL"); //C6DE44C8"); //3336455368"); //Voices.Add("958511928
             Voices.Add("NERVOUSRON"); //20251950"); //539302224"); //539302224
             Voices.Add("NIGEL"); //F95E18F2"); //4183693554"); //Voices.Add("111273742
-            Voices.Add("NIGHT_OUT_FEMALE_01"); //33A0908D"); //866160781"); //866160781
-            Voices.Add("NIGHT_OUT_FEMALE_02"); //49EBBD23"); //1240186147"); //1240186147
-            Voices.Add("NIGHT_OUT_FEMALE_03"); //831EAF88"); //2199826312"); //Voices.Add("2095140984
-            Voices.Add("NIGHT_OUT_FEMALE_04"); //A56CF424"); //2775381028"); //Voices.Add("1519586268
             Voices.Add("NIGHT_OUT_MALE_01"); //41EC4175"); //1106002293"); //1106002293
             Voices.Add("NIGHT_OUT_MALE_02"); //C428C5EC"); //3291006444"); //Voices.Add("1003960852
-            Voices.Add("NIKKI"); //47F4D564"); //1207227748"); //1207227748
-            Voices.Add("NIKKI_MP"); //11515E1F"); //290545183"); //290545183
             Voices.Add("NORM"); //AE21D168"); //2921451880"); //Voices.Add("1373515416
             Voices.Add("NO_VOICE"); //87BFF09A"); //2277503130"); //Voices.Add("2017464166
             Voices.Add("PACKIE"); //B8791A2F"); //3094944303"); //Voices.Add("1200022993
             Voices.Add("PACKIE_AI_NORM_PART1_BOOTH"); //E0D1A809"); //3771836425"); //Voices.Add("523130871
-            Voices.Add("PAIGE"); //C2515320"); //3260109600"); //Voices.Add("1034857696
-            Voices.Add("PAIN_FEMALE_01"); //40F0B1B8"); //1089515960"); //1089515960
-            Voices.Add("PAIN_FEMALE_02"); //D828602D"); //3626524717"); //Voices.Add("668442579
-            Voices.Add("PAIN_FEMALE_NORMAL_01"); //6EF36D3C"); //1861446972"); //1861446972
-            Voices.Add("PAIN_FEMALE_NORMAL_02"); //5CECC92F"); //1559021871"); //1559021871
-            Voices.Add("PAIN_FEMALE_NORMAL_03"); //8AA3249B"); //2325947547"); //Voices.Add("1969019749
-            Voices.Add("PAIN_FEMALE_NORMAL_04"); //78878064"); //2022146148"); //2022146148
-            Voices.Add("PAIN_FEMALE_NORMAL_05"); //2629DBA6"); //640277414"); //640277414
-            Voices.Add("PAIN_FEMALE_NORMAL_06"); //0BF1A736"); //200386358"); //200386358
-            Voices.Add("PAIN_FEMALE_NORMAL_07"); //41699229"); //1097437737"); //1097437737
-            Voices.Add("PAIN_FEMALE_NORMAL_08"); //374E7DEF"); //927890927"); //927890927
-            Voices.Add("PAIN_FEMALE_NORMAL_09"); //DCDE4910"); //3705555216"); //Voices.Add("589412080
-            Voices.Add("PAIN_FEMALE_NORMAL_10"); //966B3B23"); //2523609891"); //Voices.Add("1771357405
-            Voices.Add("PAIN_FEMALE_NORMAL_11"); //343976BD"); //876181181"); //876181181
-            Voices.Add("PAIN_FEMALE_NORMAL_12"); //21EAD220"); //569037344"); //569037344
-            Voices.Add("PAIN_FEMALE_TEST_01"); //95928372"); //2509407090"); //Voices.Add("1785560206
-            Voices.Add("PAIN_FEMALE_TEST_02"); //AAE0AE0E"); //2866851342"); //Voices.Add("1428115954
-            Voices.Add("PAIN_FEMALE_TEST_03"); //B89E4989"); //3097381257"); //Voices.Add("1197586039
             Voices.Add("PAIN_FRANKLIN_01"); //2003420C"); //537084428"); //537084428
             Voices.Add("PAIN_FRANKLIN_02"); //EBF4D9F0"); //3958692336"); //Voices.Add("336274960
             Voices.Add("PAIN_FRANKLIN_03"); //1DA7BD55"); //497532245"); //497532245
@@ -979,36 +1073,9 @@ namespace RandomStart
             Voices.Add("PAIN_TREVOR_02"); //32DCBE48"); //853327432"); //853327432
             Voices.Add("PAIN_TREVOR_03"); //3DAED3EC"); //1034867692"); //1034867692
             Voices.Add("PAIN_TREVOR_04"); //4F427713"); //1329755923"); //1329755923
-            Voices.Add("PAMELA_DRAKE"); //714E62B7"); //1900962487"); //1900962487
             Voices.Add("PANIC_WALLA"); //14DEB561"); //350139745"); //350139745
-            Voices.Add("PATRICIA"); //D22B34C3"); //3526046915"); //Voices.Add("768920381
-            Voices.Add("PEACH"); //FE7FCDEA"); //4269788650"); //Voices.Add("25178646
-            Voices.Add("PEYOTE_ATTRACT_BOAR"); //44E0B0C1"); //1155576001"); //1155576001
-            Voices.Add("PEYOTE_ATTRACT_CAT"); //957D8693"); //2508031635"); //Voices.Add("1786935661
-            Voices.Add("PEYOTE_ATTRACT_CHICKENHAWK"); //37642D77"); //929312119"); //929312119
-            Voices.Add("PEYOTE_ATTRACT_CORMORANT"); //25B89DC4"); //632856004"); //632856004
-            Voices.Add("PEYOTE_ATTRACT_COW"); //D18269E8"); //3514984936"); //Voices.Add("779982360
-            Voices.Add("PEYOTE_ATTRACT_COYOTE"); //CACF8A4A"); //3402598986"); //Voices.Add("892368310
-            Voices.Add("PEYOTE_ATTRACT_CROW"); //4ECC966B"); //1322030699"); //1322030699
-            Voices.Add("PEYOTE_ATTRACT_DEER"); //F0A3CD5D"); //4037266781"); //Voices.Add("257700515
-            Voices.Add("PEYOTE_ATTRACT_DOLPHIN"); //59448EA4"); //1497665188"); //1497665188
-            Voices.Add("PEYOTE_ATTRACT_HEN"); //E2D7CD2E"); //3805793582"); //Voices.Add("489173714
-            Voices.Add("PEYOTE_ATTRACT_HUSKY"); //3E0E6964"); //1041131876"); //1041131876
-            Voices.Add("PEYOTE_ATTRACT_MTLION"); //14EF12E9"); //351212265"); //351212265
-            Voices.Add("PEYOTE_ATTRACT_PIG"); //49848323"); //1233421091"); //1233421091
-            Voices.Add("PEYOTE_ATTRACT_PIGEON"); //8E48AAC7"); //2387126983"); //Voices.Add("1907840313
-            Voices.Add("PEYOTE_ATTRACT_RABBIT"); //93CBB169"); //2479599977"); //Voices.Add("1815367319
-            Voices.Add("PEYOTE_ATTRACT_RETRIEVER"); //7B353C1A"); //2067086362"); //2067086362
-            Voices.Add("PEYOTE_ATTRACT_ROTTWEILER"); //0131CB79"); //20040569"); //20040569
-            Voices.Add("PEYOTE_ATTRACT_SASQUATCH"); //068101D6"); //109117910"); //109117910
-            Voices.Add("PEYOTE_ATTRACT_SEAGULL"); //427EF9C8"); //1115617736"); //1115617736
-            Voices.Add("PEYOTE_ATTRACT_SEA_CREATURE"); //5A3979EC"); //1513716204"); //1513716204
-            Voices.Add("PEYOTE_ATTRACT_SHEPHERD"); //5CA8ACB0"); //1554558128"); //1554558128
-            Voices.Add("PEYOTE_ATTRACT_SMALL_DOG"); //517711B0"); //1366757808"); //1366757808
-            Voices.Add("PIER_ANNOUNCE_FEMALE"); //3AB5E64D"); //984999501"); //984999501
             Voices.Add("PIER_ANNOUNCE_MALE"); //9567A0E1"); //2506596577"); //Voices.Add("1788370719
             Voices.Add("PIER_FOLEY"); //58EA9491"); //1491768465"); //1491768465
-            Voices.Add("PLAYER_RINGTONES"); //3A3B02D3"); //976945875"); //976945875
             Voices.Add("PRISONER"); //7EA26372"); //2124571506"); //2124571506
             Voices.Add("PRISON_ANNOUNCER"); //9BEE7F20"); //2616098592"); //Voices.Add("1678868704
             Voices.Add("PRISON_TANNOY"); //E5DCB564"); //3856446820"); //Voices.Add("438520476
@@ -1018,10 +1085,6 @@ namespace RandomStart
             Voices.Add("REDR2DRUNKM"); //51408669"); //1363183209"); //1363183209
             Voices.Add("REHH2HIKER"); //92977683"); //2459399811"); //Voices.Add("1835567485
             Voices.Add("REHH3HIPSTER"); //C0147C2B"); //3222567979"); //Voices.Add("1072399317
-            Voices.Add("REHH5BRIDE"); //923B42A5"); //2453357221"); //Voices.Add("1841610075
-            Voices.Add("REHOMGIRL"); //745E2A7D"); //1952328317"); //1952328317
-            Voices.Add("REPRI1LOST"); //4E9991FE"); //1318687230"); //1318687230
-            Voices.Add("SAPPHIRE"); //74F8F352"); //1962472274"); //1962472274
             Voices.Add("SECUROMECH"); //9C7CE8C0"); //2625431744"); //Voices.Add("1669535552
             Voices.Add("SHOPASSISTANT"); //53912D70"); //1402023280"); //1402023280
             Voices.Add("SIMEON"); //82816017"); //2189516823"); //Voices.Add("2105450473
@@ -1030,44 +1093,6 @@ namespace RandomStart
             Voices.Add("STEVE"); //CE95B9A9"); //3465918889"); //Voices.Add("829048407
             Voices.Add("STRETCH"); //8B13F083"); //2333339779"); //Voices.Add("1961627517
             Voices.Add("SUBWAY_ANNOUNCER"); //1C2F9BF2"); //472882162"); //472882162
-            Voices.Add("S_F_M_FEMBARBER_BLACK_MINI_01"); //4B82A928"); //1266854184"); //1266854184
-            Voices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_01"); //E085EF87"); //3766873991"); //Voices.Add("528093305
-            Voices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_02"); //EA440303"); //3930325763"); //Voices.Add("364641533
-            Voices.Add("S_F_M_GENERICCHEAPWORKER_01_LATINO_MINI_03"); //51565112"); //1364611346"); //1364611346
-            Voices.Add("S_F_M_PONSEN_01_BLACK_01"); //B60A191B"); //3054115099"); //Voices.Add("1240852197
-            Voices.Add("S_F_M_SHOP_HIGH_WHITE_MINI_01"); //AD7E25AA"); //2910725546"); //Voices.Add("1384241750
-            Voices.Add("S_F_Y_AIRHOSTESS_01_BLACK_FULL_01"); //50B140C7"); //1353793735"); //1353793735
-            Voices.Add("S_F_Y_AIRHOSTESS_01_BLACK_FULL_02"); //D0FFC16E"); //3506422126"); //Voices.Add("788545170
-            Voices.Add("S_F_Y_AIRHOSTESS_01_WHITE_FULL_01"); //090B4CD4"); //151735508"); //151735508
-            Voices.Add("S_F_Y_AIRHOSTESS_01_WHITE_FULL_02"); //E1B67E2B"); //3786833451"); //Voices.Add("508133845
-            Voices.Add("S_F_Y_BAYWATCH_01_BLACK_FULL_01"); //F33860E9"); //4080558313"); //Voices.Add("214408983
-            Voices.Add("S_F_Y_BAYWATCH_01_BLACK_FULL_02"); //880F0A98"); //2282687128"); //Voices.Add("2012280168
-            Voices.Add("S_F_Y_BAYWATCH_01_WHITE_FULL_01"); //26DECE02"); //652135938"); //652135938
-            Voices.Add("S_F_Y_BAYWATCH_01_WHITE_FULL_02"); //35226A89"); //891447945"); //891447945
-            Voices.Add("S_F_Y_Cop_01_BLACK_FULL_01"); //EFB0FA91"); //4021353105"); //Voices.Add("273614191
-            Voices.Add("S_F_Y_COP_01_BLACK_FULL_02"); //62A6E07B"); //1655103611"); //1655103611
-            Voices.Add("S_F_Y_COP_01_WHITE_FULL_01"); //EB73C44F"); //3950232655"); //Voices.Add("344734641
-            Voices.Add("S_F_Y_COP_01_WHITE_FULL_02"); //F9C560F2"); //4190462194"); //Voices.Add("104505102
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_BLACK_MINI_01"); //44ACE464"); //1152181348"); //1152181348
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_BLACK_MINI_02"); //3707C91A"); //923257114"); //923257114
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_01"); //A135DE73"); //2704662131"); //Voices.Add("1590305165
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_02"); //CF08BA18"); //3473455640"); //Voices.Add("821511656
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_03"); //BC269454"); //3156644948"); //Voices.Add("1138322348
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_LATINO_MINI_04"); //EB8E7323"); //3951981347"); //Voices.Add("342985949
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_WHITE_MINI_01"); //E5EAA67A"); //3857360506"); //Voices.Add("437606790
-            Voices.Add("S_F_Y_GENERICCHEAPWORKER_01_WHITE_MINI_02"); //39B64E08"); //968248840"); //968248840
-            Voices.Add("S_F_Y_HOOKER_01_WHITE_FULL_01"); //18B73C7E"); //414661758"); //414661758
-            Voices.Add("S_F_Y_HOOKER_01_WHITE_FULL_02"); //66F658FB"); //1727420667"); //1727420667
-            Voices.Add("S_F_Y_HOOKER_01_WHITE_FULL_03"); //75E576D9"); //1977972441"); //1977972441
-            Voices.Add("S_F_Y_HOOKER_02_WHITE_FULL_01"); //77BE674B"); //2008966987"); //2008966987
-            Voices.Add("S_F_Y_HOOKER_02_WHITE_FULL_02"); //09978AFF"); //160926463"); //160926463
-            Voices.Add("S_F_Y_HOOKER_02_WHITE_FULL_03"); //1B382E40"); //456666688"); //456666688
-            Voices.Add("S_F_Y_HOOKER_03_BLACK_FULL_01"); //875814D6"); //2270696662"); //Voices.Add("2024270634
-            Voices.Add("S_F_Y_HOOKER_03_BLACK_FULL_03"); //129DAB5F"); //312322911"); //312322911
-            Voices.Add("S_F_Y_PECKER_01_WHITE_01"); //6B019062"); //1795264610"); //1795264610
-            Voices.Add("S_F_Y_RANGER_01_WHITE_MINI_01"); //47A85382"); //1202213762"); //1202213762
-            Voices.Add("S_F_Y_SHOP_LOW_WHITE_MINI_01"); //ED77E493"); //3984057491"); //Voices.Add("310909805
-            Voices.Add("S_F_Y_SHOP_MID_WHITE_MINI_01"); //77B47F14"); //2008317716"); //2008317716
             Voices.Add("S_M_M_AMMUCOUNTRY_01_WHITE_01"); //14AE106F"); //346951791"); //346951791
             Voices.Add("S_M_M_AMMUCOUNTRY_WHITE_MINI_01"); //B6A5CF41"); //3064319809"); //Voices.Add("1230647487
             Voices.Add("S_M_M_AUTOSHOP_01_WHITE_01"); //B97E410A"); //3112059146"); //Voices.Add("1182908150
@@ -1183,7 +1208,6 @@ namespace RandomStart
             Voices.Add("S_M_Y_SWAT_01_WHITE_FULL_02"); //E55E58D0"); //3848165584"); //Voices.Add("446801712
             Voices.Add("S_M_Y_SWAT_01_WHITE_FULL_03"); //F324745C"); //4079252572"); //Voices.Add("215714724
             Voices.Add("S_M_Y_SWAT_01_WHITE_FULL_04"); //0236127F"); //37098111"); //37098111
-            Voices.Add("TALINA"); //ED031790"); //3976402832"); //Voices.Add("318564464
             Voices.Add("TAXIALONZO"); //A0B07846"); //2695919686"); //Voices.Add("1599047610
             Voices.Add("TAXIBRUCE"); //1E0A9C18"); //504011800"); //504011800
             Voices.Add("TAXICLYDE"); //90992C60"); //2425957472"); //Voices.Add("1869009824
@@ -1191,22 +1215,15 @@ namespace RandomStart
             Voices.Add("TAXIDERRICK"); //2D71435C"); //762397532"); //762397532
             Voices.Add("TAXIDOM"); //9DA9FDB5"); //2645163445"); //Voices.Add("1649803851
             Voices.Add("TAXIFELIPE"); //E66D1B66"); //3865910118"); //Voices.Add("429057178
-            Voices.Add("TAXIGANGGIRL1"); //E2228087"); //3793911943"); //Voices.Add("501055353
-            Voices.Add("TAXIGANGGIRL2"); //F7E3AC09"); //4158893065"); //Voices.Add("136074231
             Voices.Add("TAXIGANGM"); //08AC318A"); //145502602"); //145502602
             Voices.Add("TAXIJAMES"); //A8A8F64E"); //2829645390"); //Voices.Add("1465321906
-            Voices.Add("TAXIKEYLA"); //23ACB127"); //598520103"); //598520103
             Voices.Add("TAXIKWAK"); //58B68A9D"); //1488358045"); //1488358045
-            Voices.Add("TAXILIZ"); //C8B6AC99"); //3367414937"); //Voices.Add("927552359
-            Voices.Add("TAXIMIRANDA"); //97A199A8"); //2543950248"); //Voices.Add("1751017048
             Voices.Add("TAXIOJCOP1"); //5883C603"); //1485030915"); //1485030915
             Voices.Add("TAXIOTIS"); //A0B868F9"); //2696440057"); //Voices.Add("1598527239
             Voices.Add("TAXIPAULIE"); //05437D58"); //88309080"); //88309080
             Voices.Add("TAXIWALTER"); //1A43E0E1"); //440656097"); //440656097
             Voices.Add("TEST_VOICE"); //62883B8C"); //1653095308"); //1653095308
             Voices.Add("TOM"); //97CBE769"); //2546722665"); //Voices.Add("1748244631
-            Voices.Add("TONYA"); //FCB43161"); //4239667553"); //Voices.Add("55299743
-            Voices.Add("TRACEY"); //5A7D2459"); //1518150745"); //1518150745
             Voices.Add("TRANSLATOR"); //EAC3FECB"); //3938713291"); //Voices.Add("356254005
             Voices.Add("TREVOR_1_NORMAL"); //3AD6D338"); //987157304"); //987157304
             Voices.Add("TREVOR_2_NORMAL"); //CB2DDB29"); //3408780073"); //Voices.Add("886187223
@@ -1215,25 +1232,39 @@ namespace RandomStart
             Voices.Add("TREVOR_DRUNK"); //EA0CA87A"); //3926698106"); //Voices.Add("368269190
             Voices.Add("TREVOR_NORMAL"); //4072CC77"); //1081265271"); //1081265271
             Voices.Add("U_M_Y_TATTOO_01_WHITE_MINI_01"); //956C178D"); //2506889101"); //Voices.Add("1788078195
-            Voices.Add("VB_FEMALE_01"); //CB2136C8"); //3407951560"); //Voices.Add("887015736
-            Voices.Add("VB_FEMALE_02"); //E4EA6A5A"); //3840567898"); //Voices.Add("454399398
-            Voices.Add("VB_FEMALE_03"); //B1510330"); //2974876464"); //Voices.Add("1320090832
-            Voices.Add("VB_FEMALE_04"); //C397A7BD"); //3281495997"); //Voices.Add("1013471299
             Voices.Add("VB_LIFEGUARD_01"); //6B6161EE"); //1801544174"); //1801544174
             Voices.Add("VB_MALE_01"); //AC519660"); //2891028064"); //Voices.Add("1403939232
             Voices.Add("VB_MALE_02"); //B5E5A988"); //3051727240"); //Voices.Add("1243240056
             Voices.Add("VB_MALE_03"); //3A03B192"); //973320594"); //973320594
             Voices.Add("VULTURES"); //18219991"); //404855185"); //404855185
             Voices.Add("WADE"); //7DD049A4"); //2110802340"); //2110802340
-            Voices.Add("WAVELOAD_PAIN_FEMALE"); //332128AB"); //857811115"); //857811115
             Voices.Add("WAVELOAD_PAIN_FRANKLIN"); //33F65FC3"); //871784387"); //871784387
             Voices.Add("WAVELOAD_PAIN_MALE"); //804C18BB"); //2152470715"); //Voices.Add("2142496581
             Voices.Add("WAVELOAD_PAIN_MICHAEL"); //6531A692"); //1697752722"); //1697752722
             Voices.Add("WAVELOAD_PAIN_TREVOR"); //0CF83E9F"); //217595551"); //217595551
-            Voices.Add("WFSTEWARDESS"); //84EDE1BF"); //2230182335"); //Voices.Add("2064784961
             Voices.Add("WHISTLINGJANITOR"); //168D3E8E"); //378355342"); //378355342
             Voices.Add("YACHTCAPTAIN"); //71C9A806"); //1909041158"); //1909041158
             Voices.Add("ZOMBIE"); //22666A99"); //577137305"); //577137305
+            Voices.Add("BTL_DAVE_PVG");
+            Voices.Add("HS4_RAMPA_PVG");
+            Voices.Add("HS4_ANDME_PVG");
+            Voices.Add("HS4_ADAM_PVG");
+            Voices.Add("HS4_PTRAX_PVG");
+            Voices.Add("HS4_MOODY_PVG");
+            Voices.Add("HS4_PRODUCER_PVG");
+            Voices.Add("HS4_POOH_PVG");
+            Voices.Add("HS4_BUSINESS_PVG");
+            Voices.Add("HS4_CELEB1_PVG");
+            Voices.Add("HS4_GUSTAVO_PVG");
+            Voices.Add("HS4_PAVEL_PVG");
+            Voices.Add("HS4_ELRUBIO_PVG");
+            Voices.Add("HS4_MIGUEL_PVG");
+            Voices.Add("HS4_ENTRYPILOT1_PVG");
+            Voices.Add("HS4_OLDRICHGUY_PVG");
+            Voices.Add("MALE_CLUB_R2PVG");
+            Voices.Add("MALE_GENERICCHEAPWORKER_LATINO_PVG");
+            Voices.Add("HS4_BODYGUARD1_PVG");
+            Voices.Add("IGUARD_PVG");
 
             return Voices;
         }
@@ -1276,536 +1307,542 @@ namespace RandomStart
         {
             LoggerLight.Loggers("DataStore.AddonsList");
 
-            List<string> AddAdds = new List<string>();
+            List<string> AddAdds = new List<string> 
+            {
+                "COMPONENT_ADVANCEDRIFLE_CLIP_01",//0xFA8FA10F,
+                "COMPONENT_ADVANCEDRIFLE_CLIP_02",//0x8EC1C979,
+                "COMPONENT_ADVANCEDRIFLE_VARMOD_LUXE",//0x377CD377,
+                "COMPONENT_APPISTOL_CLIP_01",//0x31C4B22A,
+                "COMPONENT_APPISTOL_CLIP_02",//0x249A17D5,
+                "COMPONENT_APPISTOL_VARMOD_LUXE",//0x9B76C72C,
+                "COMPONENT_ASSAULTRIFLE_CLIP_01",//0xBE5EEA16,
+                "COMPONENT_ASSAULTRIFLE_CLIP_02",//0xB1214F9B,
+                "COMPONENT_ASSAULTRIFLE_CLIP_03",//0xDBF0A53D,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO",//0x911B24AF,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_02",//0x37E5444B,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_03",//0x538B7B97,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_04",//0x25789F72,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_05",//0xC5495F2D,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_06",//0xCF8B73B1,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_07",//0xA9BB2811,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_08",//0xFC674D54,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_09",//0x7C7FCD9B,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_10",//0xA5C38392,
+                "COMPONENT_ASSAULTRIFLE_MK2_CAMO_IND_01",//0xB9B15DB0,
+                "COMPONENT_ASSAULTRIFLE_MK2_CLIP_01",//0x8610343F,
+                "COMPONENT_ASSAULTRIFLE_MK2_CLIP_02",//0xD12ACA6F,
+                "COMPONENT_ASSAULTRIFLE_MK2_CLIP_ARMORPIERCING",//0xA7DD1E58,
+                "COMPONENT_ASSAULTRIFLE_MK2_CLIP_FMJ",//0x63E0A098,
+                "COMPONENT_ASSAULTRIFLE_MK2_CLIP_INCENDIARY",//0xFB70D853,
+                "COMPONENT_ASSAULTRIFLE_MK2_CLIP_TRACER",//0xEF2C78C1,
+                "COMPONENT_ASSAULTRIFLE_VARMOD_LUXE",//0x4EAD7533,
+                "COMPONENT_ASSAULTSHOTGUN_CLIP_01",//0x94E81BC7,
+                "COMPONENT_ASSAULTSHOTGUN_CLIP_02",//0x86BD7F72,
+                "COMPONENT_ASSAULTSMG_CLIP_01",//0x8D1307B0,
+                "COMPONENT_ASSAULTSMG_CLIP_02",//0xBB46E417,
+                "COMPONENT_ASSAULTSMG_VARMOD_LOWRIDER",//0x278C78AF,
+                "COMPONENT_AT_AR_AFGRIP",//0xC164F53,
+                "COMPONENT_AT_AR_AFGRIP_02",//0x9D65907A,
+                "COMPONENT_AT_AR_BARREL_01",//0x43A49D26,
+                "COMPONENT_AT_AR_BARREL_02",//0x5646C26A,
+                "COMPONENT_AT_AR_FLSH",//0x7BC4CDDC,
+                "COMPONENT_AT_AR_SUPP",//0x837445AA,
+                "COMPONENT_AT_AR_SUPP_02",//0xA73D4664,
+                "COMPONENT_AT_BP_BARREL_01",//0x659AC11B,
+                "COMPONENT_AT_BP_BARREL_02",//0x3BF26DC7,
+                "COMPONENT_AT_CR_BARREL_01",//0x833637FF,
+                "COMPONENT_AT_CR_BARREL_02",//0x8B3C480B,
+                "COMPONENT_AT_MG_BARREL_01",//0xC34EF234,
+                "COMPONENT_AT_MG_BARREL_02",//0xB5E2575B,
+                "COMPONENT_AT_MRFL_BARREL_01",//0x381B5D89,
+                "COMPONENT_AT_MRFL_BARREL_02",//0x68373DDC,
+                "COMPONENT_AT_MUZZLE_01",//0xB99402D4,
+                "COMPONENT_AT_MUZZLE_02",//0xC867A07B,
+                "COMPONENT_AT_MUZZLE_03",//0xDE11CBCF,
+                "COMPONENT_AT_MUZZLE_04",//0xEC9068CC,
+                "COMPONENT_AT_MUZZLE_05",//0x2E7957A,
+                "COMPONENT_AT_MUZZLE_06",//0x347EF8AC,
+                "COMPONENT_AT_MUZZLE_07",//0x4DB62ABE,
+                "COMPONENT_AT_MUZZLE_08",//0x5F7DCE4D,
+                "COMPONENT_AT_MUZZLE_09",//0x6927E1A1,
+                "COMPONENT_AT_PI_COMP",//0x21E34793,
+                "COMPONENT_AT_PI_COMP_02",//0xAA8283BF,
+                "COMPONENT_AT_PI_COMP_03",//0x27077CCB,
+                "COMPONENT_AT_PI_FLSH",//0x359B7AAE,
+                "COMPONENT_AT_PI_FLSH_02",//0x43FD595B,
+                "COMPONENT_AT_PI_FLSH_03",//0x4A4965F3,
+                "COMPONENT_AT_PI_RAIL",//0x8ED4BB70,
+                "COMPONENT_AT_PI_RAIL_02",//0x47DE9258,
+                "COMPONENT_AT_PI_SUPP",//0xC304849A,
+                "COMPONENT_AT_PI_SUPP_02",//0x65EA7EBB,
+                "COMPONENT_AT_SB_BARREL_01",//0xD9103EE1,
+                "COMPONENT_AT_SB_BARREL_02",//0xA564D78B,
+                "COMPONENT_AT_SCOPE_LARGE",//0xD2443DDC,
+                "COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM",//0x1C221B1A,
+                "COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM_MK2",//0x5B1C713C,
+                "COMPONENT_AT_SCOPE_LARGE_MK2",//0x82C10383,
+                "COMPONENT_AT_SCOPE_MACRO",//0x9D2FBF29,
+                "COMPONENT_AT_SCOPE_MACRO_02",//0x3CC6BA57,
+                "COMPONENT_AT_SCOPE_MACRO_02_MK2",//0xC7ADD105,
+                "COMPONENT_AT_SCOPE_MACRO_02_SMG_MK2",//0xE502AB6B,
+                "COMPONENT_AT_SCOPE_MACRO_MK2",//0x49B2945,
+                "COMPONENT_AT_SCOPE_MAX",//0xBC54DA77,
+                "COMPONENT_AT_SCOPE_MEDIUM",//0xA0D89C42,
+                "COMPONENT_AT_SCOPE_MEDIUM_MK2",//0xC66B6542,
+                "COMPONENT_AT_SCOPE_NV",//0xB68010B0,
+                "COMPONENT_AT_SCOPE_SMALL",//0xAA2C45B4,
+                "COMPONENT_AT_SCOPE_SMALL_02",//0x3C00AFED,
+                "COMPONENT_AT_SCOPE_SMALL_MK2",//0x3F3C8181,
+                "COMPONENT_AT_SCOPE_SMALL_SMG_MK2",//0x3DECC7DA,
+                "COMPONENT_AT_SCOPE_THERMAL",//0x2E43DA41,
+                "COMPONENT_AT_SC_BARREL_01",//0xE73653A9,
+                "COMPONENT_AT_SC_BARREL_02",//0xF97F783B,
+                "COMPONENT_AT_SIGHTS",//0x420FD713,
+                "COMPONENT_AT_SIGHTS_SMG",//0x9FDB5652,
+                "COMPONENT_AT_SR_BARREL_01",//0x909630B7,
+                "COMPONENT_AT_SR_BARREL_02",//0x108AB09E,
+                "COMPONENT_AT_SR_SUPP",//0xE608B35E,
+                "COMPONENT_AT_SR_SUPP_03",//0xAC42DF71,
+                "COMPONENT_BULLPUPRIFLE_CLIP_01",//0xC5A12F80,
+                "COMPONENT_BULLPUPRIFLE_CLIP_02",//0xB3688B0F,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO",//0xAE4055B7,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_02",//0xB905ED6B,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_03",//0xA6C448E8,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_04",//0x9486246C,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_05",//0x8A390FD2,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_06",//0x2337FC5,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_07",//0xEFFFDB5E,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_08",//0xDDBDB6DA,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_09",//0xCB631225,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_10",//0xA87D541E,
+                "COMPONENT_BULLPUPRIFLE_MK2_CAMO_IND_01",//0xC5E9AE52,
+                "COMPONENT_BULLPUPRIFLE_MK2_CLIP_01",//0x18929DA,
+                "COMPONENT_BULLPUPRIFLE_MK2_CLIP_02",//0xEFB00628,
+                "COMPONENT_BULLPUPRIFLE_MK2_CLIP_ARMORPIERCING",//0xFAA7F5ED,
+                "COMPONENT_BULLPUPRIFLE_MK2_CLIP_FMJ",//0x43621710,
+                "COMPONENT_BULLPUPRIFLE_MK2_CLIP_INCENDIARY",//0xA99CF95A,
+                "COMPONENT_BULLPUPRIFLE_MK2_CLIP_TRACER",//0x822060A9,
+                "COMPONENT_BULLPUPRIFLE_VARMOD_LOW",//0xA857BC78,
+                "COMPONENT_CARBINERIFLE_CLIP_01",//0x9FBE33EC,
+                "COMPONENT_CARBINERIFLE_CLIP_02",//0x91109691,
+                "COMPONENT_CARBINERIFLE_CLIP_03",//0xBA62E935,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO",//0x4BDD6F16,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_02",//0x406A7908,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_03",//0x2F3856A4,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_04",//0xE50C424D,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_05",//0xD37D1F2F,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_06",//0x86268483,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_07",//0xF420E076,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_08",//0xAAE14DF8,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_09",//0x9893A95D,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_10",//0x6B13CD3E,
+                "COMPONENT_CARBINERIFLE_MK2_CAMO_IND_01",//0xDA55CD3F,
+                "COMPONENT_CARBINERIFLE_MK2_CLIP_01",//0x4C7A391E,
+                "COMPONENT_CARBINERIFLE_MK2_CLIP_02",//0x5DD5DBD5,
+                "COMPONENT_CARBINERIFLE_MK2_CLIP_ARMORPIERCING",//0x255D5D57,
+                "COMPONENT_CARBINERIFLE_MK2_CLIP_FMJ",//0x44032F11,
+                "COMPONENT_CARBINERIFLE_MK2_CLIP_INCENDIARY",//0x3D25C2A7,
+                "COMPONENT_CARBINERIFLE_MK2_CLIP_TRACER",//0x1757F566,
+                "COMPONENT_CARBINERIFLE_VARMOD_LUXE",//0xD89B9658,
+                "COMPONENT_COMBATMG_CLIP_01",//0xE1FFB34A,
+                "COMPONENT_COMBATMG_CLIP_02",//0xD6C59CD6,
+                "COMPONENT_COMBATMG_MK2_CAMO",//0x4A768CB5,
+                "COMPONENT_COMBATMG_MK2_CAMO_02",//0xCCE06BBD,
+                "COMPONENT_COMBATMG_MK2_CAMO_03",//0xBE94CF26,
+                "COMPONENT_COMBATMG_MK2_CAMO_04",//0x7609BE11,
+                "COMPONENT_COMBATMG_MK2_CAMO_05",//0x48AF6351,
+                "COMPONENT_COMBATMG_MK2_CAMO_06",//0x9186750A,
+                "COMPONENT_COMBATMG_MK2_CAMO_07",//0x84555AA8,
+                "COMPONENT_COMBATMG_MK2_CAMO_08",//0x1B4C088B,
+                "COMPONENT_COMBATMG_MK2_CAMO_09",//0xE046DFC,
+                "COMPONENT_COMBATMG_MK2_CAMO_10",//0x28B536E,
+                "COMPONENT_COMBATMG_MK2_CAMO_IND_01",//0xD703C94D,
+                "COMPONENT_COMBATMG_MK2_CLIP_01",//0x492B257C,
+                "COMPONENT_COMBATMG_MK2_CLIP_02",//0x17DF42E9,
+                "COMPONENT_COMBATMG_MK2_CLIP_ARMORPIERCING",//0x29882423,
+                "COMPONENT_COMBATMG_MK2_CLIP_FMJ",//0x57EF1CC8,
+                "COMPONENT_COMBATMG_MK2_CLIP_INCENDIARY",//0xC326BDBA,
+                "COMPONENT_COMBATMG_MK2_CLIP_TRACER",//0xF6649745,
+                "COMPONENT_COMBATMG_VARMOD_LOWRIDER",//0x92FECCDD,
+                "COMPONENT_COMBATPDW_CLIP_01",//0x4317F19E,
+                "COMPONENT_COMBATPDW_CLIP_02",//0x334A5203,
+                "COMPONENT_COMBATPDW_CLIP_03",//0x6EB8C8DB,
+                "COMPONENT_COMBATPISTOL_CLIP_01",//0x721B079,
+                "COMPONENT_COMBATPISTOL_CLIP_02",//0xD67B4F2D,
+                "COMPONENT_COMBATPISTOL_VARMOD_LOWRIDER",//0xC6654D72,
+                "COMPONENT_COMPACTRIFLE_CLIP_01",//0x513F0A63,
+                "COMPONENT_COMPACTRIFLE_CLIP_02",//0x59FF9BF8,
+                "COMPONENT_COMPACTRIFLE_CLIP_03",//0xC607740E,
+                "COMPONENT_GRENADELAUNCHER_CLIP_01",//0x11AE5C97,
+                "COMPONENT_GUSENBERG_CLIP_01",//0x1CE5A6A5,
+                "COMPONENT_GUSENBERG_CLIP_02",//0xEAC8C270,
+                "COMPONENT_HEAVYPISTOL_CLIP_01",//0xD4A969A,
+                "COMPONENT_HEAVYPISTOL_CLIP_02",//0x64F9C62B,
+                "COMPONENT_HEAVYPISTOL_VARMOD_LUXE",//0x7A6A7B7B,
+                "COMPONENT_HEAVYSHOTGUN_CLIP_01",//0x324F2D5F,
+                "COMPONENT_HEAVYSHOTGUN_CLIP_02",//0x971CF6FD,
+                "COMPONENT_HEAVYSHOTGUN_CLIP_03",//0x88C7DA53,
+                "COMPONENT_HEAVYSNIPER_CLIP_01",//0x476F52F4,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO",//0xF8337D02,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_02",//0xC5BEDD65,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_03",//0xE9712475,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_04",//0x13AA78E7,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_05",//0x26591E50,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_06",//0x302731EC,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_07",//0xAC722A78,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_08",//0xBEA4CEDD,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_09",//0xCD776C82,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_10",//0xABC5ACC7,
+                "COMPONENT_HEAVYSNIPER_MK2_CAMO_IND_01",//0x6C32D2EB,
+                "COMPONENT_HEAVYSNIPER_MK2_CLIP_01",//0xFA1E1A28,
+                "COMPONENT_HEAVYSNIPER_MK2_CLIP_02",//0x2CD8FF9D,
+                "COMPONENT_HEAVYSNIPER_MK2_CLIP_ARMORPIERCING",//0xF835D6D4,
+                "COMPONENT_HEAVYSNIPER_MK2_CLIP_EXPLOSIVE",//0x89EBDAA7,
+                "COMPONENT_HEAVYSNIPER_MK2_CLIP_FMJ",//0x3BE948F6,
+                "COMPONENT_HEAVYSNIPER_MK2_CLIP_INCENDIARY",//0xEC0F617,
+                "COMPONENT_KNUCKLE_VARMOD_BALLAS",//0xEED9FD63,
+                "COMPONENT_KNUCKLE_VARMOD_BASE",//0xF3462F33,
+                "COMPONENT_KNUCKLE_VARMOD_DIAMOND",//0x9761D9DC,
+                "COMPONENT_KNUCKLE_VARMOD_DOLLAR",//0x50910C31,
+                "COMPONENT_KNUCKLE_VARMOD_HATE",//0x7DECFE30,
+                "COMPONENT_KNUCKLE_VARMOD_KING",//0xE28BABEF,
+                "COMPONENT_KNUCKLE_VARMOD_LOVE",//0x3F4E8AA6,
+                "COMPONENT_KNUCKLE_VARMOD_PIMP",//0xC613F685,
+                "COMPONENT_KNUCKLE_VARMOD_PLAYER",//0x8B808BB,
+                "COMPONENT_KNUCKLE_VARMOD_VAGOS",//0x7AF3F785,
+                "COMPONENT_MACHINEPISTOL_CLIP_01",//0x476E85FF,
+                "COMPONENT_MACHINEPISTOL_CLIP_02",//0xB92C6979,
+                "COMPONENT_MACHINEPISTOL_CLIP_03",//0xA9E9CAF4,
+                "COMPONENT_MARKSMANRIFLE_CLIP_01",//0xD83B4141,
+                "COMPONENT_MARKSMANRIFLE_CLIP_02",//0xCCFD2AC5,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO",//0x9094FBA0,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_02",//0x7320F4B2,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_03",//0x60CF500F,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_04",//0xFE668B3F,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_05",//0xF3757559,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_06",//0x193B40E8,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_07",//0x107D2F6C,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_08",//0xC4E91841,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_09",//0x9BB1C5D3,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_10",//0x3B61040B,
+                "COMPONENT_MARKSMANRIFLE_MK2_CAMO_IND_01",//0xB7A316DA,
+                "COMPONENT_MARKSMANRIFLE_MK2_CLIP_01",//0x94E12DCE,
+                "COMPONENT_MARKSMANRIFLE_MK2_CLIP_02",//0xE6CFD1AA,
+                "COMPONENT_MARKSMANRIFLE_MK2_CLIP_ARMORPIERCING",//0xF46FD079,
+                "COMPONENT_MARKSMANRIFLE_MK2_CLIP_FMJ",//0xE14A9ED3,
+                "COMPONENT_MARKSMANRIFLE_MK2_CLIP_INCENDIARY",//0x6DD7A86E,
+                "COMPONENT_MARKSMANRIFLE_MK2_CLIP_TRACER",//0xD77A22D2,
+                "COMPONENT_MARKSMANRIFLE_VARMOD_LUXE",//0x161E9241,
+                "COMPONENT_MG_CLIP_01",//0xF434EF84,
+                "COMPONENT_MG_CLIP_02",//0x82158B47,
+                "COMPONENT_MG_VARMOD_LOWRIDER",//0xD6DABABE,
+                "COMPONENT_MICROSMG_CLIP_01",//0xCB48AEF0,
+                "COMPONENT_MICROSMG_CLIP_02",//0x10E6BA2B,
+                "COMPONENT_MICROSMG_VARMOD_LUXE",//0x487AAE09,
+                "COMPONENT_MINISMG_CLIP_01",//0x84C8B2D3,
+                "COMPONENT_MINISMG_CLIP_02",//0x937ED0B7,
+                "COMPONENT_PISTOL50_CLIP_01",//0x2297BE19,
+                "COMPONENT_PISTOL50_CLIP_02",//0xD9D3AC92,
+                "COMPONENT_PISTOL50_VARMOD_LUXE",//0x77B8AB2F,
+                "COMPONENT_PISTOL_CLIP_01",//0xFED0FD71,
+                "COMPONENT_PISTOL_CLIP_02",//0xED265A1C,
+                "COMPONENT_PISTOL_MK2_CAMO",//0x5C6C749C,
+                "COMPONENT_PISTOL_MK2_CAMO_02",//0x15F7A390,
+                "COMPONENT_PISTOL_MK2_CAMO_02_SLIDE",//0x1A1F1260,
+                "COMPONENT_PISTOL_MK2_CAMO_03",//0x968E24DB,
+                "COMPONENT_PISTOL_MK2_CAMO_03_SLIDE",//0xE4E00B70,
+                "COMPONENT_PISTOL_MK2_CAMO_04",//0x17BFA99,
+                "COMPONENT_PISTOL_MK2_CAMO_04_SLIDE",//0x2C298B2B,
+                "COMPONENT_PISTOL_MK2_CAMO_05",//0xF2685C72,
+                "COMPONENT_PISTOL_MK2_CAMO_05_SLIDE",//0xDFB79725,
+                "COMPONENT_PISTOL_MK2_CAMO_06",//0xDD2231E6,
+                "COMPONENT_PISTOL_MK2_CAMO_06_SLIDE",//0x6BD7228C,
+                "COMPONENT_PISTOL_MK2_CAMO_07",//0xBB43EE76,
+                "COMPONENT_PISTOL_MK2_CAMO_07_SLIDE",//0x9DDBCF8C,
+                "COMPONENT_PISTOL_MK2_CAMO_08",//0x4D901310,
+                "COMPONENT_PISTOL_MK2_CAMO_08_SLIDE",//0xB319A52C,
+                "COMPONENT_PISTOL_MK2_CAMO_09",//0x5F31B653,
+                "COMPONENT_PISTOL_MK2_CAMO_09_SLIDE",//0xC6836E12,
+                "COMPONENT_PISTOL_MK2_CAMO_10",//0x697E19A0,
+                "COMPONENT_PISTOL_MK2_CAMO_10_SLIDE",//0x43B1B173,
+                "COMPONENT_PISTOL_MK2_CAMO_IND_01",//0x930CB951,
+                "COMPONENT_PISTOL_MK2_CAMO_IND_01_SLIDE",//0x4ABDA3FA,
+                "COMPONENT_PISTOL_MK2_CAMO_SLIDE",//0xB4FC92B0,
+                "COMPONENT_PISTOL_MK2_CLIP_01",//0x94F42D62,
+                "COMPONENT_PISTOL_MK2_CLIP_02",//0x5ED6C128,
+                "COMPONENT_PISTOL_MK2_CLIP_FMJ",//0x4F37DF2A,
+                "COMPONENT_PISTOL_MK2_CLIP_HOLLOWPOINT",//0x85FEA109,
+                "COMPONENT_PISTOL_MK2_CLIP_INCENDIARY",//0x2BBD7A3A,
+                "COMPONENT_PISTOL_MK2_CLIP_TRACER",//0x25CAAEAF,
+                "COMPONENT_PISTOL_VARMOD_LUXE",//0xD7391086,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO",//0xE3BD9E44,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_02",//0x17148F9B,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_03",//0x24D22B16,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_04",//0xF2BEC6F0,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_05",//0x85627D,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_06",//0xDC2919C5,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_07",//0xE184247B,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_08",//0xD8EF9356,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_09",//0xEF29BFCA,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_10",//0x67AEB165,
+                "COMPONENT_PUMPSHOTGUN_MK2_CAMO_IND_01",//0x46411A1D,
+                "COMPONENT_PUMPSHOTGUN_MK2_CLIP_01",//0xCD940141,
+                "COMPONENT_PUMPSHOTGUN_MK2_CLIP_ARMORPIERCING",//0x4E65B425,
+                "COMPONENT_PUMPSHOTGUN_MK2_CLIP_EXPLOSIVE",//0x3BE4465D,
+                "COMPONENT_PUMPSHOTGUN_MK2_CLIP_HOLLOWPOINT",//0xE9582927,
+                "COMPONENT_PUMPSHOTGUN_MK2_CLIP_INCENDIARY",//0x9F8A1BF5,
+                "COMPONENT_PUMPSHOTGUN_VARMOD_LOWRIDER",//0xA2D79DDB,
+                "COMPONENT_REVOLVER_CLIP_01",//0xE9867CE3,
+                "COMPONENT_REVOLVER_MK2_CAMO",//0xC03FED9F,
+                "COMPONENT_REVOLVER_MK2_CAMO_02",//0xB5DE24,
+                "COMPONENT_REVOLVER_MK2_CAMO_03",//0xA7FF1B8,
+                "COMPONENT_REVOLVER_MK2_CAMO_04",//0xF2E24289,
+                "COMPONENT_REVOLVER_MK2_CAMO_05",//0x11317F27,
+                "COMPONENT_REVOLVER_MK2_CAMO_06",//0x17C30C42,
+                "COMPONENT_REVOLVER_MK2_CAMO_07",//0x257927AE,
+                "COMPONENT_REVOLVER_MK2_CAMO_08",//0x37304B1C,
+                "COMPONENT_REVOLVER_MK2_CAMO_09",//0x48DAEE71,
+                "COMPONENT_REVOLVER_MK2_CAMO_10",//0x20ED9B5B,
+                "COMPONENT_REVOLVER_MK2_CAMO_IND_01",//0xD951E867,
+                "COMPONENT_REVOLVER_MK2_CLIP_01",//0xBA23D8BE,
+                "COMPONENT_REVOLVER_MK2_CLIP_FMJ",//0xDC8BA3F,
+                "COMPONENT_REVOLVER_MK2_CLIP_HOLLOWPOINT",//0x10F42E8F,
+                "COMPONENT_REVOLVER_MK2_CLIP_INCENDIARY",//0xEFBF25,
+                "COMPONENT_REVOLVER_MK2_CLIP_TRACER",//0xC6D8E476,
+                "COMPONENT_REVOLVER_VARMOD_BOSS",//0x16EE3040,
+                "COMPONENT_REVOLVER_VARMOD_GOON",//0x9493B80D,
+                "COMPONENT_SAWNOFFSHOTGUN_VARMOD_LUXE",//0x85A64DF9,
+                "COMPONENT_SMG_CLIP_01",//0x26574997,
+                "COMPONENT_SMG_CLIP_02",//0x350966FB,
+                "COMPONENT_SMG_CLIP_03",//0x79C77076,
+                "COMPONENT_SMG_MK2_CAMO",//0xC4979067,
+                "COMPONENT_SMG_MK2_CAMO_02",//0x3815A945,
+                "COMPONENT_SMG_MK2_CAMO_03",//0x4B4B4FB0,
+                "COMPONENT_SMG_MK2_CAMO_04",//0xEC729200,
+                "COMPONENT_SMG_MK2_CAMO_05",//0x48F64B22,
+                "COMPONENT_SMG_MK2_CAMO_06",//0x35992468,
+                "COMPONENT_SMG_MK2_CAMO_07",//0x24B782A5,
+                "COMPONENT_SMG_MK2_CAMO_08",//0xA2E67F01,
+                "COMPONENT_SMG_MK2_CAMO_09",//0x2218FD68,
+                "COMPONENT_SMG_MK2_CAMO_10",//0x45C5C3C5,
+                "COMPONENT_SMG_MK2_CAMO_IND_01",//0x399D558F,
+                "COMPONENT_SMG_MK2_CLIP_01",//0x4C24806E,
+                "COMPONENT_SMG_MK2_CLIP_02",//0xB9835B2E,
+                "COMPONENT_SMG_MK2_CLIP_FMJ",//0xB5A715F,
+                "COMPONENT_SMG_MK2_CLIP_HOLLOWPOINT",//0x3A1BD6FA,
+                "COMPONENT_SMG_MK2_CLIP_INCENDIARY",//0xD99222E5,
+                "COMPONENT_SMG_MK2_CLIP_TRACER",//0x7FEA36EC,
+                "COMPONENT_SMG_VARMOD_LUXE",//0x27872C90,
+                "COMPONENT_SNIPERRIFLE_CLIP_01",//0x9BC64089,
+                "COMPONENT_SNIPERRIFLE_VARMOD_LUXE",//0x4032B5E7,
+                "COMPONENT_SNSPISTOL_CLIP_01",//0xF8802ED9,
+                "COMPONENT_SNSPISTOL_CLIP_02",//0x7B0033B3,
+                "COMPONENT_SNSPISTOL_MK2_CAMO",//0xF7BEEDD,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_02",//0x8A612EF6,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_02_SLIDE",//0x29366D21,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_03",//0x76FA8829,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_03_SLIDE",//0x3ADE514B,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_04",//0xA93C6CAC,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_04_SLIDE",//0xE64513E9,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_05",//0x9C905354,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_05_SLIDE",//0xCD7AEB9A,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_06",//0x4DFA3621,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_06_SLIDE",//0xFA7B27A6,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_07",//0x42E91FFF,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_07_SLIDE",//0xE285CA9A,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_08",//0x54A8437D,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_08_SLIDE",//0x2B904B19,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_09",//0x68C2746,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_09_SLIDE",//0x22C24F9C,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_10",//0x2366E467,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_10_SLIDE",//0x8D0D5ECD,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_IND_01",//0x441882E6,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_IND_01_SLIDE",//0x1F07150A,
+                "COMPONENT_SNSPISTOL_MK2_CAMO_SLIDE",//0xE7EE68EA,
+                "COMPONENT_SNSPISTOL_MK2_CLIP_01",//0x1466CE6,
+                "COMPONENT_SNSPISTOL_MK2_CLIP_02",//0xCE8C0772,
+                "COMPONENT_SNSPISTOL_MK2_CLIP_FMJ",//0xC111EB26,
+                "COMPONENT_SNSPISTOL_MK2_CLIP_HOLLOWPOINT",//0x8D107402,
+                "COMPONENT_SNSPISTOL_MK2_CLIP_INCENDIARY",//0xE6AD5F79,
+                "COMPONENT_SNSPISTOL_MK2_CLIP_TRACER",//0x902DA26E,
+                "COMPONENT_SNSPISTOL_VARMOD_LOWRIDER",//0x8033ECAF,
+                "COMPONENT_SPECIALCARBINE_CLIP_01",//0xC6C7E581,
+                "COMPONENT_SPECIALCARBINE_CLIP_02",//0x7C8BD10E,
+                "COMPONENT_SPECIALCARBINE_CLIP_03",//0x6B59AEAA,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO",//0xD40BB53B,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_02",//0x431B238B,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_03",//0x34CF86F4,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_04",//0xB4C306DD,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_05",//0xEE677A25,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_06",//0xDF90DC78,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_07",//0xA4C31EE,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_08",//0x89CFB0F7,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_09",//0x7B82145C,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_10",//0x899CAF75,
+                "COMPONENT_SPECIALCARBINE_MK2_CAMO_IND_01",//0x5218C819,
+                "COMPONENT_SPECIALCARBINE_MK2_CLIP_01",//0x16C69281,
+                "COMPONENT_SPECIALCARBINE_MK2_CLIP_02",//0xDE1FA12C,
+                "COMPONENT_SPECIALCARBINE_MK2_CLIP_ARMORPIERCING",//0x51351635,
+                "COMPONENT_SPECIALCARBINE_MK2_CLIP_FMJ",//0x503DEA90,
+                "COMPONENT_SPECIALCARBINE_MK2_CLIP_INCENDIARY",//0xDE011286,
+                "COMPONENT_SPECIALCARBINE_MK2_CLIP_TRACER",//0x8765C68A,
+                "COMPONENT_SPECIALCARBINE_VARMOD_LOWRIDER",//0x730154F2,
+                "COMPONENT_SWITCHBLADE_VARMOD_BASE",//0x9137A500,
+                "COMPONENT_SWITCHBLADE_VARMOD_VAR1",//0x5B3E7DB6,
+                "COMPONENT_SWITCHBLADE_VARMOD_VAR2",//0xE7939662,
+                "COMPONENT_VINTAGEPISTOL_CLIP_01",//0x45A3B6BB,
+                "COMPONENT_VINTAGEPISTOL_CLIP_02",//0x33BA12E8
 
-            AddAdds.Add("COMPONENT_ADVANCEDRIFLE_CLIP_01");//0xFA8FA10F,
-            AddAdds.Add("COMPONENT_ADVANCEDRIFLE_CLIP_02");//0x8EC1C979,
-            AddAdds.Add("COMPONENT_ADVANCEDRIFLE_VARMOD_LUXE");//0x377CD377,
-            AddAdds.Add("COMPONENT_APPISTOL_CLIP_01");//0x31C4B22A,
-            AddAdds.Add("COMPONENT_APPISTOL_CLIP_02");//0x249A17D5,
-            AddAdds.Add("COMPONENT_APPISTOL_VARMOD_LUXE");//0x9B76C72C,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_CLIP_01");//0xBE5EEA16,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_CLIP_02");//0xB1214F9B,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_CLIP_03");//0xDBF0A53D,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO");//0x911B24AF,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_02");//0x37E5444B,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_03");//0x538B7B97,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_04");//0x25789F72,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_05");//0xC5495F2D,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_06");//0xCF8B73B1,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_07");//0xA9BB2811,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_08");//0xFC674D54,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_09");//0x7C7FCD9B,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_10");//0xA5C38392,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CAMO_IND_01");//0xB9B15DB0,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CLIP_01");//0x8610343F,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CLIP_02");//0xD12ACA6F,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CLIP_ARMORPIERCING");//0xA7DD1E58,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CLIP_FMJ");//0x63E0A098,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CLIP_INCENDIARY");//0xFB70D853,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_MK2_CLIP_TRACER");//0xEF2C78C1,
-            AddAdds.Add("COMPONENT_ASSAULTRIFLE_VARMOD_LUXE");//0x4EAD7533,
-            AddAdds.Add("COMPONENT_ASSAULTSHOTGUN_CLIP_01");//0x94E81BC7,
-            AddAdds.Add("COMPONENT_ASSAULTSHOTGUN_CLIP_02");//0x86BD7F72,
-            AddAdds.Add("COMPONENT_ASSAULTSMG_CLIP_01");//0x8D1307B0,
-            AddAdds.Add("COMPONENT_ASSAULTSMG_CLIP_02");//0xBB46E417,
-            AddAdds.Add("COMPONENT_ASSAULTSMG_VARMOD_LOWRIDER");//0x278C78AF,
-            AddAdds.Add("COMPONENT_AT_AR_AFGRIP");//0xC164F53,
-            AddAdds.Add("COMPONENT_AT_AR_AFGRIP_02");//0x9D65907A,
-            AddAdds.Add("COMPONENT_AT_AR_BARREL_01");//0x43A49D26,
-            AddAdds.Add("COMPONENT_AT_AR_BARREL_02");//0x5646C26A,
-            AddAdds.Add("COMPONENT_AT_AR_FLSH");//0x7BC4CDDC,
-            AddAdds.Add("COMPONENT_AT_AR_SUPP");//0x837445AA,
-            AddAdds.Add("COMPONENT_AT_AR_SUPP_02");//0xA73D4664,
-            AddAdds.Add("COMPONENT_AT_BP_BARREL_01");//0x659AC11B,
-            AddAdds.Add("COMPONENT_AT_BP_BARREL_02");//0x3BF26DC7,
-            AddAdds.Add("COMPONENT_AT_CR_BARREL_01");//0x833637FF,
-            AddAdds.Add("COMPONENT_AT_CR_BARREL_02");//0x8B3C480B,
-            AddAdds.Add("COMPONENT_AT_MG_BARREL_01");//0xC34EF234,
-            AddAdds.Add("COMPONENT_AT_MG_BARREL_02");//0xB5E2575B,
-            AddAdds.Add("COMPONENT_AT_MRFL_BARREL_01");//0x381B5D89,
-            AddAdds.Add("COMPONENT_AT_MRFL_BARREL_02");//0x68373DDC,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_01");//0xB99402D4,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_02");//0xC867A07B,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_03");//0xDE11CBCF,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_04");//0xEC9068CC,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_05");//0x2E7957A,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_06");//0x347EF8AC,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_07");//0x4DB62ABE,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_08");//0x5F7DCE4D,
-            AddAdds.Add("COMPONENT_AT_MUZZLE_09");//0x6927E1A1,
-            AddAdds.Add("COMPONENT_AT_PI_COMP");//0x21E34793,
-            AddAdds.Add("COMPONENT_AT_PI_COMP_02");//0xAA8283BF,
-            AddAdds.Add("COMPONENT_AT_PI_COMP_03");//0x27077CCB,
-            AddAdds.Add("COMPONENT_AT_PI_FLSH");//0x359B7AAE,
-            AddAdds.Add("COMPONENT_AT_PI_FLSH_02");//0x43FD595B,
-            AddAdds.Add("COMPONENT_AT_PI_FLSH_03");//0x4A4965F3,
-            AddAdds.Add("COMPONENT_AT_PI_RAIL");//0x8ED4BB70,
-            AddAdds.Add("COMPONENT_AT_PI_RAIL_02");//0x47DE9258,
-            AddAdds.Add("COMPONENT_AT_PI_SUPP");//0xC304849A,
-            AddAdds.Add("COMPONENT_AT_PI_SUPP_02");//0x65EA7EBB,
-            AddAdds.Add("COMPONENT_AT_SB_BARREL_01");//0xD9103EE1,
-            AddAdds.Add("COMPONENT_AT_SB_BARREL_02");//0xA564D78B,
-            AddAdds.Add("COMPONENT_AT_SCOPE_LARGE");//0xD2443DDC,
-            AddAdds.Add("COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM");//0x1C221B1A,
-            AddAdds.Add("COMPONENT_AT_SCOPE_LARGE_FIXED_ZOOM_MK2");//0x5B1C713C,
-            AddAdds.Add("COMPONENT_AT_SCOPE_LARGE_MK2");//0x82C10383,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MACRO");//0x9D2FBF29,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MACRO_02");//0x3CC6BA57,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MACRO_02_MK2");//0xC7ADD105,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MACRO_02_SMG_MK2");//0xE502AB6B,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MACRO_MK2");//0x49B2945,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MAX");//0xBC54DA77,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MEDIUM");//0xA0D89C42,
-            AddAdds.Add("COMPONENT_AT_SCOPE_MEDIUM_MK2");//0xC66B6542,
-            AddAdds.Add("COMPONENT_AT_SCOPE_NV");//0xB68010B0,
-            AddAdds.Add("COMPONENT_AT_SCOPE_SMALL");//0xAA2C45B4,
-            AddAdds.Add("COMPONENT_AT_SCOPE_SMALL_02");//0x3C00AFED,
-            AddAdds.Add("COMPONENT_AT_SCOPE_SMALL_MK2");//0x3F3C8181,
-            AddAdds.Add("COMPONENT_AT_SCOPE_SMALL_SMG_MK2");//0x3DECC7DA,
-            AddAdds.Add("COMPONENT_AT_SCOPE_THERMAL");//0x2E43DA41,
-            AddAdds.Add("COMPONENT_AT_SC_BARREL_01");//0xE73653A9,
-            AddAdds.Add("COMPONENT_AT_SC_BARREL_02");//0xF97F783B,
-            AddAdds.Add("COMPONENT_AT_SIGHTS");//0x420FD713,
-            AddAdds.Add("COMPONENT_AT_SIGHTS_SMG");//0x9FDB5652,
-            AddAdds.Add("COMPONENT_AT_SR_BARREL_01");//0x909630B7,
-            AddAdds.Add("COMPONENT_AT_SR_BARREL_02");//0x108AB09E,
-            AddAdds.Add("COMPONENT_AT_SR_SUPP");//0xE608B35E,
-            AddAdds.Add("COMPONENT_AT_SR_SUPP_03");//0xAC42DF71,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_CLIP_01");//0xC5A12F80,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_CLIP_02");//0xB3688B0F,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO");//0xAE4055B7,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_02");//0xB905ED6B,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_03");//0xA6C448E8,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_04");//0x9486246C,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_05");//0x8A390FD2,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_06");//0x2337FC5,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_07");//0xEFFFDB5E,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_08");//0xDDBDB6DA,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_09");//0xCB631225,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_10");//0xA87D541E,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CAMO_IND_01");//0xC5E9AE52,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CLIP_01");//0x18929DA,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CLIP_02");//0xEFB00628,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CLIP_ARMORPIERCING");//0xFAA7F5ED,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CLIP_FMJ");//0x43621710,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CLIP_INCENDIARY");//0xA99CF95A,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_MK2_CLIP_TRACER");//0x822060A9,
-            AddAdds.Add("COMPONENT_BULLPUPRIFLE_VARMOD_LOW");//0xA857BC78,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_CLIP_01");//0x9FBE33EC,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_CLIP_02");//0x91109691,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_CLIP_03");//0xBA62E935,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO");//0x4BDD6F16,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_02");//0x406A7908,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_03");//0x2F3856A4,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_04");//0xE50C424D,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_05");//0xD37D1F2F,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_06");//0x86268483,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_07");//0xF420E076,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_08");//0xAAE14DF8,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_09");//0x9893A95D,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_10");//0x6B13CD3E,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CAMO_IND_01");//0xDA55CD3F,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CLIP_01");//0x4C7A391E,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CLIP_02");//0x5DD5DBD5,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CLIP_ARMORPIERCING");//0x255D5D57,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CLIP_FMJ");//0x44032F11,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CLIP_INCENDIARY");//0x3D25C2A7,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_MK2_CLIP_TRACER");//0x1757F566,
-            AddAdds.Add("COMPONENT_CARBINERIFLE_VARMOD_LUXE");//0xD89B9658,
-            AddAdds.Add("COMPONENT_COMBATMG_CLIP_01");//0xE1FFB34A,
-            AddAdds.Add("COMPONENT_COMBATMG_CLIP_02");//0xD6C59CD6,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO");//0x4A768CB5,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_02");//0xCCE06BBD,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_03");//0xBE94CF26,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_04");//0x7609BE11,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_05");//0x48AF6351,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_06");//0x9186750A,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_07");//0x84555AA8,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_08");//0x1B4C088B,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_09");//0xE046DFC,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_10");//0x28B536E,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CAMO_IND_01");//0xD703C94D,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CLIP_01");//0x492B257C,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CLIP_02");//0x17DF42E9,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CLIP_ARMORPIERCING");//0x29882423,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CLIP_FMJ");//0x57EF1CC8,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CLIP_INCENDIARY");//0xC326BDBA,
-            AddAdds.Add("COMPONENT_COMBATMG_MK2_CLIP_TRACER");//0xF6649745,
-            AddAdds.Add("COMPONENT_COMBATMG_VARMOD_LOWRIDER");//0x92FECCDD,
-            AddAdds.Add("COMPONENT_COMBATPDW_CLIP_01");//0x4317F19E,
-            AddAdds.Add("COMPONENT_COMBATPDW_CLIP_02");//0x334A5203,
-            AddAdds.Add("COMPONENT_COMBATPDW_CLIP_03");//0x6EB8C8DB,
-            AddAdds.Add("COMPONENT_COMBATPISTOL_CLIP_01");//0x721B079,
-            AddAdds.Add("COMPONENT_COMBATPISTOL_CLIP_02");//0xD67B4F2D,
-            AddAdds.Add("COMPONENT_COMBATPISTOL_VARMOD_LOWRIDER");//0xC6654D72,
-            AddAdds.Add("COMPONENT_COMPACTRIFLE_CLIP_01");//0x513F0A63,
-            AddAdds.Add("COMPONENT_COMPACTRIFLE_CLIP_02");//0x59FF9BF8,
-            AddAdds.Add("COMPONENT_COMPACTRIFLE_CLIP_03");//0xC607740E,
-            AddAdds.Add("COMPONENT_GRENADELAUNCHER_CLIP_01");//0x11AE5C97,
-            AddAdds.Add("COMPONENT_GUSENBERG_CLIP_01");//0x1CE5A6A5,
-            AddAdds.Add("COMPONENT_GUSENBERG_CLIP_02");//0xEAC8C270,
-            AddAdds.Add("COMPONENT_HEAVYPISTOL_CLIP_01");//0xD4A969A,
-            AddAdds.Add("COMPONENT_HEAVYPISTOL_CLIP_02");//0x64F9C62B,
-            AddAdds.Add("COMPONENT_HEAVYPISTOL_VARMOD_LUXE");//0x7A6A7B7B,
-            AddAdds.Add("COMPONENT_HEAVYSHOTGUN_CLIP_01");//0x324F2D5F,
-            AddAdds.Add("COMPONENT_HEAVYSHOTGUN_CLIP_02");//0x971CF6FD,
-            AddAdds.Add("COMPONENT_HEAVYSHOTGUN_CLIP_03");//0x88C7DA53,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_CLIP_01");//0x476F52F4,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO");//0xF8337D02,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_02");//0xC5BEDD65,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_03");//0xE9712475,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_04");//0x13AA78E7,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_05");//0x26591E50,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_06");//0x302731EC,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_07");//0xAC722A78,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_08");//0xBEA4CEDD,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_09");//0xCD776C82,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_10");//0xABC5ACC7,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CAMO_IND_01");//0x6C32D2EB,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CLIP_01");//0xFA1E1A28,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CLIP_02");//0x2CD8FF9D,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CLIP_ARMORPIERCING");//0xF835D6D4,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CLIP_EXPLOSIVE");//0x89EBDAA7,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CLIP_FMJ");//0x3BE948F6,
-            AddAdds.Add("COMPONENT_HEAVYSNIPER_MK2_CLIP_INCENDIARY");//0xEC0F617,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_BALLAS");//0xEED9FD63,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_BASE");//0xF3462F33,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_DIAMOND");//0x9761D9DC,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_DOLLAR");//0x50910C31,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_HATE");//0x7DECFE30,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_KING");//0xE28BABEF,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_LOVE");//0x3F4E8AA6,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_PIMP");//0xC613F685,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_PLAYER");//0x8B808BB,
-            AddAdds.Add("COMPONENT_KNUCKLE_VARMOD_VAGOS");//0x7AF3F785,
-            AddAdds.Add("COMPONENT_MACHINEPISTOL_CLIP_01");//0x476E85FF,
-            AddAdds.Add("COMPONENT_MACHINEPISTOL_CLIP_02");//0xB92C6979,
-            AddAdds.Add("COMPONENT_MACHINEPISTOL_CLIP_03");//0xA9E9CAF4,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_CLIP_01");//0xD83B4141,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_CLIP_02");//0xCCFD2AC5,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO");//0x9094FBA0,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_02");//0x7320F4B2,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_03");//0x60CF500F,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_04");//0xFE668B3F,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_05");//0xF3757559,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_06");//0x193B40E8,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_07");//0x107D2F6C,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_08");//0xC4E91841,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_09");//0x9BB1C5D3,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_10");//0x3B61040B,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CAMO_IND_01");//0xB7A316DA,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CLIP_01");//0x94E12DCE,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CLIP_02");//0xE6CFD1AA,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CLIP_ARMORPIERCING");//0xF46FD079,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CLIP_FMJ");//0xE14A9ED3,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CLIP_INCENDIARY");//0x6DD7A86E,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_MK2_CLIP_TRACER");//0xD77A22D2,
-            AddAdds.Add("COMPONENT_MARKSMANRIFLE_VARMOD_LUXE");//0x161E9241,
-            AddAdds.Add("COMPONENT_MG_CLIP_01");//0xF434EF84,
-            AddAdds.Add("COMPONENT_MG_CLIP_02");//0x82158B47,
-            AddAdds.Add("COMPONENT_MG_VARMOD_LOWRIDER");//0xD6DABABE,
-            AddAdds.Add("COMPONENT_MICROSMG_CLIP_01");//0xCB48AEF0,
-            AddAdds.Add("COMPONENT_MICROSMG_CLIP_02");//0x10E6BA2B,
-            AddAdds.Add("COMPONENT_MICROSMG_VARMOD_LUXE");//0x487AAE09,
-            AddAdds.Add("COMPONENT_MINISMG_CLIP_01");//0x84C8B2D3,
-            AddAdds.Add("COMPONENT_MINISMG_CLIP_02");//0x937ED0B7,
-            AddAdds.Add("COMPONENT_PISTOL50_CLIP_01");//0x2297BE19,
-            AddAdds.Add("COMPONENT_PISTOL50_CLIP_02");//0xD9D3AC92,
-            AddAdds.Add("COMPONENT_PISTOL50_VARMOD_LUXE");//0x77B8AB2F,
-            AddAdds.Add("COMPONENT_PISTOL_CLIP_01");//0xFED0FD71,
-            AddAdds.Add("COMPONENT_PISTOL_CLIP_02");//0xED265A1C,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO");//0x5C6C749C,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_02");//0x15F7A390,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_02_SLIDE");//0x1A1F1260,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_03");//0x968E24DB,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_03_SLIDE");//0xE4E00B70,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_04");//0x17BFA99,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_04_SLIDE");//0x2C298B2B,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_05");//0xF2685C72,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_05_SLIDE");//0xDFB79725,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_06");//0xDD2231E6,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_06_SLIDE");//0x6BD7228C,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_07");//0xBB43EE76,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_07_SLIDE");//0x9DDBCF8C,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_08");//0x4D901310,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_08_SLIDE");//0xB319A52C,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_09");//0x5F31B653,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_09_SLIDE");//0xC6836E12,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_10");//0x697E19A0,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_10_SLIDE");//0x43B1B173,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_IND_01");//0x930CB951,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_IND_01_SLIDE");//0x4ABDA3FA,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CAMO_SLIDE");//0xB4FC92B0,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CLIP_01");//0x94F42D62,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CLIP_02");//0x5ED6C128,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CLIP_FMJ");//0x4F37DF2A,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CLIP_HOLLOWPOINT");//0x85FEA109,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CLIP_INCENDIARY");//0x2BBD7A3A,
-            AddAdds.Add("COMPONENT_PISTOL_MK2_CLIP_TRACER");//0x25CAAEAF,
-            AddAdds.Add("COMPONENT_PISTOL_VARMOD_LUXE");//0xD7391086,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO");//0xE3BD9E44,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_02");//0x17148F9B,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_03");//0x24D22B16,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_04");//0xF2BEC6F0,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_05");//0x85627D,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_06");//0xDC2919C5,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_07");//0xE184247B,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_08");//0xD8EF9356,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_09");//0xEF29BFCA,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_10");//0x67AEB165,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CAMO_IND_01");//0x46411A1D,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CLIP_01");//0xCD940141,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CLIP_ARMORPIERCING");//0x4E65B425,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CLIP_EXPLOSIVE");//0x3BE4465D,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CLIP_HOLLOWPOINT");//0xE9582927,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_MK2_CLIP_INCENDIARY");//0x9F8A1BF5,
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_VARMOD_LOWRIDER");//0xA2D79DDB,
-            AddAdds.Add("COMPONENT_REVOLVER_CLIP_01");//0xE9867CE3,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO");//0xC03FED9F,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_02");//0xB5DE24,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_03");//0xA7FF1B8,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_04");//0xF2E24289,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_05");//0x11317F27,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_06");//0x17C30C42,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_07");//0x257927AE,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_08");//0x37304B1C,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_09");//0x48DAEE71,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_10");//0x20ED9B5B,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CAMO_IND_01");//0xD951E867,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CLIP_01");//0xBA23D8BE,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CLIP_FMJ");//0xDC8BA3F,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CLIP_HOLLOWPOINT");//0x10F42E8F,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CLIP_INCENDIARY");//0xEFBF25,
-            AddAdds.Add("COMPONENT_REVOLVER_MK2_CLIP_TRACER");//0xC6D8E476,
-            AddAdds.Add("COMPONENT_REVOLVER_VARMOD_BOSS");//0x16EE3040,
-            AddAdds.Add("COMPONENT_REVOLVER_VARMOD_GOON");//0x9493B80D,
-            AddAdds.Add("COMPONENT_SAWNOFFSHOTGUN_VARMOD_LUXE");//0x85A64DF9,
-            AddAdds.Add("COMPONENT_SMG_CLIP_01");//0x26574997,
-            AddAdds.Add("COMPONENT_SMG_CLIP_02");//0x350966FB,
-            AddAdds.Add("COMPONENT_SMG_CLIP_03");//0x79C77076,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO");//0xC4979067,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_02");//0x3815A945,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_03");//0x4B4B4FB0,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_04");//0xEC729200,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_05");//0x48F64B22,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_06");//0x35992468,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_07");//0x24B782A5,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_08");//0xA2E67F01,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_09");//0x2218FD68,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_10");//0x45C5C3C5,
-            AddAdds.Add("COMPONENT_SMG_MK2_CAMO_IND_01");//0x399D558F,
-            AddAdds.Add("COMPONENT_SMG_MK2_CLIP_01");//0x4C24806E,
-            AddAdds.Add("COMPONENT_SMG_MK2_CLIP_02");//0xB9835B2E,
-            AddAdds.Add("COMPONENT_SMG_MK2_CLIP_FMJ");//0xB5A715F,
-            AddAdds.Add("COMPONENT_SMG_MK2_CLIP_HOLLOWPOINT");//0x3A1BD6FA,
-            AddAdds.Add("COMPONENT_SMG_MK2_CLIP_INCENDIARY");//0xD99222E5,
-            AddAdds.Add("COMPONENT_SMG_MK2_CLIP_TRACER");//0x7FEA36EC,
-            AddAdds.Add("COMPONENT_SMG_VARMOD_LUXE");//0x27872C90,
-            AddAdds.Add("COMPONENT_SNIPERRIFLE_CLIP_01");//0x9BC64089,
-            AddAdds.Add("COMPONENT_SNIPERRIFLE_VARMOD_LUXE");//0x4032B5E7,
-            AddAdds.Add("COMPONENT_SNSPISTOL_CLIP_01");//0xF8802ED9,
-            AddAdds.Add("COMPONENT_SNSPISTOL_CLIP_02");//0x7B0033B3,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO");//0xF7BEEDD,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_02");//0x8A612EF6,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_02_SLIDE");//0x29366D21,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_03");//0x76FA8829,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_03_SLIDE");//0x3ADE514B,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_04");//0xA93C6CAC,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_04_SLIDE");//0xE64513E9,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_05");//0x9C905354,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_05_SLIDE");//0xCD7AEB9A,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_06");//0x4DFA3621,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_06_SLIDE");//0xFA7B27A6,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_07");//0x42E91FFF,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_07_SLIDE");//0xE285CA9A,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_08");//0x54A8437D,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_08_SLIDE");//0x2B904B19,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_09");//0x68C2746,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_09_SLIDE");//0x22C24F9C,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_10");//0x2366E467,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_10_SLIDE");//0x8D0D5ECD,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_IND_01");//0x441882E6,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_IND_01_SLIDE");//0x1F07150A,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CAMO_SLIDE");//0xE7EE68EA,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CLIP_01");//0x1466CE6,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CLIP_02");//0xCE8C0772,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CLIP_FMJ");//0xC111EB26,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CLIP_HOLLOWPOINT");//0x8D107402,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CLIP_INCENDIARY");//0xE6AD5F79,
-            AddAdds.Add("COMPONENT_SNSPISTOL_MK2_CLIP_TRACER");//0x902DA26E,
-            AddAdds.Add("COMPONENT_SNSPISTOL_VARMOD_LOWRIDER");//0x8033ECAF,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_CLIP_01");//0xC6C7E581,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_CLIP_02");//0x7C8BD10E,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_CLIP_03");//0x6B59AEAA,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO");//0xD40BB53B,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_02");//0x431B238B,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_03");//0x34CF86F4,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_04");//0xB4C306DD,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_05");//0xEE677A25,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_06");//0xDF90DC78,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_07");//0xA4C31EE,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_08");//0x89CFB0F7,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_09");//0x7B82145C,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_10");//0x899CAF75,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CAMO_IND_01");//0x5218C819,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CLIP_01");//0x16C69281,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CLIP_02");//0xDE1FA12C,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CLIP_ARMORPIERCING");//0x51351635,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CLIP_FMJ");//0x503DEA90,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CLIP_INCENDIARY");//0xDE011286,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_MK2_CLIP_TRACER");//0x8765C68A,
-            AddAdds.Add("COMPONENT_SPECIALCARBINE_VARMOD_LOWRIDER");//0x730154F2,
-            AddAdds.Add("COMPONENT_SWITCHBLADE_VARMOD_BASE");//0x9137A500,
-            AddAdds.Add("COMPONENT_SWITCHBLADE_VARMOD_VAR1");//0x5B3E7DB6,
-            AddAdds.Add("COMPONENT_SWITCHBLADE_VARMOD_VAR2");//0xE7939662,
-            AddAdds.Add("COMPONENT_VINTAGEPISTOL_CLIP_01");//0x45A3B6BB,
-            AddAdds.Add("COMPONENT_VINTAGEPISTOL_CLIP_02");//0x33BA12E8
+                "COMPONENT_AT_AR_FLSH",//
+                "COMPONENT_AT_AR_SUPP",//
+                "COMPONENT_MILITARYRIFLE_CLIP_01",//
+                "COMPONENT_MILITARYRIFLE_CLIP_02",//
+                "COMPONENT_MILITARYRIFLE_SIGHT_01",//
+                "COMPONENT_AT_SCOPE_SMALL",//
+                "COMPONENT_AT_AR_FLSH",//
+                "COMPONENT_AT_AR_SUPP",//
 
-            AddAdds.Add("COMPONENT_AT_AR_FLSH");//
-            AddAdds.Add("COMPONENT_AT_AR_SUPP");//
-            AddAdds.Add("COMPONENT_MILITARYRIFLE_CLIP_01");//
-            AddAdds.Add("COMPONENT_MILITARYRIFLE_CLIP_02");//
-            AddAdds.Add("COMPONENT_MILITARYRIFLE_SIGHT_01");//
-            AddAdds.Add("COMPONENT_AT_SCOPE_SMALL");//
-            AddAdds.Add("COMPONENT_AT_AR_FLSH");//
-            AddAdds.Add("COMPONENT_AT_AR_SUPP");//
+                "COMPONENT_HEAVYRIFLE_CLIP_01",// | 0x5AF49386
+                "COMPONENT_HEAVYRIFLE_CLIP_02",//",// | 0x6CBF371B
+                "COMPONENT_HEAVYRIFLE_SIGHT_01",// | 0xB3E1C452
+                "COMPONENT_AT_SCOPE_MEDIUM",// | 0xA0D89C42
+                "COMPONENT_AT_AR_FLSH",// | 0x7BC4CDDC
+                "COMPONENT_AT_AR_SUPP",// | 0x837445AA
+                "COMPONENT_AT_AR_AFGRIP",// | 0xC164F53
+                "COMPONENT_HEAVYRIFLE_CAMO1",// | 0xEC9FECD9
+                "COMPONENT_APPISTOL_VARMOD_SECURITY",//
+                "COMPONENT_MICROSMG_VARMOD_SECURITY",//
+                "COMPONENT_PUMPSHOTGUN_VARMOD_SECURITY",//
 
-            AddAdds.Add("COMPONENT_HEAVYRIFLE_CLIP_01");// | 0x5AF49386
-            AddAdds.Add("COMPONENT_HEAVYRIFLE_CLIP_02");//");// | 0x6CBF371B
-            AddAdds.Add("COMPONENT_HEAVYRIFLE_SIGHT_01");// | 0xB3E1C452
-            AddAdds.Add("COMPONENT_AT_SCOPE_MEDIUM");// | 0xA0D89C42
-            AddAdds.Add("COMPONENT_AT_AR_FLSH");// | 0x7BC4CDDC
-            AddAdds.Add("COMPONENT_AT_AR_SUPP");// | 0x837445AA
-            AddAdds.Add("COMPONENT_AT_AR_AFGRIP");// | 0xC164F53
-            AddAdds.Add("COMPONENT_HEAVYRIFLE_CAMO1");// | 0xEC9FECD9
-            AddAdds.Add("COMPONENT_APPISTOL_VARMOD_SECURITY");//
-            AddAdds.Add("COMPONENT_MICROSMG_VARMOD_SECURITY");//
-            AddAdds.Add("COMPONENT_PUMPSHOTGUN_VARMOD_SECURITY");//
-
+			    "COMPONENT_AT_AR_FLSH_REH", //| 0x9DB1E023
+			    "COMPONENT_TACTICALRIFLE_CLIP_02", //| 0x8594554F
+			    "COMPONENT_AT_AR_SUPP_02", ///| 0xA73D4664
+			    "COMPONENT_AT_AR_AFGRIP" //| 0xC164F53
+            };
             return AddAdds;
         }
         public static List<string> WeapsList()
         {
             LoggerLight.Loggers("DataStore.WeapsList");
-            List<string> AddWeaps = new List<string>();
+            List<string> AddWeaps = new List<string> 
+            {
+                "WEAPON_dagger",  //0x92A27487",
+                "WEAPON_bat",  //0x958A4A8F",
+                "WEAPON_bottle",  //0xF9E6AA4B",
+                "WEAPON_crowbar",  //0x84BD7BFD",
+                "WEAPON_unarmed",  //0xA2719263",
+                "WEAPON_flashlight",  //0x8BB05FD7",
+                "WEAPON_golfclub",  //0x440E4788",
+                "WEAPON_hammer",  //0x4E875F73",
+                "WEAPON_hatchet",  //0xF9DCBF2D",
+                "WEAPON_knuckle",  //0xD8DF3C3C",
+                "WEAPON_knife",  //0x99B507EA",
+                "WEAPON_machete",  //0xDD5DF8D9",
+                "WEAPON_switchblade",  //0xDFE37640",
+                "WEAPON_nightstick",  //0x678B81B1",
+                "WEAPON_wrench",  //0x19044EE0",
+                "WEAPON_battleaxe",  //0xCD274149",
+                "WEAPON_poolcue",  //0x94117305",
+                "WEAPON_stone_hatchet",  //0x3813FC08"--17
 
-            AddWeaps.Add("WEAPON_dagger");  //0x92A27487",
-            AddWeaps.Add("WEAPON_bat");  //0x958A4A8F",
-            AddWeaps.Add("WEAPON_bottle");  //0xF9E6AA4B",
-            AddWeaps.Add("WEAPON_crowbar");  //0x84BD7BFD",
-            AddWeaps.Add("WEAPON_unarmed");  //0xA2719263",
-            AddWeaps.Add("WEAPON_flashlight");  //0x8BB05FD7",
-            AddWeaps.Add("WEAPON_golfclub");  //0x440E4788",
-            AddWeaps.Add("WEAPON_hammer");  //0x4E875F73",
-            AddWeaps.Add("WEAPON_hatchet");  //0xF9DCBF2D",
-            AddWeaps.Add("WEAPON_knuckle");  //0xD8DF3C3C",
-            AddWeaps.Add("WEAPON_knife");  //0x99B507EA",
-            AddWeaps.Add("WEAPON_machete");  //0xDD5DF8D9",
-            AddWeaps.Add("WEAPON_switchblade");  //0xDFE37640",
-            AddWeaps.Add("WEAPON_nightstick");  //0x678B81B1",
-            AddWeaps.Add("WEAPON_wrench");  //0x19044EE0",
-            AddWeaps.Add("WEAPON_battleaxe");  //0xCD274149",
-            AddWeaps.Add("WEAPON_poolcue");  //0x94117305",
-            AddWeaps.Add("WEAPON_stone_hatchet");  //0x3813FC08"--17
+                "WEAPON_pistol",  //0x1B06D571",
+                "WEAPON_pistol_mk2",  //0xBFE256D4",---------19
+                "WEAPON_combatpistol",  //0x5EF9FEC4",
+                "WEAPON_appistol",  //0x22D8FE39",
+                "WEAPON_pistol50",  //0x99AEEB3B",
+                "WEAPON_snspistol",  //0xBFD21232",
+                "WEAPON_snspistol_mk2",  //0x88374054",---24
+                "WEAPON_heavypistol",  //0xD205520E",
+                "WEAPON_vintagepistol",  //0x83839C4",
+                "WEAPON_marksmanpistol",  //0xDC4DB296",
+                "WEAPON_revolver",  //0xC1B3C3D1",
+                "WEAPON_revolver_mk2",  //0xCB96392F",----29
+                "WEAPON_doubleaction",  //0x97EA20B8",
+                "WEAPON_ceramicpistol",  //0x2B5EF5EC",
+                "WEAPON_navyrevolver",  //0x917F6C8C"
+                "WEAPON_GADGETPISTOL",  //0xAF3696A1",
+                "WEAPON_stungun",  //0x3656C8C1",
+                "WEAPON_flaregun",  //0x47757124",
+                "WEAPON_raypistol",  //0xAF3696A1",--36
 
-            AddWeaps.Add("WEAPON_pistol");  //0x1B06D571",
-            AddWeaps.Add("WEAPON_pistol_mk2");  //0xBFE256D4",---------19
-            AddWeaps.Add("WEAPON_combatpistol");  //0x5EF9FEC4",
-            AddWeaps.Add("WEAPON_appistol");  //0x22D8FE39",
-            AddWeaps.Add("WEAPON_pistol50");  //0x99AEEB3B",
-            AddWeaps.Add("WEAPON_snspistol");  //0xBFD21232",
-            AddWeaps.Add("WEAPON_snspistol_mk2");  //0x88374054",---24
-            AddWeaps.Add("WEAPON_heavypistol");  //0xD205520E",
-            AddWeaps.Add("WEAPON_vintagepistol");  //0x83839C4",
-            AddWeaps.Add("WEAPON_marksmanpistol");  //0xDC4DB296",
-            AddWeaps.Add("WEAPON_revolver");  //0xC1B3C3D1",
-            AddWeaps.Add("WEAPON_revolver_mk2");  //0xCB96392F",----29
-            AddWeaps.Add("WEAPON_doubleaction");  //0x97EA20B8",
-            AddWeaps.Add("WEAPON_ceramicpistol");  //0x2B5EF5EC",
-            AddWeaps.Add("WEAPON_navyrevolver");  //0x917F6C8C"
-            AddWeaps.Add("WEAPON_GADGETPISTOL");  //0xAF3696A1",
-            AddWeaps.Add("WEAPON_stungun");  //0x3656C8C1",
-            AddWeaps.Add("WEAPON_flaregun");  //0x47757124",
-            AddWeaps.Add("WEAPON_raypistol");  //0xAF3696A1",--36
+                "WEAPON_microsmg",  //0x13532244",
+                "WEAPON_smg",  //0x2BE6766B",
+                "WEAPON_smg_mk2",  //0x78A97CD0",-----39
+                "WEAPON_assaultsmg",  //0xEFE7E2DF",
+                "WEAPON_combatpdw",  //0xA3D4D34",
+                "WEAPON_machinepistol",  //0xDB1AA450",
+                "WEAPON_minismg",  //0xBD248B55",
+                "WEAPON_raycarbine",  //0x476BF155"--44
 
-            AddWeaps.Add("WEAPON_microsmg");  //0x13532244",
-            AddWeaps.Add("WEAPON_smg");  //0x2BE6766B",
-            AddWeaps.Add("WEAPON_smg_mk2");  //0x78A97CD0",-----39
-            AddWeaps.Add("WEAPON_assaultsmg");  //0xEFE7E2DF",
-            AddWeaps.Add("WEAPON_combatpdw");  //0xA3D4D34",
-            AddWeaps.Add("WEAPON_machinepistol");  //0xDB1AA450",
-            AddWeaps.Add("WEAPON_minismg");  //0xBD248B55",
-            AddWeaps.Add("WEAPON_raycarbine");  //0x476BF155"--44
+                "WEAPON_pumpshotgun",  //0x1D073A89",
+                "WEAPON_pumpshotgun_mk2",  //0x555AF99A",-----------46
+                "WEAPON_sawnoffshotgun",  //0x7846A318",
+                "WEAPON_assaultshotgun",  //0xE284C527",
+                "WEAPON_bullpupshotgun",  //0x9D61E50F",
+                "WEAPON_musket",  //0xA89CB99E",
+                "WEAPON_heavyshotgun",  //0x3AABBBAA",
+                "WEAPON_dbshotgun",  //0xEF951FBB",
+                "WEAPON_autoshotgun",  //0x12E82D3D"--53
+                "WEAPON_COMBATSHOTGUN",  //0x5A96BA4--54
 
-            AddWeaps.Add("WEAPON_pumpshotgun");  //0x1D073A89",
-            AddWeaps.Add("WEAPON_pumpshotgun_mk2");  //0x555AF99A",-----------46
-            AddWeaps.Add("WEAPON_sawnoffshotgun");  //0x7846A318",
-            AddWeaps.Add("WEAPON_assaultshotgun");  //0xE284C527",
-            AddWeaps.Add("WEAPON_bullpupshotgun");  //0x9D61E50F",
-            AddWeaps.Add("WEAPON_musket");  //0xA89CB99E",
-            AddWeaps.Add("WEAPON_heavyshotgun");  //0x3AABBBAA",
-            AddWeaps.Add("WEAPON_dbshotgun");  //0xEF951FBB",
-            AddWeaps.Add("WEAPON_autoshotgun");  //0x12E82D3D"--53
-            AddWeaps.Add("WEAPON_COMBATSHOTGUN");  //0x5A96BA4--54
+                "WEAPON_assaultrifle",  //0xBFEFFF6D",
+                "WEAPON_assaultrifle_mk2",  //0x394F415C",-------56
+                "WEAPON_carbinerifle",  //0x83BF0278",
+                "WEAPON_carbinerifle_mk2",  //0xFAD1F1C9",------58
+                "WEAPON_advancedrifle",  //0xAF113F99",
+                "WEAPON_specialcarbine",  //0xC0A3098D",
+                "WEAPON_specialcarbine_mk2",  //0x969C3D67",------61
+                "WEAPON_bullpuprifle",  //0x7F229F94",
+                "WEAPON_bullpuprifle_mk2",  //0x84D6FAFD",----63
+                "WEAPON_compactrifle",  //0x624FE830"--64
+                "WEAPON_MILITARYRIFLE",  //0x624FE830"--65
 
-            AddWeaps.Add("WEAPON_assaultrifle");  //0xBFEFFF6D",
-            AddWeaps.Add("WEAPON_assaultrifle_mk2");  //0x394F415C",-------56
-            AddWeaps.Add("WEAPON_carbinerifle");  //0x83BF0278",
-            AddWeaps.Add("WEAPON_carbinerifle_mk2");  //0xFAD1F1C9",------58
-            AddWeaps.Add("WEAPON_advancedrifle");  //0xAF113F99",
-            AddWeaps.Add("WEAPON_specialcarbine");  //0xC0A3098D",
-            AddWeaps.Add("WEAPON_specialcarbine_mk2");  //0x969C3D67",------61
-            AddWeaps.Add("WEAPON_bullpuprifle");  //0x7F229F94",
-            AddWeaps.Add("WEAPON_bullpuprifle_mk2");  //0x84D6FAFD",----63
-            AddWeaps.Add("WEAPON_compactrifle");  //0x624FE830"--64
-            AddWeaps.Add("WEAPON_MILITARYRIFLE");  //0x624FE830"--65
+                "WEAPON_mg",  //0x9D07F764",
+                "WEAPON_combatmg",  //0x7FD62962",
+                "WEAPON_combatmg_mk2",  //0xDBBD7280",------68
+                "WEAPON_gusenberg",  //0x61012683"--69
 
-            AddWeaps.Add("WEAPON_mg");  //0x9D07F764",
-            AddWeaps.Add("WEAPON_combatmg");  //0x7FD62962",
-            AddWeaps.Add("WEAPON_combatmg_mk2");  //0xDBBD7280",------68
-            AddWeaps.Add("WEAPON_gusenberg");  //0x61012683"--69
+                "WEAPON_sniperrifle",  //0x5FC3C11",
+                "WEAPON_heavysniper",  //0xC472FE2",
+                "WEAPON_heavysniper_mk2",  //0xA914799",---72
+                "WEAPON_marksmanrifle",  //0xC734385A",
+                "WEAPON_marksmanrifle_mk2",  //0x6A6C02E0"--74
 
-            AddWeaps.Add("WEAPON_sniperrifle");  //0x5FC3C11",
-            AddWeaps.Add("WEAPON_heavysniper");  //0xC472FE2",
-            AddWeaps.Add("WEAPON_heavysniper_mk2");  //0xA914799",---72
-            AddWeaps.Add("WEAPON_marksmanrifle");  //0xC734385A",
-            AddWeaps.Add("WEAPON_marksmanrifle_mk2");  //0x6A6C02E0"--74
+                "WEAPON_rpg",  //0xB1CA77B1",
+                "WEAPON_grenadelauncher",  //0xA284510B",
+                "WEAPON_grenadelauncher_smoke",  //0x4DD2DC56",
+                "WEAPON_minigun",  //0x42BF8A85",
+                "WEAPON_firework",  //0x7F7497E5",
+                "WEAPON_railgun",  //0x6D544C99",
+                "WEAPON_hominglauncher",  //0x63AB0442",
+                "WEAPON_compactlauncher",  //0x781FE4A",
+                "WEAPON_rayminigun",  //0xB62D1F67"--83
 
-            AddWeaps.Add("WEAPON_rpg");  //0xB1CA77B1",
-            AddWeaps.Add("WEAPON_grenadelauncher");  //0xA284510B",
-            AddWeaps.Add("WEAPON_grenadelauncher_smoke");  //0x4DD2DC56",
-            AddWeaps.Add("WEAPON_minigun");  //0x42BF8A85",
-            AddWeaps.Add("WEAPON_firework");  //0x7F7497E5",
-            AddWeaps.Add("WEAPON_railgun");  //0x6D544C99",
-            AddWeaps.Add("WEAPON_hominglauncher");  //0x63AB0442",
-            AddWeaps.Add("WEAPON_compactlauncher");  //0x781FE4A",
-            AddWeaps.Add("WEAPON_rayminigun");  //0xB62D1F67"--83
+                "WEAPON_grenade",  //0x93E220BD",
+                "WEAPON_bzgas",  //0xA0973D5E",
+                "WEAPON_smokegrenade",  //0xFDBC8A50",
+                "WEAPON_flare",  //0x497FACC3",
+                "WEAPON_molotov",  //0x24B17070",
+                "WEAPON_stickybomb",  //0x2C3731D9",
+                "WEAPON_proxmine",  //0xAB564B93",
+                "WEAPON_snowball",  //0x787F0BB",
+                "WEAPON_pipebomb",  //0xBA45E8B8",
+                "WEAPON_ball",  //0x23C9F95C"--93
 
-            AddWeaps.Add("WEAPON_grenade");  //0x93E220BD",
-            AddWeaps.Add("WEAPON_bzgas");  //0xA0973D5E",
-            AddWeaps.Add("WEAPON_smokegrenade");  //0xFDBC8A50",
-            AddWeaps.Add("WEAPON_flare");  //0x497FACC3",
-            AddWeaps.Add("WEAPON_molotov");  //0x24B17070",
-            AddWeaps.Add("WEAPON_stickybomb");  //0x2C3731D9",
-            AddWeaps.Add("WEAPON_proxmine");  //0xAB564B93",
-            AddWeaps.Add("WEAPON_snowball");  //0x787F0BB",
-            AddWeaps.Add("WEAPON_pipebomb");  //0xBA45E8B8",
-            AddWeaps.Add("WEAPON_ball");  //0x23C9F95C"--93
+                "WEAPON_petrolcan",  //0x34A67B97",
+                "WEAPON_fireextinguisher",  //0x60EC506",
+                "WEAPON_parachute",  //0xFBAB5776",
+                "WEAPON_hazardcan",  //0xBA536372"--97
 
-            AddWeaps.Add("WEAPON_petrolcan");  //0x34A67B97",
-            AddWeaps.Add("WEAPON_fireextinguisher");  //0x60EC506",
-            AddWeaps.Add("WEAPON_parachute");  //0xFBAB5776",
-            AddWeaps.Add("WEAPON_hazardcan");  //0xBA536372"--97
+                "WEAPON_EMPLAUNCHER",  // 0xDB26713A--98
+                "WEAPON_HEAVYRIFLE",  //0xC78D71B4 --99
+                "WEAPON_FERTILIZERCAN",//100
+                "WEAPON_STUNGUN_MP",//101
 
-            AddWeaps.Add("WEAPON_EMPLAUNCHER");  // 0xDB26713A--98
-
-            AddWeaps.Add("WEAPON_HEAVYRIFLE");  //0xC78D71B4 --99
-
-            AddWeaps.Add("WEAPON_FERTILIZERCAN");//100
-
-            AddWeaps.Add("WEAPON_STUNGUN_MP");//101
-
+                "WEAPON_METALDETECTOR",
+                "WEAPON_PRECISIONRIFLE", //| 0x6E7DDDEC
+                "WEAPON_TACTICALRIFLE" //| 0xD1D5F52B
+            };
             return AddWeaps;
         }
         public static SettingsXML LoadSetXML()
@@ -1848,22 +1885,23 @@ namespace RandomStart
         {
             LoggerLight.Loggers("DataStore.LangText");
 
-            List<string> Locals = new List<string>();
-
-            Locals.Add("LangReader");
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/English.Xml"); //1
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Chinese.Xml"); //2
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/ChineseS.Xml");//3
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/French.Xml");//4
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/German.Xml");//5
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Italian.Xml");//6
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Japanese.Xml");//7
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Korean.Xml");//8
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Mexican.Xml");//9
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Polish.Xml");//10
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Portuguese.Xml");//11
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Russian.Xml");//12
-            Locals.Add("" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Spanish.Xml");//13
+            List<string> Locals = new List<string>
+            {
+                "LangReader",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/English.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Chinese.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/ChineseS.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/French.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/German.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Italian.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Japanese.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Korean.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Mexican.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Polish.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Portuguese.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Russian.Xml",
+                "" + Directory.GetCurrentDirectory() + "/Scripts/RandomStart/Language/Spanish.Xml"
+            };
 
             return Locals;
         }
@@ -2006,6 +2044,374 @@ namespace RandomStart
             PeskyDoors.Add(new Vector3(4977.988f, -5764.742f, 20.93811f));
             PeskyDoors.Add(new Vector3(4989.251f, -5717.235f, 19.87565f));
             PeskyDoors.Add(new Vector3(4983.159f, -5711.408f, 19.40226f));
+        }
+        public static List<string> ControlList()
+        {
+            List<string> ControlerSet = new List<string> 
+            {
+                "INPUT_NEXT_CAMERA 	0 	V",
+                "INPUT_LOOK_LR 	1 	Left Mouse Button",
+                "INPUT_LOOK_UD 	2 	Right Mouse Button",
+                "INPUT_LOOK_UP_ONLY 	3 	Control-Break Processing",
+                "INPUT_LOOK_DOWN_ONLY 	4 	Middle Mouse Button",
+                "INPUT_LOOK_LEFT_ONLY 	5",
+                "INPUT_LOOK_RIGHT_ONLY 	6 	Right Mouse Button",
+                "INPUT_CINEMATIC_SLOWMO 	7 	L",
+                "INPUT_SCRIPTED_FLY_UD 	8 	S",
+                "INPUT_SCRIPTED_FLY_LR 	9 	D",
+                "INPUT_SCRIPTED_FLY_ZUP 	10 	PAGE UP",
+                "INPUT_SCRIPTED_FLY_ZDOWN 	11 	PAGE DOWN",
+                "INPUT_WEAPON_WHEEL_UD 	12 	MOUSE DOWN",
+                "INPUT_WEAPON_WHEEL_LR 	13 	MOUSE RIGHT",
+                "INPUT_WEAPON_WHEEL_NEXT 	14 	MOUSE SCROLL WHEEL DOWN",
+                "INPUT_WEAPON_WHEEL_PREV 	15 	MOUSE SCROLL WHEEL UP",
+                "INPUT_SELECT_NEXT_WEAPON 	16 	MOUSE SCROLL WHEEL DOWN",
+                "INPUT_SELECT_PREV_WEAPON 	17 	MOUSE SCROLL WHEEL UP",
+                "INPUT_SKIP_CUTSCENE 	18 	ENTER / LEFT MOUSE BUTTON / SPACEBAR",
+                "INPUT_CHARACTER_WHEEL 	19 	LEFT ALT",
+                "INPUT_MULTIPLAYER_INFO 	20 	Z",
+                "INPUT_SPRINT 	21 	Shift Key",
+                "INPUT_JUMP 	22 	Space Key",
+                "INPUT_ENTER 	23 	Enter Key",
+                "INPUT_ATTACK 	24 	Left Mouse Button",
+                "INPUT_AIM 	25 	Right Mouse Button",
+                "INPUT_LOOK_BEHIND 	26 	C",
+                "INPUT_PHONE 	27 	ARROW UP/SCROLLWHEEL BUTTON (press)",
+                "INPUT_SPECIAL_ABILITY 	28 	",
+                "INPUT_SPECIAL_ABILITY_SECONDARY 	29 	B",
+                "INPUT_MOVE_LR 	30 	D",
+                "INPUT_MOVE_UD 	31 	S",
+                "INPUT_MOVE_UP_ONLY 	32 	W",
+                "INPUT_MOVE_DOWN_ONLY 	33 	S",
+                "INPUT_MOVE_LEFT_ONLY 	34 	A",
+                "INPUT_MOVE_RIGHT_ONLY 	35 	D",
+                "INPUT_DUCK 	36 	LEFT CONTROL",
+                "INPUT_SELECT_WEAPON 	37 	TAB",
+                "INPUT_PICKUP 	38 	E",
+                "INPUT_SNIPER_ZOOM 	39 	[",
+                "INPUT_SNIPER_ZOOM_IN_ONLY 	40 	]",
+                "INPUT_SNIPER_ZOOM_OUT_ONLY 	41 	[",
+                "INPUT_SNIPER_ZOOM_IN_SECONDARY 	42 	]",
+                "INPUT_SNIPER_ZOOM_OUT_SECONDARY 	43 	[",
+                "INPUT_COVER 	44 	Q",
+                "INPUT_RELOAD 	45 	R",
+                "INPUT_TALK 	46 	E",
+                "INPUT_DETONATE 	47 	G",
+                "INPUT_HUD_SPECIAL 	48 	Z",
+                "INPUT_ARREST 	49 	F",
+                "INPUT_ACCURATE_AIM 	50 	SCROLLWHEEL DOWN",
+                "INPUT_CONTEXT 	51 	E",
+                "INPUT_CONTEXT_SECONDARY 	52 	Q",
+                "INPUT_WEAPON_SPECIAL 	53 	",
+                "INPUT_WEAPON_SPECIAL_TWO 	54 	E",
+                "INPUT_DIVE 	55 	SPACEBAR",
+                "INPUT_DROP_WEAPON 	56 	F9",
+                "INPUT_DROP_AMMO 	57 	F10",
+                "INPUT_THROW_GRENADE 	58 	G",
+                "INPUT_VEH_MOVE_LR 	59 	D",
+                "INPUT_VEH_MOVE_UD 	60 	LEFT CTRL",
+                "INPUT_VEH_MOVE_UP_ONLY 	61 	LEFT SHIFT",
+                "INPUT_VEH_MOVE_DOWN_ONLY 	62 	LEFT CTRL",
+                "INPUT_VEH_MOVE_LEFT_ONLY 	63 	A",
+                "INPUT_VEH_MOVE_RIGHT_ONLY 	64 	D",
+                "INPUT_VEH_SPECIAL 	65 	",
+                "INPUT_VEH_GUN_LR 	66 	MOUSE RIGHT",
+                "INPUT_VEH_GUN_UD 	67 	MOUSE DOWN",
+                "INPUT_VEH_AIM 	68 	RIGHT MOUSE BUTTON",
+                "INPUT_VEH_ATTACK 	69 	LEFT MOUSE BUTTON",
+                "INPUT_VEH_ATTACK2 	70 	RIGHT MOUSE BUTTON",
+                "INPUT_VEH_ACCELERATE 	71 	W",
+                "INPUT_VEH_BRAKE 	72 	S",
+                "INPUT_VEH_DUCK 	73 	X",
+                "INPUT_VEH_HEADLIGHT 	74 	H",
+                "INPUT_VEH_EXIT 	75 	F",
+                "INPUT_VEH_HANDBRAKE 	76 	SPACEBAR",
+                "INPUT_VEH_HOTWIRE_LEFT 	77 	W",
+                "INPUT_VEH_HOTWIRE_RIGHT 	78 	S",
+                "INPUT_VEH_LOOK_BEHIND 	79 	C",
+                "INPUT_VEH_CIN_CAM 	80 	R",
+                "INPUT_VEH_NEXT_RADIO 	81 	.",
+                "INPUT_VEH_PREV_RADIO 	82 	,",
+                "INPUT_VEH_NEXT_RADIO_TRACK 	83 	=",
+                "INPUT_VEH_PREV_RADIO_TRACK 	84 	-",
+                "INPUT_VEH_RADIO_WHEEL 	85 	Q",
+                "INPUT_VEH_HORN 	86 	E",
+                "INPUT_VEH_FLY_THROTTLE_UP 	87 	W",
+                "INPUT_VEH_FLY_THROTTLE_DOWN 	88 	S",
+                "INPUT_VEH_FLY_YAW_LEFT 	89 	A",
+                "INPUT_VEH_FLY_YAW_RIGHT 	90 	D",
+                "INPUT_VEH_PASSENGER_AIM 	91 	RIGHT MOUSE BUTTON",
+                "INPUT_VEH_PASSENGER_ATTACK 	92 	LEFT MOUSE BUTTON",
+                "INPUT_VEH_SPECIAL_ABILITY_FRANKLIN 	93 	",
+                "INPUT_VEH_STUNT_UD 	94 	",
+                "INPUT_VEH_CINEMATIC_UD 	95 	MOUSE DOWN",
+                "INPUT_VEH_CINEMATIC_UP_ONLY 	96 	NUMPAD- / SCROLLWHEEL UP",
+                "INPUT_VEH_CINEMATIC_DOWN_ONLY 	97 	NUMPAD+ / SCROLLWHEEL DOWN",
+                "INPUT_VEH_CINEMATIC_LR 	98 	MOUSE RIGHT",
+                "INPUT_VEH_SELECT_NEXT_WEAPON 	99 	SCROLLWHEEL UP",
+                "INPUT_VEH_SELECT_PREV_WEAPON 	100 	[",
+                "INPUT_VEH_ROOF 	101 	H",
+                "INPUT_VEH_JUMP 	102 	SPACEBAR",
+                "INPUT_VEH_GRAPPLING_HOOK 	103 	E",
+                "INPUT_VEH_SHUFFLE 	104 	H",
+                "INPUT_VEH_DROP_PROJECTILE 	105 	X",
+                "INPUT_VEH_MOUSE_CONTROL_OVERRIDE 	106 	LEFT MOUSE BUTTON",
+                "INPUT_VEH_FLY_ROLL_LR 	107 	NUMPAD 6",
+                "INPUT_VEH_FLY_ROLL_LEFT_ONLY 	108 	NUMPAD 4",
+                "INPUT_VEH_FLY_ROLL_RIGHT_ONLY 	109 	NUMPAD 6",
+                "INPUT_VEH_FLY_PITCH_UD 	110 	NUMPAD 5",
+                "INPUT_VEH_FLY_PITCH_UP_ONLY 	111 	NUMPAD 8",
+                "INPUT_VEH_FLY_PITCH_DOWN_ONLY 	112 	NUMPAD 5",
+                "INPUT_VEH_FLY_UNDERCARRIAGE 	113 	G",
+                "INPUT_VEH_FLY_ATTACK 	114 	RIGHT MOUSE BUTTON",
+                "INPUT_VEH_FLY_SELECT_NEXT_WEAPON 	115 	SCROLLWHEEL UP",
+                "INPUT_VEH_FLY_SELECT_PREV_WEAPON 	116 	[",
+                "INPUT_VEH_FLY_SELECT_TARGET_LEFT 	117 	NUMPAD 7",
+                "INPUT_VEH_FLY_SELECT_TARGET_RIGHT 	118 	NUMPAD 9",
+                "INPUT_VEH_FLY_VERTICAL_FLIGHT_MODE 	119 	E",
+                "INPUT_VEH_FLY_DUCK 	120 	X",
+                "INPUT_VEH_FLY_ATTACK_CAMERA 	121 	INSERT",
+                "INPUT_VEH_FLY_MOUSE_CONTROL_OVERRIDE 	122 	LEFT MOUSE BUTTON",
+                "INPUT_VEH_SUB_TURN_LR 	123 	NUMPAD 6",
+                "INPUT_VEH_SUB_TURN_LEFT_ONLY 	124 	NUMPAD 4",
+                "INPUT_VEH_SUB_TURN_RIGHT_ONLY 	125 	NUMPAD 6",
+                "INPUT_VEH_SUB_PITCH_UD 	126 	NUMPAD 5",
+                "INPUT_VEH_SUB_PITCH_UP_ONLY 	127 	NUMPAD 8",
+                "INPUT_VEH_SUB_PITCH_DOWN_ONLY 	128 	NUMPAD 5",
+                "INPUT_VEH_SUB_THROTTLE_UP 	129 	W",
+                "INPUT_VEH_SUB_THROTTLE_DOWN 	130 	S",
+                "INPUT_VEH_SUB_ASCEND 	131 	LEFT SHIFT",
+                "INPUT_VEH_SUB_DESCEND 	132 	LEFT CTRL",
+                "INPUT_VEH_SUB_TURN_HARD_LEFT 	133 	A",
+                "INPUT_VEH_SUB_TURN_HARD_RIGHT 	134 	D",
+                "INPUT_VEH_SUB_MOUSE_CONTROL_OVERRIDE 	135 	LEFT MOUSE BUTTON",
+                "INPUT_VEH_PUSHBIKE_PEDAL 	136 	W",
+                "INPUT_VEH_PUSHBIKE_SPRINT 	137 	CAPSLOCK",
+                "INPUT_VEH_PUSHBIKE_FRONT_BRAKE 	138 	Q",
+                "INPUT_VEH_PUSHBIKE_REAR_BRAKE 	139 	S",
+                "INPUT_MELEE_ATTACK_LIGHT 	140 	R",
+                "INPUT_MELEE_ATTACK_HEAVY 	141 	Q",
+                "INPUT_MELEE_ATTACK_ALTERNATE 	142 	LEFT MOUSE BUTTON",
+                "INPUT_MELEE_BLOCK 	143 	SPACEBAR",
+                "INPUT_PARACHUTE_DEPLOY 	144 	F / LEFT MOUSE BUTTON",
+                "INPUT_PARACHUTE_DETACH 	145 	F",
+                "INPUT_PARACHUTE_TURN_LR 	146 	D",
+                "INPUT_PARACHUTE_TURN_LEFT_ONLY 	147 	A",
+                "INPUT_PARACHUTE_TURN_RIGHT_ONLY 	148 	D",
+                "INPUT_PARACHUTE_PITCH_UD 	149 	S",
+                "INPUT_PARACHUTE_PITCH_UP_ONLY 	150 	W",
+                "INPUT_PARACHUTE_PITCH_DOWN_ONLY 	151 	S",
+                "INPUT_PARACHUTE_BRAKE_LEFT 	152 	Q",
+                "INPUT_PARACHUTE_BRAKE_RIGHT 	153 	E",
+                "INPUT_PARACHUTE_SMOKE 	154 	X",
+                "INPUT_PARACHUTE_PRECISION_LANDING 	155 	LEFT SHIFT",
+                "INPUT_MAP 	156 	",
+                "INPUT_SELECT_WEAPON_UNARMED 	157 	1",
+                "INPUT_SELECT_WEAPON_MELEE 	158 	2",
+                "INPUT_SELECT_WEAPON_HANDGUN 	159 	6",
+                "INPUT_SELECT_WEAPON_SHOTGUN 	160 	3",
+                "INPUT_SELECT_WEAPON_SMG 	161 	7",
+                "INPUT_SELECT_WEAPON_AUTO_RIFLE 	162 	8",
+                "INPUT_SELECT_WEAPON_SNIPER 	163 	9",
+                "INPUT_SELECT_WEAPON_HEAVY 	164 	4",
+                "INPUT_SELECT_WEAPON_SPECIAL 	165 	5",
+                "INPUT_SELECT_CHARACTER_MICHAEL 	166 	F5",
+                "INPUT_SELECT_CHARACTER_FRANKLIN 	167 	F6",
+                "INPUT_SELECT_CHARACTER_TREVOR 	168 	F7",
+                "INPUT_SELECT_CHARACTER_MULTIPLAYER 	169 	F8",
+                "INPUT_SAVE_REPLAY_CLIP 	170 	F3",
+                "INPUT_SPECIAL_ABILITY_PC 	171 	CAPSLOCK",
+                "INPUT_CELLPHONE_UP 	172 	ARROW UP",
+                "INPUT_CELLPHONE_DOWN 	173 	ARROW DOWN",
+                "INPUT_CELLPHONE_LEFT 	174 	ARROW LEFT",
+                "INPUT_CELLPHONE_RIGHT 	175 	ARROW RIGHT",
+                "INPUT_CELLPHONE_SELECT 	176 	ENTER/LEFT MOUSE BUTTON",
+                "INPUT_CELLPHONE_CANCEL 	177 	BACKSPACE/ESC/RIGHT MOUSE BUTTON",
+                "INPUT_CELLPHONE_OPTION 	178 	DELETE",
+                "INPUT_CELLPHONE_EXTRA_OPTION 	179 	SPACEBAR",
+                "INPUT_CELLPHONE_SCROLL_FORWARD 	180 	SCROLLWHEEL DOWN",
+                "INPUT_CELLPHONE_SCROLL_BACKWARD 	181 	SCROLLWHEEL UP",
+                "INPUT_CELLPHONE_CAMERA_FOCUS_LOCK 	182 	L",
+                "INPUT_CELLPHONE_CAMERA_GRID 	183 	G",
+                "INPUT_CELLPHONE_CAMERA_SELFIE 	184 	E",
+                "INPUT_CELLPHONE_CAMERA_DOF 	185 	F",
+                "INPUT_CELLPHONE_CAMERA_EXPRESSION 	186 	X",
+                "INPUT_FRONTEND_DOWN 	187 	ARROW DOWN",
+                "INPUT_FRONTEND_UP 	188 	ARROW UP",
+                "INPUT_FRONTEND_LEFT 	189 	ARROW LEFT",
+                "INPUT_FRONTEND_RIGHT 	190 	ARROW RIGHT",
+                "INPUT_FRONTEND_RDOWN 	191 	ENTER",
+                "INPUT_FRONTEND_RUP 	192 	TAB",
+                "INPUT_FRONTEND_RLEFT 	193 	",
+                "INPUT_FRONTEND_RRIGHT 	194 	BACKSPACE",
+                "INPUT_FRONTEND_AXIS_X 	195 	D",
+                "INPUT_FRONTEND_AXIS_Y 	196 	S",
+                "INPUT_FRONTEND_RIGHT_AXIS_X 	197 	]",
+                "INPUT_FRONTEND_RIGHT_AXIS_Y 	198 	SCROLLWHEEL DOWN",
+                "INPUT_FRONTEND_PAUSE 	199 	P",
+                "INPUT_FRONTEND_PAUSE_ALTERNATE 	200 	ESC",
+                "INPUT_FRONTEND_ACCEPT 	201 	ENTER/NUMPAD ENTER",
+                "INPUT_FRONTEND_CANCEL 	202 	BACKSPACE/ESC",
+                "INPUT_FRONTEND_X 	203 	SPACEBAR",
+                "INPUT_FRONTEND_Y 	204 	TAB",
+                "INPUT_FRONTEND_LB 	205 	Q",
+                "INPUT_FRONTEND_RB 	206 	E",
+                "INPUT_FRONTEND_LT 	207 	PAGE DOWN",
+                "INPUT_FRONTEND_RT 	208 	PAGE UP",
+                "INPUT_FRONTEND_LS 	209 	LEFT SHIFT",
+                "INPUT_FRONTEND_RS 	210 	LEFT CTRL",
+                "INPUT_FRONTEND_LEADERBOARD 	211 	TAB",
+                "INPUT_FRONTEND_SOCIAL_CLUB 	212 	HOME",
+                "INPUT_FRONTEND_SOCIAL_CLUB_SECONDARY 	213 	HOME",
+                "INPUT_FRONTEND_DELETE 	214 	DELETE",
+                "INPUT_FRONTEND_ENDSCREEN_ACCEPT 	215 	ENTER",
+                "INPUT_FRONTEND_ENDSCREEN_EXPAND 	216 	SPACEBAR",
+                "INPUT_FRONTEND_SELECT 	217 	CAPSLOCK",
+                "INPUT_SCRIPT_LEFT_AXIS_X 	218 	D",
+                "INPUT_SCRIPT_LEFT_AXIS_Y 	219 	S",
+                "INPUT_SCRIPT_RIGHT_AXIS_X 	220 	MOUSE RIGHT",
+                "INPUT_SCRIPT_RIGHT_AXIS_Y 	221 	MOUSE DOWN",
+                "INPUT_SCRIPT_RUP 	222 	RIGHT MOUSE BUTTON",
+                "INPUT_SCRIPT_RDOWN 	223 	LEFT MOUSE BUTTON",
+                "INPUT_SCRIPT_RLEFT 	224 	LEFT CTRL",
+                "INPUT_SCRIPT_RRIGHT 	225 	RIGHT MOUSE BUTTON",
+                "INPUT_SCRIPT_LB 	226 	",
+                "INPUT_SCRIPT_RB 	227 	",
+                "INPUT_SCRIPT_LT 	228 	",
+                "INPUT_SCRIPT_RT 	229 	LEFT MOUSE BUTTON",
+                "INPUT_SCRIPT_LS 	230 	",
+                "INPUT_SCRIPT_RS 	231 	",
+                "INPUT_SCRIPT_PAD_UP 	232 	W",
+                "INPUT_SCRIPT_PAD_DOWN 	233 	S",
+                "INPUT_SCRIPT_PAD_LEFT 	234 	A",
+                "INPUT_SCRIPT_PAD_RIGHT 	235 	D",
+                "INPUT_SCRIPT_SELECT 	236 	V",
+                "INPUT_CURSOR_ACCEPT 	237 	LEFT MOUSE BUTTON",
+                "INPUT_CURSOR_CANCEL 	238 	RIGHT MOUSE BUTTON",
+                "INPUT_CURSOR_X 	239 	",
+                "INPUT_CURSOR_Y 	240 	",
+                "INPUT_CURSOR_SCROLL_UP 	241 	SCROLLWHEEL UP",
+                "INPUT_CURSOR_SCROLL_DOWN 	242 	SCROLLWHEEL DOWN",
+                "INPUT_ENTER_CHEAT_CODE 	243 	~ / `",
+                "INPUT_INTERACTION_MENU 	244 	M",
+                "INPUT_MP_TEXT_CHAT_ALL 	245 	T",
+                "INPUT_MP_TEXT_CHAT_TEAM 	246 	Y",
+                "INPUT_MP_TEXT_CHAT_FRIENDS 	247 	",
+                "INPUT_MP_TEXT_CHAT_CREW 	248 	",
+                "INPUT_PUSH_TO_TALK 	249 	N",
+                "INPUT_CREATOR_LS 	250 	R",
+                "INPUT_CREATOR_RS 	251 	F",
+                "INPUT_CREATOR_LT 	252 	X",
+                "INPUT_CREATOR_RT 	253 	C",
+                "INPUT_CREATOR_MENU_TOGGLE 	254 	LEFT SHIFT",
+                "INPUT_CREATOR_ACCEPT 	255 	SPACEBAR",
+                "INPUT_CREATOR_DELETE 	256 	DELETE",
+                "INPUT_ATTACK2 	257 	LEFT MOUSE BUTTON",
+                "INPUT_RAPPEL_JUMP 	258 	",
+                "INPUT_RAPPEL_LONG_JUMP 	259 	",
+                "INPUT_RAPPEL_SMASH_WINDOW 	260 	",
+                "INPUT_PREV_WEAPON 	261 	SCROLLWHEEL UP",
+                "INPUT_NEXT_WEAPON 	262 	SCROLLWHEEL DOWN",
+                "INPUT_MELEE_ATTACK1 	263 	R",
+                "INPUT_MELEE_ATTACK2 	264 	Q",
+                "INPUT_WHISTLE 	265 	",
+                "INPUT_MOVE_LEFT 	266 	D",
+                "INPUT_MOVE_RIGHT 	267 	D",
+                "INPUT_MOVE_UP 	268 	S",
+                "INPUT_MOVE_DOWN 	269 	S",
+                "INPUT_LOOK_LEFT 	270 	MOUSE RIGHT",
+                "INPUT_LOOK_RIGHT 	271 	MOUSE RIGHT",
+                "INPUT_LOOK_UP 	272 	MOUSE DOWN",
+                "INPUT_LOOK_DOWN 	273 	MOUSE DOWN",
+                "INPUT_SNIPER_ZOOM_IN 	274 	[",
+                "INPUT_SNIPER_ZOOM_OUT 	275 	[",
+                "INPUT_SNIPER_ZOOM_IN_ALTERNATE 	276 	[",
+                "INPUT_SNIPER_ZOOM_OUT_ALTERNATE 	277 	[",
+                "INPUT_VEH_MOVE_LEFT 	278 	D",
+                "INPUT_VEH_MOVE_RIGHT 	279 	D",
+                "INPUT_VEH_MOVE_UP 	280 	LEFT CTRL",
+                "INPUT_VEH_MOVE_DOWN 	281 	LEFT CTRL",
+                "INPUT_VEH_GUN_LEFT 	282 	MOUSE RIGHT",
+                "INPUT_VEH_GUN_RIGHT 	283 	MOUSE RIGHT",
+                "INPUT_VEH_GUN_UP 	284 	MOUSE RIGHT",
+                "INPUT_VEH_GUN_DOWN 	285 	MOUSE RIGHT",
+                "INPUT_VEH_LOOK_LEFT 	286 	MOUSE RIGHT",
+                "INPUT_VEH_LOOK_RIGHT 	287 	MOUSE RIGHT",
+                "INPUT_REPLAY_START_STOP_RECORDING 	288 	F1",
+                "INPUT_REPLAY_START_STOP_RECORDING_SECONDARY 	289 	F2",
+                "INPUT_SCALED_LOOK_LR 	290 	MOUSE RIGHT",
+                "INPUT_SCALED_LOOK_UD 	291 	MOUSE DOWN",
+                "INPUT_SCALED_LOOK_UP_ONLY 	292 	",
+                "INPUT_SCALED_LOOK_DOWN_ONLY 	293 	",
+                "INPUT_SCALED_LOOK_LEFT_ONLY 	294 	",
+                "INPUT_SCALED_LOOK_RIGHT_ONLY 	295 	",
+                "INPUT_REPLAY_MARKER_DELETE 	296 	DELETE",
+                "INPUT_REPLAY_CLIP_DELETE 	297 	DELETE",
+                "INPUT_REPLAY_PAUSE 	298 	SPACEBAR",
+                "INPUT_REPLAY_REWIND 	299 	ARROW DOWN",
+                "INPUT_REPLAY_FFWD 	300 	ARROW UP",
+                "INPUT_REPLAY_NEWMARKER 	301 	M",
+                "INPUT_REPLAY_RECORD 	302 	S",
+                "INPUT_REPLAY_SCREENSHOT 	303 	U",
+                "INPUT_REPLAY_HIDEHUD 	304 	H",
+                "INPUT_REPLAY_STARTPOINT 	305 	B",
+                "INPUT_REPLAY_ENDPOINT 	306 	N",
+                "INPUT_REPLAY_ADVANCE 	307 	ARROW RIGHT",
+                "INPUT_REPLAY_BACK 	308 	ARROW LEFT",
+                "INPUT_REPLAY_TOOLS 	309 	T",
+                "INPUT_REPLAY_RESTART 	310 	R",
+                "INPUT_REPLAY_SHOWHOTKEY 	311 	K",
+                "INPUT_REPLAY_CYCLEMARKERLEFT 	312 	[",
+                "INPUT_REPLAY_CYCLEMARKERRIGHT 	313 	]",
+                "INPUT_REPLAY_FOVINCREASE 	314 	NUMPAD+",
+                "INPUT_REPLAY_FOVDECREASE 	315 	NUMPAD-",
+                "INPUT_REPLAY_CAMERAUP 	316 	PAGE UP",
+                "INPUT_REPLAY_CAMERADOWN 	317 	PAGE DOWN",
+                "INPUT_REPLAY_SAVE 	318 	F5",
+                "INPUT_REPLAY_TOGGLETIME 	319 	C",
+                "INPUT_REPLAY_TOGGLETIPS 	320 	V",
+                "INPUT_REPLAY_PREVIEW 	321 	SPACEBAR",
+                "INPUT_REPLAY_TOGGLE_TIMELINE 	322 	ESC",
+                "INPUT_REPLAY_TIMELINE_PICKUP_CLIP 	323 	X",
+                "INPUT_REPLAY_TIMELINE_DUPLICATE_CLIP 	324 	C",
+                "INPUT_REPLAY_TIMELINE_PLACE_CLIP 	325 	V",
+                "INPUT_REPLAY_CTRL 	326 	LEFT CTRL",
+                "INPUT_REPLAY_TIMELINE_SAVE 	327 	F5",
+                "INPUT_REPLAY_PREVIEW_AUDIO 	328 	SPACEBAR",
+                "INPUT_VEH_DRIVE_LOOK 	329 	LEFT MOUSE BUTTON",
+                "INPUT_VEH_DRIVE_LOOK2 	330 	RIGHT MOUSE BUTTON",
+                "INPUT_VEH_FLY_ATTACK2 	331 	RIGHT MOUSE BUTTON",
+                "INPUT_RADIO_WHEEL_UD 	332 	MOUSE DOWN",
+                "INPUT_RADIO_WHEEL_LR 	333 	MOUSE RIGHT",
+                "INPUT_VEH_SLOWMO_UD 	334 	SCROLLWHEEL DOWN",
+                "INPUT_VEH_SLOWMO_UP_ONLY 	335 	SCROLLWHEEL UP",
+                "INPUT_VEH_SLOWMO_DOWN_ONLY 	336 	SCROLLWHEEL DOWN",
+                "INPUT_VEH_HYDRAULICS_CONTROL_TOGGLE 	337 	X",
+                "INPUT_VEH_HYDRAULICS_CONTROL_LEFT 	338 	A",
+                "INPUT_VEH_HYDRAULICS_CONTROL_RIGHT 	339 	D",
+                "INPUT_VEH_HYDRAULICS_CONTROL_UP 	340 	LEFT SHIFT",
+                "INPUT_VEH_HYDRAULICS_CONTROL_DOWN 	341 	LEFT CTRL",
+                "INPUT_VEH_HYDRAULICS_CONTROL_LR 	342 	D",
+                "INPUT_VEH_HYDRAULICS_CONTROL_UD 	343 	LEFT CTRL",
+                "INPUT_SWITCH_VISOR 	344 	F11",
+                "INPUT_VEH_MELEE_HOLD 	345 	X",
+                "INPUT_VEH_MELEE_LEFT 	346 	LEFT MOUSE BUTTON",
+                "INPUT_VEH_MELEE_RIGHT 	347 	RIGHT MOUSE BUTTON",
+                "INPUT_MAP_POI 	348 	SCROLLWHEEL BUTTON (PRESS)",
+                "INPUT_REPLAY_SNAPMATIC_PHOTO 	349 	TAB",
+                "INPUT_VEH_CAR_JUMP 	350 	E",
+                "INPUT_VEH_ROCKET_BOOST 	351 	E",
+                "INPUT_VEH_FLY_BOOST 	352 	LEFT SHIFT",
+                "INPUT_VEH_PARACHUTE 	353 	SPACEBAR",
+                "INPUT_VEH_BIKE_WINGS 	354 	X",
+                "INPUT_VEH_FLY_BOMB_BAY 	355 	E",
+                "INPUT_VEH_FLY_COUNTER 	356 	E",
+                "INPUT_VEH_TRANSFORM 	357 	X",
+                "INPUT_QUAD_LOCO_REVERSE 	358 	",
+                "INPUT_RESPAWN_FASTER 	359 	",
+                "INPUT_HUDMARKER_SELECT 	360 "
+            };
+            return ControlerSet;
         }
     }
 }

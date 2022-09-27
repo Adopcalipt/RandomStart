@@ -88,22 +88,6 @@ namespace RandomStart
                 return Named();
             }
         }
-        public static RandomPlusList LoadRando(string fileName)
-        {
-            LoggerLight.Loggers("LoadRando == " + fileName);
-            try
-            {
-                XmlSerializer xml = new XmlSerializer(typeof(RandomPlusList));
-                using (StreamReader sr = new StreamReader(fileName))
-                {
-                    return (RandomPlusList)xml.Deserialize(sr);
-                }
-            }
-            catch
-            {
-                return new RandomPlusList();
-            }
-        }
         public static ClothBankist LoadChars(string fileName)
         {
             LoggerLight.Loggers("LoadChars == " + fileName);
@@ -198,22 +182,6 @@ namespace RandomStart
             catch
             {
                 LoggerLight.Loggers("SaveSetMain failed");
-            }
-        }
-        public static void SaveRando(RandomPlusList config, string fileName)
-        {
-            LoggerLight.Loggers("SaveRando == " + fileName);
-            try
-            {
-                XmlSerializer xml = new XmlSerializer(typeof(RandomPlusList));
-                using (StreamWriter sw = new StreamWriter(fileName))
-                {
-                    xml.Serialize(sw, config);
-                }
-            }
-            catch
-            {
-                LoggerLight.Loggers("SaveRando failed");
             }
         }
         public static void SaveChars(ClothBankist config, string fileName)
@@ -429,7 +397,9 @@ namespace RandomStart
                 ReSave = false,
                 YourWeaps = DataStore.GetWeaps(),
                 BeachPart = true,
-
+                ControlSupport = false,
+                ControlA = 47,
+                ControlB = 21,
                 BeachPed = true,
                 Tramps = true,
                 Highclass = true,
@@ -659,7 +629,6 @@ namespace RandomStart
         }
         public static void BuildWeapXML()
         {
-
             LoggerLight.Loggers("BuildWeapXML");
 
             List<string> sWepList = new List<string>();
