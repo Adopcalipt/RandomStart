@@ -53,28 +53,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ClothX.cs" />
-    <Compile Include="Classes\Tattoo.cs" />
-    <Compile Include="RandomNum.cs" />
-    <Compile Include="FreePed.cs" />
+    <Compile Include="RandomX.cs" />
     <Compile Include="RsReturns.cs" />
     <Compile Include="RsActions.cs" />
-    <Compile Include="RandomS.cs" />
-    <Compile Include="Classes\ClothBank.cs" />
-    <Compile Include="Classes\NameList.cs" />
-    <Compile Include="Classes\ClothBankist.cs" />
-    <Compile Include="Classes\NewClothBank.cs" />
-    <Compile Include="Classes\XmlSetings.cs" />
-    <Compile Include="Classes\WeaponSaver.cs" />
-    <Compile Include="Classes\WeaponsXML.cs" />
-    <Compile Include="Classes\LangXML.cs" />
+    <Compile Include="RSMain.cs" />
+    <Compile Include="Classes\RSClasses.cs" />
     <Compile Include="SHVFreeFaces.cs" />
     <Compile Include="SHVNative.cs" />
-    <Compile Include="Classes\SettingsXML.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DataStore.cs" />
     <Compile Include="LoggerLight.cs" />
-    <Compile Include="XmlReadWrite.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

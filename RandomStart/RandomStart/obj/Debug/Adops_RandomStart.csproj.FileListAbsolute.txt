@@ -1,10 +1,10 @@
-C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\RandomStart.csproj.CoreCompileInputs.cache
 C:\Users\Ado\source\repos\RandomStart\RandomStart\bin\Debug\Random Start.dll
 C:\Users\Ado\source\repos\RandomStart\RandomStart\bin\Debug\Random Start.pdb
 C:\Users\Ado\source\repos\RandomStart\RandomStart\bin\Debug\ScriptHookVDotNet2.dll
+C:\Users\Ado\source\repos\RandomStart\RandomStart\bin\Debug\ScriptHookVDotNet2.pdb
 C:\Users\Ado\source\repos\RandomStart\RandomStart\bin\Debug\ScriptHookVDotNet2.xml
-C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\RandomStart.csproj.CopyComplete
+C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\Adops_RandomStart.csproj.AssemblyReference.cache
+C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\Adops_RandomStart.csproj.CoreCompileInputs.cache
+C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\Adops_RandomStart.csproj.CopyComplete
 C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\Random Start.dll
 C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\Random Start.pdb
-C:\Users\Ado\source\repos\RandomStart\RandomStart\bin\Debug\ScriptHookVDotNet2.pdb
-C:\Users\Ado\source\repos\RandomStart\RandomStart\obj\Debug\RandomStart.csproj.AssemblyReference.cache

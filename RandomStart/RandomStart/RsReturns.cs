@@ -4,13 +4,1813 @@ using GTA.Native;
 using RandomStart.Classes;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 
 namespace RandomStart
 {
     public class RsReturns
     {
+        public readonly static List<AnimatedActions> MaleDance01 = new List<AnimatedActions>
+        {
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_male^5"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_male^6"),
+        };
+        public readonly static List<AnimatedActions> MaleDance02 = new List<AnimatedActions>
+        {
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_male^6")
+        };
+        public readonly static List<AnimatedActions> MaleDance03 = new List<AnimatedActions>
+        {
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_male^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_male^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_male^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_male^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_male^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_male^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_male^6")
+        };
+
+        public readonly static List<AnimatedActions> FemaleDance01 = new List<AnimatedActions>
+        {
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_09_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_11_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_13_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_15_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity", "li_dance_facedj_17_v2_female^6")
+        };
+        public readonly static List<AnimatedActions> FemaleDance02 = new List<AnimatedActions>
+        {
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_09_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_11_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_13_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_15_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity", "mi_dance_facedj_17_v1_female^6")
+        };
+        public readonly static List<AnimatedActions> FemaleDance03 = new List<AnimatedActions>
+        {
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_09_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_11_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_13_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_15_v2_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v1_female^6"),
+
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_female^1"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_female^2"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_female^3"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_female^4"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_female^5"),
+            new AnimatedActions("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity", "hi_dance_facedj_17_v2_female^6")
+        };
+
+        public static List<TShirt> TShirtyFe = new List<TShirt>
+        {
+            new TShirt("mpheist_overlays","MP_Bugstar_C","MP_Bugstar_C"),
+            new TShirt("mpheist_overlays","MP_Als_A","MP_Als_A"),
+            new TShirt("mpheist_overlays","MP_Als_B","MP_Als_B"),
+            new TShirt("mpheist_overlays","MP_Bugstar_A","MP_Bugstar_A"),
+            new TShirt("mpheist_overlays","MP_Bugstar_B","MP_Bugstar_B"),
+            new TShirt("mpheist_overlays","MP_Power_A","MP_Power_A"),
+            new TShirt("mpheist_overlays","MP_Power_B","MP_Power_B"),
+            new TShirt("mpheist_overlays","MP_Rogers_A","MP_Rogers_A"),
+            new TShirt("mpheist_overlays","MP_Rogers_B","MP_Rogers_B"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_019","mp_fm_branding_019"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_025","mp_fm_branding_025"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_037","mp_fm_branding_037"),
+            new TShirt("mphalloween_overlays","HW_Tee_000_F","HW_Tee_000_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_001_F","HW_Tee_001_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_002_F","HW_Tee_002_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_003_F","HW_Tee_003_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_004_F","HW_Tee_004_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_005_F","HW_Tee_005_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_006_F","HW_Tee_006_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_007_F","HW_Tee_007_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_008_F","HW_Tee_008_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_009_F","HW_Tee_009_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_010_F","HW_Tee_010_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_011_F","HW_Tee_011_F"),
+            new TShirt("mphalloween_overlays","HW_Tee_012_F","HW_Tee_012_F"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_004","MP_Award_F_Tshirt_004"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_005","MP_Award_F_Tshirt_005"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_006","MP_Award_F_Tshirt_006"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_007","MP_Award_F_Tshirt_007"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_008","MP_Award_F_Tshirt_008"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_009","MP_Award_F_Tshirt_009"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_010","MP_Award_F_Tshirt_010"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_011","MP_Award_F_Tshirt_011"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_012","MP_Award_F_Tshirt_012"),
+            new TShirt("mpheist_overlays","MP_Award_F_Tshirt_013","MP_Award_F_Tshirt_013"),
+            new TShirt("mpheist_overlays","MP_Elite_F_Tshirt","MP_Elite_F_Tshirt"),
+            new TShirt("mpheist_overlays","MP_Elite_F_Tshirt_1","MP_Elite_F_Tshirt_1"),
+            new TShirt("mpheist_overlays","MP_Elite_F_Tshirt_2","MP_Elite_F_Tshirt_2"),
+            new TShirt("mpheist_overlays","MP_Fli_F_Tshirt_000","MP_Fli_F_Tshirt_000"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_000","FM_Hip_F_Retro_000"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_001","FM_Hip_F_Retro_001"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_002","FM_Hip_F_Retro_002"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_003","FM_Hip_F_Retro_003"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_004","FM_Hip_F_Retro_004"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_005","FM_Hip_F_Retro_005"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_006","FM_Hip_F_Retro_006"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_007","FM_Hip_F_Retro_007"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_008","FM_Hip_F_Retro_008"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_009","FM_Hip_F_Retro_009"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_010","FM_Hip_F_Retro_010"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_011","FM_Hip_F_Retro_011"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_012","FM_Hip_F_Retro_012"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Retro_013","FM_Hip_F_Retro_013"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_000","FM_Hip_F_Tshirt_000"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_001","FM_Hip_F_Tshirt_001"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_002","FM_Hip_F_Tshirt_002"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_003","FM_Hip_F_Tshirt_003"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_004","FM_Hip_F_Tshirt_004"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_005","FM_Hip_F_Tshirt_005"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_006","FM_Hip_F_Tshirt_006"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_007","FM_Hip_F_Tshirt_007"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_008","FM_Hip_F_Tshirt_008"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_009","FM_Hip_F_Tshirt_009"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_010","FM_Hip_F_Tshirt_010"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_011","FM_Hip_F_Tshirt_011"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_012","FM_Hip_F_Tshirt_012"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_013","FM_Hip_F_Tshirt_013"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_014","FM_Hip_F_Tshirt_014"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_015","FM_Hip_F_Tshirt_015"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_016","FM_Hip_F_Tshirt_016"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_017","FM_Hip_F_Tshirt_017"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_018","FM_Hip_F_Tshirt_018"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_019","FM_Hip_F_Tshirt_019"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_020","FM_Hip_F_Tshirt_020"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_021","FM_Hip_F_Tshirt_021"),
+            new TShirt("mphipster_overlays","FM_Hip_F_Tshirt_022","FM_Hip_F_Tshirt_022"),
+            new TShirt("mphipster_overlays","FM_Rstar_F_Tshirt_000","FM_Rstar_F_Tshirt_000"),
+            new TShirt("mphipster_overlays","FM_Rstar_F_Tshirt_001","FM_Rstar_F_Tshirt_001"),
+            new TShirt("mphipster_overlays","FM_Rstar_F_Tshirt_002","FM_Rstar_F_Tshirt_002"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Award_000","FM_Ind_F_Award_000"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_000","FM_Ind_F_Tshirt_000"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_001","FM_Ind_F_Tshirt_001"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_002","FM_Ind_F_Tshirt_002"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_003","FM_Ind_F_Tshirt_003"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_004","FM_Ind_F_Tshirt_004"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_005","FM_Ind_F_Tshirt_005"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_006","FM_Ind_F_Tshirt_006"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_007","FM_Ind_F_Tshirt_007"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_008","FM_Ind_F_Tshirt_008"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_009","FM_Ind_F_Tshirt_009"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_010","FM_Ind_F_Tshirt_010"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_011","FM_Ind_F_Tshirt_011"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_012","FM_Ind_F_Tshirt_012"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_013","FM_Ind_F_Tshirt_013"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_014","FM_Ind_F_Tshirt_014"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_015","FM_Ind_F_Tshirt_015"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_016","FM_Ind_F_Tshirt_016"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_017","FM_Ind_F_Tshirt_017"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_018","FM_Ind_F_Tshirt_018"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_019","FM_Ind_F_Tshirt_019"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_020","FM_Ind_F_Tshirt_020"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_021","FM_Ind_F_Tshirt_021"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_022","FM_Ind_F_Tshirt_022"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_023","FM_Ind_F_Tshirt_023"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_024","FM_Ind_F_Tshirt_024"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_025","FM_Ind_F_Tshirt_025"),
+            new TShirt("mpindependance_overlays","FM_Ind_F_Tshirt_026","FM_Ind_F_Tshirt_026"),
+            new TShirt("mplowrider_overlays","MP_Bennys_000_F","MP_Bennys_000_F"),
+            new TShirt("mplowrider_overlays","MP_Bennys_001_F","MP_Bennys_001_F"),
+            new TShirt("mplowrider_overlays","MP_Broker_000_F","MP_Broker_000_F"),
+            new TShirt("mplowrider_overlays","MP_Broker_001_F","MP_Broker_001_F"),
+            new TShirt("mplowrider_overlays","MP_Broker_002_F","MP_Broker_002_F"),
+            new TShirt("mplowrider_overlays","MP_Broker_003_F","MP_Broker_003_F"),
+            new TShirt("mplowrider_overlays","MP_Broker_004_F","MP_Broker_004_F"),
+            new TShirt("mplowrider_overlays","MP_Broker_005_F","MP_Broker_005_F"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_000_F","MP_Magnetics_000_F"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_001_F","MP_Magnetics_001_F"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_002_F","MP_Magnetics_002_F"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_003_F","MP_Magnetics_003_F"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_004_F","MP_Magnetics_004_F"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_005_F","MP_Magnetics_005_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_000_F","MP_Trickster_000_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_001_F","MP_Trickster_001_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_002_F","MP_Trickster_002_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_003_F","MP_Trickster_003_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_004_F","MP_Trickster_004_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_005_F","MP_Trickster_005_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_006_F","MP_Trickster_006_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_007_F","MP_Trickster_007_F"),
+            new TShirt("mplowrider_overlays","MP_Trickster_010_F","MP_Trickster_010_F"),
+            new TShirt("mplts_overlays","FM_LTS_F_Tshirt_000","FM_LTS_F_Tshirt_000"),
+            new TShirt("mpluxe_overlays","MP_FAKE_DIS_000_F","MP_FAKE_DIS_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_DIS_001_F","MP_FAKE_DIS_001_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_DS_000_F","MP_FAKE_DS_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_ENEMA_000_F","MP_FAKE_ENEMA_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_LB_000_F","MP_FAKE_LB_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_LC_000_F","MP_FAKE_LC_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_Per_000_F","MP_FAKE_Per_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_SC_000_F","MP_FAKE_SC_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_SN_000_F","MP_FAKE_SN_000_F"),
+            new TShirt("mpluxe_overlays","MP_FAKE_Vap_000_F","MP_FAKE_Vap_000_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_000_F","MP_FILM_000_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_001_F","MP_FILM_001_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_002_F","MP_FILM_002_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_003_F","MP_FILM_003_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_004_F","MP_FILM_004_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_005_F","MP_FILM_005_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_006_F","MP_FILM_006_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_007_F","MP_FILM_007_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_008_F","MP_FILM_008_F"),
+            new TShirt("mpluxe_overlays","MP_FILM_009_F","MP_FILM_009_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_DIX_000_F","MP_LUXE_DIX_000_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_DIX_001_F","MP_LUXE_DIX_001_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_DIX_002_F","MP_LUXE_DIX_002_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_Enema_000_F","MP_LUXE_Enema_000_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_004_F","MP_LUXE_LC_004_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_005_F","MP_LUXE_LC_005_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_010_F","MP_LUXE_LC_010_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_011_F","MP_LUXE_LC_011_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_Per_001_F","MP_LUXE_Per_001_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SC_000_F","MP_LUXE_SC_000_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_000_F","MP_LUXE_SN_000_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_001_F","MP_LUXE_SN_001_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_002_F","MP_LUXE_SN_002_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_003_F","MP_LUXE_SN_003_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_004_F","MP_LUXE_SN_004_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_005_F","MP_LUXE_SN_005_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_006_F","MP_LUXE_SN_006_F"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_007_F","MP_LUXE_SN_007_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_000_F","MP_LUXE_LC_000_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_001_F","MP_LUXE_LC_001_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_002_F","MP_LUXE_LC_002_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_003_F","MP_LUXE_LC_003_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_006_F","MP_LUXE_LC_006_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_007_F","MP_LUXE_LC_007_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_008_F","MP_LUXE_LC_008_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_009_F","MP_LUXE_LC_009_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_012_F","MP_LUXE_LC_012_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_013_F","MP_LUXE_LC_013_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_014_F","MP_LUXE_LC_014_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_015_F","MP_LUXE_LC_015_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_000_F","MP_LUXE_VDG_000_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_001_F","MP_LUXE_VDG_001_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_002_F","MP_LUXE_VDG_002_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_004_F","MP_LUXE_VDG_004_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_005_F","MP_LUXE_VDG_005_F"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_006_F","MP_LUXE_VDG_006_F"),
+            new TShirt("mppilot_overlays","MP_Fli_F_Tshirt_000","MP_Fli_F_Tshirt_000"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_A","MP_Val_F_Tshirt_A"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_B","MP_Val_F_Tshirt_B"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_C","MP_Val_F_Tshirt_C"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_D","MP_Val_F_Tshirt_D"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_E","MP_Val_F_Tshirt_E"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_F","MP_Val_F_Tshirt_F"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_G","MP_Val_F_Tshirt_G"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_H","MP_Val_F_Tshirt_H"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_I","MP_Val_F_Tshirt_I"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_J","MP_Val_F_Tshirt_J"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_K","MP_Val_F_Tshirt_K"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_L","MP_Val_F_Tshirt_L"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_M","MP_Val_F_Tshirt_M"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_N","MP_Val_F_Tshirt_N"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_O","MP_Val_F_Tshirt_O"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_P","MP_Val_F_Tshirt_P"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_Q","MP_Val_F_Tshirt_Q"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_R","MP_Val_F_Tshirt_R"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_S","MP_Val_F_Tshirt_S"),
+            new TShirt("mpvalentines_overlays","MP_Val_F_Tshirt_T","MP_Val_F_Tshirt_T"),
+            new TShirt("mpxmas_604490_overlays","MP_IHeartLC_001_F","MP_IHeartLC_001_F"),
+            new TShirt("multiplayer_overlays","FM_CREW_F_000_A","FM_CREW_F_000_A"),
+            new TShirt("multiplayer_overlays","FM_CREW_F_000_B","FM_CREW_F_000_B"),
+            new TShirt("multiplayer_overlays","FM_CREW_F_000_C","FM_CREW_F_000_C"),
+            new TShirt("multiplayer_overlays","FM_CREW_F_000_D","FM_CREW_F_000_D"),
+            new TShirt("multiplayer_overlays","FM_Tshirt_Award_F_000","FM_Tshirt_Award_F_000"),
+            new TShirt("multiplayer_overlays","FM_Tshirt_Award_F_001","FM_Tshirt_Award_F_001"),
+            new TShirt("multiplayer_overlays","FM_Tshirt_Award_F_002","FM_Tshirt_Award_F_002"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_027_f","mp_fm_branding_027_f"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_028_F","mp_fm_branding_028_F"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_034_f","mp_fm_branding_034_f"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_036_F","mp_fm_branding_036_F"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_039_f","mp_fm_branding_039_f"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_048","mp_fm_branding_048"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_049","mp_fm_branding_049"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_050","mp_fm_branding_050"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_051","mp_fm_branding_051"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_052","mp_fm_branding_052"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_053","mp_fm_branding_053"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_054","mp_fm_branding_054"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_055","mp_fm_branding_055"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_056","mp_fm_branding_056"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_057","mp_fm_branding_057"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_058","mp_fm_branding_058"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_059","mp_fm_branding_059"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_060","mp_fm_branding_060"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_061","mp_fm_branding_061"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_062","mp_fm_branding_062"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_066","mp_fm_branding_066"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_067","mp_fm_branding_067"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_068","mp_fm_branding_068"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_069","mp_fm_branding_069"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_070","mp_fm_branding_070"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_000_f","mp_fm_OGA_000_f"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_001_f","mp_fm_OGA_001_f"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_002_f","mp_fm_OGA_002_f"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_003_f","mp_fm_OGA_003_f"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_000_F","MP_Chianski_000_F"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_001_F","MP_Chianski_001_F"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_002_F","MP_Chianski_002_F"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_003_F","MP_Chianski_003_F"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_004_F","MP_Chianski_004_F"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_005_F","MP_Chianski_005_F"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_006_F","MP_Chianski_006_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_000_F","MP_Hntr_000_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_001_F","MP_Hntr_001_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_002_F","MP_Hntr_002_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_003_F","MP_Hntr_003_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_004_F","MP_Hntr_004_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_005_F","MP_Hntr_005_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_006_F","MP_Hntr_006_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_007_F","MP_Hntr_007_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_008_F","MP_Hntr_008_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_009_F","MP_Hntr_009_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_010_F","MP_Hntr_010_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_011_F","MP_Hntr_011_F"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_012_F","MP_Hntr_012_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_000_F","MP_Dense_000_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_001_F","MP_Dense_001_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_002_F","MP_Dense_002_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_003_F","MP_Dense_003_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_004_F","MP_Dense_004_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_005_F","MP_Dense_005_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_006_F","MP_Dense_006_F"),
+            new TShirt("mplowrider2_overlays","MP_Dense_007_F","MP_Dense_007_F"),
+            new TShirt("mpexecutive_overlays","MP_Securoserv_000_F","MP_Securoserv_000_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_000_F","MP_exec_teams_000_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_001_F","MP_exec_teams_001_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_002_F","MP_exec_teams_002_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_003_F","MP_exec_teams_003_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_000_F","MP_exec_prizes_000_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_001_F","MP_exec_prizes_001_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_002_F","MP_exec_prizes_002_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_003_F","MP_exec_prizes_003_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_004_F","MP_exec_prizes_004_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_005_F","MP_exec_prizes_005_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_006_F","MP_exec_prizes_006_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_007_F","MP_exec_prizes_007_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_008_F","MP_exec_prizes_008_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_009_F","MP_exec_prizes_009_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_010_F","MP_exec_prizes_010_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_011_F","MP_exec_prizes_011_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_012_F","MP_exec_prizes_012_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_013_F","MP_exec_prizes_013_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_014_F","MP_exec_prizes_014_F"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_015_F","MP_exec_prizes_015_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Award_000_F","MP_Biker_Award_000_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Award_001_F","MP_Biker_Award_001_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_000_F","MP_Biker_Rank_000_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_001_F","MP_Biker_Rank_001_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_002_F","MP_Biker_Rank_002_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_003_F","MP_Biker_Rank_003_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_004_F","MP_Biker_Rank_004_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_005_F","MP_Biker_Rank_005_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_006_F","MP_Biker_Rank_006_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_007_F","MP_Biker_Rank_007_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_008_F","MP_Biker_Rank_008_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_009_F","MP_Biker_Rank_009_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_010_F","MP_Biker_Rank_010_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_011_F","MP_Biker_Rank_011_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_012_F","MP_Biker_Rank_012_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_013_F","MP_Biker_Rank_013_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_014_F","MP_Biker_Rank_014_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_015_F","MP_Biker_Rank_015_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_016_F","MP_Biker_Rank_016_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_017_F","MP_Biker_Rank_017_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_000_F","MP_Biker_Tee_000_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_001_F","MP_Biker_Tee_001_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_002_F","MP_Biker_Tee_002_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_003_F","MP_Biker_Tee_003_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_004_F","MP_Biker_Tee_004_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_005_F","MP_Biker_Tee_005_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_006_F","MP_Biker_Tee_006_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_007_F","MP_Biker_Tee_007_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_008_F","MP_Biker_Tee_008_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_009_F","MP_Biker_Tee_009_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_010_F","MP_Biker_Tee_010_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_011_F","MP_Biker_Tee_011_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_012_F","MP_Biker_Tee_012_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_013_F","MP_Biker_Tee_013_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_014_F","MP_Biker_Tee_014_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_015_F","MP_Biker_Tee_015_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_016_F","MP_Biker_Tee_016_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_017_F","MP_Biker_Tee_017_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_018_F","MP_Biker_Tee_018_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_019_F","MP_Biker_Tee_019_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_020_F","MP_Biker_Tee_020_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_021_F","MP_Biker_Tee_021_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_022_F","MP_Biker_Tee_022_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_023_F","MP_Biker_Tee_023_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_024_F","MP_Biker_Tee_024_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_025_F","MP_Biker_Tee_025_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_026_F","MP_Biker_Tee_026_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_027_F","MP_Biker_Tee_027_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_028_F","MP_Biker_Tee_028_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_029_F","MP_Biker_Tee_029_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_030_F","MP_Biker_Tee_030_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_031_F","MP_Biker_Tee_031_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_032_F","MP_Biker_Tee_032_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_033_F","MP_Biker_Tee_033_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_034_F","MP_Biker_Tee_034_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_035_F","MP_Biker_Tee_035_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_036_F","MP_Biker_Tee_036_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_037_F","MP_Biker_Tee_037_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_038_F","MP_Biker_Tee_038_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_039_F","MP_Biker_Tee_039_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_040_F","MP_Biker_Tee_040_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_041_F","MP_Biker_Tee_041_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_042_F","MP_Biker_Tee_042_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_043_F","MP_Biker_Tee_043_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_044_F","MP_Biker_Tee_044_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_045_F","MP_Biker_Tee_045_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_046_F","MP_Biker_Tee_046_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_047_F","MP_Biker_Tee_047_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_048_F","MP_Biker_Tee_048_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_049_F","MP_Biker_Tee_049_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_050_F","MP_Biker_Tee_050_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_051_F","MP_Biker_Tee_051_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_052_F","MP_Biker_Tee_052_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_053_F","MP_Biker_Tee_053_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_054_F","MP_Biker_Tee_054_F"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_055_F","MP_Biker_Tee_055_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_000_F","MP_Gunrunning_Award_000_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_001_F","MP_Gunrunning_Award_001_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_002_F","MP_Gunrunning_Award_002_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_003_F","MP_Gunrunning_Award_003_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_004_F","MP_Gunrunning_Award_004_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_005_F","MP_Gunrunning_Award_005_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_006_F","MP_Gunrunning_Award_006_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_007_F","MP_Gunrunning_Award_007_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_008_F","MP_Gunrunning_Award_008_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_009_F","MP_Gunrunning_Award_009_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_010_F","MP_Gunrunning_Award_010_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_011_F","MP_Gunrunning_Award_011_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_012_F","MP_Gunrunning_Award_012_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_013_F","MP_Gunrunning_Award_013_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_014_F","MP_Gunrunning_Award_014_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_015_F","MP_Gunrunning_Award_015_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_016_F","MP_Gunrunning_Award_016_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_017_F","MP_Gunrunning_Award_017_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_018_F","MP_Gunrunning_Award_018_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_019_F","MP_Gunrunning_Award_019_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_020_F","MP_Gunrunning_Award_020_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_021_F","MP_Gunrunning_Award_021_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_022_F","MP_Gunrunning_Award_022_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_023_F","MP_Gunrunning_Award_023_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_024_F","MP_Gunrunning_Award_024_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_025_F","MP_Gunrunning_Award_025_F"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_026_F","MP_Gunrunning_Award_026_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_000_F","MP_Battle_Clothing_000_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_001_F","MP_Battle_Clothing_001_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_002_F","MP_Battle_Clothing_002_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_003_F","MP_Battle_Clothing_003_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_004_F","MP_Battle_Clothing_004_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_005_F","MP_Battle_Clothing_005_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_006_F","MP_Battle_Clothing_006_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_007_F","MP_Battle_Clothing_007_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_008_F","MP_Battle_Clothing_008_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_009_F","MP_Battle_Clothing_009_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_010_F","MP_Battle_Clothing_010_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_011_F","MP_Battle_Clothing_011_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_012_F","MP_Battle_Clothing_012_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_013_F","MP_Battle_Clothing_013_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_014_F","MP_Battle_Clothing_014_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_015_F","MP_Battle_Clothing_015_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_016_F","MP_Battle_Clothing_016_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_017_F","MP_Battle_Clothing_017_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_018_F","MP_Battle_Clothing_018_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_019_F","MP_Battle_Clothing_019_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_020_F","MP_Battle_Clothing_020_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_021_F","MP_Battle_Clothing_021_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_022_F","MP_Battle_Clothing_022_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_023_F","MP_Battle_Clothing_023_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_024_F","MP_Battle_Clothing_024_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_025_F","MP_Battle_Clothing_025_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_026_F","MP_Battle_Clothing_026_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_027_F","MP_Battle_Clothing_027_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_028_F","MP_Battle_Clothing_028_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_029_F","MP_Battle_Clothing_029_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_030_F","MP_Battle_Clothing_030_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_031_F","MP_Battle_Clothing_031_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_032_F","MP_Battle_Clothing_032_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_033_F","MP_Battle_Clothing_033_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_034_F","MP_Battle_Clothing_034_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_035_F","MP_Battle_Clothing_035_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_036_F","MP_Battle_Clothing_036_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_037_F","MP_Battle_Clothing_037_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_038_F","MP_Battle_Clothing_038_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_039_F","MP_Battle_Clothing_039_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_040_F","MP_Battle_Clothing_040_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_041_F","MP_Battle_Clothing_041_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_042_F","MP_Battle_Clothing_042_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_043_F","MP_Battle_Clothing_043_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_044_F","MP_Battle_Clothing_044_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_045_F","MP_Battle_Clothing_045_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_046_F","MP_Battle_Clothing_046_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_047_F","MP_Battle_Clothing_047_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_048_F","MP_Battle_Clothing_048_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_049_F","MP_Battle_Clothing_049_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_050_F","MP_Battle_Clothing_050_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_051_F","MP_Battle_Clothing_051_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_052_F","MP_Battle_Clothing_052_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_053_F","MP_Battle_Clothing_053_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_054_F","MP_Battle_Clothing_054_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_055_F","MP_Battle_Clothing_055_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_056_F","MP_Battle_Clothing_056_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_057_F","MP_Battle_Clothing_057_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_058_F","MP_Battle_Clothing_058_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_059_F","MP_Battle_Clothing_059_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_060_F","MP_Battle_Clothing_060_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_061_F","MP_Battle_Clothing_061_F"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_062_F","MP_Battle_Clothing_062_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_000_F","MP_Christmas2018_Tee_000_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_001_F","MP_Christmas2018_Tee_001_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_002_F","MP_Christmas2018_Tee_002_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_003_F","MP_Christmas2018_Tee_003_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_004_F","MP_Christmas2018_Tee_004_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_005_F","MP_Christmas2018_Tee_005_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_006_F","MP_Christmas2018_Tee_006_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_007_F","MP_Christmas2018_Tee_007_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_008_F","MP_Christmas2018_Tee_008_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_009_F","MP_Christmas2018_Tee_009_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_010_F","MP_Christmas2018_Tee_010_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_011_F","MP_Christmas2018_Tee_011_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_012_F","MP_Christmas2018_Tee_012_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_013_F","MP_Christmas2018_Tee_013_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_014_F","MP_Christmas2018_Tee_014_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_015_F","MP_Christmas2018_Tee_015_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_016_F","MP_Christmas2018_Tee_016_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_017_F","MP_Christmas2018_Tee_017_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_018_F","MP_Christmas2018_Tee_018_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_019_F","MP_Christmas2018_Tee_019_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_020_F","MP_Christmas2018_Tee_020_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_021_F","MP_Christmas2018_Tee_021_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_022_F","MP_Christmas2018_Tee_022_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_023_F","MP_Christmas2018_Tee_023_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_024_F","MP_Christmas2018_Tee_024_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_025_F","MP_Christmas2018_Tee_025_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_026_F","MP_Christmas2018_Tee_026_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_027_F","MP_Christmas2018_Tee_027_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_028_F","MP_Christmas2018_Tee_028_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_029_F","MP_Christmas2018_Tee_029_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_030_F","MP_Christmas2018_Tee_030_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_031_F","MP_Christmas2018_Tee_031_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_032_F","MP_Christmas2018_Tee_032_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_033_F","MP_Christmas2018_Tee_033_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_034_F","MP_Christmas2018_Tee_034_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_035_F","MP_Christmas2018_Tee_035_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_036_F","MP_Christmas2018_Tee_036_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_037_F","MP_Christmas2018_Tee_037_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_038_F","MP_Christmas2018_Tee_038_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_039_F","MP_Christmas2018_Tee_039_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_040_F","MP_Christmas2018_Tee_040_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_041_F","MP_Christmas2018_Tee_041_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_042_F","MP_Christmas2018_Tee_042_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_043_F","MP_Christmas2018_Tee_043_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_044_F","MP_Christmas2018_Tee_044_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_045_F","MP_Christmas2018_Tee_045_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_046_F","MP_Christmas2018_Tee_046_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_047_F","MP_Christmas2018_Tee_047_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_048_F","MP_Christmas2018_Tee_048_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_049_F","MP_Christmas2018_Tee_049_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_050_F","MP_Christmas2018_Tee_050_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_051_F","MP_Christmas2018_Tee_051_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_052_F","MP_Christmas2018_Tee_052_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_053_F","MP_Christmas2018_Tee_053_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_054_F","MP_Christmas2018_Tee_054_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_055_F","MP_Christmas2018_Tee_055_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_056_F","MP_Christmas2018_Tee_056_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_057_F","MP_Christmas2018_Tee_057_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_058_F","MP_Christmas2018_Tee_058_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_059_F","MP_Christmas2018_Tee_059_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_060_F","MP_Christmas2018_Tee_060_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_061_F","MP_Christmas2018_Tee_061_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_062_F","MP_Christmas2018_Tee_062_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_063_F","MP_Christmas2018_Tee_063_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_064_F","MP_Christmas2018_Tee_064_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_065_F","MP_Christmas2018_Tee_065_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_066_F","MP_Christmas2018_Tee_066_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_067_F","MP_Christmas2018_Tee_067_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_068_F","MP_Christmas2018_Tee_068_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_069_F","MP_Christmas2018_Tee_069_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_070_F","MP_Christmas2018_Tee_070_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_071_F","MP_Christmas2018_Tee_071_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_072_F","MP_Christmas2018_Tee_072_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_073_F","MP_Christmas2018_Tee_073_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_074_F","MP_Christmas2018_Tee_074_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_075_F","MP_Christmas2018_Tee_075_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_076_F","MP_Christmas2018_Tee_076_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_077_F","MP_Christmas2018_Tee_077_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_078_F","MP_Christmas2018_Tee_078_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_079_F","MP_Christmas2018_Tee_079_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_080_F","MP_Christmas2018_Tee_080_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_081_F","MP_Christmas2018_Tee_081_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_082_F","MP_Christmas2018_Tee_082_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_083_F","MP_Christmas2018_Tee_083_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_084_F","MP_Christmas2018_Tee_084_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_085_F","MP_Christmas2018_Tee_085_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_086_F","MP_Christmas2018_Tee_086_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_087_F","MP_Christmas2018_Tee_087_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_088_F","MP_Christmas2018_Tee_088_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_089_F","MP_Christmas2018_Tee_089_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_090_F","MP_Christmas2018_Tee_090_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_091_F","MP_Christmas2018_Tee_091_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_092_F","MP_Christmas2018_Tee_092_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_093_F","MP_Christmas2018_Tee_093_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_094_F","MP_Christmas2018_Tee_094_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_095_F","MP_Christmas2018_Tee_095_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_096_F","MP_Christmas2018_Tee_096_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_097_F","MP_Christmas2018_Tee_097_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_098_F","MP_Christmas2018_Tee_098_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_099_F","MP_Christmas2018_Tee_099_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_100_F","MP_Christmas2018_Tee_100_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_101_F","MP_Christmas2018_Tee_101_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_102_F","MP_Christmas2018_Tee_102_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_103_F","MP_Christmas2018_Tee_103_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_104_F","MP_Christmas2018_Tee_104_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_105_F","MP_Christmas2018_Tee_105_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_106_F","MP_Christmas2018_Tee_106_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_107_F","MP_Christmas2018_Tee_107_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_108_F","MP_Christmas2018_Tee_108_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_109_F","MP_Christmas2018_Tee_109_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_110_F","MP_Christmas2018_Tee_110_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_111_F","MP_Christmas2018_Tee_111_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_112_F","MP_Christmas2018_Tee_112_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_113_F","MP_Christmas2018_Tee_113_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_114_F","MP_Christmas2018_Tee_114_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_115_F","MP_Christmas2018_Tee_115_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_116_F","MP_Christmas2018_Tee_116_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_117_F","MP_Christmas2018_Tee_117_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_118_F","MP_Christmas2018_Tee_118_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_119_F","MP_Christmas2018_Tee_119_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_120_F","MP_Christmas2018_Tee_120_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_121_F","MP_Christmas2018_Tee_121_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_122_F","MP_Christmas2018_Tee_122_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_123_F","MP_Christmas2018_Tee_123_F"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_124_F","MP_Christmas2018_Tee_124_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_000_F","MP_Smuggler_Graphic_000_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_001_F","MP_Smuggler_Graphic_001_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_002_F","MP_Smuggler_Graphic_002_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_003_F","MP_Smuggler_Graphic_003_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_004_F","MP_Smuggler_Graphic_004_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_005_F","MP_Smuggler_Graphic_005_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_006_F","MP_Smuggler_Graphic_006_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_007_F","MP_Smuggler_Graphic_007_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_008_F","MP_Smuggler_Graphic_008_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_009_F","MP_Smuggler_Graphic_009_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_010_F","MP_Smuggler_Graphic_010_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_011_F","MP_Smuggler_Graphic_011_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_012_F","MP_Smuggler_Graphic_012_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_013_F","MP_Smuggler_Graphic_013_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_014_F","MP_Smuggler_Graphic_014_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_015_F","MP_Smuggler_Graphic_015_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_016_F","MP_Smuggler_Graphic_016_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_017_F","MP_Smuggler_Graphic_017_F"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_018_F","MP_Smuggler_Graphic_018_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_000_F","mpHeist3_Tee_000_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_001_F","mpHeist3_Tee_001_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_002_F","mpHeist3_Tee_002_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_003_F","mpHeist3_Tee_003_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_004_F","mpHeist3_Tee_004_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_005_F","mpHeist3_Tee_005_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_006_F","mpHeist3_Tee_006_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_007_F","mpHeist3_Tee_007_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_008_F","mpHeist3_Tee_008_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_009_F","mpHeist3_Tee_009_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_010_F","mpHeist3_Tee_010_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_011_F","mpHeist3_Tee_011_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_012_F","mpHeist3_Tee_012_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_013_F","mpHeist3_Tee_013_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_014_F","mpHeist3_Tee_014_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_015_F","mpHeist3_Tee_015_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_016_F","mpHeist3_Tee_016_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_017_F","mpHeist3_Tee_017_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_018_F","mpHeist3_Tee_018_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_019_F","mpHeist3_Tee_019_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_020_F","mpHeist3_Tee_020_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_021_F","mpHeist3_Tee_021_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_022_F","mpHeist3_Tee_022_F"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_023_F","mpHeist3_Tee_023_F"),
+            new TShirt("mpchristmas3_overlays","MP_Christmas3_Tee_000_F","MP_Christmas3_Tee_000_F"),
+            new TShirt("mpchristmas3_overlays","MP_Christmas3_Tee_001_F","MP_Christmas3_Tee_001_F"),
+            new TShirt("mpsecurity_overlays","MP_Security_Tee_000_F","MP_Security_Tee_000_F"),
+            new TShirt("mpsecurity_overlays","MP_Security_Tee_001_F","MP_Security_Tee_001_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_000_F","mpSum_Tee_000_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_001_F","mpSum_Tee_001_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_002_F","mpSum_Tee_002_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_003_F","mpSum_Tee_003_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_004_F","mpSum_Tee_004_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_005_F","mpSum_Tee_005_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_006_F","mpSum_Tee_006_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_007_F","mpSum_Tee_007_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_008_F","mpSum_Tee_008_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_009_F","mpSum_Tee_009_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_010_F","mpSum_Tee_010_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_011_F","mpSum_Tee_011_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_012_F","mpSum_Tee_012_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_013_F","mpSum_Tee_013_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_014_F","mpSum_Tee_014_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_015_F","mpSum_Tee_015_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_016_F","mpSum_Tee_016_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_017_F","mpSum_Tee_017_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_018_F","mpSum_Tee_018_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_019_F","mpSum_Tee_019_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_020_F","mpSum_Tee_020_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_021_F","mpSum_Tee_021_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_022_F","mpSum_Tee_022_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_023_F","mpSum_Tee_023_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_024_F","mpSum_Tee_024_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_025_F","mpSum_Tee_025_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_026_F","mpSum_Tee_026_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_027_F","mpSum_Tee_027_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_028_F","mpSum_Tee_028_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_029_F","mpSum_Tee_029_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_030_F","mpSum_Tee_030_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_031_F","mpSum_Tee_031_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_032_F","mpSum_Tee_032_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_033_F","mpSum_Tee_033_F"),
+            new TShirt("mpsum_overlays","mpSum_Tee_034_F","mpSum_Tee_034_F"),
+            new TShirt("mpsum2_overlays","MP_Sum2_Tee_000_F","MP_Sum2_Tee_000_F"),
+            new TShirt("mpsum2_overlays","MP_Sum2_Tee_001_F","MP_Sum2_Tee_001_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_000_F","MP_Tuner_Tee_000_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_001_F","MP_Tuner_Tee_001_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_002_F","MP_Tuner_Tee_002_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_003_F","MP_Tuner_Tee_003_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_004_F","MP_Tuner_Tee_004_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_005_F","MP_Tuner_Tee_005_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_006_F","MP_Tuner_Tee_006_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_007_F","MP_Tuner_Tee_007_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_008_F","MP_Tuner_Tee_008_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_009_F","MP_Tuner_Tee_009_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_010_F","MP_Tuner_Tee_010_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_011_F","MP_Tuner_Tee_011_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_012_F","MP_Tuner_Tee_012_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_013_F","MP_Tuner_Tee_013_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_014_F","MP_Tuner_Tee_014_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_015_F","MP_Tuner_Tee_015_F"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_016_F","MP_Tuner_Tee_016_F")
+        };
+        public static List<TShirt> TShirtyMa = new List<TShirt>
+        {
+            new TShirt("mpheist_overlays","MP_Bugstar_C","MP_Bugstar_C"),
+            new TShirt("mpheist_overlays","MP_Als_A","MP_Als_A"),
+            new TShirt("mpheist_overlays","MP_Als_B","MP_Als_B"),
+            new TShirt("mpheist_overlays","MP_Bugstar_A","MP_Bugstar_A"),
+            new TShirt("mpheist_overlays","MP_Bugstar_B","MP_Bugstar_B"),
+            new TShirt("mpheist_overlays","MP_Power_A","MP_Power_A"),
+            new TShirt("mpheist_overlays","MP_Power_B","MP_Power_B"),
+            new TShirt("mpheist_overlays","MP_Rogers_A","MP_Rogers_A"),
+            new TShirt("mpheist_overlays","MP_Rogers_B","MP_Rogers_B"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_019","mp_fm_branding_019"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_025","mp_fm_branding_025"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_037","mp_fm_branding_037"),
+            new TShirt("mphalloween_overlays","HW_Tee_000_M","HW_Tee_000_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_001_M","HW_Tee_001_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_002_M","HW_Tee_002_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_003_M","HW_Tee_003_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_004_M","HW_Tee_004_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_005_M","HW_Tee_005_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_006_M","HW_Tee_006_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_007_M","HW_Tee_007_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_008_M","HW_Tee_008_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_009_M","HW_Tee_009_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_010_M","HW_Tee_010_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_011_M","HW_Tee_011_M"),
+            new TShirt("mphalloween_overlays","HW_Tee_012_M","HW_Tee_012_M"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_004","MP_Award_M_Tshirt_004"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_005","MP_Award_M_Tshirt_005"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_006","MP_Award_M_Tshirt_006"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_007","MP_Award_M_Tshirt_007"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_008","MP_Award_M_Tshirt_008"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_009","MP_Award_M_Tshirt_009"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_010","MP_Award_M_Tshirt_010"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_011","MP_Award_M_Tshirt_011"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_012","MP_Award_M_Tshirt_012"),
+            new TShirt("mpheist_overlays","MP_Award_M_Tshirt_013","MP_Award_M_Tshirt_013"),
+            new TShirt("mpheist_overlays","MP_Elite_M_Tshirt","MP_Elite_M_Tshirt"),
+            new TShirt("mpheist_overlays","MP_Elite_M_Tshirt_1","MP_Elite_M_Tshirt_1"),
+            new TShirt("mpheist_overlays","MP_Elite_M_Tshirt_2","MP_Elite_M_Tshirt_2"),
+            new TShirt("mpheist_overlays","MP_Fli_M_Tshirt_000","MP_Fli_M_Tshirt_000"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_000","FM_Hip_M_Retro_000"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_001","FM_Hip_M_Retro_001"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_002","FM_Hip_M_Retro_002"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_003","FM_Hip_M_Retro_003"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_004","FM_Hip_M_Retro_004"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_005","FM_Hip_M_Retro_005"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_006","FM_Hip_M_Retro_006"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_007","FM_Hip_M_Retro_007"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_008","FM_Hip_M_Retro_008"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_009","FM_Hip_M_Retro_009"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_010","FM_Hip_M_Retro_010"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_011","FM_Hip_M_Retro_011"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_012","FM_Hip_M_Retro_012"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Retro_013","FM_Hip_M_Retro_013"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_000","FM_Hip_M_Tshirt_000"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_001","FM_Hip_M_Tshirt_001"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_002","FM_Hip_M_Tshirt_002"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_003","FM_Hip_M_Tshirt_003"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_004","FM_Hip_M_Tshirt_004"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_005","FM_Hip_M_Tshirt_005"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_006","FM_Hip_M_Tshirt_006"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_007","FM_Hip_M_Tshirt_007"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_008","FM_Hip_M_Tshirt_008"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_009","FM_Hip_M_Tshirt_009"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_010","FM_Hip_M_Tshirt_010"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_011","FM_Hip_M_Tshirt_011"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_012","FM_Hip_M_Tshirt_012"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_013","FM_Hip_M_Tshirt_013"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_014","FM_Hip_M_Tshirt_014"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_015","FM_Hip_M_Tshirt_015"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_016","FM_Hip_M_Tshirt_016"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_017","FM_Hip_M_Tshirt_017"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_018","FM_Hip_M_Tshirt_018"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_019","FM_Hip_M_Tshirt_019"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_020","FM_Hip_M_Tshirt_020"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_021","FM_Hip_M_Tshirt_021"),
+            new TShirt("mphipster_overlays","FM_Hip_M_Tshirt_022","FM_Hip_M_Tshirt_022"),
+            new TShirt("mphipster_overlays","FM_Rstar_M_Tshirt_000","FM_Rstar_M_Tshirt_000"),
+            new TShirt("mphipster_overlays","FM_Rstar_M_Tshirt_001","FM_Rstar_M_Tshirt_001"),
+            new TShirt("mphipster_overlays","FM_Rstar_M_Tshirt_002","FM_Rstar_M_Tshirt_002"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Award_000","FM_Ind_M_Award_000"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_000","FM_Ind_M_Tshirt_000"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_001","FM_Ind_M_Tshirt_001"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_002","FM_Ind_M_Tshirt_002"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_003","FM_Ind_M_Tshirt_003"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_004","FM_Ind_M_Tshirt_004"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_005","FM_Ind_M_Tshirt_005"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_006","FM_Ind_M_Tshirt_006"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_007","FM_Ind_M_Tshirt_007"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_008","FM_Ind_M_Tshirt_008"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_009","FM_Ind_M_Tshirt_009"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_010","FM_Ind_M_Tshirt_010"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_011","FM_Ind_M_Tshirt_011"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_012","FM_Ind_M_Tshirt_012"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_013","FM_Ind_M_Tshirt_013"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_014","FM_Ind_M_Tshirt_014"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_015","FM_Ind_M_Tshirt_015"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_016","FM_Ind_M_Tshirt_016"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_017","FM_Ind_M_Tshirt_017"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_018","FM_Ind_M_Tshirt_018"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_019","FM_Ind_M_Tshirt_019"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_020","FM_Ind_M_Tshirt_020"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_021","FM_Ind_M_Tshirt_021"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_022","FM_Ind_M_Tshirt_022"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_023","FM_Ind_M_Tshirt_023"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_024","FM_Ind_M_Tshirt_024"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_025","FM_Ind_M_Tshirt_025"),
+            new TShirt("mpindependance_overlays","FM_Ind_M_Tshirt_026","FM_Ind_M_Tshirt_026"),
+            new TShirt("mplowrider_overlays","MP_Bennys_000_M","MP_Bennys_000_M"),
+            new TShirt("mplowrider_overlays","MP_Bennys_001_M","MP_Bennys_001_M"),
+            new TShirt("mplowrider_overlays","MP_Broker_000_M","MP_Broker_000_M"),
+            new TShirt("mplowrider_overlays","MP_Broker_001_M","MP_Broker_001_M"),
+            new TShirt("mplowrider_overlays","MP_Broker_002_M","MP_Broker_002_M"),
+            new TShirt("mplowrider_overlays","MP_Broker_003_M","MP_Broker_003_M"),
+            new TShirt("mplowrider_overlays","MP_Broker_004_M","MP_Broker_004_M"),
+            new TShirt("mplowrider_overlays","MP_Broker_005_M","MP_Broker_005_M"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_000_M","MP_Magnetics_000_M"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_001_M","MP_Magnetics_001_M"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_002_M","MP_Magnetics_002_M"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_003_M","MP_Magnetics_003_M"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_004_M","MP_Magnetics_004_M"),
+            new TShirt("mplowrider_overlays","MP_Magnetics_005_M","MP_Magnetics_005_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_000_M","MP_Trickster_000_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_001_M","MP_Trickster_001_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_002_M","MP_Trickster_002_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_003_M","MP_Trickster_003_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_004_M","MP_Trickster_004_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_005_M","MP_Trickster_005_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_006_M","MP_Trickster_006_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_007_M","MP_Trickster_007_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_008_M","MP_Trickster_008_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_009_M","MP_Trickster_009_M"),
+            new TShirt("mplowrider_overlays","MP_Trickster_010_M","MP_Trickster_010_M"),
+            new TShirt("mplts_overlays","FM_LTS_M_Tshirt_000","FM_LTS_M_Tshirt_000"),
+            new TShirt("mpluxe_overlays","MP_FAKE_DIS_000_M","MP_FAKE_DIS_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_DIS_001_M","MP_FAKE_DIS_001_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_DS_000_M","MP_FAKE_DS_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_ENEMA_000_M","MP_FAKE_ENEMA_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_LB_000_M","MP_FAKE_LB_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_LC_000_M","MP_FAKE_LC_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_Per_000_M","MP_FAKE_Per_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_SC_000_M","MP_FAKE_SC_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_SN_000_M","MP_FAKE_SN_000_M"),
+            new TShirt("mpluxe_overlays","MP_FAKE_Vap_000_M","MP_FAKE_Vap_000_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_000_M","MP_FILM_000_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_001_M","MP_FILM_001_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_002_M","MP_FILM_002_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_003_M","MP_FILM_003_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_004_M","MP_FILM_004_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_005_M","MP_FILM_005_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_006_M","MP_FILM_006_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_007_M","MP_FILM_007_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_008_M","MP_FILM_008_M"),
+            new TShirt("mpluxe_overlays","MP_FILM_009_M","MP_FILM_009_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_DIX_000_M","MP_LUXE_DIX_000_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_DIX_001_M","MP_LUXE_DIX_001_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_DIX_002_M","MP_LUXE_DIX_002_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_ENEMA_000_M","MP_LUXE_ENEMA_000_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_004_M","MP_LUXE_LC_004_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_005_M","MP_LUXE_LC_005_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_010_M","MP_LUXE_LC_010_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_LC_011_M","MP_LUXE_LC_011_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_Per_001_M","MP_LUXE_Per_001_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SC_000_M","MP_LUXE_SC_000_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_000_M","MP_LUXE_SN_000_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_001_M","MP_LUXE_SN_001_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_002_M","MP_LUXE_SN_002_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_003_M","MP_LUXE_SN_003_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_004_M","MP_LUXE_SN_004_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_005_M","MP_LUXE_SN_005_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_006_M","MP_LUXE_SN_006_M"),
+            new TShirt("mpluxe_overlays","MP_LUXE_SN_007_M","MP_LUXE_SN_007_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_000_M","MP_LUXE_LC_000_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_001_M","MP_LUXE_LC_001_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_002_M","MP_LUXE_LC_002_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_003_M","MP_LUXE_LC_003_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_006_M","MP_LUXE_LC_006_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_007_M","MP_LUXE_LC_007_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_008_M","MP_LUXE_LC_008_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_009_M","MP_LUXE_LC_009_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_012_M","MP_LUXE_LC_012_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_013_M","MP_LUXE_LC_013_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_014_M","MP_LUXE_LC_014_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_LC_015_M","MP_LUXE_LC_015_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_000_M","MP_LUXE_VDG_000_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_001_M","MP_LUXE_VDG_001_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_002_M","MP_LUXE_VDG_002_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_004_M","MP_LUXE_VDG_004_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_005_M","MP_LUXE_VDG_005_M"),
+            new TShirt("mpluxe2_overlays","MP_LUXE_VDG_006_M","MP_LUXE_VDG_006_M"),
+            new TShirt("mppilot_overlays","MP_Fli_M_Tshirt_000","MP_Fli_M_Tshirt_000"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_A","MP_Val_M_Tshirt_A"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_B","MP_Val_M_Tshirt_B"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_C","MP_Val_M_Tshirt_C"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_D","MP_Val_M_Tshirt_D"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_E","MP_Val_M_Tshirt_E"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_F","MP_Val_M_Tshirt_F"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_G","MP_Val_M_Tshirt_G"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_H","MP_Val_M_Tshirt_H"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_I","MP_Val_M_Tshirt_I"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_J","MP_Val_M_Tshirt_J"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_K","MP_Val_M_Tshirt_K"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_L","MP_Val_M_Tshirt_L"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_M","MP_Val_M_Tshirt_M"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_N","MP_Val_M_Tshirt_N"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_O","MP_Val_M_Tshirt_O"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_P","MP_Val_M_Tshirt_P"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_Q","MP_Val_M_Tshirt_Q"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_R","MP_Val_M_Tshirt_R"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_S","MP_Val_M_Tshirt_S"),
+            new TShirt("mpvalentines_overlays","MP_Val_M_Tshirt_T","MP_Val_M_Tshirt_T"),
+            new TShirt("mpxmas_604490_overlays","MP_IHeartLC_000_M","MP_IHeartLC_000_M"),
+            new TShirt("multiplayer_overlays","FM_CREW_M_000_A","FM_CREW_M_000_A"),
+            new TShirt("multiplayer_overlays","FM_CREW_M_000_B","FM_CREW_M_000_B"),
+            new TShirt("multiplayer_overlays","FM_CREW_M_000_C","FM_CREW_M_000_C"),
+            new TShirt("multiplayer_overlays","FM_CREW_M_000_D","FM_CREW_M_000_D"),
+            new TShirt("multiplayer_overlays","FM_CREW_M_000_E","FM_CREW_M_000_E"),
+            new TShirt("multiplayer_overlays","FM_CREW_M_000_F","FM_CREW_M_000_F"),
+            new TShirt("multiplayer_overlays","FM_Tshirt_Award_000","FM_Tshirt_Award_000"),
+            new TShirt("multiplayer_overlays","FM_Tshirt_Award_001","FM_Tshirt_Award_001"),
+            new TShirt("multiplayer_overlays","FM_Tshirt_Award_002","FM_Tshirt_Award_002"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_001","mp_fm_branding_001"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_002","mp_fm_branding_002"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_003","mp_fm_branding_003"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_004","mp_fm_branding_004"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_005","mp_fm_branding_005"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_006","mp_fm_branding_006"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_007","mp_fm_branding_007"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_008","mp_fm_branding_008"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_009","mp_fm_branding_009"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_010","mp_fm_branding_010"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_011","mp_fm_branding_011"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_012","mp_fm_branding_012"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_013","mp_fm_branding_013"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_014","mp_fm_branding_014"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_015","mp_fm_branding_015"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_016","mp_fm_branding_016"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_017","mp_fm_branding_017"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_018","mp_fm_branding_018"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_020","mp_fm_branding_020"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_022","mp_fm_branding_022"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_023","mp_fm_branding_023"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_024","mp_fm_branding_024"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_027","mp_fm_branding_027"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_028","mp_fm_branding_028"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_029","mp_fm_branding_029"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_031","mp_fm_branding_031"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_032","mp_fm_branding_032"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_034","mp_fm_branding_034"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_035","mp_fm_branding_035"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_036","mp_fm_branding_036"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_038","mp_fm_branding_038"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_039","mp_fm_branding_039"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_040","mp_fm_branding_040"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_041","mp_fm_branding_041"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_042","mp_fm_branding_042"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_043","mp_fm_branding_043"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_044","mp_fm_branding_044"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_045","mp_fm_branding_045"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_046","mp_fm_branding_046"),
+            new TShirt("multiplayer_overlays","mp_fm_branding_047","mp_fm_branding_047"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_000_m","mp_fm_OGA_000_m"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_001_m","mp_fm_OGA_001_m"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_002_m","mp_fm_OGA_002_m"),
+            new TShirt("multiplayer_overlays","mp_fm_OGA_003_m","mp_fm_OGA_003_m"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_000_M","MP_Chianski_000_M"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_001_M","MP_Chianski_001_M"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_002_M","MP_Chianski_002_M"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_003_M","MP_Chianski_003_M"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_004_M","MP_Chianski_004_M"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_005_M","MP_Chianski_005_M"),
+            new TShirt("mplowrider2_overlays","MP_Chianski_006_M","MP_Chianski_006_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_000_M","MP_Hntr_000_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_001_M","MP_Hntr_001_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_002_M","MP_Hntr_002_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_003_M","MP_Hntr_003_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_004_M","MP_Hntr_004_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_005_M","MP_Hntr_005_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_006_M","MP_Hntr_006_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_007_M","MP_Hntr_007_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_008_M","MP_Hntr_008_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_009_M","MP_Hntr_009_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_010_M","MP_Hntr_010_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_011_M","MP_Hntr_011_M"),
+            new TShirt("mplowrider2_overlays","MP_Hntr_012_M","MP_Hntr_012_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_000_M","MP_Dense_000_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_001_M","MP_Dense_001_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_002_M","MP_Dense_002_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_003_M","MP_Dense_003_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_004_M","MP_Dense_004_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_005_M","MP_Dense_005_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_006_M","MP_Dense_006_M"),
+            new TShirt("mplowrider2_overlays","MP_Dense_007_M","MP_Dense_007_M"),
+            new TShirt("mpexecutive_overlays","MP_Securoserv_000_M","MP_Securoserv_000_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_000_M","MP_exec_teams_000_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_001_M","MP_exec_teams_001_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_002_M","MP_exec_teams_002_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_teams_003_M","MP_exec_teams_003_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_000_M","MP_exec_prizes_000_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_001_M","MP_exec_prizes_001_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_002_M","MP_exec_prizes_002_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_003_M","MP_exec_prizes_003_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_004_M","MP_exec_prizes_004_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_005_M","MP_exec_prizes_005_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_006_M","MP_exec_prizes_006_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_007_M","MP_exec_prizes_007_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_008_M","MP_exec_prizes_008_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_009_M","MP_exec_prizes_009_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_010_M","MP_exec_prizes_010_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_011_M","MP_exec_prizes_011_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_012_M","MP_exec_prizes_012_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_013_M","MP_exec_prizes_013_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_014_M","MP_exec_prizes_014_M"),
+            new TShirt("mpexecutive_overlays","MP_exec_prizes_015_M","MP_exec_prizes_015_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Award_000_M","MP_Biker_Award_000_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Award_001_M","MP_Biker_Award_001_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_000_M","MP_Biker_Rank_000_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_001_M","MP_Biker_Rank_001_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_002_M","MP_Biker_Rank_002_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_003_M","MP_Biker_Rank_003_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_004_M","MP_Biker_Rank_004_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_005_M","MP_Biker_Rank_005_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_006_M","MP_Biker_Rank_006_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_007_M","MP_Biker_Rank_007_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_008_M","MP_Biker_Rank_008_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_009_M","MP_Biker_Rank_009_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_010_M","MP_Biker_Rank_010_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_011_M","MP_Biker_Rank_011_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_012_M","MP_Biker_Rank_012_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_013_M","MP_Biker_Rank_013_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_014_M","MP_Biker_Rank_014_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_015_M","MP_Biker_Rank_015_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_016_M","MP_Biker_Rank_016_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Rank_017_M","MP_Biker_Rank_017_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_000_M","MP_Biker_Tee_000_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_001_M","MP_Biker_Tee_001_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_002_M","MP_Biker_Tee_002_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_003_M","MP_Biker_Tee_003_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_004_M","MP_Biker_Tee_004_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_005_M","MP_Biker_Tee_005_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_006_M","MP_Biker_Tee_006_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_007_M","MP_Biker_Tee_007_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_008_M","MP_Biker_Tee_008_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_009_M","MP_Biker_Tee_009_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_010_M","MP_Biker_Tee_010_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_011_M","MP_Biker_Tee_011_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_012_M","MP_Biker_Tee_012_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_013_M","MP_Biker_Tee_013_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_014_M","MP_Biker_Tee_014_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_015_M","MP_Biker_Tee_015_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_016_M","MP_Biker_Tee_016_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_017_M","MP_Biker_Tee_017_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_018_M","MP_Biker_Tee_018_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_019_M","MP_Biker_Tee_019_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_020_M","MP_Biker_Tee_020_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_021_M","MP_Biker_Tee_021_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_022_M","MP_Biker_Tee_022_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_023_M","MP_Biker_Tee_023_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_024_M","MP_Biker_Tee_024_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_025_M","MP_Biker_Tee_025_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_026_M","MP_Biker_Tee_026_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_027_M","MP_Biker_Tee_027_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_028_M","MP_Biker_Tee_028_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_029_M","MP_Biker_Tee_029_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_030_M","MP_Biker_Tee_030_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_031_M","MP_Biker_Tee_031_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_032_M","MP_Biker_Tee_032_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_033_M","MP_Biker_Tee_033_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_034_M","MP_Biker_Tee_034_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_035_M","MP_Biker_Tee_035_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_036_M","MP_Biker_Tee_036_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_037_M","MP_Biker_Tee_037_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_038_M","MP_Biker_Tee_038_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_039_M","MP_Biker_Tee_039_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_040_M","MP_Biker_Tee_040_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_041_M","MP_Biker_Tee_041_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_042_M","MP_Biker_Tee_042_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_043_M","MP_Biker_Tee_043_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_044_M","MP_Biker_Tee_044_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_045_M","MP_Biker_Tee_045_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_046_M","MP_Biker_Tee_046_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_047_M","MP_Biker_Tee_047_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_048_M","MP_Biker_Tee_048_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_049_M","MP_Biker_Tee_049_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_050_M","MP_Biker_Tee_050_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_051_M","MP_Biker_Tee_051_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_052_M","MP_Biker_Tee_052_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_053_M","MP_Biker_Tee_053_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_054_M","MP_Biker_Tee_054_M"),
+            new TShirt("mpbiker_overlays","MP_Biker_Tee_055_M","MP_Biker_Tee_055_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_000_M","MP_Gunrunning_Award_000_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_001_M","MP_Gunrunning_Award_001_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_002_M","MP_Gunrunning_Award_002_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_003_M","MP_Gunrunning_Award_003_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_004_M","MP_Gunrunning_Award_004_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_005_M","MP_Gunrunning_Award_005_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_006_M","MP_Gunrunning_Award_006_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_007_M","MP_Gunrunning_Award_007_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_008_M","MP_Gunrunning_Award_008_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_009_M","MP_Gunrunning_Award_009_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_010_M","MP_Gunrunning_Award_010_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_011_M","MP_Gunrunning_Award_011_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_012_M","MP_Gunrunning_Award_012_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_013_M","MP_Gunrunning_Award_013_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_014_M","MP_Gunrunning_Award_014_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_015_M","MP_Gunrunning_Award_015_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_016_M","MP_Gunrunning_Award_016_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_017_M","MP_Gunrunning_Award_017_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_018_M","MP_Gunrunning_Award_018_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_019_M","MP_Gunrunning_Award_019_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_020_M","MP_Gunrunning_Award_020_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_021_M","MP_Gunrunning_Award_021_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_022_M","MP_Gunrunning_Award_022_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_023_M","MP_Gunrunning_Award_023_M"),
+            new TShirt("mpgunrunning_overlays","MP_Gunrunning_Award_024_M","MP_Gunrunning_Award_024_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_000_M","MP_Battle_Clothing_000_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_001_M","MP_Battle_Clothing_001_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_002_M","MP_Battle_Clothing_002_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_003_M","MP_Battle_Clothing_003_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_004_M","MP_Battle_Clothing_004_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_005_M","MP_Battle_Clothing_005_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_006_M","MP_Battle_Clothing_006_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_007_M","MP_Battle_Clothing_007_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_008_M","MP_Battle_Clothing_008_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_009_M","MP_Battle_Clothing_009_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_010_M","MP_Battle_Clothing_010_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_011_M","MP_Battle_Clothing_011_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_012_M","MP_Battle_Clothing_012_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_013_M","MP_Battle_Clothing_013_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_014_M","MP_Battle_Clothing_014_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_015_M","MP_Battle_Clothing_015_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_016_M","MP_Battle_Clothing_016_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_017_M","MP_Battle_Clothing_017_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_018_M","MP_Battle_Clothing_018_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_019_M","MP_Battle_Clothing_019_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_020_M","MP_Battle_Clothing_020_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_021_M","MP_Battle_Clothing_021_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_022_M","MP_Battle_Clothing_022_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_023_M","MP_Battle_Clothing_023_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_024_M","MP_Battle_Clothing_024_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_025_M","MP_Battle_Clothing_025_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_026_M","MP_Battle_Clothing_026_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_027_M","MP_Battle_Clothing_027_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_028_M","MP_Battle_Clothing_028_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_029_M","MP_Battle_Clothing_029_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_030_M","MP_Battle_Clothing_030_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_031_M","MP_Battle_Clothing_031_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_032_M","MP_Battle_Clothing_032_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_033_M","MP_Battle_Clothing_033_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_034_M","MP_Battle_Clothing_034_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_035_M","MP_Battle_Clothing_035_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_036_M","MP_Battle_Clothing_036_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_037_M","MP_Battle_Clothing_037_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_038_M","MP_Battle_Clothing_038_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_039_M","MP_Battle_Clothing_039_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_040_M","MP_Battle_Clothing_040_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_041_M","MP_Battle_Clothing_041_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_042_M","MP_Battle_Clothing_042_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_043_M","MP_Battle_Clothing_043_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_044_M","MP_Battle_Clothing_044_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_045_M","MP_Battle_Clothing_045_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_046_M","MP_Battle_Clothing_046_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_047_M","MP_Battle_Clothing_047_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_048_M","MP_Battle_Clothing_048_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_049_M","MP_Battle_Clothing_049_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_050_M","MP_Battle_Clothing_050_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_051_M","MP_Battle_Clothing_051_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_052_M","MP_Battle_Clothing_052_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_053_M","MP_Battle_Clothing_053_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_054_M","MP_Battle_Clothing_054_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_055_M","MP_Battle_Clothing_055_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_056_M","MP_Battle_Clothing_056_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_057_M","MP_Battle_Clothing_057_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_058_M","MP_Battle_Clothing_058_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_059_M","MP_Battle_Clothing_059_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_060_M","MP_Battle_Clothing_060_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_061_M","MP_Battle_Clothing_061_M"),
+            new TShirt("mpbattle_overlays","MP_Battle_Clothing_062_M","MP_Battle_Clothing_062_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_000_M","MP_Christmas2018_Tee_000_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_001_M","MP_Christmas2018_Tee_001_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_002_M","MP_Christmas2018_Tee_002_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_003_M","MP_Christmas2018_Tee_003_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_004_M","MP_Christmas2018_Tee_004_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_005_M","MP_Christmas2018_Tee_005_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_006_M","MP_Christmas2018_Tee_006_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_007_M","MP_Christmas2018_Tee_007_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_008_M","MP_Christmas2018_Tee_008_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_009_M","MP_Christmas2018_Tee_009_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_010_M","MP_Christmas2018_Tee_010_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_011_M","MP_Christmas2018_Tee_011_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_012_M","MP_Christmas2018_Tee_012_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_013_M","MP_Christmas2018_Tee_013_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_014_M","MP_Christmas2018_Tee_014_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_015_M","MP_Christmas2018_Tee_015_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_016_M","MP_Christmas2018_Tee_016_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_017_M","MP_Christmas2018_Tee_017_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_018_M","MP_Christmas2018_Tee_018_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_019_M","MP_Christmas2018_Tee_019_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_020_M","MP_Christmas2018_Tee_020_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_021_M","MP_Christmas2018_Tee_021_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_022_M","MP_Christmas2018_Tee_022_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_023_M","MP_Christmas2018_Tee_023_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_024_M","MP_Christmas2018_Tee_024_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_025_M","MP_Christmas2018_Tee_025_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_026_M","MP_Christmas2018_Tee_026_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_027_M","MP_Christmas2018_Tee_027_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_028_M","MP_Christmas2018_Tee_028_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_029_M","MP_Christmas2018_Tee_029_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_030_M","MP_Christmas2018_Tee_030_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_031_M","MP_Christmas2018_Tee_031_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_032_M","MP_Christmas2018_Tee_032_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_033_M","MP_Christmas2018_Tee_033_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_034_M","MP_Christmas2018_Tee_034_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_035_M","MP_Christmas2018_Tee_035_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_036_M","MP_Christmas2018_Tee_036_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_037_M","MP_Christmas2018_Tee_037_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_038_M","MP_Christmas2018_Tee_038_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_039_M","MP_Christmas2018_Tee_039_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_040_M","MP_Christmas2018_Tee_040_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_041_M","MP_Christmas2018_Tee_041_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_042_M","MP_Christmas2018_Tee_042_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_043_M","MP_Christmas2018_Tee_043_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_044_M","MP_Christmas2018_Tee_044_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_045_M","MP_Christmas2018_Tee_045_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_046_M","MP_Christmas2018_Tee_046_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_047_M","MP_Christmas2018_Tee_047_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_048_M","MP_Christmas2018_Tee_048_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_049_M","MP_Christmas2018_Tee_049_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_050_M","MP_Christmas2018_Tee_050_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_051_M","MP_Christmas2018_Tee_051_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_052_M","MP_Christmas2018_Tee_052_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_053_M","MP_Christmas2018_Tee_053_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_054_M","MP_Christmas2018_Tee_054_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_055_M","MP_Christmas2018_Tee_055_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_056_M","MP_Christmas2018_Tee_056_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_057_M","MP_Christmas2018_Tee_057_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_058_M","MP_Christmas2018_Tee_058_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_059_M","MP_Christmas2018_Tee_059_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_060_M","MP_Christmas2018_Tee_060_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_061_M","MP_Christmas2018_Tee_061_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_062_M","MP_Christmas2018_Tee_062_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_063_M","MP_Christmas2018_Tee_063_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_064_M","MP_Christmas2018_Tee_064_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_065_M","MP_Christmas2018_Tee_065_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_066_M","MP_Christmas2018_Tee_066_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_067_M","MP_Christmas2018_Tee_067_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_068_M","MP_Christmas2018_Tee_068_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_069_M","MP_Christmas2018_Tee_069_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_070_M","MP_Christmas2018_Tee_070_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_071_M","MP_Christmas2018_Tee_071_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_072_M","MP_Christmas2018_Tee_072_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_073_M","MP_Christmas2018_Tee_073_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_074_M","MP_Christmas2018_Tee_074_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_075_M","MP_Christmas2018_Tee_075_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_076_M","MP_Christmas2018_Tee_076_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_077_M","MP_Christmas2018_Tee_077_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_078_M","MP_Christmas2018_Tee_078_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_079_M","MP_Christmas2018_Tee_079_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_080_M","MP_Christmas2018_Tee_080_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_081_M","MP_Christmas2018_Tee_081_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_082_M","MP_Christmas2018_Tee_082_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_083_M","MP_Christmas2018_Tee_083_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_084_M","MP_Christmas2018_Tee_084_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_085_M","MP_Christmas2018_Tee_085_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_086_M","MP_Christmas2018_Tee_086_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_087_M","MP_Christmas2018_Tee_087_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_088_M","MP_Christmas2018_Tee_088_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_089_M","MP_Christmas2018_Tee_089_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_090_M","MP_Christmas2018_Tee_090_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_091_M","MP_Christmas2018_Tee_091_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_092_M","MP_Christmas2018_Tee_092_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_093_M","MP_Christmas2018_Tee_093_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_094_M","MP_Christmas2018_Tee_094_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_095_M","MP_Christmas2018_Tee_095_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_096_M","MP_Christmas2018_Tee_096_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_097_M","MP_Christmas2018_Tee_097_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_098_M","MP_Christmas2018_Tee_098_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_099_M","MP_Christmas2018_Tee_099_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_100_M","MP_Christmas2018_Tee_100_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_101_M","MP_Christmas2018_Tee_101_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_102_M","MP_Christmas2018_Tee_102_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_103_M","MP_Christmas2018_Tee_103_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_104_M","MP_Christmas2018_Tee_104_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_105_M","MP_Christmas2018_Tee_105_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_106_M","MP_Christmas2018_Tee_106_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_107_M","MP_Christmas2018_Tee_107_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_108_M","MP_Christmas2018_Tee_108_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_109_M","MP_Christmas2018_Tee_109_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_110_M","MP_Christmas2018_Tee_110_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_111_M","MP_Christmas2018_Tee_111_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_112_M","MP_Christmas2018_Tee_112_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_113_M","MP_Christmas2018_Tee_113_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_114_M","MP_Christmas2018_Tee_114_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_115_M","MP_Christmas2018_Tee_115_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_116_M","MP_Christmas2018_Tee_116_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_117_M","MP_Christmas2018_Tee_117_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_118_M","MP_Christmas2018_Tee_118_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_119_M","MP_Christmas2018_Tee_119_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_120_M","MP_Christmas2018_Tee_120_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_121_M","MP_Christmas2018_Tee_121_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_122_M","MP_Christmas2018_Tee_122_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_123_M","MP_Christmas2018_Tee_123_M"),
+            new TShirt("mpchristmas2018_overlays","MP_Christmas2018_Tee_124_M","MP_Christmas2018_Tee_124_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_000_M","MP_Smuggler_Graphic_000_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_001_M","MP_Smuggler_Graphic_001_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_002_M","MP_Smuggler_Graphic_002_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_003_M","MP_Smuggler_Graphic_003_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_004_M","MP_Smuggler_Graphic_004_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_005_M","MP_Smuggler_Graphic_005_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_006_M","MP_Smuggler_Graphic_006_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_007_M","MP_Smuggler_Graphic_007_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_008_M","MP_Smuggler_Graphic_008_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_009_M","MP_Smuggler_Graphic_009_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_010_M","MP_Smuggler_Graphic_010_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_011_M","MP_Smuggler_Graphic_011_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_012_M","MP_Smuggler_Graphic_012_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_013_M","MP_Smuggler_Graphic_013_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_014_M","MP_Smuggler_Graphic_014_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_015_M","MP_Smuggler_Graphic_015_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_016_M","MP_Smuggler_Graphic_016_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_017_M","MP_Smuggler_Graphic_017_M"),
+            new TShirt("mpsmuggler_overlays","MP_Smuggler_Graphic_018_M","MP_Smuggler_Graphic_018_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_000_M","mpHeist3_Tee_000_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_001_M","mpHeist3_Tee_001_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_002_M","mpHeist3_Tee_002_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_003_M","mpHeist3_Tee_003_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_004_M","mpHeist3_Tee_004_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_005_M","mpHeist3_Tee_005_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_006_M","mpHeist3_Tee_006_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_007_M","mpHeist3_Tee_007_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_008_M","mpHeist3_Tee_008_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_009_M","mpHeist3_Tee_009_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_010_M","mpHeist3_Tee_010_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_011_M","mpHeist3_Tee_011_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_012_M","mpHeist3_Tee_012_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_013_M","mpHeist3_Tee_013_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_014_M","mpHeist3_Tee_014_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_015_M","mpHeist3_Tee_015_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_016_M","mpHeist3_Tee_016_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_017_M","mpHeist3_Tee_017_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_018_M","mpHeist3_Tee_018_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_019_M","mpHeist3_Tee_019_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_020_M","mpHeist3_Tee_020_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_021_M","mpHeist3_Tee_021_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_022_M","mpHeist3_Tee_022_M"),
+            new TShirt("mpheist3_overlays","mpHeist3_Tee_023_M","mpHeist3_Tee_023_M"),
+            new TShirt("mpchristmas3_overlays","MP_Christmas3_Tee_000_M","MP_Christmas3_Tee_000_M"),
+            new TShirt("mpchristmas3_overlays","MP_Christmas3_Tee_001_M","MP_Christmas3_Tee_001_M"),
+            new TShirt("mpsecurity_overlays","MP_Security_Tee_000_M","MP_Security_Tee_000_M"),
+            new TShirt("mpsecurity_overlays","MP_Security_Tee_001_M","MP_Security_Tee_001_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_000_M","mpSum_Tee_000_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_001_M","mpSum_Tee_001_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_002_M","mpSum_Tee_002_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_003_M","mpSum_Tee_003_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_004_M","mpSum_Tee_004_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_005_M","mpSum_Tee_005_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_006_M","mpSum_Tee_006_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_007_M","mpSum_Tee_007_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_008_M","mpSum_Tee_008_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_009_M","mpSum_Tee_009_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_010_M","mpSum_Tee_010_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_011_M","mpSum_Tee_011_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_012_M","mpSum_Tee_012_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_013_M","mpSum_Tee_013_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_014_M","mpSum_Tee_014_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_015_M","mpSum_Tee_015_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_016_M","mpSum_Tee_016_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_017_M","mpSum_Tee_017_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_018_M","mpSum_Tee_018_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_019_M","mpSum_Tee_019_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_020_M","mpSum_Tee_020_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_021_M","mpSum_Tee_021_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_022_M","mpSum_Tee_022_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_023_M","mpSum_Tee_023_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_024_M","mpSum_Tee_024_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_025_M","mpSum_Tee_025_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_026_M","mpSum_Tee_026_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_027_M","mpSum_Tee_027_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_028_M","mpSum_Tee_028_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_029_M","mpSum_Tee_029_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_030_M","mpSum_Tee_030_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_031_M","mpSum_Tee_031_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_032_M","mpSum_Tee_032_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_033_M","mpSum_Tee_033_M"),
+            new TShirt("mpsum_overlays","mpSum_Tee_034_M","mpSum_Tee_034_M"),
+            new TShirt("mpsum2_overlays","MP_Sum2_Tee_000_M","MP_Sum2_Tee_000_M"),
+            new TShirt("mpsum2_overlays","MP_Sum2_Tee_001_M","MP_Sum2_Tee_001_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_000_M","MP_Tuner_Tee_000_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_001_M","MP_Tuner_Tee_001_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_002_M","MP_Tuner_Tee_002_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_003_M","MP_Tuner_Tee_003_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_004_M","MP_Tuner_Tee_004_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_005_M","MP_Tuner_Tee_005_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_006_M","MP_Tuner_Tee_006_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_007_M","MP_Tuner_Tee_007_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_008_M","MP_Tuner_Tee_008_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_009_M","MP_Tuner_Tee_009_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_010_M","MP_Tuner_Tee_010_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_011_M","MP_Tuner_Tee_011_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_012_M","MP_Tuner_Tee_012_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_013_M","MP_Tuner_Tee_013_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_014_M","MP_Tuner_Tee_014_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_015_M","MP_Tuner_Tee_015_M"),
+            new TShirt("mptuner_overlays","MP_Tuner_Tee_016_M","MP_Tuner_Tee_016_M")
+        };
+
         public static bool GetMainChar()
         {
             bool bYes = false;
@@ -18,68 +1818,77 @@ namespace RandomStart
                 bYes = true;
             return bYes;
         }
+        private static List<int> BuildStartsList()
+        {
+            LoggerLight.Loggers("BuildStartsList");
+
+            List<int> iSel = new List<int>();
+
+            for (int i = 1; i < 26; i++)
+                iSel.Add(i);
+
+            return iSel;
+        }
         public static int RandomSeletor()
         {
             int iYourSell = -1;
-
-            if (DataStore.MySettingsXML.RandStarts.Count < 1)
-                DataStore.MySettingsXML.RandStarts = XmlReadWrite.BuildRandStartsList();
+            List<int> Starters = BuildStartsList();
 
             if (!DataStore.MySettingsXML.BeachPed)
-                DataStore.MySettingsXML.RandStarts.Remove(1);
+                Starters.Remove(1);
             if (!DataStore.MySettingsXML.Tramps)
-                DataStore.MySettingsXML.RandStarts.Remove(2);
+                Starters.Remove(2);
             if (!DataStore.MySettingsXML.Highclass)
-                DataStore.MySettingsXML.RandStarts.Remove(3);
+                Starters.Remove(3);
             if (!DataStore.MySettingsXML.Midclass)
-                DataStore.MySettingsXML.RandStarts.Remove(4);
+                Starters.Remove(4);
             if (!DataStore.MySettingsXML.Lowclass)
-                DataStore.MySettingsXML.RandStarts.Remove(5);
+                Starters.Remove(5);
             if (!DataStore.MySettingsXML.Business)
-                DataStore.MySettingsXML.RandStarts.Remove(6);
+                Starters.Remove(6);
             if (!DataStore.MySettingsXML.Bodybuilder)
-                DataStore.MySettingsXML.RandStarts.Remove(7);
+                Starters.Remove(7);
             if (!DataStore.MySettingsXML.GangStars)
-                DataStore.MySettingsXML.RandStarts.Remove(8);
+                Starters.Remove(8);
             if (!DataStore.MySettingsXML.Epsilon)
-                DataStore.MySettingsXML.RandStarts.Remove(9);
+                Starters.Remove(9);
             if (!DataStore.MySettingsXML.Jogger)
-                DataStore.MySettingsXML.RandStarts.Remove(10);
+                Starters.Remove(10);
             if (!DataStore.MySettingsXML.Golfer)
-                DataStore.MySettingsXML.RandStarts.Remove(11);
+                Starters.Remove(11);
             if (!DataStore.MySettingsXML.Hiker)
-                DataStore.MySettingsXML.RandStarts.Remove(12);
+                Starters.Remove(12);
             if (!DataStore.MySettingsXML.Methaddict)
-                DataStore.MySettingsXML.RandStarts.Remove(13);
+                Starters.Remove(13);
             if (!DataStore.MySettingsXML.Rural)
-                DataStore.MySettingsXML.RandStarts.Remove(14);
+                Starters.Remove(14);
             if (!DataStore.MySettingsXML.Cyclist)
-                DataStore.MySettingsXML.RandStarts.Remove(15);
+                Starters.Remove(15);
             if (!DataStore.MySettingsXML.LGBTWXYZ)
-                DataStore.MySettingsXML.RandStarts.Remove(16);
+                Starters.Remove(16);
             if (!DataStore.MySettingsXML.PoolPeds)
-                DataStore.MySettingsXML.RandStarts.Remove(17);
+                Starters.Remove(17);
             if (!DataStore.MySettingsXML.Workers)
-                DataStore.MySettingsXML.RandStarts.Remove(18);
+                Starters.Remove(18);
             if (!DataStore.MySettingsXML.Jetski)
-                DataStore.MySettingsXML.RandStarts.Remove(19);
+                Starters.Remove(19);
             if (!DataStore.MySettingsXML.BikeATV)
-                DataStore.MySettingsXML.RandStarts.Remove(20);
+                Starters.Remove(20);
             if (!DataStore.MySettingsXML.Services)
-                DataStore.MySettingsXML.RandStarts.Remove(21);
+                Starters.Remove(21);
             if (!DataStore.MySettingsXML.Pilot)
-                DataStore.MySettingsXML.RandStarts.Remove(22);
+                Starters.Remove(22);
             if (!DataStore.MySettingsXML.Animals)
-                DataStore.MySettingsXML.RandStarts.Remove(23);
+                Starters.Remove(23);
             if (!DataStore.MySettingsXML.Yankton)
-                DataStore.MySettingsXML.RandStarts.Remove(24);
+                Starters.Remove(24);
             if (!DataStore.MySettingsXML.Cayo)
-                DataStore.MySettingsXML.RandStarts.Remove(25);
+                Starters.Remove(25);
 
-            if (DataStore.MySettingsXML.RandStarts.Count < 1)
+            if (Starters.Count < 1)
                 DataStore.MySettingsXML.Locate = false;
             else
-                iYourSell = DataStore.MySettingsXML.RandStarts[RandomNum.RandInt(0, DataStore.MySettingsXML.RandStarts.Count - 1)];
+                iYourSell = RandomX.FindRandomList("StartTypeSelect", Starters);
 
             return iYourSell;
         }
@@ -556,16 +2365,16 @@ namespace RandomStart
             }
             else if (iList == 15)
             {
-                if (iSubSet == 1 || iSubSet == 2)
+                if (iSubSet == 1)
                 {
                     sVeh.Add("TRIBIKE");
                     sVeh.Add("TRIBIKE2");
                     sVeh.Add("TRIBIKE3");
                     sVeh.Add("FIXTER");
                 }
-                else if (iSubSet == 3 || iSubSet == 4)
+                else if (iSubSet == 2)
                     sVeh.Add("SCORCHER");
-                else if (iSubSet == 5 || iSubSet == 6)
+                else if (iSubSet ==3)
                     sVeh.Add("BMX");
                 else
                     sVeh.Add("CRUISER");
@@ -788,10 +2597,11 @@ namespace RandomStart
                     sVeh.Add("VETO2"); //><!-- Dinka Veto Modern -->GoCart
                 }       //randomOther??
             }
+            
             if (sVeh.Count() == 1)
                 sVehc = sVeh[0];
             else
-                sVehc = sVeh[RandomNum.RandInt(0, sVeh.Count() - 1)];
+                sVehc = sVeh[RandomX.RandInt(0, sVeh.Count() - 1)];
 
             return sVehc;
         }
@@ -1457,11 +3267,11 @@ namespace RandomStart
             if (sPeddy.Count() == 1)
                 sPed = sPeddy[0];
             else
-                sPed = sPeddy[RandomNum.RandInt(0, sPeddy.Count() - 1)];
+                sPed = sPeddy[RandomX.RandInt(0, sPeddy.Count() - 1)];
 
             return sPed;
         }
-        public static Prop MyPropBuild(string sPop, Vector3 Local, Vector3 Rotate, int iPropTask, bool bAddToLiist)
+        public static Prop PropBuild(string sPop, Vector3 Local, Vector3 Rotate, int iPropTask)
         {
             LoggerLight.Loggers("MyPropBuild, sPop == " + sPop + ", iPropTask == " + iPropTask);
 
@@ -1487,8 +3297,9 @@ namespace RandomStart
                 Propper.Rotation = Rotate;
                 Propper.IsPersistent = true;
 
-                if (bAddToLiist)
-                    DataStore.PropList.Add(new Prop(Propper.Handle));
+                LoggerLight.SendRequest("MyProp_" + Propper.Handle, DataStore.sSaveArts, false);
+                DataStore.PropList.Add(new Prop(Propper.Handle));
+
                 if (iPropTask > 0)
                     RsActions.PropTasks(Propper, iPropTask);
             }
@@ -1499,435 +3310,52 @@ namespace RandomStart
 
             return Propper;
         }
-        public static List<string> DanceList(bool bMale, int iSpeed)
+        public static Prop MyPropBuild(string sPop, Vector3 Local, Vector3 Rotate, int iPropTask)
+        {
+            Prop pX = null;
+
+            while (pX == null)
+            {
+                pX = PropBuild(sPop, Local, Rotate, iPropTask);
+                Script.Wait(10);
+            }
+
+            return pX;
+        }
+        public static AnimatedActions DanceList(bool bMale, int iSpeed)
         {
             LoggerLight.Loggers("DanceList, bMale == " + bMale + ", iSpeed == " + iSpeed);
-
-            List<string> sDancing = new List<string>();
-            List<string> Dance = new List<string>(); List<string> DanceVar = new List<string>();
 
             if (bMale)
             {
                 if (iSpeed == 1)
                 {
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_male^5");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_male^6");
+                    return MaleDance01[RandomX.FindRandom("DanceListM01", 0, MaleDance01.Count - 1)];
                 }
                 else if (iSpeed == 2)
                 {
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_male^6");
+                    return MaleDance02[RandomX.FindRandom("DanceListM02", 0, MaleDance02.Count - 1)];
                 }
                 else
                 {
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_male^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_male^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_male^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_male^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_male^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_male^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_male^6");
+                    return MaleDance03[RandomX.FindRandom("DanceListM03", 0, MaleDance03.Count - 1)];
                 }
             }
             else
             {
                 if (iSpeed == 1)
                 {
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_09_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_11_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_13_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_15_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity"); DanceVar.Add("li_dance_facedj_17_v2_female^6");
+                    return FemaleDance01[RandomX.FindRandom("DanceListF01", 0, FemaleDance01.Count - 1)];
                 }
                 else if (iSpeed == 2)
                 {
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_09_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_11_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_13_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_15_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@med_intensity"); DanceVar.Add("mi_dance_facedj_17_v1_female^6");
+                    return FemaleDance02[RandomX.FindRandom("DanceListF02", 0, FemaleDance02.Count - 1)];
                 }
                 else
                 {
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_09_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_11_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_13_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_15_v2_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v1_female^6");
-
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_female^1");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_female^2");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_female^3");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_female^4");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_female^5");
-                    Dance.Add("anim@amb@nightclub@dancers@crowddance_facedj@hi_intensity"); DanceVar.Add("hi_dance_facedj_17_v2_female^6");
+                    return FemaleDance03[RandomX.FindRandom("DanceListF03", 0, FemaleDance03.Count-1)];
                 }
             }
-            if (Dance.Count() > 0)
-            {
-                int iRand = RandomNum.RandInt(0, Dance.Count() - 1);
-                sDancing.Add(Dance[iRand]);
-                sDancing.Add(DanceVar[iRand]);
-            }
-            else
-            {
-                sDancing.Add("anim@amb@nightclub@dancers@crowddance_facedj@low_intesnsity");
-                sDancing.Add("li_dance_facedj_17_v2_female^6");
-            }
-
-            return sDancing;
         }
         public static string AddAnyPed(int iType)
         {
@@ -1958,7 +3386,7 @@ namespace RandomStart
                 sPeds.Add("A_M_Y_Beach_04");
             }           //DancingBeach
 
-            return sPeds[RandomNum.RandInt(0, sPeds.Count() - 1)];
+            return sPeds[RandomX.RandInt(0, sPeds.Count() - 1)];
         }
         public static float RandFloat(float fMin, float fMax)
         {
@@ -2312,6 +3740,35 @@ namespace RandomStart
                 }//BACK
                 else if (iZone == 2)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_004_F", Name = "Herbal Bouquet" }); ;
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_005_F", Name = "Cash Krampus" }); ;
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_006_F", Name = "All In One Night" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_007_F", Name = "A Little Present For You" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_014_F", Name = "Masked Machete Killer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_015_F", Name = "Killer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_016_F", Name = "Powwer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_017_F", Name = "Two Headed Beast" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_018_F", Name = "Dudes" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_019_F", Name = "Fooligan Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_020_F", Name = "Vile Smile" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_021_F", Name = "Demon Skull Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_022_F", Name = "Fatal Incursion Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_023_F", Name = "Many-Headed Beast" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_024_F", Name = "Demon Stitches" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_025_F", Name = "Collector" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_040_F", Name = "Monkey" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_041_F", Name = "Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_042_F", Name = "Snake" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_043_F", Name = "Goat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_044_F", Name = "Rat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_045_F", Name = "Rabbit" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_046_F", Name = "Ox" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_047_F", Name = "Pig" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_048_F", Name = "Rooster" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_049_F", Name = "Dog" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_050_F", Name = "Horse" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_051_F", Name = "Tiger" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_003_F", Name = "Bullet Mouth" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_004_F", Name = "Smoking Barrel" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_040_F", Name = "Carved Pumpkin" });
@@ -2503,6 +3960,11 @@ namespace RandomStart
                 }//STOMACH
                 else if (iZone == 4)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_010_F", Name = "Dude" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_011_F", Name = "Fooligan Tribal" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_012_F", Name = "Skull Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_013_F", Name = "Budonk-adonk!" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_000_F", Name = "Live Fast Mono" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_001_F", Name = "Live Fast Color" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_018_F", Name = "Branched Skull" });
@@ -2582,6 +4044,13 @@ namespace RandomStart
                 }//HEAD
                 else if (iZone == 5)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_033_F", Name = "Fooligan Impotent Rage" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_030_F", Name = "Dude Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_026_F", Name = "Fooligan Clown" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_028_F", Name = "Dude Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_000_F", Name = "The Christmas Spirit" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_001_F", Name = "Festive Reaper" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_008_F", Name = "Bigness Chimp" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_009_F", Name = "Up-n-Atomizer Design" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_010_F", Name = "Rocket Launcher Girl" });
@@ -2702,6 +4171,13 @@ namespace RandomStart
                 }//LEFT ARM
                 else if (iZone == 6)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_032_F", Name = "Fooligan" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_027_F", Name = "Orang-O-Tang Dude" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_029_F", Name = "Orang-O-Tang Gray" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_031_F", Name = "Sailor Fuku Killer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_002_F", Name = "Skull Bauble" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_003_F", Name = "Bony Snowman" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_011_F", Name = "Nothing Mini About It" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_012_F", Name = "Snake Revolver" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_013_F", Name = "Weapon Sleeve" });
@@ -2836,6 +4312,11 @@ namespace RandomStart
                 }//RIGHT ARM
                 else if (iZone == 7)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_038_F", Name = "Fool" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_037_F", Name = "Orang-O-Tang Grenade" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_034_F", Name = "Zombie Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_009_F", Name = "Naughty Snow Globe" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_002_F", Name = "Cobra Biker" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_014_F", Name = "Minimal SMG" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_015_F", Name = "Minimal Advanced Rifle" });
@@ -2911,6 +4392,11 @@ namespace RandomStart
                 }//LEFT LEG
                 else
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_039_F", Name = "Jack Me" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_035_F", Name = "Erupting Skeleton" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_036_F", Name = "B Donk Now Crank It Later" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_008_F", Name = "Gingerbread Steed" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_017_F", Name = "Skull Grenade" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_033_F", Name = "Three-eyed Demon" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_034_F", Name = "Smoldering Reaper" });
@@ -3149,6 +4635,35 @@ namespace RandomStart
                 }//BACK
                 else if (iZone == 2)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_004_M", Name = "Herbal Bouquet" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_005_M", Name = "Cash Krampus" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_006_M", Name = "All In One Night" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_007_M", Name = "A Little Present For You" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_014_M", Name = "Masked Machete Killer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_015_M", Name = "Killer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_016_M", Name = "Powwer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_017_M", Name = "Two Headed Beast" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_018_M", Name = "Dudes" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_019_M", Name = "Fooligan Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_020_M", Name = "Vile Smile" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_021_M", Name = "Demon Skull Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_022_M", Name = "Fatal Incursion Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_023_M", Name = "Many-Headed Beast" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_024_M", Name = "Demon Stitches" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_025_M", Name = "Collector" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_040_M", Name = "Monkey" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_041_M", Name = "Dragon" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_042_M", Name = "Snake" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_043_M", Name = "Goat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_044_M", Name = "Rat" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_045_M", Name = "Rabbit" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_046_M", Name = "Ox" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_047_M", Name = "Pig" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_048_M", Name = "Rooster" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_049_M", Name = "Dog" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_050_M", Name = "Horse" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_051_M", Name = "Tiger" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_003_M", Name = "Bullet Mouth" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_004_M", Name = "Smoking Barrel" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_040_M", Name = "Carved Pumpkin" });
@@ -3334,6 +4849,11 @@ namespace RandomStart
                 }//STOMACH
                 else if (iZone == 4)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_010_M", Name = "Dude" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_011_M", Name = "Fooligan Tribal" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_012_M", Name = "Skull Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_013_M", Name = "Budonk-adonk!" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_000_M", Name = "Live Fast Mono" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_001_M", Name = "Live Fast Color" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_018_M", Name = "Branched Skull" });
@@ -3420,6 +4940,13 @@ namespace RandomStart
                 }//HEAD
                 else if (iZone == 5)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_033_M", Name = "Fooligan Impotent Rage" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_030_M", Name = "Dude Jester" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_026_M", Name = "Fooligan Clown" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_028_M", Name = "Dude Outline" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_000_M", Name = "The Christmas Spirit" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_001_M", Name = "Festive Reaper" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_008_M", Name = "Bigness Chimp" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_009_M", Name = "Up-n-Atomizer Design" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_010_M", Name = "Rocket Launcher Girl" });
@@ -3542,6 +5069,14 @@ namespace RandomStart
                 }//LEFT ARM
                 else if (iZone == 6)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_032_M", Name = "Fooligan" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_027_M", Name = "Orang-O-Tang Dude" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_029_M", Name = "Orang-O-Tang Gray" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_031_M", Name = "Sailor Fuku Killer" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_002_M", Name = "Skull Bauble" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_003_M", Name = "Bony Snowman" });
+
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_011_M", Name = "Nothing Mini About It" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_012_M", Name = "Snake Revolver" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_013_M", Name = "Weapon Sleeve" });
@@ -3678,6 +5213,11 @@ namespace RandomStart
                 }//RIGHT ARM
                 else if (iZone == 7)
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_038_M", Name = "Fool" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_037_M", Name = "Orang-O-Tang Grenade" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_034_M", Name = "Zombie Head" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_009_M", Name = "Naughty Snow Globe" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_002_M", Name = "Cobra Biker" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_014_M", Name = "Minimal SMG" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_015_M", Name = "Minimal Advanced Rifle" });
@@ -3753,6 +5293,11 @@ namespace RandomStart
                 }//LEFT LEG
                 else
                 {
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_039_M", Name = "Jack Me" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_035_M", Name = "Erupting Skeleton" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_036_M", Name = "B Donk Now Crank It Later" });
+                    TatList.Add(new Tattoo { BaseName = "mpchristmas3_overlays", TatName = "MP_Christmas3_Tat_008_M", Name = "Gingerbread Steed" });
+
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_017_M", Name = "Skull Grenade" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_033_M", Name = "Three-eyed Demon" });
                     TatList.Add(new Tattoo { BaseName = "mpsum2_overlays", TatName = "MP_Sum2_Tat_034_M", Name = "Smoldering Reaper" });
@@ -3818,9 +5363,21 @@ namespace RandomStart
             }// FreeMale
 
             if (bEmpty)
-                TatList.Add(new Tattoo { BaseName = "", TatName = "", Name = "No Tattoos Available" });
+                TatList.Add(new Tattoo("", "", "No Tattoos Available"));
 
             return TatList;
+        }
+        public static List<TShirt> ShirtyList(int iPed)
+        {
+            List<TShirt> MyShirt = new List<TShirt>();
+            if (iPed == 4)
+                MyShirt = TShirtyFe;// FreeFemale
+            else if (iPed == 5)
+                MyShirt = TShirtyMa;// FreeMale
+
+            if (MyShirt.Count == 0)
+                MyShirt.Add(new TShirt("", "", "No Shirt Tags Available"));
+            return MyShirt;
         }
         public static List<string> PedCollect()
         {
@@ -3871,7 +5428,7 @@ namespace RandomStart
                 {
                     if (bRando)
                     {
-                        iPerPickP = RandomNum.RandInt(0, NearPeds.Count - 1);
+                        iPerPickP = RandomX.RandInt(0, NearPeds.Count - 1);
                         Vector3 Campo = Game.Player.Character.Position;
                         if (DataStore.MySettingsXML.ReCurr)
                         {
@@ -3886,7 +5443,7 @@ namespace RandomStart
                             Vector3 Pedpos = NearPeds[iPerPickP].Position;
                             float PedHed = NearPeds[iPerPickP].Heading;
                             NearPeds[iPerPickP].Delete();
-                            RsActions.YourSavedPed();
+                            RsActions.SavePedFinder(RandomX.FindRandom("YourSavedPed01", 0, DataStore.MyPedCollection.Count - 1));
                             Game.Player.Character.Position = Pedpos;
                             Game.Player.Character.Heading = PedHed;
                         }
@@ -3899,7 +5456,7 @@ namespace RandomStart
                         while (bLooking && NearPeds[iPerPickP].Exists())
                         {
                             Script.Wait(1);
-                            RsActions.TopCornerUI(DataStore.MyLang.Langfile[138]);
+                            RsActions.TopCornerUI(DataStore.RsTranslate[138]);
                             World.DrawMarker(MarkerType.UpsideDownCone, new Vector3(NearPeds[iPerPickP].Position.X, NearPeds[iPerPickP].Position.Y, NearPeds[iPerPickP].Position.Z + 1.50f), Vector3.Zero, Vector3.Zero, new Vector3(0.75f, 0.75f, 0.75f), Color.Red);
                             if (WhileButtonDown(51, true))
                             {
@@ -3922,130 +5479,1766 @@ namespace RandomStart
             }
             return bDone;
         }
-        public static bool AreTheyTheSame(int iPreset)
+        public static bool AreTheyTheSame(ClothBank OldBank, ClothBank newBank)
         {
             bool bYes = true;
-            Ped Peddy = Game.Player.Character;
-            NewClothBank ComBAnk = DataStore.MyPedCollection[iPreset];
-            if (ComBAnk.ModelX == Peddy.Model.GetHashCode())
+            if (OldBank.FreeMode && newBank.FreeMode) 
             {
-                for (int i = 0; i < DataStore.NewBank.ClothA.Count; i++)
+                if (OldBank.MyFaces == newBank.MyFaces && OldBank.Male == newBank.Male)
                 {
-                    if (ComBAnk.ClothA[i] != DataStore.NewBank.ClothA[i])
-                        bYes = false;
-                    if (ComBAnk.ClothB[i] != DataStore.NewBank.ClothB[i])
-                        bYes = false;
-                }
-                for (int i = 0; i < 5; i++)
-                {
-                    if (ComBAnk.ExtraA[i] != DataStore.NewBank.ExtraA[i])
-                        bYes = false;
-                    if (ComBAnk.ExtraB[i] != DataStore.NewBank.ExtraB[i])
-                        bYes = false;
-                }
 
-                if (ComBAnk.FreeMode)
-                {
-                    if (ComBAnk.XshapeFirstID != DataStore.NewBank.XshapeFirstID)
-                        bYes = false;
-                    if (ComBAnk.XshapeSecondID != DataStore.NewBank.XshapeSecondID)
-                        bYes = false;
-                    if (ComBAnk.XshapeThirdID != DataStore.NewBank.XshapeThirdID)
-                        bYes = false;
-                    if (ComBAnk.XskinFirstID != DataStore.NewBank.XskinFirstID)
-                        bYes = false;
-                    if (ComBAnk.XskinSecondID != DataStore.NewBank.XskinSecondID)
-                        bYes = false;
-                    if (ComBAnk.XskinThirdID != DataStore.NewBank.XskinThirdID)
-                        bYes = false;
-                    if (ComBAnk.XshapeMix != DataStore.NewBank.XshapeMix)
-                        bYes = false;
-                    if (ComBAnk.XskinMix != DataStore.NewBank.XskinMix)
-                        bYes = false;
-                    if (ComBAnk.XthirdMix != DataStore.NewBank.XthirdMix)
-                        bYes = false;
-                    if (ComBAnk.XisParent != DataStore.NewBank.XisParent)
-                        bYes = false;
                 }
+                else
+                    bYes = false;
+            }
+            else if (OldBank.ModelX == newBank.ModelX)
+            {
+
             }
             else
                 bYes = false;
 
+            LoggerLight.Loggers("AreTheyTheSame, bYes == " + bYes);
+
             return bYes;
         }
-        public static NewClothBank BuildABank()
+        public static int IsInTheList(ClothBank thisBank)
         {
-            NewClothBank MyBanks = new NewClothBank();
-            Ped Peddy = Game.Player.Character;
+            int inList = 0;
+            for (int i = 1; i < DataStore.MyPedCollection.Count; i++)
+            {
+                if (thisBank.FreeMode && DataStore.MyPedCollection[i].FreeMode)
+                {
+                    if (thisBank.MyFaces.XshapeFirstID == DataStore.MyPedCollection[i].MyFaces.XshapeFirstID && thisBank.MyFaces.XshapeSecondID == DataStore.MyPedCollection[i].MyFaces.XshapeSecondID && thisBank.MyFaces.XshapeThirdID == DataStore.MyPedCollection[i].MyFaces.XshapeThirdID && thisBank.MyFaces.XisParent == DataStore.MyPedCollection[i].MyFaces.XisParent && thisBank.Male == DataStore.MyPedCollection[i].Male)
+                        inList = i;
+                }
+                else if (thisBank.ModelX == DataStore.MyPedCollection[i].ModelX)
+                    inList = i;
+            }
+            LoggerLight.Loggers("IsInTheList, Ped == " + thisBank.Name + ", inList == " + inList);
+            return inList;
+        }
+        public static int MyPedIs()
+        {
+            int iPed = 0;
 
+            if (Game.Player.Character.Model == PedHash.Michael)
+                iPed = 1;
+            else if (Game.Player.Character.Model == PedHash.Franklin)
+                iPed = 2;
+            else if (Game.Player.Character.Model == PedHash.Trevor)
+                iPed = 3;
+            else if (Game.Player.Character.Model == PedHash.FreemodeFemale01)
+                iPed = 4;
+            else if (Game.Player.Character.Model == PedHash.FreemodeMale01)
+                iPed = 5;
 
-            MyBanks.Name = "Current";
-            MyBanks.ModelX = Peddy.Model.GetHashCode();
-
-            if (Peddy.Model == Function.Call<int>(Hash.GET_HASH_KEY, "mp_f_freemode_01") || Peddy.Model == Function.Call<int>(Hash.GET_HASH_KEY, "mp_m_freemode_01"))
-                MyBanks.FreeMode = true;
-            else
-                MyBanks.FreeMode = false;
+            return iPed;
+        }
+        public static List<FreeOverLay> BuildOverlay(Ped Peddy)
+        {
+            List<FreeOverLay> MyOvers = new List<FreeOverLay>();
 
             for (int i = 0; i < 12; i++)
             {
-                MyBanks.ClothA.Add(Function.Call<int>(Hash.GET_PED_DRAWABLE_VARIATION, Peddy.Handle, i));
-                MyBanks.ClothB.Add(Function.Call<int>(Hash.GET_PED_TEXTURE_VARIATION, Peddy.Handle, i));
-            }
-            for (int i = 0; i < 5; i++)
-            {
-                MyBanks.ExtraA.Add(Function.Call<int>(Hash.GET_PED_PROP_INDEX, Peddy.Handle, i));
-                MyBanks.ExtraB.Add(Function.Call<int>(Hash.GET_PED_PROP_TEXTURE_INDEX, Peddy.Handle, i));
+                int iColour = RandomX.RandInt(0, 64);
+                int iChange = Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Peddy.Handle, i);
+                float fVar = RandomX.RandFlow(0.35f, 0.65f);
+
+                MyOvers.Add(new FreeOverLay(iChange, iColour, fVar));
             }
 
-            MyBanks.PedVoice = "";
-
-            if (MyBanks.FreeMode)
-            {
-                MyBanks.XshapeFirstID = SHVFreeFaces.GetHeadBlendData(Peddy).shapeFirstID;
-                MyBanks.XshapeSecondID = SHVFreeFaces.GetHeadBlendData(Peddy).shapeSecondID;
-                MyBanks.XshapeThirdID = SHVFreeFaces.GetHeadBlendData(Peddy).shapeThirdID;
-                MyBanks.XskinFirstID = SHVFreeFaces.GetHeadBlendData(Peddy).skinFirstID;
-                MyBanks.XskinSecondID = SHVFreeFaces.GetHeadBlendData(Peddy).skinSecondID;
-                MyBanks.XskinThirdID = SHVFreeFaces.GetHeadBlendData(Peddy).skinThirdID;
-                MyBanks.XshapeMix = SHVFreeFaces.GetHeadBlendData(Peddy).shapeMix;
-                MyBanks.XskinMix = SHVFreeFaces.GetHeadBlendData(Peddy).skinMix;
-                MyBanks.XthirdMix = SHVFreeFaces.GetHeadBlendData(Peddy).thirdMix;
-                MyBanks.XisParent = SHVFreeFaces.GetHeadBlendData(Peddy).isParent;
-
-                MyBanks = AddMissingOverlays(MyBanks);
-
-                MyBanks = AddMissingFaces(MyBanks);
-
-            }
-            return MyBanks;
+            return MyOvers;
         }
-        public static NewClothBank AddMissingOverlays(NewClothBank ThisBank)
+        public static ClothX PickOutfit(bool bMale, int iSelect, int iSubset)
         {
-            for (int i = 0; i < 13; i++)
+            LoggerLight.Loggers("FreemodePed.PickOutfit");
+            ClothX cOutput = new ClothX();
+
+            if (bMale)
             {
-                int iValue = Function.Call<int>(Hash._GET_PED_HEAD_OVERLAY_VALUE, Game.Player.Character.Handle, i);
-                ThisBank.Overlay.Add(iValue);
-                if (iValue == 255)
+                List<ClothX> CBList = new List<ClothX>();
+                int iText = 0;
+                int iText2 = 0;
+                int iText3 = 0;
+
+                if (iSelect == 1)
                 {
-                    ThisBank.OverlayColour.Add(0);
-                    ThisBank.OverlayOpc.Add(0.00f);
-                }
-                else
+                    iText = RandomX.RandInt(0, 11);
+                    iText2 = RandomX.RandInt(0, 15);
+                    ClothX myCB0 = new ClothX("M_Beach_0", new List<int> { 0, 0, -1, 15, 16, 0, 1, 16, -1, 0, 0, 15 }, new List<int> { 0, 0, 0, 0, iText, 0, iText2, 0, 0, 0, 0, 0 }, new List<int> { -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1, -1 });
+                    CBList.Add(myCB0);
+                    iText = RandomX.RandInt(0, 15);
+                    iText2 = RandomX.RandInt(0, 11);
+                    iText3 = RandomX.RandInt(0, 5);
+                    ClothX myCB2 = new ClothX("M_Beach_2", new List<int> { 0, 0, -1, 5, 15, 0, 16, 0, 15, 0, 0, 17 }, new List<int> { 0, 0, 0, 0, iText, 0, iText2, 0, 0, 0, 0, iText3 }, new List<int> { -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1, -1 });
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX("M_Beach_3", new List<int> { 0, 0, -1, 5, 18, 0, 16, 0, 15, 0, 0, 36 }, new List<int> { 0, 0, 0, 0, iText2, 0, iText2, 0, 0, 0, 0, iText3 }, new List<int> { -1, -1, -1, -1, -1 }, new List<int> { -1, -1, -1, -1, -1 });
+                    CBList.Add(myCB3);
+                }//Beach
+                else if (iSelect == 3)
                 {
-                    ThisBank.OverlayColour.Add(RandomNum.RandInt(0, 61));
-                    ThisBank.OverlayOpc.Add(RandFloat(0.65f, 0.99f));
-                }
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_Highclass_0",
+                        ClothA = new List<int> { 0, 0, -1, 4, 20, 0, 40, 11, 35, 0, 0, 27 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 9, 2, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "M_Highclass_1",
+                        ClothA = new List<int> { 0, 0, -1, 6, 83, 0, 29, 89, 15, 0, 0, 190 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { 96, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 6, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "M_Highclass_2",
+                        ClothA = new List<int> { 0, 0, -1, 4, 63, 0, 2, 0, 15, 0, 0, 139 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 3 },
+                        ExtraA = new List<int> { -1, 3, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 9, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "M_Highclass_3",
+                        ClothA = new List<int> { 0, 0, -1, 4, 60, 0, 36, 0, 72, 0, 0, 108 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 3, 0, 3, 0, 0, 4 },
+                        ExtraA = new List<int> { -1, 13, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "M_Highclass_4",
+                        ClothA = new List<int> { 0, 0, -1, 12, 24, 0, 18, 29, 31, 0, 0, 29 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 5, 0, 0, 2, 0, 0, 0, 5 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "M_Highclass_5",
+                        ClothA = new List<int> { 0, 0, -1, 12, 60, 0, 40, 24, 22, 0, 0, 120 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 4, 0, 4, 1, 0, 0, 0, 4 },
+                        ExtraA = new List<int> { 64, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 4, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "M_Highclass_6",
+                        ClothA = new List<int> { 0, 0, -1, 12, 60, 0, 40, 24, 22, 0, 0, 120 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 1, 2, 4, 0, 0, 1 },
+                        ExtraA = new List<int> { 64, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                    ClothX myCB7 = new ClothX
+                    {
+                        Title = "M_Highclass_7",
+                        ClothA = new List<int> { 0, 0, -1, 12, 60, 0, 40, 24, 22, 0, 0, 120 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 11, 0, 11, 1, 4, 0, 0, 11 },
+                        ExtraA = new List<int> { 64, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 11, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB7);
+                }//HighClass
+                else if (iSelect == 4)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_Midclass_0",
+                        ClothA = new List<int> { 0, 0, -1, 8, 4, 0, 4, 0, 15, 0, 0, 38 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 4, 0, 1, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "M_Midclass_1",
+                        ClothA = new List<int> { 0, 0, -1, 0, 0, 0, 1, 17, 15, 0, 0, 33 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "M_Midclass_2",
+                        ClothA = new List<int> { 0, 0, -1, 12, 1, 0, 1, 0, 15, 0, 0, 41 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 14, 0, 4, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "M_Midclass_3",
+                        ClothA = new List<int> { 0, 0, -1, 0, 0, 0, 0, 0, 15, 0, 0, 1 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 10, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "M_Midclass_4",
+                        ClothA = new List<int> { 0, 0, -1, 0, 1, 0, 1, 0, 15, 0, 0, 22 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "M_Midclass_5",
+                        ClothA = new List<int> { 0, 0, -1, 0, 0, 0, 2, 0, 15, 0, 0, 0 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, 0, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, 0, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "M_Midclass_6",
+                        ClothA = new List<int> { 0, 0, -1, 0, 43, 0, 57, 51, 81, 0, 0, 170 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 6, 0, 2, 0, 0, 3 },
+                        ExtraA = new List<int> { -1, 18, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 3, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                }//MiddleClass
+                else if (iSelect == 6)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_Buisness_0",
+                        ClothA = new List<int> { 0, 0, -1, 4, 13, 0, 10, 115, 10, 0, 0, 28 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, 17, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 6, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "M_Buisness_1",
+                        ClothA = new List<int> { 0, 0, -1, 4, 37, 0, 20, 38, 10, 0, 0, 142 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 5, 6, 2, 0, 0, 2 },
+                        ExtraA = new List<int> { 29, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "M_Buisness_2",
+                        ClothA = new List<int> { 0, 0, -1, 4, 37, 0, 15, 28, 31, 0, 0, 140 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 10, 1, 0, 0, 0, 2 },
+                        ExtraA = new List<int> { -1, 17, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 5, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "M_Buisness_3",
+                        ClothA = new List<int> { 0, 0, -1, 4, 37, 0, 40, 28, 31, 0, 0, 140 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 2, 15, 0, 0, 0, 7 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "M_Buisness_4",
+                        ClothA = new List<int> { 0, 0, -1, 4, 37, 0, 40, 28, 31, 0, 0, 140 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 3, 0, 7, 14, 0, 0, 0, 8 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "M_Buisness_5",
+                        ClothA = new List<int> { 0, 0, -1, 4, 37, 0, 40, 28, 31, 0, 0, 140 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 6, 13, 0, 0, 0, 13 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "M_Buisness_6",
+                        ClothA = new List<int> { 0, 0, -1, 4, 60, 0, 23, 10, 10, 0, 0, 72 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 7, 0, 2, 2, 7, 0, 0, 2 },
+                        ExtraA = new List<int> { 29, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                    ClothX myCB7 = new ClothX
+                    {
+                        Title = "M_Buisness_7",
+                        ClothA = new List<int> { 0, 0, -1, 4, 10, 0, 23, 21, 31, 0, 0, 106 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 3, 12, 3, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB7);
+                    ClothX myCB8 = new ClothX
+                    {
+                        Title = "M_Buisness_8",
+                        ClothA = new List<int> { 0, 0, -1, 4, 10, 0, 10, 38, 10, 0, 0, 4 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 6, 4, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB8);
+                }//Buisness
+                else if (iSelect == 9)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_Epslon_0",
+                        ClothA = new List<int> { 0, 0, 0, 8, 104, 0, 20, 129, 15, 0, 0, 272 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                }//Eppps
+                else if (iSelect == 10)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_Jogger_0",
+                        ClothA = new List<int> { 0, 0, -1, 0, 18, 0, 9, 0, 15, 0, 0, 39 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 7, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "M_Jogger_1",
+                        ClothA = new List<int> { 0, 0, -1, 0, 5, 0, 2, 0, 15, 0, 0, 1 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 6, 0, 6, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "M_Jogger_2",
+                        ClothA = new List<int> { 0, 0, -1, 0, 6, 0, 9, 0, 15, 0, 0, 9 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "M_Jogger_3",
+                        ClothA = new List<int> { 0, 0, -1, 1, 3, 0, 7, 0, 41, 0, 0, 7 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 4, 0, 15, 0, 3, 0, 0, 4 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "M_Jogger_4",
+                        ClothA = new List<int> { 0, 0, -1, 8, 14, 0, 2, 0, 15, 0, 0, 38 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 13, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                }//jogger
+                else if (iSelect == 17)
+                {
+                    iText = RandomX.RandInt(0, 11);
+                    iText2 = RandomX.RandInt(0, 3);
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_Swim_14",
+                        ClothA = new List<int> { 0, 0, -1, 15, 18, 0, 5, 0, 15, 0, 0, 15 },
+                        ClothB = new List<int> { 0, 0, 0, 0, iText, 0, iText2, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                }//Swim
+                else if (iSelect == 20)
+                {
+                    iText = RandomX.RandInt(0, 10);
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_BikeATV_0",
+                        ClothA = new List<int> { 0, 0, -1, 17, 77, 0, 55, 0, 15, 0, 0, 178 },
+                        ClothB = new List<int> { 0, 0, 0, 0, iText, 0, iText, 0, 0, 0, 0, iText },
+                        ExtraA = new List<int> { 91, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { iText, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    iText = RandomX.RandInt(0, 11);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "M_BikeATV_1",
+                        ClothA = new List<int> { 0, 0, -1, 110, 67, 0, 47, 0, 15, 0, 0, 148 },
+                        ClothB = new List<int> { 0, 0, 0, iText, iText, 0, iText, 0, 0, 0, 0, iText },
+                        ExtraA = new List<int> { 62, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { iText, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                }//BikeATV
+                else if (iSelect == 21)
+                {
+                    if (iSubset == 3 || iSubset == 4 || iSubset == 5 || iSubset == 6)
+                    {
+                        ClothX myCB0 = new ClothX
+                        {
+                            Title = "M_Services_0",
+                            ClothA = new List<int> { 0, 0, -1, 0, 35, 0, 25, 0, 58, 0, 0, 55 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB0);
+                        ClothX myCB1 = new ClothX
+                        {
+                            Title = "M_Services_1",
+                            ClothA = new List<int> { 0, 0, -1, 0, 35, 0, 25, 0, 58, 0, 0, 55 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 46, 1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, 1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB1);
+                    }//police
+                    else if (iSubset == 7)
+                    {
+                        ClothX myCB10 = new ClothX
+                        {
+                            Title = "M_Services_10",
+                            ClothA = new List<int> { 0, 0, 0, 1, 37, 0, 21, 38, 13, 54, 0, 59 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 2, 15, 0, 0, 0, 2 },
+                            ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB10);
+                        ClothX myCB11 = new ClothX
+                        {
+                            Title = "M_Services_11",
+                            ClothA = new List<int> { 0, 0, 0, 4, 10, 0, 20, 38, 10, 53, 0, 28 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { -1, 8, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, 5, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB11);
+                        ClothX myCB12 = new ClothX
+                        {
+                            Title = "M_Services_12",
+                            ClothA = new List<int> { 0, 0, 0, 12, 28, 0, 10, 37, 11, 53, 0, 4 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { -1, 8, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, 6, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB12);
+                        ClothX myCB13 = new ClothX
+                        {
+                            Title = "M_Services_13",
+                            ClothA = new List<int> { 0, 0, 0, 4, 25, 0, 21, 21, 10, 55, 0, 23 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 0, 11, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB13);
+                    }//fib
+                    else if (iSubset == 10)
+                    {
+                        ClothX myCB2 = new ClothX
+                        {
+                            Title = "M_Services_2",
+                            ClothA = new List<int> { 0, 0, -1, 85, 96, 0, 51, 127, 15, 0, 58, 250 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0 },
+                            ExtraA = new List<int> { 122, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB2);
+                        ClothX myCB3 = new ClothX
+                        {
+                            Title = "M_Services_3",
+                            ClothA = new List<int> { 0, 0, -1, 85, 96, 0, 51, 127, 15, 0, 58, 250 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1 },
+                            ExtraA = new List<int> { 122, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB3);
+                        ClothX myCB4 = new ClothX
+                        {
+                            Title = "M_Services_4",
+                            ClothA = new List<int> { 0, 0, -1, 90, 96, 0, 51, 126, 15, 0, 57, 249 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 122, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB4);
+                        ClothX myCB5 = new ClothX
+                        {
+                            Title = "M_Services_5",
+                            ClothA = new List<int> { 0, 0, -1, 90, 96, 0, 51, 126, 15, 0, 57, 249 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { 122, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB5);
+                    }//Ambulance
+                    else if (iSubset == 11)
+                    {
+                        ClothX myCB6 = new ClothX
+                        {
+                            Title = "M_Services_6",
+                            ClothA = new List<int> { 0, 0, 0, 4, 120, 0, 51, 0, 151, 0, 64, 314 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 137, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB6);
+                        ClothX myCB7 = new ClothX
+                        {
+                            Title = "M_Services_7",
+                            ClothA = new List<int> { 0, 0, 0, 4, 120, 0, 51, 0, 15, 0, 64, 315 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 138, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB7);
+                        ClothX myCB8 = new ClothX
+                        {
+                            Title = "M_Services_8",
+                            ClothA = new List<int> { 0, 0, 0, 4, 120, 0, 51, 0, 15, 0, 64, 315 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { 138, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB8);
+                        ClothX myCB9 = new ClothX
+                        {
+                            Title = "M_Services_9",
+                            ClothA = new List<int> { 0, 0, 0, 4, 120, 0, 51, 0, 151, 0, 64, 314 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { 137, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB9);
+                    }//fire
+                }//Services
+                else if (iSelect == 25)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "M_CayoPerico_0",
+                        ClothA = new List<int> { 0, 0, 0, 184, 22, 0, 36, 0, 15, 0, 0, 355 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 8, 0, 2, 0, 0, 0, 0, 17 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "M_CayoPerico_1",
+                        ClothA = new List<int> { 0, 0, 0, 11, 6, 0, 9, 0, 15, 0, 0, 354 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 13, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "M_CayoPerico_2",
+                        ClothA = new List<int> { 0, 0, 0, 184, 0, 0, 1, 0, 141, 0, 0, 355 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "M_CayoPerico_3",
+                        ClothA = new List<int> { 0, 0, 0, 11, 12, 0, 5, 0, 15, 0, 0, 354 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 14 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "M_CayoPerico_4",
+                        ClothA = new List<int> { 0, 0, 0, 4, 87, 0, 60, 148, 170, 0, 0, 221 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 6, 0, 0, 1, 6, 0, 0, 6 },
+                        ExtraA = new List<int> { 150, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 14, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "M_CayoPerico_5",
+                        ClothA = new List<int> { 0, 0, 0, 4, 87, 0, 60, 147, 170, 0, 0, 221 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 8, 0, 0, 1, 5, 0, 0, 8 },
+                        ExtraA = new List<int> { 107, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 8, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "M_CayoPerico_6",
+                        ClothA = new List<int> { 0, 0, 0, 4, 87, 0, 96, 148, 170, 0, 0, 220 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 15, 0, 0, 11, 9, 0, 0, 15 },
+                        ExtraA = new List<int> { 104, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 15, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                    ClothX myCB7 = new ClothX
+                    {
+                        Title = "M_CayoPerico_7",
+                        ClothA = new List<int> { 0, 0, 0, 4, 87, 0, 96, 146, 170, 0, 0, 220 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 16, 0, 0, 4, 8, 0, 0, 16 },
+                        ExtraA = new List<int> { 105, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 16, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB7);
+                    ClothX myCB8 = new ClothX
+                    {
+                        Title = "M_CayoPerico_8",
+                        ClothA = new List<int> { 0, 0, 0, 11, 9, 0, 73, 0, 15, 0, 0, 222 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 7, 0, 6, 0, 0, 0, 0, 23 },
+                        ExtraA = new List<int> { 142, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 19, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB8);
+                    ClothX myCB9 = new ClothX
+                    {
+                        Title = "M_CayoPerico_9",
+                        ClothA = new List<int> { 0, 0, 0, 0, 0, 0, 59, 0, 171, 0, 0, 325 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 6, 0, 23, 0, 14, 0, 0, 12 },
+                        ExtraA = new List<int> { 106, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 23, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB9);
+                    ClothX myCB10 = new ClothX
+                    {
+                        Title = "M_CayoPerico_10",
+                        ClothA = new List<int> { 0, 0, 0, 0, 122, 0, 54, 0, 171, 0, 0, 208 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 18 },
+                        ExtraA = new List<int> { 60, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB10);
+                    ClothX myCB11 = new ClothX
+                    {
+                        Title = "M_CayoPerico_11",
+                        ClothA = new List<int> { 0, 0, 0, 11, 122, 0, 71, 0, 15, 0, 0, 222 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 24 },
+                        ExtraA = new List<int> { 107, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 24, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB11);
+                    ClothX myCB12 = new ClothX
+                    {
+                        Title = "M_CayoPerico_12",
+                        ClothA = new List<int> { 0, 0, 0, 5, 86, 0, 61, 0, 15, 0, 0, 237 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 4 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB12);
+                    ClothX myCB13 = new ClothX
+                    {
+                        Title = "M_CayoPerico_13",
+                        ClothA = new List<int> { 0, 0, 0, 15, 86, 0, 73, 0, 15, 0, 0, 15 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 17, 0, 6, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB13);
+                    ClothX myCB14 = new ClothX
+                    {
+                        Title = "M_CayoPerico_14",
+                        ClothA = new List<int> { 0, 0, 0, 15, 124, 0, 71, 0, 171, 0, 0, 15 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 19, 0, 1, 0, 8, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB14);
+                    ClothX myCB15 = new ClothX
+                    {
+                        Title = "M_CayoPerico_15",
+                        ClothA = new List<int> { 0, 0, 0, 2, 124, 0, 97, 0, 171, 0, 0, 238 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 16, 0, 0, 0, 2, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB15);
+                    ClothX myCB16 = new ClothX
+                    {
+                        Title = "M_CayoPerico_16",
+                        ClothA = new List<int> { 0, 185, 0, 174, 98, 0, 71, 0, 15, 0, 0, 253 },
+                        ClothB = new List<int> { 0, 8, 0, 0, 1, 0, 4, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB16);
+                    ClothX myCB17 = new ClothX
+                    {
+                        Title = "M_CayoPerico_17",
+                        ClothA = new List<int> { 0, 52, 0, 174, 124, 0, 25, 0, 15, 0, 0, 336 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3 },
+                        ExtraA = new List<int> { 147, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB17);
+                    ClothX myCB18 = new ClothX
+                    {
+                        Title = "M_CayoPerico_18",
+                        ClothA = new List<int> { 0, 132, 0, 174, 125, 0, 73, 0, 15, 0, 0, 251 },
+                        ClothB = new List<int> { 0, 8, 0, 0, 1, 0, 0, 0, 0, 0, 0, 25 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB18);
+                    ClothX myCB19 = new ClothX
+                    {
+                        Title = "M_CayoPerico_19",
+                        ClothA = new List<int> { 0, 185, 0, 174, 130, 0, 96, 0, 15, 0, 0, 328 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB19);
+                    ClothX myCB20 = new ClothX
+                    {
+                        Title = "M_CayoPerico_20",
+                        ClothA = new List<int> { 0, 0, 0, 12, 0, 0, 10, 0, 11, 0, 0, 338 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 12, 0, 7, 0, 0, 3 },
+                        ExtraA = new List<int> { -1, 5, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB20);
+                    ClothX myCB21 = new ClothX
+                    {
+                        Title = "M_CayoPerico_21",
+                        ClothA = new List<int> { 0, 0, 0, 184, 1, 0, 4, 0, 141, 0, 0, 346 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 24 },
+                        ExtraA = new List<int> { -1, 7, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB21);
+                    ClothX myCB22 = new ClothX
+                    {
+                        Title = "M_CayoPerico_22",
+                        ClothA = new List<int> { 0, 0, 0, 12, 22, 0, 1, 0, 15, 0, 0, 12 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB22);
+                    ClothX myCB23 = new ClothX
+                    {
+                        Title = "M_CayoPerico_23",
+                        ClothA = new List<int> { 0, 0, 0, 184, 0, 0, 12, 0, 23, 0, 0, 346 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 12, 0, 6, 0, 1, 0, 0, 20 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB23);
+                    ClothX myCB24 = new ClothX
+                    {
+                        Title = "M_CayoPerico_24",
+                        ClothA = new List<int> { 0, 0, 0, 0, 4, 0, 4, 0, 172, 0, 0, 9 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 4, 0, 12, 0, 0, 14 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB24);
+                    ClothX myCB25 = new ClothX
+                    {
+                        Title = "M_CayoPerico_25",
+                        ClothA = new List<int> { 0, 186, 0, 0, 118, 0, 94, 0, 172, 0, 0, 9 },
+                        ClothB = new List<int> { 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB25);
+                    ClothX myCB26 = new ClothX
+                    {
+                        Title = "M_CayoPerico_26",
+                        ClothA = new List<int> { 0, 0, 0, 4, 117, 0, 75, 0, 172, 0, 0, 305 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 9, 0, 21, 0, 2, 0, 0, 23 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB26);
+                    ClothX myCB27 = new ClothX
+                    {
+                        Title = "M_CayoPerico_27",
+                        ClothA = new List<int> { 0, 101, 0, 0, 117, 0, 31, 0, 172, 0, 0, 73 },
+                        ClothB = new List<int> { 0, 11, 0, 0, 10, 0, 4, 0, 19, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB27);
+                }//Cayo
+
+                cOutput = CBList[RandomX.RandInt(0, CBList.Count - 1)];
             }
-            return ThisBank;
-        }
-        public static NewClothBank AddMissingFaces(NewClothBank ThisBank)
-        {
-            for (int i = 0; i < 20; i++)
+            else
             {
-                ThisBank.FaceScale.Add(0.00f);
+                List<ClothX> CBList = new List<ClothX>();
+                int iText = 0;
+                int iText2 = 0;
+                int iText3 = 0;
+
+                if (iSelect == 1)
+                {
+                    iText = RandomX.RandInt(0, 11);
+                    iText2 = RandomX.RandInt(0, 11);
+                    iText3 = RandomX.RandInt(0, 4);
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_Beach_0",
+                        ClothA = new List<int> { 0, 0, -1, 11, 17, 0, 16, 11, 3, 0, 0, 36 },
+                        ClothB = new List<int> { 0, 0, 0, 0, iText, 0, iText2, 2, 0, 0, 0, iText3 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    iText = RandomX.RandInt(0, 15);
+                    iText2 = RandomX.RandInt(0, 15);
+                    iText3 = RandomX.RandInt(0, 11);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "F_Beach_1",
+                        ClothA = new List<int> { 0, 0, -1, 15, 12, 0, 3, 11, 3, 0, 0, 18 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 15, 0, 15, 1, 0, 0, 0, 11 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    iText = RandomX.RandInt(0, 12);
+                    iText2 = RandomX.RandInt(0, 11);
+                    iText3 = RandomX.RandInt(0, 11);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "F_Beach_2",
+                        ClothA = new List<int> { 0, 0, -1, 15, 25, 0, 16, 1, 3, 0, 0, 18 },
+                        ClothB = new List<int> { 0, 0, 0, 0, iText, 0, iText2, 2, 0, 0, 0, iText3 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                }
+                else if (iSelect == 3)
+                {
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "F_Highclass_3",
+                        ClothA = new List<int> { 0, 0, -1, 36, 41, 0, 29, 0, 67, 0, 0, 107 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, 10, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "F_Highclass_4",
+                        ClothA = new List<int> { 0, 0, -1, 7, 27, 0, 11, 0, 39, 0, 0, 66 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 0, 2, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "F_Highclass_5",
+                        ClothA = new List<int> { 0, 0, -1, 3, 43, 0, 4, 84, 65, 0, 0, 100 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { 55, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 24, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "F_Highclass_6",
+                        ClothA = new List<int> { 0, 0, -1, 3, 64, 0, 6, 23, 41, 0, 0, 58 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                    ClothX myCB7 = new ClothX
+                    {
+                        Title = "F_Highclass_7",
+                        ClothA = new List<int> { 0, 0, -1, 0, 85, 0, 31, 67, 3, 0, 0, 192 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { 95, -1, 13, -1, -1 },
+                        ExtraB = new List<int> { 6, -1, 0, -1, -1 }
+                    };
+                    CBList.Add(myCB7);
+                    ClothX myCB8 = new ClothX
+                    {
+                        Title = "F_Highclass_8",
+                        ClothA = new List<int> { 0, 0, -1, 3, 50, 0, 37, 0, 66, 0, 0, 104 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 3, 0, 5, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, 2, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB8);
+                    ClothX myCB9 = new ClothX
+                    {
+                        Title = "F_Highclass_9",
+                        ClothA = new List<int> { 0, 0, -1, 7, 0, 0, 3, 85, 55, 0, 0, 66 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0 },
+                        ExtraA = new List<int> { 58, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 2, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB9);
+                    ClothX myCB10 = new ClothX
+                    {
+                        Title = "F_Highclass_10",
+                        ClothA = new List<int> { 0, 0, -1, 36, 37, 0, 29, 0, 39, 0, 0, 65 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB10);
+                    ClothX myCB11 = new ClothX
+                    {
+                        Title = "F_Highclass_11",
+                        ClothA = new List<int> { 0, 0, -1, 3, 63, 0, 41, 0, 76, 0, 0, 99 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 2, 0, 3, 0, 0, 2 },
+                        ExtraA = new List<int> { -1, 2, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB11);
+                    ClothX myCB12 = new ClothX
+                    {
+                        Title = "F_Highclass_12",
+                        ClothA = new List<int> { 0, 0, -1, 3, 37, 0, 0, 21, 38, 0, 0, 57 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 5, 0, 2, 0, 2, 0, 0, 5 },
+                        ExtraA = new List<int> { -1, -1, 15, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, 0, -1, -1 }
+                    };
+                    CBList.Add(myCB12);
+                    ClothX myCB13 = new ClothX
+                    {
+                        Title = "F_Highclass_13",
+                        ClothA = new List<int> { 0, 0, -1, 3, 41, 0, 39, 0, 14, 0, 0, 136 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7 },
+                        ExtraA = new List<int> { -1, 4, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB13);
+                    ClothX myCB14 = new ClothX
+                    {
+                        Title = "F_Highclass_14",
+                        ClothA = new List<int> { 40, 0, -1, 3, 27, 0, 7, 0, 3, 0, 0, 98 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3 },
+                        ExtraA = new List<int> { -1, 7, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 2, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB14);
+                    ClothX myCB15 = new ClothX
+                    {
+                        Title = "F_Highclass_15",
+                        ClothA = new List<int> { 0, 0, -1, 11, 21, 0, 0, 54, 3, 0, 0, 115 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 1, 0, 0, 0, 2 },
+                        ExtraA = new List<int> { 54, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 7, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB15);
+                    ClothX myCB16 = new ClothX
+                    {
+                        Title = "F_Highclass_16",
+                        ClothA = new List<int> { 40, 0, -1, 3, 54, 0, 4, 0, 39, 0, 0, 92 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, 11, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 7, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB16);
+                    ClothX myCB17 = new ClothX
+                    {
+                        Title = "F_Highclass_17",
+                        ClothA = new List<int> { 0, 0, -1, 3, 54, 0, 8, 0, 44, 0, 0, 66 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 2 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB17);
+                }//HighClass
+                else if (iSelect == 4)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_Midclass_0",
+                        ClothA = new List<int> { 0, 0, -1, 2, 2, 0, 2, 5, 3, 0, 0, 2 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 0, 4, 0, 0, 0, 6 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "F_Midclass_1",
+                        ClothA = new List<int> { 0, 0, -1, 0, 16, 0, 2, 2, 3, 0, 0, 0 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 4, 0, 5, 1, 0, 0, 0, 11 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "F_Midclass_2",
+                        ClothA = new List<int> { 0, 0, -1, 9, 4, 0, 13, 1, 3, 0, 0, 9 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 9, 0, 12, 2, 0, 0, 0, 9 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "F_Midclass_3",
+                        ClothA = new List<int> { 0, 0, -1, 3, 2, 0, 16, 2, 3, 0, 0, 3 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 6, 1, 0, 0, 0, 11 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "F_Midclass_4",
+                        ClothA = new List<int> { 0, 0, -1, 2, 3, 0, 16, 1, 3, 0, 0, 2 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 7, 0, 11, 0, 0, 0, 0, 15 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "F_Midclass_5",
+                        ClothA = new List<int> { 0, 0, -1, 3, 3, 0, 16, 1, 3, 0, 0, 3 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 11, 0, 1, 3, 0, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "F_Midclass_6",
+                        ClothA = new List<int> { 0, 0, -1, 2, 0, 0, 10, 0, 2, 0, 0, 2 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, 0, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, 0, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                }//MiddleClass
+                else if (iSelect == 6)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_Buisness_0",
+                        ClothA = new List<int> { 0, 0, -1, 3, 41, 0, 29, 20, 39, 0, 0, 97 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 2, 5, 4, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "F_Buisness_1",
+                        ClothA = new List<int> { 0, 0, -1, 7, 54, 0, 0, 22, 38, 0, 0, 139 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 1, 6, 2, 0, 0, 2 },
+                        ExtraA = new List<int> { 28, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 4, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "F_Buisness_2",
+                        ClothA = new List<int> { 0, 0, -1, 3, 37, 0, 29, 22, 38, 0, 0, 7 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 6, 4, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "F_Buisness_3",
+                        ClothA = new List<int> { 0, 0, -1, 1, 64, 0, 29, 0, 13, 0, 0, 137 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 7 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "F_Buisness_4",
+                        ClothA = new List<int> { 0, 0, -1, 1, 50, 0, 29, 0, 13, 0, 0, 137 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 10, 0, 0, 8 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "F_Buisness_5",
+                        ClothA = new List<int> { 0, 0, -1, 1, 64, 0, 29, 0, 13, 0, 0, 137 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 0, 15, 0, 0, 13 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "F_Buisness_6",
+                        ClothA = new List<int> { 40, 0, -1, 3, 54, 0, 1, 0, 39, 0, 0, 92 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 4, 0, 5, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, 11, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 2, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                    ClothX myCB7 = new ClothX
+                    {
+                        Title = "F_Buisness_7",
+                        ClothA = new List<int> { 0, 0, -1, 3, 37, 0, 0, 22, 38, 0, 0, 64 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 3, 0, 3, 0, 0, 2 },
+                        ExtraA = new List<int> { 28, -1, 15, -1, -1 },
+                        ExtraB = new List<int> { 3, -1, 0, -1, -1 }
+                    };
+                    CBList.Add(myCB7);
+                    ClothX myCB8 = new ClothX
+                    {
+                        Title = "F_Buisness_8",
+                        ClothA = new List<int> { 0, 0, -1, 3, 37, 0, 6, 22, 38, 0, 0, 64 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 6, 0, 0, 12, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { 28, -1, 15, -1, -1 },
+                        ExtraB = new List<int> { 3, -1, 0, -1, -1 }
+                    };
+                    CBList.Add(myCB8);
+                    ClothX myCB9 = new ClothX
+                    {
+                        Title = "F_Buisness_9",
+                        ClothA = new List<int> { 0, 0, -1, 3, 37, 0, 20, 22, 38, 0, 0, 64 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 0, 7, 0, 0, 1 },
+                        ExtraA = new List<int> { 28, -1, 15, -1, -1 },
+                        ExtraB = new List<int> { 3, -1, 0, -1, -1 }
+                    };
+                    CBList.Add(myCB9);
+                    ClothX myCB10 = new ClothX
+                    {
+                        Title = "F_Buisness_10",
+                        ClothA = new List<int> { 40, 0, -1, 6, 8, 0, 8, 0, 22, 0, 0, 58 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB10);
+                    ClothX myCB11 = new ClothX
+                    {
+                        Title = "F_Buisness_11",
+                        ClothA = new List<int> { 40, 0, -1, 6, 37, 0, 0, 0, 22, 0, 0, 57 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 8 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB11);
+                    ClothX myCB12 = new ClothX
+                    {
+                        Title = "F_Buisness_12",
+                        ClothA = new List<int> { 40, 0, -1, 1, 27, 0, 7, 21, 38, 0, 0, 6 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 4 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB12);
+                    ClothX myCB13 = new ClothX
+                    {
+                        Title = "F_Buisness_13",
+                        ClothA = new List<int> { 40, 0, -1, 7, 41, 0, 27, 0, 13, 0, 0, 7 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB13);
+                    ClothX myCB14 = new ClothX
+                    {
+                        Title = "F_Buisness_14",
+                        ClothA = new List<int> { 0, 0, -1, 6, 36, 0, 20, 6, 13, 0, 0, 25 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 2 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB14);
+                    ClothX myCB15 = new ClothX
+                    {
+                        Title = "F_Buisness_15",
+                        ClothA = new List<int> { 0, 0, -1, 6, 6, 0, 13, 6, 25, 0, 0, 7 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB15);
+                    ClothX myCB16 = new ClothX
+                    {
+                        Title = "F_Buisness_16",
+                        ClothA = new List<int> { 0, 0, -1, 0, 7, 0, 19, 1, 24, 0, 0, 28 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 9, 1, 3, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB16);
+                }//Buisness
+                else if (iSelect == 9)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_Epslon_1",
+                        ClothA = new List<int> { 21, 0, 0, 3, 111, 0, 29, 99, 6, 0, 0, 285 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                }//Eppps
+                else if (iSelect == 10)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_Jogger_0",
+                        ClothA = new List<int> { 0, 0, -1, 14, 14, 0, 3, 3, 3, 0, 0, 14 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 8, 0, 1, 5, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "F_Jogger_1",
+                        ClothA = new List<int> { 0, 0, -1, 14, 2, 0, 10, 0, 3, 0, 0, 14 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 7 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "F_Jogger_2",
+                        ClothA = new List<int> { 0, 0, -1, 7, 14, 0, 11, 2, 15, 0, 0, 10 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 9, 0, 0, 4, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "F_Jogger_3",
+                        ClothA = new List<int> { 0, 0, -1, 11, 2, 0, 10, 3, 3, 0, 0, 11 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 2, 3, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "F_Jogger_4",
+                        ClothA = new List<int> { 0, 0, -1, 14, 12, 0, 10, 3, 3, 0, 0, 14 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 8, 0, 3, 4, 0, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "F_Jogger_5",
+                        ClothA = new List<int> { 0, 0, -1, 7, 2, 0, 11, 0, 16, 0, 0, 10 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 1, 0, 1, 0, 0, 7 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "F_Jogger_6",
+                        ClothA = new List<int> { 0, 0, -1, 7, 10, 0, 1, 1, 5, 0, 0, 10 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 13, 1, 0, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                    ClothX myCB7 = new ClothX
+                    {
+                        Title = "F_Jogger_7",
+                        ClothA = new List<int> { 0, 0, -1, 14, 12, 0, 4, 0, 3, 0, 0, 14 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 4 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB7);
+                }//jogger
+                else if (iSelect == 17)
+                {
+                    iText = RandomX.RandInt(0, 11);
+                    iText2 = RandomX.RandInt(0, 4);
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_Swim_14",
+                        ClothA = new List<int> { 0, 0, -1, 11, 17, 0, 35, 11, 3, 0, 0, 36 },
+                        ClothB = new List<int> { 0, 0, 0, 0, iText, 0, 0, 2, 0, 0, 0, iText2 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    iText = RandomX.RandInt(0, 11);
+                    iText2 = RandomX.RandInt(0, 10);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "F_Swim_15",
+                        ClothA = new List<int> { 0, 0, -1, 15, 17, 0, 35, 11, 3, 0, 0, 15 },
+                        ClothB = new List<int> { 0, 0, 0, 0, iText, 0, 0, 2, 0, 0, 0, iText2 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                }//Swim
+                else if (iSelect == 20)
+                {
+                    iText = RandomX.RandInt(0, 10);
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_BikeATV_3",
+                        ClothA = new List<int> { 0, 0, -1, 18, 79, 0, 58, 0, 3, 0, 0, 180 },
+                        ClothB = new List<int> { 0, 0, 0, 0, iText, 0, iText, 0, 0, 0, 0, iText },
+                        ExtraA = new List<int> { 90, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { iText, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    iText = RandomX.RandInt(0, 11);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "F_BikeATV_4",
+                        ClothA = new List<int> { 0, 0, -1, 127, 69, 0, 48, 0, 14, 0, 0, 145 },
+                        ClothB = new List<int> { 0, 0, 0, iText, iText, 0, iText, 0, 0, 0, 0, iText },
+                        ExtraA = new List<int> { 62, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { iText, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                }//BikeATV
+                else if (iSelect == 21)
+                {
+                    if (iSubset == 3 || iSubset == 4 || iSubset == 5 || iSubset == 6)
+                    {
+                        ClothX myCB0 = new ClothX
+                        {
+                            Title = "F_Services_0",
+                            ClothA = new List<int> { 0, 0, -1, 14, 34, 0, 25, 0, 35, 0, 0, 48 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB0);
+                        ClothX myCB1 = new ClothX
+                        {
+                            Title = "F_Services_1",
+                            ClothA = new List<int> { 0, 0, -1, 14, 34, 0, 25, 0, 35, 0, 0, 48 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 45, 0, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, 0, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB1);
+                    }//police
+                    else if (iSubset == 7)
+                    {
+                        ClothX myCB10 = new ClothX
+                        {
+                            Title = "F_Services_10",
+                            ClothA = new List<int> { 21, 0, 0, 9, 6, 0, 29, 0, 3, 55, 0, 9 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 4 },
+                            ExtraA = new List<int> { -1, 11, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, 3, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB10);
+                        ClothX myCB11 = new ClothX
+                        {
+                            Title = "F_Services_11",
+                            ClothA = new List<int> { 21, 0, 0, 1, 6, 0, 29, 0, 69, 54, 0, 6 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 4 },
+                            ExtraA = new List<int> { -1, 11, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB11);
+                        ClothX myCB12 = new ClothX
+                        {
+                            Title = "F_Services_12",
+                            ClothA = new List<int> { 21, 0, 0, 3, 7, 0, 13, 0, 39, 53, 0, 57 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8 },
+                            ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB12);
+                        ClothX myCB13 = new ClothX
+                        {
+                            Title = "F_Services_13",
+                            ClothA = new List<int> { 21, 0, 0, 3, 37, 0, 13, 0, 39, 53, 0, 57 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0 },
+                            ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB13);
+                    }//fib
+                    else if (iSubset == 10)
+                    {
+                        ClothX myCB2 = new ClothX
+                        {
+                            Title = "F_Services_2",
+                            ClothA = new List<int> { 0, 0, -1, 109, 99, 0, 52, 97, 3, 0, 66, 258 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 121, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB2);
+                        ClothX myCB3 = new ClothX
+                        {
+                            Title = "F_Services_3",
+                            ClothA = new List<int> { 0, 0, -1, 109, 99, 0, 52, 97, 3, 0, 66, 258 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { 121, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB3);
+                        ClothX myCB4 = new ClothX
+                        {
+                            Title = "F_Services_4",
+                            ClothA = new List<int> { 0, 0, -1, 105, 99, 0, 52, 96, 3, 0, 65, 257 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 121, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB4);
+                        ClothX myCB5 = new ClothX
+                        {
+                            Title = "F_Services_5",
+                            ClothA = new List<int> { 0, 0, -1, 105, 99, 0, 52, 96, 3, 0, 65, 257 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { 121, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 1, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB5);
+                    }//Ambulance
+                    else if (iSubset == 11)
+                    {
+                        ClothX myCB6 = new ClothX
+                        {
+                            Title = "F_Services_6",
+                            ClothA = new List<int> { 21, 0, 0, 3, 126, 0, 52, 0, 187, 0, 73, 325 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 136, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB6);
+                        ClothX myCB7 = new ClothX
+                        {
+                            Title = "F_Services_7",
+                            ClothA = new List<int> { 21, 0, 0, 3, 126, 0, 52, 0, 3, 0, 73, 326 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                            ExtraA = new List<int> { 137, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB7);
+                        ClothX myCB8 = new ClothX
+                        {
+                            Title = "F_Services_8",
+                            ClothA = new List<int> { 21, 0, 0, 3, 126, 0, 52, 0, 3, 0, 73, 326 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { 137, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB8);
+                        ClothX myCB9 = new ClothX
+                        {
+                            Title = "F_Services_9",
+                            ClothA = new List<int> { 21, 0, 0, 3, 126, 0, 52, 0, 187, 0, 73, 325 },
+                            ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1 },
+                            ExtraA = new List<int> { 136, -1, -1, -1, -1 },
+                            ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                        };
+                        CBList.Add(myCB9);
+                    }//fire
+                }//Services
+                else if (iSelect == 25)
+                {
+                    ClothX myCB0 = new ClothX
+                    {
+                        Title = "F_CayoPerico_0",
+                        ClothA = new List<int> { 21, 0, 0, 229, 50, 0, 37, 0, 5, 0, 0, 373 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 17 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB0);
+                    ClothX myCB1 = new ClothX
+                    {
+                        Title = "F_CayoPerico_1",
+                        ClothA = new List<int> { 21, 0, 0, 9, 14, 0, 4, 0, 14, 0, 0, 372 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB1);
+                    ClothX myCB2 = new ClothX
+                    {
+                        Title = "F_CayoPerico_2",
+                        ClothA = new List<int> { 21, 0, 0, 229, 0, 0, 1, 0, 204, 0, 0, 373 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 2, 0, 1, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB2);
+                    ClothX myCB3 = new ClothX
+                    {
+                        Title = "F_CayoPerico_3",
+                        ClothA = new List<int> { 21, 0, 0, 9, 14, 0, 5, 0, 14, 0, 0, 372 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 14 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB3);
+                    ClothX myCB4 = new ClothX
+                    {
+                        Title = "F_CayoPerico_4",
+                        ClothA = new List<int> { 21, 0, 0, 3, 90, 0, 63, 117, 207, 0, 0, 231 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 6, 0, 0, 1, 6, 0, 0, 6 },
+                        ExtraA = new List<int> { 149, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 14, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB4);
+                    ClothX myCB5 = new ClothX
+                    {
+                        Title = "F_CayoPerico_5",
+                        ClothA = new List<int> { 21, 0, 0, 3, 90, 0, 63, 116, 207, 0, 0, 231 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 8, 0, 0, 1, 5, 0, 0, 8 },
+                        ExtraA = new List<int> { 106, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 8, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB5);
+                    ClothX myCB6 = new ClothX
+                    {
+                        Title = "F_CayoPerico_6",
+                        ClothA = new List<int> { 21, 0, 0, 3, 90, 0, 100, 117, 207, 0, 0, 230 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 15, 0, 0, 11, 9, 0, 0, 15 },
+                        ExtraA = new List<int> { 103, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 15, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB6);
+                    ClothX myCB7 = new ClothX
+                    {
+                        Title = "F_CayoPerico_7",
+                        ClothA = new List<int> { 21, 0, 0, 3, 90, 0, 100, 115, 207, 0, 0, 230 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 16, 0, 0, 4, 8, 0, 0, 16 },
+                        ExtraA = new List<int> { 104, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 16, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB7);
+                    ClothX myCB8 = new ClothX
+                    {
+                        Title = "F_CayoPerico_8",
+                        ClothA = new List<int> { 21, 0, 0, 9, 45, 0, 76, 0, 14, 0, 0, 232 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 6, 0, 0, 0, 0, 23 },
+                        ExtraA = new List<int> { 141, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 19, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB8);
+                    ClothX myCB9 = new ClothX
+                    {
+                        Title = "F_CayoPerico_9",
+                        ClothA = new List<int> { 21, 0, 0, 14, 1, 0, 62, 0, 208, 0, 0, 337 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 3, 0, 23, 0, 14, 0, 0, 12 },
+                        ExtraA = new List<int> { 105, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 23, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB9);
+                    ClothX myCB10 = new ClothX
+                    {
+                        Title = "F_CayoPerico_10",
+                        ClothA = new List<int> { 21, 0, 0, 14, 128, 0, 55, 0, 208, 0, 0, 212 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 18 },
+                        ExtraA = new List<int> { 60, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB10);
+                    ClothX myCB11 = new ClothX
+                    {
+                        Title = "F_CayoPerico_11",
+                        ClothA = new List<int> { 21, 0, 0, 9, 128, 0, 74, 0, 14, 0, 0, 232 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 24 },
+                        ExtraA = new List<int> { 106, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 24, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB11);
+                    ClothX myCB12 = new ClothX
+                    {
+                        Title = "F_CayoPerico_12",
+                        ClothA = new List<int> { 21, 0, 0, 4, 89, 0, 64, 0, 3, 0, 0, 247 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 4 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB12);
+                    ClothX myCB13 = new ClothX
+                    {
+                        Title = "F_CayoPerico_13",
+                        ClothA = new List<int> { 21, 0, 0, 4, 89, 0, 76, 0, 3, 0, 0, 5 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 17, 0, 23, 0, 0, 0, 0, 7 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB13);
+                    ClothX myCB14 = new ClothX
+                    {
+                        Title = "F_CayoPerico_14",
+                        ClothA = new List<int> { 21, 0, 0, 15, 130, 0, 25, 0, 208, 0, 0, 15 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 19, 0, 0, 0, 8, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB14);
+                    ClothX myCB15 = new ClothX
+                    {
+                        Title = "F_CayoPerico_15",
+                        ClothA = new List<int> { 21, 0, 0, 12, 130, 0, 101, 0, 208, 0, 0, 118 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 16, 0, 0, 0, 2, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB15);
+                    ClothX myCB16 = new ClothX
+                    {
+                        Title = "F_CayoPerico_16",
+                        ClothA = new List<int> { 21, 185, 0, 215, 101, 0, 74, 0, 14, 0, 0, 261 },
+                        ClothB = new List<int> { 0, 8, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB16);
+                    ClothX myCB17 = new ClothX
+                    {
+                        Title = "F_CayoPerico_17",
+                        ClothA = new List<int> { 21, 52, 0, 215, 130, 0, 64, 0, 14, 0, 0, 351 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 3 },
+                        ExtraA = new List<int> { 146, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { 0, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB17);
+                    ClothX myCB18 = new ClothX
+                    {
+                        Title = "F_CayoPerico_18",
+                        ClothA = new List<int> { 21, 132, 0, 219, 131, 0, 76, 0, 14, 0, 0, 259 },
+                        ClothB = new List<int> { 0, 8, 0, 0, 1, 0, 0, 0, 0, 0, 0, 25 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB18);
+                    ClothX myCB19 = new ClothX
+                    {
+                        Title = "F_CayoPerico_19",
+                        ClothA = new List<int> { 21, 185, 0, 215, 136, 0, 100, 0, 14, 0, 0, 343 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB19);
+                    ClothX myCB20 = new ClothX
+                    {
+                        Title = "F_CayoPerico_20",
+                        ClothA = new List<int> { 21, 0, 0, 3, 0, 0, 9, 0, 39, 0, 0, 353 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 2, 0, 7, 0, 0, 3 },
+                        ExtraA = new List<int> { -1, 11, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB20);
+                    ClothX myCB21 = new ClothX
+                    {
+                        Title = "F_CayoPerico_21",
+                        ClothA = new List<int> { 21, 0, 0, 229, 1, 0, 3, 0, 204, 0, 0, 364 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 4, 0, 0, 0, 0, 24 },
+                        ExtraA = new List<int> { -1, 2, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, 0, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB21);
+                    ClothX myCB22 = new ClothX
+                    {
+                        Title = "F_CayoPerico_22",
+                        ClothA = new List<int> { 21, 0, 0, 9, 23, 0, 1, 0, 3, 0, 0, 9 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 5, 0, 1, 0, 0, 0, 0, 1 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB22);
+                    ClothX myCB23 = new ClothX
+                    {
+                        Title = "F_CayoPerico_23",
+                        ClothA = new List<int> { 21, 0, 0, 229, 4, 0, 13, 0, 4, 0, 0, 364 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 14, 0, 0, 20 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB23);
+                    ClothX myCB24 = new ClothX
+                    {
+                        Title = "F_CayoPerico_24",
+                        ClothA = new List<int> { 21, 0, 0, 14, 0, 0, 3, 0, 209, 0, 0, 14 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 1, 0, 2, 0, 12, 0, 0, 4 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB24);
+                    ClothX myCB25 = new ClothX
+                    {
+                        Title = "F_CayoPerico_25",
+                        ClothA = new List<int> { 21, 186, 0, 14, 124, 0, 97, 0, 209, 0, 0, 14 },
+                        ClothB = new List<int> { 0, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 3 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB25);
+                    ClothX myCB26 = new ClothX
+                    {
+                        Title = "F_CayoPerico_26",
+                        ClothA = new List<int> { 21, 0, 0, 3, 123, 0, 79, 0, 209, 0, 0, 316 },
+                        ClothB = new List<int> { 0, 0, 0, 0, 9, 0, 21, 0, 2, 0, 0, 23 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB26);
+                    ClothX myCB27 = new ClothX
+                    {
+                        Title = "F_CayoPerico_27",
+                        ClothA = new List<int> { 21, 101, 0, 14, 123, 0, 32, 0, 209, 0, 0, 68 },
+                        ClothB = new List<int> { 0, 11, 0, 0, 10, 0, 4, 0, 19, 0, 0, 10 },
+                        ExtraA = new List<int> { -1, -1, -1, -1, -1 },
+                        ExtraB = new List<int> { -1, -1, -1, -1, -1 }
+                    };
+                    CBList.Add(myCB27);
+                }//Cayo
+
+                cOutput = CBList[RandomX.RandInt(0, CBList.Count - 1)];
             }
-            return ThisBank;
+
+            return cOutput;
         }
     }
 }
